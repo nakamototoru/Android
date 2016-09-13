@@ -10,7 +10,7 @@
     tools:context="com.hidezo.app.buyer.ActivitySuppliers">
 
     <ListView
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/listViewSupplier"
         android:layout_alignParentTop="true"

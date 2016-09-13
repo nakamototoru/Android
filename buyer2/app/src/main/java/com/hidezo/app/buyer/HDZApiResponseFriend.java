@@ -8,19 +8,10 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 /**
+ * Created by dezami on 2016/09/13.
  *
  */
 public class HDZApiResponseFriend extends HDZApiResponse {
-
-    public static class HDZFriendInfo {
-        public String address = "";
-        public String id = "";
-        public String mail_addr = "";
-        public String minister = "";
-        public String mobile = "";
-        public String name = "";
-        public String tel = "";
-    }
 
     public ArrayList<HDZFriendInfo> friendInfoList = new ArrayList<HDZFriendInfo>();
 
@@ -33,7 +24,6 @@ public class HDZApiResponseFriend extends HDZApiResponse {
 
                 JSONArray friendList = json.getJSONArray("friendList");
                 if (friendList != null) {
-//                    friendList = list;
                     if (friendList.length() > 0) {
                         for (int i = 0; i < friendList.length(); i++) {
                             HDZFriendInfo info = new HDZFriendInfo();

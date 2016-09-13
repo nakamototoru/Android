@@ -17,10 +17,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- *
+ * Created by dezami on 2016/09/13.
+ * 取引先一覧リストビュー
  */
-public class ActivitySuppliers extends AppCompatActivity implements MyOkhttpCallbacks {
+public class ActivitySuppliers extends AppCompatActivity implements HDZClientCallbacksGet {
 
+    private static ActivitySuppliers _self;
     private HDZApiResponseFriend responseFriend = new HDZApiResponseFriend();
 
     @Override
@@ -28,96 +30,61 @@ public class ActivitySuppliers extends AppCompatActivity implements MyOkhttpCall
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_suppliers);
 
-        // !!!: 追加
-        populateUsersList();
+        _self = this;
 
         // HTTP TEST
         HDZApiRequestPackage.Friend req = new HDZApiRequestPackage.Friend();
         req.begin("6146740737615597570","955F40F8-563B-40A0-BB26-EBF7412DC3E7",this);
-
-//        HDZApiRequest request = new HDZApiRequest();
-//        request.putKeyAndValue("id", "6146740737615597570");
-//        request.putKeyAndValue("uuid", "955F40F8-563B-40A0-BB26-EBF7412DC3E7");
-////        request.putKeyAndValue("page", "1");
-//        request.beginRequest("friend",this); //
-
-//        httpget.runAsync("order_list", request.getParams(), this);
-    }
-
-    private void populateUsersList() {
-
-        // Construct the data source
-        ArrayList<Supplier> arrayOfUsers = Supplier.getSuppliers();
-
-        // Create the adapter to convert the array to views
-        CustomSupplierAdapter adapter = new CustomSupplierAdapter(this, arrayOfUsers);
-
-        // Attach the adapter to a ListView
-        ListView listView = (ListView) findViewById(R.id.listViewSupplier);
-        listView.setAdapter(adapter);
-
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                String country = adapter.getItem(position);
-
-                new AlertDialog.Builder(ActivitySuppliers.this)
-                        .setTitle( String.valueOf(position) )
-//                        .setMessage(_strsample)
-                        .setPositiveButton( "Yes", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                            }
-                        })
-                        .setNegativeButton( "No", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                            }
-                        })
-                        .show();
-            }
-        });
     }
 
     /**
-     * MyOkhttpCallbacks
+     * HDZClientCallbacksGet
+     * データ取得時
      */
-    public void myOkhttpCallbackComplete(String response) {
-
-//        Log.d("########",response);
-
+    public void hdzClientCallbackGetComplete(String response) {
         if ( responseFriend.parseJson(response) ) {
             if (responseFriend.friendInfoList.size() > 0) {
                 String name = responseFriend.friendInfoList.get(0).name;
                 Log.d("########",name);
             }
+
+            //UIスレッド上で呼び出してもらう
+            this.runOnUiThread(new Runnable(){
+                @Override
+                public void run(){
+
+                    //リストビュー作成
+                    ArrayAdapterSupplier aasupplier = new ArrayAdapterSupplier(_self, responseFriend.friendInfoList);
+                    ListView listView = (ListView) findViewById(R.id.listViewSupplier);
+                    listView.setAdapter(aasupplier);
+                    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        //行タッチイベント
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                            new AlertDialog.Builder(ActivitySuppliers._self)
+                                    .setTitle( String.valueOf(position) )
+                                    .setPositiveButton( "Yes", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+
+                                        }
+                                    })
+                                    .setNegativeButton( "No", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+
+                                        }
+                                    })
+                                    .show();
+                        }
+                    });
+                }
+            });
+
         }
-
-//        try {
-//            JSONObject json = new JSONObject(response);
-//
-//            boolean result = json.getBoolean("result");
-//            if (result) {
-//                JSONArray friendList = json.getJSONArray("friendList");
-//                if (friendList != null && friendList.length() > 0) {
-//                    String supplier_name = friendList.getJSONObject(0).getString("name");
-//                    Log.d("########",supplier_name);
-//                }
-//            }
-//            else {
-//                Log.d("########","result = false");
-//            }
-//
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-
     }
-    public void myOkhttpCallbackError(String error) {
-
-        Log.d("########",error);
+    public void hdzClientCallbackGetError(String message) {
+        Log.d("########",message);
     }
+
 }

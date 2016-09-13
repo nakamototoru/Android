@@ -7,6 +7,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
+ * Created by dezami on 2016/09/13.
  *
  */
 public class HDZApiResponse {
