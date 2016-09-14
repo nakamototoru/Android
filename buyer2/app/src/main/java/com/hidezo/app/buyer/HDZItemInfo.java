@@ -13,10 +13,6 @@ public class HDZItemInfo {
     public ArrayList<String> deliver_to_list = new ArrayList<String>();
 
     public static class Supplier {
-        /*
-        let supplier_id: String
-    let supplier_name: String
-         */
         String supplier_id = "";
         String supplier_name = "";
     }
@@ -24,6 +20,7 @@ public class HDZItemInfo {
     public static class Category {
         String id = "";
         String name = "";
+        boolean isStatic = false;
     }
 
     public static class StaticItem {

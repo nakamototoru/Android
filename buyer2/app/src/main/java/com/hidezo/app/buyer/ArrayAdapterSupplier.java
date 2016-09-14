@@ -22,16 +22,14 @@ import java.util.ArrayList;
  */
 public class ArrayAdapterSupplier extends ArrayAdapter<HDZFriendInfo> {
 
-//    private HDZFriendInfo myFriendInfo;
-
     private ArrayList<HDZFriendInfo> friendInfoList = new ArrayList<HDZFriendInfo>();
 
-    private AppCompatActivity activityOrner;
+//    private AppCompatActivity activityOrner;
 
     public ArrayAdapterSupplier(Context context, ArrayList<HDZFriendInfo> friends, AppCompatActivity orner) {
         super(context, 0, friends);
         this.friendInfoList = friends;
-        this.activityOrner = orner;
+//        this.activityOrner = orner;
     }
     @Override
     public boolean isEnabled(int position) {
@@ -85,14 +83,6 @@ public class ArrayAdapterSupplier extends ArrayAdapter<HDZFriendInfo> {
             @Override
             public void onClick(View view) {
                 Log.d("########","R.id.buttonItemList");
-
-//                HDZFriendInfo friend = getItem(position);
-//                String supplier_id = friend.id;
-//
-//                // 画面遷移
-//                Intent intent = new Intent( activityOrner.getApplication(), ActivityCategorys.class);
-//                intent.putExtra("supplier_id", supplier_id);
-//                activityOrner.startActivity(intent);
             }
         });
         */
@@ -101,14 +91,4 @@ public class ArrayAdapterSupplier extends ArrayAdapter<HDZFriendInfo> {
         return convertView;
     }
 
-    public void onSelected(int position) {
-
-        HDZFriendInfo friend = getItem(position);
-        String supplier_id = friend.id;
-
-        // 画面遷移
-        Intent intent = new Intent( activityOrner.getApplication(), ActivityCategorys.class);
-        intent.putExtra("supplier_id", supplier_id);
-        activityOrner.startActivity(intent);
-    }
 }

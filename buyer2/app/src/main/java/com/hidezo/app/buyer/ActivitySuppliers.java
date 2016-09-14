@@ -47,9 +47,8 @@ public class ActivitySuppliers extends AppCompatActivity implements HDZClientCal
      */
     public void hdzClientCallbackGetComplete(String response) {
         if ( responseFriend.parseJson(response) ) {
-            if (responseFriend.friendInfoList.size() > 0) {
-                String name = responseFriend.friendInfoList.get(0).name;
-                Log.d("########",name);
+            if (responseFriend.friendInfoList.size() == 0) {
+                return;
             }
 
             //UIスレッド上で呼び出してもらう
