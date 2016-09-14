@@ -76,7 +76,7 @@ public class HDZClient {
                 requestUrl += e.getKey() + "=" + e.getValue();
                 count++;
             }
-//            Log.d("########",requestUrl);
+            Log.d("########",requestUrl);
             runAsync(requestUrl,callbacks);
         }
 

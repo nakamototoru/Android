@@ -5,11 +5,12 @@
     android:padding="10dp"
      >
 
-    <Button
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="注文する"
-        android:id="@+id/buttonItemList"
+        android:id="@+id/textViewOrder"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true" />
 
@@ -22,7 +23,6 @@
         android:layout_alignParentTop="false"
         android:layout_gravity="right"
         android:layout_alignWithParentIfMissing="false"
-        android:layout_alignBaseline="@+id/buttonItemList"
         android:layout_centerHorizontal="true"
         android:layout_toRightOf="@+id/tvRow" />
 
@@ -32,7 +32,6 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="row"
         android:id="@+id/tvRow"
-        android:layout_alignBaseline="@+id/buttonItemList"
         android:layout_alignParentLeft="true" />
 
 </RelativeLayout>
