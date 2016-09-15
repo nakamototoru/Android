@@ -14,10 +14,10 @@ import java.util.ArrayList;
  */
 public class HDZApiResponseItem extends HDZApiResponse {
 
-    public HDZItemInfo.Supplier supplierInfo = null;
+    public HDZItemInfo.Supplier supplierInfo = new HDZItemInfo.Supplier();
     public ArrayList<HDZItemInfo.StaticItem> staticItemList = new ArrayList<HDZItemInfo.StaticItem>();
     public ArrayList<HDZItemInfo.DynamicItem> dynamicItemList = new ArrayList<HDZItemInfo.DynamicItem>();
-    public HDZItemInfo.DynamicItemInfo dynamicItemInfo = null;
+    public HDZItemInfo.DynamicItemInfo dynamicItemInfo = new HDZItemInfo.DynamicItemInfo();
 
     @Override
     public boolean parseJson(final String strjson) {
@@ -27,7 +27,7 @@ public class HDZApiResponseItem extends HDZApiResponse {
                 JSONObject json = new JSONObject(strjson);
 
                 JSONObject json_supplier = json.getJSONObject("supplier");
-                supplierInfo = new HDZItemInfo.Supplier();
+//                supplierInfo = new HDZItemInfo.Supplier();
                 supplierInfo.supplier_id = json_supplier.getString("supplier_id");
                 supplierInfo.supplier_name = json_supplier.getString("supplier_name");
 
@@ -50,13 +50,11 @@ public class HDZApiResponseItem extends HDZApiResponse {
                         item.scale = json_staticItem.getJSONObject(i).getString("scale");
                         item.standard = json_staticItem.getJSONObject(i).getString("standard");
 
-//                        item.num_scale = new ArrayList<String>();
                         JSONArray json_num_scale = json_staticItem.getJSONObject(i).getJSONArray("num_scale");
                         for (int j = 0; j < json_num_scale.length(); j++) {
                             item.num_scale.add( json_num_scale.getString(j) );
                         }
 
-//                        item.category = new HDZItemInfo.Category();
                         JSONObject json_category = json_staticItem.getJSONObject(i).getJSONObject("category");
 
 //                        Log.d("########",json_category.toString());
@@ -78,7 +76,6 @@ public class HDZApiResponseItem extends HDZApiResponse {
                         item.item_name = json_dynamicItem.getJSONObject(i).getString("item_name");
                         item.price = json_dynamicItem.getJSONObject(i).getString("price");
 
-//                        item.num_scale = new ArrayList<String>();
                         JSONArray json_num_scale = json_dynamicItem.getJSONObject(i).getJSONArray("num_scale");
                         for (int j = 0; j < json_num_scale.length(); j++) {
                             item.num_scale.add(json_num_scale.getString(j));
@@ -89,33 +86,16 @@ public class HDZApiResponseItem extends HDZApiResponse {
                 }
 
                 if ( !json.isNull("dynamicItemInfo") ) {
-                    JSONArray dynamivItemInfo = json.getJSONArray("dynamicItemInfo");
-                    if (dynamivItemInfo.length() >= 1) {
-
-                    }
-                }
-/*
-                JSONArray friendList = json.getJSONArray("friendList");
-                if (friendList != null) {
-                    if (friendList.length() > 0) {
-                        for (int i = 0; i < friendList.length(); i++) {
-                            HDZFriendInfo info = new HDZFriendInfo();
-                            info.id = friendList.getJSONObject(i).getString("id");
-                            info.name = friendList.getJSONObject(i).getString("name");
-                            info.address = friendList.getJSONObject(i).getString("address");
-                            info.mail_addr = friendList.getJSONObject(i).getString("mail_addr");
-                            info.minister = friendList.getJSONObject(i).getString("minister");
-                            info.mobile = friendList.getJSONObject(i).getString("mobile");
-                            info.tel = friendList.getJSONObject(i).getString("tel");
-
-                            friendInfoList.add(info);
+                    JSONArray json_dynamiciteminfo = json.getJSONArray("dynamicItemInfo");
+                    if (json_dynamiciteminfo.length() >= 1) {
+                        dynamicItemInfo.text = json_dynamiciteminfo.getJSONObject(0).getString("text");
+                        dynamicItemInfo.lastUpdate = json_dynamiciteminfo.getJSONObject(0).getString("lastUpdate");
+                        JSONArray json_imagepath = json_dynamiciteminfo.getJSONArray(0);
+                        for (int i = 0; i < json_imagepath.length(); i++) {
+                            dynamicItemInfo.imagePath.add( json_imagepath.getString(i) );
                         }
                     }
                 }
-*/
-//                else {
-////                    friendList = new JSONArray();
-//                }
 
             } catch (JSONException e) {
                 e.printStackTrace();

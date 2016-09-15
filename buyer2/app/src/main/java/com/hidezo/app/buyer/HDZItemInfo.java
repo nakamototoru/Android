@@ -25,19 +25,6 @@ public class HDZItemInfo {
 
     public static class StaticItem {
         Category category = new Category();
-     /*
-    let id: String
-    let name: String
-    let code: String
-    let detail: String
-    let image: NSURL
-    let loading: Int
-    let min_order_count: String
-    let standard: String
-    let price: String
-    let scale: String
-    let num_scale: [String]
-         */
         String id ="";
         String name = "";
         String code = "";
@@ -52,12 +39,6 @@ public class HDZItemInfo {
     }
 
     public static class DynamicItem {
-        /*
-         let id: String
-    let item_name: String
-    let num_scale: [String]
-    let price: String
-         */
         String id = "";
         String item_name = "";
         String price = "";
@@ -65,11 +46,6 @@ public class HDZItemInfo {
     }
 
     public static class DynamicItemInfo {
-        /*
-         let imagePath: [String]
-    let text: String
-    let lastUpdate: NSDate
-         */
         String text = "";
         ArrayList<String> imagePath = new ArrayList<String>();
         String lastUpdate = "";

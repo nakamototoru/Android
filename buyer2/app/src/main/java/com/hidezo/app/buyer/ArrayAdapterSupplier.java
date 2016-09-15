@@ -24,12 +24,9 @@ public class ArrayAdapterSupplier extends ArrayAdapter<HDZFriendInfo> {
 
     private ArrayList<HDZFriendInfo> friendInfoList = new ArrayList<HDZFriendInfo>();
 
-//    private AppCompatActivity activityOrner;
-
-    public ArrayAdapterSupplier(Context context, ArrayList<HDZFriendInfo> friends, AppCompatActivity orner) {
+    public ArrayAdapterSupplier(Context context, ArrayList<HDZFriendInfo> friends) {
         super(context, 0, friends);
         this.friendInfoList = friends;
-//        this.activityOrner = orner;
     }
     @Override
     public boolean isEnabled(int position) {

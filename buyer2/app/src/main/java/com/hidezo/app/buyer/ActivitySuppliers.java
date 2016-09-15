@@ -56,7 +56,7 @@ public class ActivitySuppliers extends AppCompatActivity implements HDZClientCal
                 @Override
                 public void run(){
                     //リストビュー作成
-                    ArrayAdapterSupplier aasupplier = new ArrayAdapterSupplier(_self, responseFriend.friendInfoList, _self);
+                    ArrayAdapterSupplier aasupplier = new ArrayAdapterSupplier(_self, responseFriend.friendInfoList);
                     ListView listView = (ListView) findViewById(R.id.listViewSupplier);
 
                     listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -75,10 +75,6 @@ public class ActivitySuppliers extends AppCompatActivity implements HDZClientCal
                                 intent.putExtra("supplier_id", supplier_id);
                                 _self.startActivity(intent);
                             }
-//                            else {
-//                                // 取引先詳細
-//                            }
-
 
                             /*
                             new AlertDialog.Builder(ActivitySuppliers._self)

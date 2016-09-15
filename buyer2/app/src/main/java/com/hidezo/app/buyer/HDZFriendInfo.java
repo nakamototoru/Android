@@ -14,6 +14,4 @@ public class HDZFriendInfo {
     public String name = "";
     public String tel = "";
 
-//    public HDZFriendInfo() {
-//    }
 }

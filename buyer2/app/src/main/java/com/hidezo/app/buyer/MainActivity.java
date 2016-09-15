@@ -13,11 +13,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onStart() {
+        super.onStart();
 
         // 画面遷移
         Intent intent = new Intent(getApplication(), ActivitySuppliers.class);
         startActivity(intent);
     }
+
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//
+////        // 画面遷移
+////        Intent intent = new Intent(getApplication(), ActivitySuppliers.class);
+////        startActivity(intent);
+//    }
 }

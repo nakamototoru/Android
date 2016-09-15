@@ -39,9 +39,6 @@ public class HDZApiResponseFriend extends HDZApiResponse {
                         }
                     }
                 }
-//                else {
-////                    friendList = new JSONArray();
-//                }
 
             } catch (JSONException e) {
                 e.printStackTrace();

@@ -20,7 +20,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".ActivitySuppliers" />
-        <activity android:name=".ActivityCategorys"></activity>
+        <activity android:name=".ActivityCategorys" />
+        <activity android:name=".ActivityStaticItems"></activity>
     </application>
 
 </manifest>
