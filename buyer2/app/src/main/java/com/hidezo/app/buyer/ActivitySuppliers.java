@@ -1,24 +1,15 @@
 package com.hidezo.app.buyer;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
-import com.astuetz.PagerSlidingTabStrip;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * Created by dezami on 2016/09/13.
@@ -29,23 +20,61 @@ public class ActivitySuppliers extends AppCompatActivity implements HDZClientCal
     private static ActivitySuppliers _self;
     private HDZApiResponseFriend responseFriend = new HDZApiResponseFriend();
 
+    //メンバー変数
+    private RadioGroup mRadioGroup;
+    private RadioButton mRadioButton;
+
+    // グローバル
+    AppGlobals sGlobals;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_suppliers);
 
+        // getApplication()でアプリケーションクラスのインスタンスを拾う
+        sGlobals = (AppGlobals) this.getApplication();
+
         _self = this;
 
         // HTTP GET
         HDZApiRequestPackage.Friend req = new HDZApiRequestPackage.Friend();
-        req.begin("6146740737615597570","955F40F8-563B-40A0-BB26-EBF7412DC3E7",this);
-    }
+        req.begin( sGlobals.getUserId(), sGlobals.getUuid(), this);
+
+
+        //radioGroupとリソースのradioGroupを結び付ける
+        mRadioGroup = (RadioGroup)findViewById(R.id.radioGroupSuppliersTabbar);
+
+        //radioButtonとチェックされているボタンを結び付ける
+        mRadioButton = (RadioButton) findViewById(mRadioGroup.getCheckedRadioButtonId());
+
+        mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+
+                if (checkedId != -1) {
+                    // 選択されているラジオボタンの取得
+                    RadioButton radioButton = (RadioButton) findViewById(checkedId);
+
+                    // ラジオボタンのテキストを取得
+                    String text = radioButton.getText().toString();
+
+//                    Log.d("########", text);
+
+                    sGlobals.openWarning("ラジオボタンのテキストを取得", text, _self);
+                }
+
+            }
+        });
+
+   }
 
     /**
      * HDZClientCallbacksGet
      * データ取得時
      */
-    public void hdzClientCallbackGetComplete(String response) {
+    public void hdzClientCallbackGetComplete(String response,String apiname) {
         if ( responseFriend.parseJson(response) ) {
             if (responseFriend.friendInfoList.size() == 0) {
                 return;
@@ -58,7 +87,6 @@ public class ActivitySuppliers extends AppCompatActivity implements HDZClientCal
                     //リストビュー作成
                     ArrayAdapterSupplier aasupplier = new ArrayAdapterSupplier(_self, responseFriend.friendInfoList);
                     ListView listView = (ListView) findViewById(R.id.listViewSupplier);
-
                     listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         //行タッチイベント
                         @Override
@@ -75,27 +103,14 @@ public class ActivitySuppliers extends AppCompatActivity implements HDZClientCal
                                 intent.putExtra("supplier_id", supplier_id);
                                 _self.startActivity(intent);
                             }
-
-                            /*
-                            new AlertDialog.Builder(ActivitySuppliers._self)
-                                    .setTitle( String.valueOf(position) )
-                                    .setPositiveButton( "Yes", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-
-                                        }
-                                    })
-                                    .setNegativeButton( "No", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-
-                                        }
-                                    })
-                                    .show();
-                                    */
+                            else {
+                                // 取引先詳細
+                                Intent intent = new Intent( _self.getApplication(), ActivitySupplierDetail.class);
+                                intent.putExtra("supplier_id", supplier_id);
+                                _self.startActivity(intent);
+                            }
                         }
                     });
-
                     listView.setAdapter(aasupplier);
                 }
             });

@@ -20,14 +20,14 @@ import okhttp3.RequestBody;
  */
 public class HDZClient {
 
-    public static final String _baseUrl = "https://dev-api.hidezo.co/store/"; // "https://api.hidezo.co/store/";
-    public static final String _baseUrlRelease = "https://api.hidezo.co/store/";
+    public static final String _baseUrl = "https://dev-api.hidezo.co/"; // "https://api.hidezo.co/store/";
+    public static final String _baseUrlRelease = "https://api.hidezo.co/";
 
     private static HDZClientCallbacksGet _myCallbacks = null;
 
     public static class Get {
 
-        public void runAsync(final String url, HDZClientCallbacksGet callbacks) {
+        private void runAsync(final String url, HDZClientCallbacksGet callbacks, final String apiname) {
 
             _myCallbacks = callbacks;
             //リクエスト開始
@@ -48,7 +48,7 @@ public class HDZClient {
                     for (int i = 0, size = responseHeaders.size(); i < size; i++) {
                         System.out.println(responseHeaders.name(i) + ": " + responseHeaders.value(i));
                     }
-                    _myCallbacks.hdzClientCallbackGetComplete(response.body().string());
+                    _myCallbacks.hdzClientCallbackGetComplete(response.body().string(),apiname);
                 }
             });
         }
@@ -77,7 +77,7 @@ public class HDZClient {
                 count++;
             }
             Log.d("########",requestUrl);
-            runAsync(requestUrl,callbacks);
+            runAsync(requestUrl,callbacks,apiname);
         }
 
     }

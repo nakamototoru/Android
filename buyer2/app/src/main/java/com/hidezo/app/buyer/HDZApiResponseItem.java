@@ -90,7 +90,7 @@ public class HDZApiResponseItem extends HDZApiResponse {
                     if (json_dynamiciteminfo.length() >= 1) {
                         dynamicItemInfo.text = json_dynamiciteminfo.getJSONObject(0).getString("text");
                         dynamicItemInfo.lastUpdate = json_dynamiciteminfo.getJSONObject(0).getString("lastUpdate");
-                        JSONArray json_imagepath = json_dynamiciteminfo.getJSONArray(0);
+                        JSONArray json_imagepath = json_dynamiciteminfo.getJSONObject(0).getJSONArray("imagePath");
                         for (int i = 0; i < json_imagepath.length(); i++) {
                             dynamicItemInfo.imagePath.add( json_imagepath.getString(i) );
                         }

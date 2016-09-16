@@ -23,23 +23,34 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="@dimen/abc_action_bar_default_height_material"
-        android:gravity="center_horizontal"
+        android:gravity="center_vertical|center_horizontal"
         android:layout_alignParentBottom="true">
 
-        <Button
-            android:layout_width="wrap_content"
+        <RadioGroup
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="取引先"
-            android:id="@+id/buttonSuppliers"
-            android:layout_alignTop="@+id/tool_bar"
-            android:layout_alignParentLeft="true" />
+            android:id="@+id/radioGroupSuppliersTabbar"
+            android:orientation="horizontal">
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="注文履歴"
-            android:id="@+id/buttonOrders" />
+            <RadioButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/SupplierList"
+                android:id="@+id/radioButtonSupplier"
+                android:layout_weight="1"
+                android:button="@mipmap/profile_white"
+                android:textColor="@android:color/white" />
 
+            <RadioButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/OrderHistory"
+                android:id="@+id/radioButtonOrder"
+                android:layout_weight="1"
+                android:button="@mipmap/order_white"
+                android:textColor="@android:color/white" />
+
+        </RadioGroup>
     </LinearLayout>
 
     <ListView

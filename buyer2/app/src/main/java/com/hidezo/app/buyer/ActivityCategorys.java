@@ -19,20 +19,25 @@ public class ActivityCategorys extends AppCompatActivity implements HDZClientCal
     private String mySupplierId = "";
     private HDZApiResponseItem responseItem = new HDZApiResponseItem();
 
+    // グローバル
+    AppGlobals sGlobals;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_categorys);
 
+        // getApplication()でアプリケーションクラスのインスタンスを拾う
+        sGlobals = (AppGlobals) this.getApplication();
+
         _self = this;
 
         Intent intent = getIntent();
         mySupplierId = intent.getStringExtra("supplier_id");
-//        mySupplierId = supplier_id;
 
         // HTTP GET
         HDZApiRequestPackage.Item req = new HDZApiRequestPackage.Item();
-        req.begin("6146740737615597570","955F40F8-563B-40A0-BB26-EBF7412DC3E7",mySupplierId,this);
+        req.begin(sGlobals.getUserId(), sGlobals.getUuid(), mySupplierId, this);
 
     }
 
@@ -40,7 +45,7 @@ public class ActivityCategorys extends AppCompatActivity implements HDZClientCal
      * HDZClientCallbacksGet
      * データ取得時
      */
-    public void hdzClientCallbackGetComplete(final String response) {
+    public void hdzClientCallbackGetComplete(String response,String apiname) {
         if (responseItem.parseJson(response)) {
 //            if (responseItem.supplierInfo != null) {
 //                String name = responseItem.supplierInfo.supplier_name;
@@ -89,24 +94,16 @@ public class ActivityCategorys extends AppCompatActivity implements HDZClientCal
                             HDZItemInfo.Category category = (HDZItemInfo.Category)listView.getItemAtPosition(position);
 
                             if (!category.isStatic) {
-                                // 動的商品
+                                // 動的商品リストビュー
+                                Intent intent = new Intent( _self.getApplication(), ActivityDynamicItems.class);
+                                intent.putExtra("supplier_id",_self.mySupplierId);
+                                _self.startActivity(intent);
                             }
                             else if (position < listView.getCount() ) {
                                 // 静的商品リストビュー
                                 Intent intent = new Intent( _self.getApplication(), ActivityStaticItems.class);
-
-                                String supplier_id = _self.mySupplierId;
-                                String category_id = category.id;
-//                                for (int i = 0; i < responseItem.staticItemList.size(); i++) {
-//                                    HDZItemInfo.StaticItem item = responseItem.staticItemList.get(i);
-//                                    String cid = item.category.id;
-//                                    if (cid == category.id) {
-//                                        category_id = category.id;
-//                                    }
-//                                }
-
-                                intent.putExtra("supplier_id", supplier_id);
-                                intent.putExtra("category_id", category_id);
+                                intent.putExtra("supplier_id", _self.mySupplierId);
+                                intent.putExtra("category_id", category.id);
                                 _self.startActivity(intent);
                             }
                         }

@@ -6,7 +6,7 @@ package com.hidezo.app.buyer;
  */
 public interface HDZClientCallbacksGet {
 
-    void hdzClientCallbackGetComplete(String response);
+    void hdzClientCallbackGetComplete(String response,String apiname);
     void hdzClientCallbackGetError(String message);
 
 }

@@ -9,14 +9,12 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
-public class ActivityStaticItems extends AppCompatActivity implements HDZClientCallbacksGet {
+public class ActivityDynamicItems extends AppCompatActivity implements HDZClientCallbacksGet {
 
-    private static ActivityStaticItems _self;
+    private static ActivityDynamicItems _self;
 
     private String mySupplierId = "";
-    private String myCategoryId = "";
     private HDZApiResponseItem responseItem = new HDZApiResponseItem();
 
     // グローバル
@@ -25,7 +23,7 @@ public class ActivityStaticItems extends AppCompatActivity implements HDZClientC
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_static_items);
+        setContentView(R.layout.activity_dynamic_items);
 
         // getApplication()でアプリケーションクラスのインスタンスを拾う
         sGlobals = (AppGlobals) this.getApplication();
@@ -34,11 +32,10 @@ public class ActivityStaticItems extends AppCompatActivity implements HDZClientC
 
         Intent intent = getIntent();
         mySupplierId = intent.getStringExtra("supplier_id");
-        myCategoryId = intent.getStringExtra("category_id");
 
         // HTTP GET
         HDZApiRequestPackage.Item req = new HDZApiRequestPackage.Item();
-        req.begin( sGlobals.getUserId(), sGlobals.getUuid(), mySupplierId, this);
+        req.begin(sGlobals.getUserId(), sGlobals.getUuid(), mySupplierId, this);
     }
 
     /**
@@ -47,8 +44,8 @@ public class ActivityStaticItems extends AppCompatActivity implements HDZClientC
      */
     public void hdzClientCallbackGetComplete(String response,String apiname) {
         if (responseItem.parseJson(response)) {
-            if (responseItem.staticItemList != null && responseItem.staticItemList.size() > 0) {
-                String name = responseItem.staticItemList.get(0).name;
+            if (responseItem.dynamicItemList != null && responseItem.dynamicItemList.size() > 0) {
+                String name = responseItem.dynamicItemList.get(0).item_name;
                 Log.d("########", name);
             }
 
@@ -57,19 +54,16 @@ public class ActivityStaticItems extends AppCompatActivity implements HDZClientC
                 @Override
                 public void run() {
 
-                    ArrayList<HDZItemInfo.StaticItem> staticItems = new ArrayList<HDZItemInfo.StaticItem>();
-
-                    // 静的商品
-                    for (HDZItemInfo.StaticItem item : responseItem.staticItemList) {
-                        String cid =item.category.id;
-                        if ( cid.equals(myCategoryId) ) {
-                            staticItems.add(item);
-                        }
-                    }
+//                    ArrayList<HDZItemInfo.DynamicItem> dynamicItems = new ArrayList<HDZItemInfo.DynamicItem>();
+//
+//                    // 動的商品
+//                    for (HDZItemInfo.DynamicItem item : responseItem.dynamicItemList) {
+//
+//                    }
 
                     //リストビュー作成
-                    ArrayAdapterStaticItem aastaticitem = new ArrayAdapterStaticItem(_self, staticItems);
-                    ListView listView = (ListView) findViewById(R.id.listViewStaticItem);
+                    ArrayAdapterDynamicItem aadynamicitem = new ArrayAdapterDynamicItem(_self, responseItem.dynamicItemList);
+                    ListView listView = (ListView) findViewById(R.id.listViewDynamicItem);
                     listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
                         //行タッチイベント
@@ -95,7 +89,8 @@ public class ActivityStaticItems extends AppCompatActivity implements HDZClientC
 //                            }
                         }
                     });
-                    listView.setAdapter(aastaticitem);
+                    listView.setAdapter(aadynamicitem);
+
                 }
             });
         }
