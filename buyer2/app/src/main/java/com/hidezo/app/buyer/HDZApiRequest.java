@@ -20,7 +20,7 @@ public class HDZApiRequest {
         return mapParams;
     }
 
-    public void beginRequest(final String apiname, HDZClientCallbacksGet callbacks) {
+    public void beginRequest(final String apiname, HDZClient.HDZCallbacks callbacks) {
         if (mapParams.size() == 0) {
             return;
         }

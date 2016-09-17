@@ -20,16 +20,22 @@ import okhttp3.RequestBody;
  */
 public class HDZClient {
 
+    public interface HDZCallbacks {
+        void HDZClientComplete(String response,String apiname);
+        void HDZClientError(String message);
+    }
+
     public static final String _baseUrl = "https://dev-api.hidezo.co/"; // "https://api.hidezo.co/store/";
     public static final String _baseUrlRelease = "https://api.hidezo.co/";
 
-    private static HDZClientCallbacksGet _myCallbacks = null;
+//    private static HDZClientCallbacksGet _myCallbacksGet = null;
+    private static HDZCallbacks hdzCallbacks = null;
 
     public static class Get {
 
-        private void runAsync(final String url, HDZClientCallbacksGet callbacks, final String apiname) {
+        private void runAsync(final String url, HDZCallbacks callbacks, final String apiname) {
 
-            _myCallbacks = callbacks;
+            hdzCallbacks = callbacks;
             //リクエスト開始
             Request request = new Request.Builder()
                     .url(url)
@@ -38,7 +44,7 @@ public class HDZClient {
             client.newCall(request).enqueue(new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
-                    _myCallbacks.hdzClientCallbackGetError("Error:HDZClient.runAsync");
+                    hdzCallbacks.HDZClientError("Error:HDZClient.runAsync");
                 }
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
@@ -48,7 +54,7 @@ public class HDZClient {
                     for (int i = 0, size = responseHeaders.size(); i < size; i++) {
                         System.out.println(responseHeaders.name(i) + ": " + responseHeaders.value(i));
                     }
-                    _myCallbacks.hdzClientCallbackGetComplete(response.body().string(),apiname);
+                    hdzCallbacks.HDZClientComplete(response.body().string(),apiname);
                 }
             });
         }
@@ -59,7 +65,7 @@ public class HDZClient {
          * @param params : Request Parameter Map
          * @param callbacks : Result After
          */
-        public void runAsync(final String apiname, final HashMap<String,String> params, HDZClientCallbacksGet callbacks) {
+        public void runAsync(final String apiname, final HashMap<String,String> params, HDZCallbacks callbacks) {
 
             String requestUrl;
             if (BuildConfig.DEBUG) {
@@ -86,7 +92,31 @@ public class HDZClient {
 
         public static final MediaType MEDIA_TYPE_MARKDOWN = MediaType.parse("text/x-markdown; charset=utf-8");
 
-        public void run() throws Exception {
+//        public void run() throws Exception {
+//            String postBody = ""
+//                    + "Releases\n"
+//                    + "--------\n"
+//                    + "\n"
+//                    + " * _1.0_ May 6, 2013\n"
+//                    + " * _1.1_ June 15, 2013\n"
+//                    + " * _1.2_ August 11, 2013\n";
+//
+//            Request request = new Request.Builder()
+//                    .url("https://api.github.com/markdown/raw")
+//                    .post(RequestBody.create(MEDIA_TYPE_MARKDOWN, postBody))
+//                    .build();
+//
+//            OkHttpClient client = new OkHttpClient();
+//            Response response = client.newCall(request).execute();
+//            if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+//
+//            System.out.println(response.body().string());
+//        }
+
+        public void runAsync(final String url, HDZCallbacks callbacks, final String apiname) {
+
+            hdzCallbacks = callbacks;
+
             String postBody = ""
                     + "Releases\n"
                     + "--------\n"
@@ -94,17 +124,28 @@ public class HDZClient {
                     + " * _1.0_ May 6, 2013\n"
                     + " * _1.1_ June 15, 2013\n"
                     + " * _1.2_ August 11, 2013\n";
-
             Request request = new Request.Builder()
-                    .url("https://api.github.com/markdown/raw")
+                    .url(url)
                     .post(RequestBody.create(MEDIA_TYPE_MARKDOWN, postBody))
                     .build();
-
             OkHttpClient client = new OkHttpClient();
-            Response response = client.newCall(request).execute();
-            if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+            client.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    hdzCallbacks.HDZClientError("Error:HDZClient.runAsync");
+                }
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
 
-            System.out.println(response.body().string());
+                    Headers responseHeaders = response.headers();
+                    for (int i = 0, size = responseHeaders.size(); i < size; i++) {
+                        System.out.println(responseHeaders.name(i) + ": " + responseHeaders.value(i));
+                    }
+                    hdzCallbacks.HDZClientComplete(response.body().string(),apiname);
+                }
+            });
+
         }
     }
 }

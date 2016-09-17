@@ -11,7 +11,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class ActivityStaticItems extends AppCompatActivity implements HDZClientCallbacksGet {
+public class ActivityStaticItems extends AppCompatActivity implements HDZClient.HDZCallbacks {
 
     private static ActivityStaticItems _self;
 
@@ -45,7 +45,7 @@ public class ActivityStaticItems extends AppCompatActivity implements HDZClientC
      * HDZClientCallbacksGet
      * データ取得時
      */
-    public void hdzClientCallbackGetComplete(String response,String apiname) {
+    public void HDZClientComplete(String response,String apiname) {
         if (responseItem.parseJson(response)) {
             if (responseItem.staticItemList != null && responseItem.staticItemList.size() > 0) {
                 String name = responseItem.staticItemList.get(0).name;
@@ -100,7 +100,7 @@ public class ActivityStaticItems extends AppCompatActivity implements HDZClientC
             });
         }
     }
-    public void hdzClientCallbackGetError(String message) {
+    public void HDZClientError(String message) {
         Log.d("########",message);
     }
 }

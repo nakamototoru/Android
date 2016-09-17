@@ -10,7 +10,7 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-public class ActivityDynamicItems extends AppCompatActivity implements HDZClientCallbacksGet {
+public class ActivityDynamicItems extends AppCompatActivity implements HDZClient.HDZCallbacks {
 
     private static ActivityDynamicItems _self;
 
@@ -42,7 +42,7 @@ public class ActivityDynamicItems extends AppCompatActivity implements HDZClient
      * HDZClientCallbacksGet
      * データ取得時
      */
-    public void hdzClientCallbackGetComplete(String response,String apiname) {
+    public void HDZClientComplete(String response,String apiname) {
         if (responseItem.parseJson(response)) {
             if (responseItem.dynamicItemList != null && responseItem.dynamicItemList.size() > 0) {
                 String name = responseItem.dynamicItemList.get(0).item_name;
@@ -95,7 +95,7 @@ public class ActivityDynamicItems extends AppCompatActivity implements HDZClient
             });
         }
     }
-    public void hdzClientCallbackGetError(String message) {
+    public void HDZClientError(String message) {
         Log.d("########",message);
     }
 }

@@ -8,7 +8,7 @@ public class HDZApiRequestPackage {
 
     public static class LoginCheck {
 
-        public void begin(final String id,final String uuid, HDZClientCallbacksGet callbacks) {
+        public void begin(final String id,final String uuid, HDZClient.HDZCallbacks callbacks) {
 
             HDZApiRequest request = new HDZApiRequest();
             request.putKeyAndValue("id", id);
@@ -20,19 +20,19 @@ public class HDZApiRequestPackage {
 
     public static class Login {
 
-        public void begin(final String id,final String uuid,final String password, HDZClientCallbacksGet callbacks) {
+        public void begin(final String id,final String uuid,final String password, HDZClient.HDZCallbacks callbacks) {
             HDZApiRequest request = new HDZApiRequest();
             request.putKeyAndValue("id", id);
             request.putKeyAndValue("uuid", uuid);
             request.putKeyAndValue("password", password);
 
-            request.beginRequest("store/item",callbacks);
+            request.beginRequest("login/store",callbacks);
         }
     }
 
     public static class Friend {
 
-        public void begin(final String id,final String uuid, HDZClientCallbacksGet callbacks) {
+        public void begin(final String id,final String uuid, HDZClient.HDZCallbacks callbacks) {
 
             HDZApiRequest request = new HDZApiRequest();
             request.putKeyAndValue("id", id);
@@ -44,7 +44,7 @@ public class HDZApiRequestPackage {
 
     public static class Item {
 
-        public void begin(final String id,final String uuid,final String supplier_id, HDZClientCallbacksGet callbacks) {
+        public void begin(final String id,final String uuid,final String supplier_id, HDZClient.HDZCallbacks callbacks) {
 
             HDZApiRequest request = new HDZApiRequest();
             request.putKeyAndValue("id", id);

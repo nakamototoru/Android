@@ -23,34 +23,15 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="@dimen/abc_action_bar_default_height_material"
-        android:gravity="center_vertical|center_horizontal"
-        android:layout_alignParentBottom="true">
+        android:gravity="center_vertical|right"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="8dp">
 
-        <RadioGroup
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/radioGroupSuppliersTabbar"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/SupplierList"
-                android:id="@+id/radioButtonSupplier"
-                android:layout_weight="1"
-                android:button="@mipmap/profile_white"
-                android:textColor="@android:color/white" />
-
-            <RadioButton
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/OrderHistory"
-                android:id="@+id/radioButtonOrder"
-                android:layout_weight="1"
-                android:button="@mipmap/order_white"
-                android:textColor="@android:color/white" />
-
-        </RadioGroup>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageViewGoHistory"
+            android:src="@mipmap/order_white" />
     </LinearLayout>
 
     <ListView
@@ -63,3 +44,30 @@
         android:layout_above="@+id/tool_bar" />
 
 </RelativeLayout>
+
+<!--
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="false"
+    tools:context="com.hidezo.app.buyer.MainActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
+
+
+</android.support.design.widget.CoordinatorLayout>
+-->

@@ -10,7 +10,7 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 
-public class ActivitySupplierDetail extends AppCompatActivity implements HDZClientCallbacksGet {
+public class ActivitySupplierDetail extends AppCompatActivity implements HDZClient.HDZCallbacks {
 
     private static ActivitySupplierDetail _self;
     private HDZApiResponseFriend responseFriend = new HDZApiResponseFriend();
@@ -42,7 +42,7 @@ public class ActivitySupplierDetail extends AppCompatActivity implements HDZClie
      * HDZClientCallbacksGet
      * データ取得時
      */
-    public void hdzClientCallbackGetComplete(String response, String apiname) {
+    public void HDZClientComplete(String response, String apiname) {
         if (responseFriend.parseJson(response)) {
             if (responseFriend.friendInfoList.size() == 0) {
                 return;
@@ -51,7 +51,7 @@ public class ActivitySupplierDetail extends AppCompatActivity implements HDZClie
             for (HDZFriendInfo object : responseFriend.friendInfoList) {
                 if (object.id.equals(mySupplierId)) {
 
-                    Log.d("########",object.name);
+//                    Log.d("########",object.name);
 
                     final ArrayList<HDZProfile> profileList = new ArrayList<HDZProfile>();
                     HDZProfile pName = new HDZProfile("店舗名",object.name);
@@ -74,30 +74,6 @@ public class ActivitySupplierDetail extends AppCompatActivity implements HDZClie
                             //リストビュー作成
                             ArrayAdapterSupplierDetail aasupplier = new ArrayAdapterSupplierDetail(_self, profileList);
                             ListView listView = (ListView) findViewById(R.id.listViewSupplierDetail);
-//                            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//                                //行タッチイベント
-//                                @Override
-//                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//
-//                                    ListView listView = (ListView)parent;
-//                                    HDZFriendInfo friend = (HDZFriendInfo)listView.getItemAtPosition(position);
-//                                    String supplier_id = friend.id;
-//
-//                                    // 画面遷移
-//                                    if (id == 0) {
-//                                        // カテゴリ一覧
-//                                        Intent intent = new Intent( _self.getApplication(), ActivityCategorys.class);
-//                                        intent.putExtra("supplier_id", supplier_id);
-//                                        _self.startActivity(intent);
-//                                    }
-//                                    else {
-//                                        // 取引先詳細
-//                                        Intent intent = new Intent( _self.getApplication(), ActivitySupplierDetail.class);
-//                                        intent.putExtra("supplier_id", supplier_id);
-//                                        _self.startActivity(intent);
-//                                    }
-//                                }
-//                            });
                             listView.setAdapter(aasupplier);
                         }
                     });
@@ -107,7 +83,7 @@ public class ActivitySupplierDetail extends AppCompatActivity implements HDZClie
             }
         }
     }
-    public void hdzClientCallbackGetError(String message) {
+    public void HDZClientError(String message) {
         Log.d("########",message);
     }
 

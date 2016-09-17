@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.StringTokenizer;
 
-public class ActivityCategorys extends AppCompatActivity implements HDZClientCallbacksGet {
+public class ActivityCategorys extends AppCompatActivity implements HDZClient.HDZCallbacks {
 
     private static ActivityCategorys _self;
 
@@ -45,7 +45,7 @@ public class ActivityCategorys extends AppCompatActivity implements HDZClientCal
      * HDZClientCallbacksGet
      * データ取得時
      */
-    public void hdzClientCallbackGetComplete(String response,String apiname) {
+    public void HDZClientComplete(String response,String apiname) {
         if (responseItem.parseJson(response)) {
 //            if (responseItem.supplierInfo != null) {
 //                String name = responseItem.supplierInfo.supplier_name;
@@ -113,7 +113,7 @@ public class ActivityCategorys extends AppCompatActivity implements HDZClientCal
             });
         }
     }
-    public void hdzClientCallbackGetError(String message) {
+    public void HDZClientError(String message) {
         Log.d("########",message);
     }
 

@@ -2,6 +2,7 @@ package com.hidezo.app.buyer;
 
 import android.app.Application;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
@@ -13,7 +14,7 @@ import java.util.UUID;
  * Created by dezami on 2016/09/14.
  *
  */
-public class AppGlobals extends Application {
+public class AppGlobals extends Application implements HDZClient.HDZCallbacks {
 
     /**
      * UUID
@@ -81,6 +82,59 @@ public class AppGlobals extends Application {
     }
 
 
+    /**
+     * ログインチェック
+     */
+    private static CheckLoginCallbacks sCheckLoginCallbacks;
+    public interface CheckLoginCallbacks {
+        void responseLoginState(boolean isLogin);
+    }
+    public void checkLogin(CheckLoginCallbacks callbacks) {
+        sCheckLoginCallbacks = callbacks;
+
+        HDZApiRequestPackage.LoginCheck req = new HDZApiRequestPackage.LoginCheck();
+        req.begin( getUserId(), getUuid(), this);
+    }
+    /**
+     * HDZClientCallbacksGet
+     * データ取得時
+     */
+    public void HDZClientComplete(String response,String apiname) {
+        if (apiname.equals("login_check/store")) {
+
+            HDZApiResponse responseLoginCheck = new HDZApiResponse();
+
+            if (responseLoginCheck.parseJson(response)) {
+                if (responseLoginCheck.result) {
+
+                    //ログインしている
+                    sCheckLoginCallbacks.responseLoginState(true);
+                }
+                else {
+                    //ログインしていない
+                    sCheckLoginCallbacks.responseLoginState(false);
+                }
+            }
+        }
+//        else if (apiname.equals("login/store")) {
+//            if (responseLogin.parseJson(response)) {
+//                if (responseLogin.result) {
+//
+//                    //ログイン状態に
+//                    // 画面遷移
+//                    Intent intent = new Intent(getApplication(), ActivitySuppliers.class);
+//                    startActivity(intent);
+//                }
+//                else {
+//                    //ログイン失敗
+//                    sGlobals.openWarning("login/store","ログイン失敗",this);
+//                }
+//            }
+//        }
+
+    }
+    public void HDZClientError(String error) {
+    }
 
     /**
      * ALERT DIALOG

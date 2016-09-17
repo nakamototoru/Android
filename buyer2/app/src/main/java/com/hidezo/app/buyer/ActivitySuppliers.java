@@ -3,7 +3,10 @@ package com.hidezo.app.buyer;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -15,7 +18,7 @@ import android.widget.RadioGroup;
  * Created by dezami on 2016/09/13.
  * 取引先一覧リストビュー
  */
-public class ActivitySuppliers extends AppCompatActivity implements HDZClientCallbacksGet {
+public class ActivitySuppliers extends AppCompatActivity implements HDZClient.HDZCallbacks,AppGlobals.CheckLoginCallbacks {
 
     private static ActivitySuppliers _self;
     private HDZApiResponseFriend responseFriend = new HDZApiResponseFriend();
@@ -27,10 +30,19 @@ public class ActivitySuppliers extends AppCompatActivity implements HDZClientCal
     // グローバル
     AppGlobals sGlobals;
 
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.menu_main, menu);
+//        return super.onCreateOptionsMenu(menu);
+//    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_suppliers);
+
+//        setActionBar( (android.widget.Toolbar) findViewById(R.id.toolbar_suppliers) );
 
         // getApplication()でアプリケーションクラスのインスタンスを拾う
         sGlobals = (AppGlobals) this.getApplication();
@@ -41,15 +53,12 @@ public class ActivitySuppliers extends AppCompatActivity implements HDZClientCal
         HDZApiRequestPackage.Friend req = new HDZApiRequestPackage.Friend();
         req.begin( sGlobals.getUserId(), sGlobals.getUuid(), this);
 
-
+/*
         //radioGroupとリソースのradioGroupを結び付ける
         mRadioGroup = (RadioGroup)findViewById(R.id.radioGroupSuppliersTabbar);
-
         //radioButtonとチェックされているボタンを結び付ける
         mRadioButton = (RadioButton) findViewById(mRadioGroup.getCheckedRadioButtonId());
-
         mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
 
@@ -64,9 +73,9 @@ public class ActivitySuppliers extends AppCompatActivity implements HDZClientCal
 
                     sGlobals.openWarning("ラジオボタンのテキストを取得", text, _self);
                 }
-
             }
         });
+        */
 
    }
 
@@ -74,7 +83,7 @@ public class ActivitySuppliers extends AppCompatActivity implements HDZClientCal
      * HDZClientCallbacksGet
      * データ取得時
      */
-    public void hdzClientCallbackGetComplete(String response,String apiname) {
+    public void HDZClientComplete(String response,String apiname) {
         if ( responseFriend.parseJson(response) ) {
             if (responseFriend.friendInfoList.size() == 0) {
                 return;
@@ -117,8 +126,17 @@ public class ActivitySuppliers extends AppCompatActivity implements HDZClientCal
 
         }
     }
-    public void hdzClientCallbackGetError(String message) {
+    public void HDZClientError(String message) {
         Log.d("########",message);
     }
 
+    /**
+     * ログインチェック結果
+     */
+    public void responseLoginState(boolean isLogin) {
+
+        if (!isLogin) {
+            sGlobals.openWarning("別デバイスでログインされた","ログアウトしてください",this);
+        }
+    }
 }
