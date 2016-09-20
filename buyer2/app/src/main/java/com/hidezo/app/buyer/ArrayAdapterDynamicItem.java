@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 /**
@@ -36,6 +38,15 @@ public class ArrayAdapterDynamicItem extends ArrayAdapter<HDZItemInfo.DynamicIte
         // Lookup view for data population
         TextView tvName = (TextView) convertView.findViewById(R.id.textViewName);
         tvName.setText(dynamicItem.item_name);
+
+        TextView tvNumScale = (TextView) convertView.findViewById(R.id.textViewNumScale);
+        tvNumScale.setText( String.valueOf(dynamicItem.num_scale.size()) );
+
+        TextView tvPrice = (TextView) convertView.findViewById(R.id.textViewPrice);
+        tvPrice.setText(dynamicItem.price);
+
+        TextView tvRow = (TextView) convertView.findViewById(R.id.textViewRow);
+        tvRow.setText( String.valueOf(position+1) );
 
         // Return the completed view to render on screen
         return convertView;

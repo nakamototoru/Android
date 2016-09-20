@@ -25,4 +25,19 @@
         >
     </android.support.v7.widget.Toolbar>
 
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/abc_action_bar_default_height_material"
+        android:layout_alignParentBottom="true"
+        android:gravity="center_vertical|center_horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/OrderCheck"
+            android:id="@+id/textView7" />
+    </LinearLayout>
+
 </RelativeLayout>

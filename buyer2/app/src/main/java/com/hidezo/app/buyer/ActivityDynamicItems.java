@@ -62,13 +62,6 @@ public class ActivityDynamicItems extends AppCompatActivity implements HDZClient
                 @Override
                 public void run() {
 
-//                    ArrayList<HDZItemInfo.DynamicItem> dynamicItems = new ArrayList<HDZItemInfo.DynamicItem>();
-//
-//                    // 動的商品
-//                    for (HDZItemInfo.DynamicItem item : responseItem.dynamicItemList) {
-//
-//                    }
-
                     //リストビュー作成
                     ArrayAdapterDynamicItem aadynamicitem = new ArrayAdapterDynamicItem(_self, responseItem.dynamicItemList);
                     ListView listView = (ListView) findViewById(R.id.listViewDynamicItem);
