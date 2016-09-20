@@ -70,20 +70,6 @@ public class ArrayAdapterSupplier extends ArrayAdapter<HDZFriendInfo> {
             }
         });
 
-        /*
-        // クリックイベントを取得したいボタン
-        Button button = (Button)convertView.findViewById(R.id.buttonItemList);
-        // ボタンに OnClickListener インターフェースを実装する
-        button.setOnClickListener(new View.OnClickListener() {
-
-            // クリック時に呼ばれるメソッド
-            @Override
-            public void onClick(View view) {
-                Log.d("########","R.id.buttonItemList");
-            }
-        });
-        */
-
         // Return the completed view to render on screen
         return convertView;
     }

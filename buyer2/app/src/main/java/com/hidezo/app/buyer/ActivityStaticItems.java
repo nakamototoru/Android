@@ -22,6 +22,8 @@ public class ActivityStaticItems extends AppCompatActivity implements HDZClient.
     private String myCategoryId = "";
     private HDZApiResponseItem responseItem = new HDZApiResponseItem();
 
+//    private Toolbar myToolbar;
+
     // グローバル
     AppGlobals sGlobals;
 
@@ -29,11 +31,6 @@ public class ActivityStaticItems extends AppCompatActivity implements HDZClient.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_static_items);
-
-        // ツールバー初期化
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
 
         // getApplication()でアプリケーションクラスのインスタンスを拾う
         sGlobals = (AppGlobals) this.getApplication();
@@ -47,6 +44,13 @@ public class ActivityStaticItems extends AppCompatActivity implements HDZClient.
         // HTTP GET
         HDZApiRequestPackage.Item req = new HDZApiRequestPackage.Item();
         req.begin( sGlobals.getUserId(), sGlobals.getUuid(), mySupplierId, this);
+
+        // ツールバー初期化
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        String title = intent.getStringExtra("category_name");
+        toolbar.setTitle(title);
+        setSupportActionBar(toolbar);
+
     }
 
     /**
@@ -55,10 +59,10 @@ public class ActivityStaticItems extends AppCompatActivity implements HDZClient.
      */
     public void HDZClientComplete(String response,String apiname) {
         if (responseItem.parseJson(response)) {
-            if (responseItem.staticItemList != null && responseItem.staticItemList.size() > 0) {
-                String name = responseItem.staticItemList.get(0).name;
-                Log.d("########", name);
-            }
+//            if (responseItem.staticItemList != null && responseItem.staticItemList.size() > 0) {
+//                String name = responseItem.staticItemList.get(0).name;
+//                Log.d("########", name);
+//            }
 
             //UIスレッド上で呼び出してもらう
             this.runOnUiThread(new Runnable() {
@@ -84,23 +88,14 @@ public class ActivityStaticItems extends AppCompatActivity implements HDZClient.
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-//                            ListView listView = (ListView) parent;
-//                            HDZItemInfo.Category category = (HDZItemInfo.Category)listView.getItemAtPosition(position);
-//
-//                            if (!category.isStatic) {
-//                                // 動的商品
-//                            }
-//                            else if (position < listView.getCount() ) {
-//                                // 静的商品リストビュー
-//                                Intent intent = new Intent( _self.getApplication(), ActivityStaticItems.class);
-//
-//                                String supplier_id = _self.mySupplierId;
-//                                String category_id = category.id;
-//
-//                                intent.putExtra("supplier_id", supplier_id);
-//                                intent.putExtra("category_id", category_id);
-//                                _self.startActivity(intent);
-//                            }
+                            ListView listView = (ListView) parent;
+                            try {
+                                View targetView = listView.getChildAt(position);
+                                listView.getAdapter().getView(position,targetView,parent);
+                            } catch (Exception e) {
+                                Log.d("########","Failed : ListView reflesh");
+                            }
+
                         }
                     });
                     listView.setAdapter(aastaticitem);
@@ -131,7 +126,7 @@ public class ActivityStaticItems extends AppCompatActivity implements HDZClient.
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_logout) {
             return true;
         }
 

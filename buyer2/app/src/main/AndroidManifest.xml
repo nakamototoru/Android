@@ -24,7 +24,8 @@
         <activity android:name=".ActivityCategorys" />
         <activity android:name=".ActivityStaticItems" />
         <activity android:name=".ActivityDynamicItems" />
-        <activity android:name=".ActivitySupplierDetail"></activity>
+        <activity android:name=".ActivitySupplierDetail" />
+        <activity android:name=".ActivityUserOrders"></activity>
     </application>
 
 </manifest>

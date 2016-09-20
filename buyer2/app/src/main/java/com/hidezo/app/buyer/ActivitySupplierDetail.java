@@ -28,10 +28,6 @@ public class ActivitySupplierDetail extends AppCompatActivity implements HDZClie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_supplier_detail);
 
-        // ツールバー初期化
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
 
         // getApplication()でアプリケーションクラスのインスタンスを拾う
         sGlobals = (AppGlobals) this.getApplication();
@@ -44,6 +40,13 @@ public class ActivitySupplierDetail extends AppCompatActivity implements HDZClie
         // HTTP GET
         HDZApiRequestPackage.Friend req = new HDZApiRequestPackage.Friend();
         req.begin( sGlobals.getUserId(), sGlobals.getUuid(), this);
+
+        // ツールバー初期化
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        String supplier_name = intent.getStringExtra("supplier_name");
+        toolbar.setTitle(supplier_name);
+        setSupportActionBar(toolbar);
+
     }
 
     /**
@@ -114,7 +117,7 @@ public class ActivitySupplierDetail extends AppCompatActivity implements HDZClie
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_logout) {
             return true;
         }
 

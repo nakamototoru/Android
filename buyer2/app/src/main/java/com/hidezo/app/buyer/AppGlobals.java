@@ -8,6 +8,7 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 /**
@@ -80,7 +81,6 @@ public class AppGlobals extends Application implements HDZClient.HDZCallbacks {
         // データを取得する(第2引数はデフォルト値)
         return sp.getString("user_id", "6146740737615597570");
     }
-
 
     /**
      * ログインチェック
@@ -161,4 +161,12 @@ public class AppGlobals extends Application implements HDZClient.HDZCallbacks {
             }
         });
     }
+
+    /**
+     *
+     */
+    public static class CartCount {
+        int count = 0;
+    }
+
 }

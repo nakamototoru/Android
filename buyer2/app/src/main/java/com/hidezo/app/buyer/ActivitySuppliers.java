@@ -19,14 +19,11 @@ import android.widget.ListView;
  * Created by dezami on 2016/09/13.
  * 取引先一覧リストビュー
  */
-public class ActivitySuppliers extends AppCompatActivity implements HDZClient.HDZCallbacks,AppGlobals.CheckLoginCallbacks {
+public class ActivitySuppliers extends CustomAppCompatActivity implements HDZClient.HDZCallbacks {
+    // ,AppGlobals.CheckLoginCallbacks
 
     private static ActivitySuppliers _self;
     private HDZApiResponseFriend responseFriend = new HDZApiResponseFriend();
-
-    //メンバー変数
-//    private RadioGroup mRadioGroup;
-//    private RadioButton mRadioButton;
 
     // グローバル
     AppGlobals sGlobals;
@@ -37,19 +34,28 @@ public class ActivitySuppliers extends AppCompatActivity implements HDZClient.HD
         setContentView(R.layout.activity_suppliers);
 
         // ツールバー初期化
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        toolbar.setTitle("取引先一覧");
+//        setSupportActionBar(toolbar);
 
         // getApplication()でアプリケーションクラスのインスタンスを拾う
         sGlobals = (AppGlobals) this.getApplication();
 
         _self = this;
 
-        // HTTP GET
-        HDZApiRequestPackage.Friend req = new HDZApiRequestPackage.Friend();
-        req.begin( sGlobals.getUserId(), sGlobals.getUuid(), this);
+        setNavigationBar("取引先一覧");
 
+        // ログインチェック
+        sGlobals.checkLogin(this);
    }
+
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//
+//        // ログインチェック
+//        sGlobals.checkLogin(this);
+//    }
 
     /**
      * HDZClientCallbacksGet
@@ -88,6 +94,7 @@ public class ActivitySuppliers extends AppCompatActivity implements HDZClient.HD
                                 // 取引先詳細
                                 Intent intent = new Intent( _self.getApplication(), ActivitySupplierDetail.class);
                                 intent.putExtra("supplier_id", supplier_id);
+                                intent.putExtra("supplier_name", friend.name);
                                 _self.startActivity(intent);
                             }
                         }
@@ -107,7 +114,12 @@ public class ActivitySuppliers extends AppCompatActivity implements HDZClient.HD
      */
     public void responseLoginState(boolean isLogin) {
 
-        if (!isLogin) {
+        if (isLogin) {
+            // HTTP GET
+            HDZApiRequestPackage.Friend req = new HDZApiRequestPackage.Friend();
+            req.begin( sGlobals.getUserId(), sGlobals.getUuid(), this);
+        }
+        else {
             sGlobals.openWarning("別デバイスでログインされた","TODO:ログアウト処理",this);
         }
     }
@@ -131,7 +143,12 @@ public class ActivitySuppliers extends AppCompatActivity implements HDZClient.HD
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_logout) {
+
+            // ログインフォーム画面遷移
+            Intent intent = new Intent(getApplication(), MainActivity.class);
+            startActivity(intent);
+
             return true;
         }
 

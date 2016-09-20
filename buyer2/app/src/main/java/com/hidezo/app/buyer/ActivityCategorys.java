@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,6 +33,7 @@ public class ActivityCategorys extends AppCompatActivity implements HDZClient.HD
 
         // ツールバー初期化
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("カテゴリ一覧");
         setSupportActionBar(toolbar);
 
 
@@ -47,6 +49,17 @@ public class ActivityCategorys extends AppCompatActivity implements HDZClient.HD
         HDZApiRequestPackage.Item req = new HDZApiRequestPackage.Item();
         req.begin(sGlobals.getUserId(), sGlobals.getUuid(), mySupplierId, this);
 
+        // TouchEvent
+        TextView tvOrderCheck = (TextView)findViewById(R.id.textViewButtonOrderCheck);
+        tvOrderCheck.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("########","R.id.textViewButtonOrderCheck");
+
+                Intent intent = new Intent( _self.getApplication(), ActivityUserOrders.class);
+                startActivity(intent);
+            }
+        });
     }
 
     /**
@@ -112,6 +125,7 @@ public class ActivityCategorys extends AppCompatActivity implements HDZClient.HD
                                 Intent intent = new Intent( _self.getApplication(), ActivityStaticItems.class);
                                 intent.putExtra("supplier_id", _self.mySupplierId);
                                 intent.putExtra("category_id", category.id);
+                                intent.putExtra("category_name", category.name);
                                 _self.startActivity(intent);
                             }
                         }
@@ -144,7 +158,7 @@ public class ActivityCategorys extends AppCompatActivity implements HDZClient.HD
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_logout) {
             return true;
         }
 

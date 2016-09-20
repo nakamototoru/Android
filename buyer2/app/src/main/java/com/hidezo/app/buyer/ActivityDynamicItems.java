@@ -30,6 +30,7 @@ public class ActivityDynamicItems extends AppCompatActivity implements HDZClient
 
         // ツールバー初期化
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle("新着");
         setSupportActionBar(toolbar);
 
 
@@ -71,23 +72,14 @@ public class ActivityDynamicItems extends AppCompatActivity implements HDZClient
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-//                            ListView listView = (ListView) parent;
-//                            HDZItemInfo.Category category = (HDZItemInfo.Category)listView.getItemAtPosition(position);
-//
-//                            if (!category.isStatic) {
-//                                // 動的商品
-//                            }
-//                            else if (position < listView.getCount() ) {
-//                                // 静的商品リストビュー
-//                                Intent intent = new Intent( _self.getApplication(), ActivityStaticItems.class);
-//
-//                                String supplier_id = _self.mySupplierId;
-//                                String category_id = category.id;
-//
-//                                intent.putExtra("supplier_id", supplier_id);
-//                                intent.putExtra("category_id", category_id);
-//                                _self.startActivity(intent);
-//                            }
+//                            Log.d("########","ActivityDynamicItems : onItemClick");
+                            ListView listView = (ListView) parent;
+                            try {
+                                View targetView = listView.getChildAt(position);
+                                listView.getAdapter().getView(position,targetView,parent);
+                            } catch (Exception e) {
+                                Log.d("########","Failed : ListView reflesh");
+                            }
                         }
                     });
                     listView.setAdapter(aadynamicitem);
@@ -99,6 +91,14 @@ public class ActivityDynamicItems extends AppCompatActivity implements HDZClient
     public void HDZClientError(String message) {
         Log.d("########",message);
     }
+
+    /**
+     * ListView更新
+     */
+//    public void reflesh() {
+//        ArrayAdapterDynamicItem adapter = (ArrayAdapterDynamicItem)myListView.getAdapter();
+//        adapter.getFilter().filter(s);
+//    }
 
     /**
      * ツールバー
@@ -119,7 +119,7 @@ public class ActivityDynamicItems extends AppCompatActivity implements HDZClient
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_logout) {
             return true;
         }
 
