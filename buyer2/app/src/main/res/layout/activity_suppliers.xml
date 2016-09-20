@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,50 +10,16 @@
     android:paddingTop="0dp"
     tools:context="com.hidezo.app.buyer.ActivitySuppliers">
 
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/tool_bar"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:minHeight="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        android:layout_alignParentBottom="true"
-        >
-    </android.support.v7.widget.Toolbar>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/abc_action_bar_default_height_material"
-        android:gravity="center_vertical|right"
-        android:layout_alignParentBottom="true"
-        android:layout_marginRight="8dp">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/imageViewGoHistory"
-            android:src="@mipmap/order_white" />
-    </LinearLayout>
-
-    <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/listViewSupplier"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_above="@+id/tool_bar" />
-
 </RelativeLayout>
+-->
 
-<!--
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="false"
-    tools:context="com.hidezo.app.buyer.MainActivity">
+    android:fitsSystemWindows="true"
+    tools:context="com.hidezo.app.buyer.ActivitySuppliers">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -68,6 +35,6 @@
 
     </android.support.design.widget.AppBarLayout>
 
+    <include layout="@layout/content_suppliers" />
 
 </android.support.design.widget.CoordinatorLayout>
--->

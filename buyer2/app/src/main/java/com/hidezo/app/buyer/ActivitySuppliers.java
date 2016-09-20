@@ -6,12 +6,13 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuInflater;
+//import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
+//import android.widget.RadioButton;
+//import android.widget.RadioGroup;
 
 
 /**
@@ -24,25 +25,20 @@ public class ActivitySuppliers extends AppCompatActivity implements HDZClient.HD
     private HDZApiResponseFriend responseFriend = new HDZApiResponseFriend();
 
     //メンバー変数
-    private RadioGroup mRadioGroup;
-    private RadioButton mRadioButton;
+//    private RadioGroup mRadioGroup;
+//    private RadioButton mRadioButton;
 
     // グローバル
     AppGlobals sGlobals;
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.menu.menu_main, menu);
-//        return super.onCreateOptionsMenu(menu);
-//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_suppliers);
 
-//        setActionBar( (android.widget.Toolbar) findViewById(R.id.toolbar_suppliers) );
+        // ツールバー初期化
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         // getApplication()でアプリケーションクラスのインスタンスを拾う
         sGlobals = (AppGlobals) this.getApplication();
@@ -52,30 +48,6 @@ public class ActivitySuppliers extends AppCompatActivity implements HDZClient.HD
         // HTTP GET
         HDZApiRequestPackage.Friend req = new HDZApiRequestPackage.Friend();
         req.begin( sGlobals.getUserId(), sGlobals.getUuid(), this);
-
-/*
-        //radioGroupとリソースのradioGroupを結び付ける
-        mRadioGroup = (RadioGroup)findViewById(R.id.radioGroupSuppliersTabbar);
-        //radioButtonとチェックされているボタンを結び付ける
-        mRadioButton = (RadioButton) findViewById(mRadioGroup.getCheckedRadioButtonId());
-        mRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-
-                if (checkedId != -1) {
-                    // 選択されているラジオボタンの取得
-                    RadioButton radioButton = (RadioButton) findViewById(checkedId);
-
-                    // ラジオボタンのテキストを取得
-                    String text = radioButton.getText().toString();
-
-//                    Log.d("########", text);
-
-                    sGlobals.openWarning("ラジオボタンのテキストを取得", text, _self);
-                }
-            }
-        });
-        */
 
    }
 
@@ -136,7 +108,33 @@ public class ActivitySuppliers extends AppCompatActivity implements HDZClient.HD
     public void responseLoginState(boolean isLogin) {
 
         if (!isLogin) {
-            sGlobals.openWarning("別デバイスでログインされた","ログアウトしてください",this);
+            sGlobals.openWarning("別デバイスでログインされた","TODO:ログアウト処理",this);
         }
+    }
+
+    /**
+     * ツールバー
+     * @param menu menu
+     * @return result
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

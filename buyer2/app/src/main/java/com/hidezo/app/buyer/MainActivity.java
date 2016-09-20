@@ -15,7 +15,7 @@ import android.support.v4.app.FragmentTabHost;
 import android.widget.TextView;
 
 // FragmentActivity implements FragmentTabHost.OnTabChangeListener
-public class MainActivity extends AppCompatActivity implements HDZClient.HDZCallbacks {
+public class MainActivity extends AppCompatActivity implements HDZClient.HDZCallbacks,AppGlobals.CheckLoginCallbacks {
 
     private static MainActivity _self;
     private static boolean isStarted = false;
@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements HDZClient.HDZCall
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // ツールバー初期化
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -43,30 +44,28 @@ public class MainActivity extends AppCompatActivity implements HDZClient.HDZCall
         TextView tvEditId = (TextView) findViewById(R.id.editTextUserId);
         tvEditId.setText(sGlobals.getUserId());
         TextView tvEditPass = (TextView) findViewById(R.id.editTextPassword);
-        tvEditPass.setText("");
+        tvEditPass.setText("test");
 
-        // クリックイベントを取得したいボタン
-        Button button = (Button) findViewById(R.id.buttonLogin);
-        // ボタンに OnClickListener インターフェースを実装する
-        button.setOnClickListener(new View.OnClickListener() {
-
-            // クリック時に呼ばれるメソッド
-            @Override
-            public void onClick(View view) {
-
-                // HTTP GET
+//        // クリックイベントを取得したいボタン
+//        Button button = (Button) findViewById(R.id.buttonLogin);
+//        // ボタンに OnClickListener インターフェースを実装する
+//        button.setOnClickListener(new View.OnClickListener() {
+//
+//            // クリック時に呼ばれるメソッド
+//            @Override
+//            public void onClick(View view) {
+//
+//                TextView tvPass = (TextView) findViewById(R.id.editTextPassword);
+//                String password = tvPass.getText().toString();
+//
+//                // HTTP POST
 //                HDZApiRequestPackage.Login req = new HDZApiRequestPackage.Login();
-//                req.begin( sGlobals.getUserId(), sGlobals.getUuid(), "test", _self);
+//                req.begin( sGlobals.getUserId(), sGlobals.getUuid(), password, _self);
+//            }
+//        });
 
-                Intent intent = new Intent(getApplication(), ActivitySuppliers.class);
-                startActivity(intent);
-
-            }
-        });
-
-        // HTTP GET
-//        HDZApiRequestPackage.LoginCheck req = new HDZApiRequestPackage.LoginCheck();
-//        req.begin( sGlobals.getUserId(), sGlobals.getUuid(), this);
+        // ログインチェック
+        sGlobals.checkLogin(this);
 
 //        initTabs();
     }
@@ -76,23 +75,24 @@ public class MainActivity extends AppCompatActivity implements HDZClient.HDZCall
      * データ取得時
      */
     public void HDZClientComplete(String response,String apiname) {
-        if (apiname.equals("login_check/store")) {
-            if (responseLoginCheck.parseJson(response)) {
-                if (responseLoginCheck.result) {
+//        if (apiname.equals("login_check/store")) {
+//            if (responseLoginCheck.parseJson(response)) {
+//                if (responseLoginCheck.result) {
+//
+//                    //ログインしている
+//                    // 画面遷移
+////                    Intent intent = new Intent(getApplication(), ActivitySuppliers.class);
+////                    startActivity(intent);
+//                }
+//                else {
+//
+//                    //ログインを促す
+//                    sGlobals.openWarning("login_check/store","ログインを促す",this);
+//                }
+//            }
+//        }
 
-                    //ログインしている
-                    // 画面遷移
-//                    Intent intent = new Intent(getApplication(), ActivitySuppliers.class);
-//                    startActivity(intent);
-                }
-                else {
-
-                    //ログインを促す
-                    sGlobals.openWarning("login_check/store","ログインを促す",this);
-                }
-            }
-        }
-        else if (apiname.equals("login/store")) {
+//        if (apiname.equals("login/store")) {
             if (responseLogin.parseJson(response)) {
                 if (responseLogin.result) {
 
@@ -105,10 +105,41 @@ public class MainActivity extends AppCompatActivity implements HDZClient.HDZCall
                     //ログイン失敗
                     sGlobals.openWarning("login/store","ログイン失敗",this);
                 }
-            }
+//            }
         }
     }
     public void HDZClientError(String error) {
+    }
+
+    /**
+     * ログインチェック結果
+     */
+    public void responseLoginState(boolean isLogin) {
+
+        if (isLogin) {
+            // 画面遷移
+            Intent intent = new Intent(getApplication(), ActivitySuppliers.class);
+            startActivity(intent);
+        }
+        else {
+            // クリックイベントを取得したいボタン
+            Button button = (Button) findViewById(R.id.buttonLogin);
+            // ボタンに OnClickListener インターフェースを実装する
+            button.setOnClickListener(new View.OnClickListener() {
+
+                // クリック時に呼ばれるメソッド
+                @Override
+                public void onClick(View view) {
+
+                    TextView tvPass = (TextView) findViewById(R.id.editTextPassword);
+                    String password = tvPass.getText().toString();
+
+                    // HTTP POST
+                    HDZApiRequestPackage.Login req = new HDZApiRequestPackage.Login();
+                    req.begin( sGlobals.getUserId(), sGlobals.getUuid(), password, _self);
+                }
+            });
+        }
     }
 
     /**
@@ -119,7 +150,7 @@ public class MainActivity extends AppCompatActivity implements HDZClient.HDZCall
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+//        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
     @Override

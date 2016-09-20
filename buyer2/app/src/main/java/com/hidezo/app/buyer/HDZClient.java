@@ -7,6 +7,7 @@ import java.util.HashMap;
 
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.FormBody;
 import okhttp3.Headers;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -113,22 +114,32 @@ public class HDZClient {
 //            System.out.println(response.body().string());
 //        }
 
-        public void runAsync(final String url, HDZCallbacks callbacks, final String apiname) {
+        public void runAsync(final String apiname, final HashMap<String ,String> paramMap, HDZCallbacks callbacks) {
 
             hdzCallbacks = callbacks;
 
-            String postBody = ""
-                    + "Releases\n"
-                    + "--------\n"
-                    + "\n"
-                    + " * _1.0_ May 6, 2013\n"
-                    + " * _1.1_ June 15, 2013\n"
-                    + " * _1.2_ August 11, 2013\n";
-            Request request = new Request.Builder()
-                    .url(url)
-                    .post(RequestBody.create(MEDIA_TYPE_MARKDOWN, postBody))
-                    .build();
+            String requestUrl;
+            if (BuildConfig.DEBUG) {
+                requestUrl = _baseUrl + apiname;
+            }
+            else {
+                requestUrl = _baseUrlRelease + apiname;
+            }
+
             OkHttpClient client = new OkHttpClient();
+            Request.Builder builder = new Request.Builder().url(requestUrl);
+
+            if (paramMap != null) {
+                FormBody.Builder postData = new FormBody.Builder();
+                for(HashMap.Entry<String, String> e : paramMap.entrySet()) {
+                    //System.out.println(e.getKey() + " : " + e.getValue());
+                    postData.add(e.getKey(),e.getValue());
+                }
+                builder.post(postData.build());
+            }
+
+            Request request = builder.build(); //new Request.Builder()
+
             client.newCall(request).enqueue(new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
