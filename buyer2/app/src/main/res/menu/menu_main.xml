@@ -3,8 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.hidezo.app.samplebaseactivity01.MainActivity">
     <item
+        android:id="@+id/action_orderes"
+        android:title="注文履歴"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/action_logout"
-        android:orderInCategory="100"
         android:title="ログアウト"
         app:showAsAction="never" />
+
+    <!--        android:orderInCategory="100"-->
+
 </menu>

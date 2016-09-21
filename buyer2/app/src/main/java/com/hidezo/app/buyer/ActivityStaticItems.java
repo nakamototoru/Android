@@ -1,56 +1,63 @@
 package com.hidezo.app.buyer;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+//import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
+//import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+//import java.util.HashMap;
 
-public class ActivityStaticItems extends AppCompatActivity implements HDZClient.HDZCallbacks {
+public class ActivityStaticItems extends CustomAppCompatActivity {
 
     private static ActivityStaticItems _self;
 
-    private String mySupplierId = "";
+//    private String mySupplierId = "";
     private String myCategoryId = "";
     private HDZApiResponseItem responseItem = new HDZApiResponseItem();
-
-//    private Toolbar myToolbar;
-
-    // グローバル
-    AppGlobals sGlobals;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_static_items);
 
-        // getApplication()でアプリケーションクラスのインスタンスを拾う
-        sGlobals = (AppGlobals) this.getApplication();
-
         _self = this;
 
         Intent intent = getIntent();
-        mySupplierId = intent.getStringExtra("supplier_id");
+        String mySupplierId = intent.getStringExtra("supplier_id");
         myCategoryId = intent.getStringExtra("category_id");
 
         // HTTP GET
         HDZApiRequestPackage.Item req = new HDZApiRequestPackage.Item();
-        req.begin( sGlobals.getUserId(), sGlobals.getUuid(), mySupplierId, this);
+        AppGlobals globals = (AppGlobals) this.getApplication();
+        req.begin( globals.getUserId(), globals.getUuid(), mySupplierId, this);
+
+        // TouchEvent
+        TextView tvOrderCheck = (TextView)findViewById(R.id.textViewButtonOrderCheck);
+        tvOrderCheck.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("########","R.id.textViewButtonOrderCheck");
+
+                Intent intent = new Intent( _self.getApplication(), ActivityUserOrders.class);
+                startActivity(intent);
+            }
+        });
 
         // ツールバー初期化
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        String title = intent.getStringExtra("category_name");
+//        toolbar.setTitle(title);
+//        setSupportActionBar(toolbar);
         String title = intent.getStringExtra("category_name");
-        toolbar.setTitle(title);
-        setSupportActionBar(toolbar);
-
+        setNavigationBar(title);
     }
 
     /**
@@ -88,14 +95,21 @@ public class ActivityStaticItems extends AppCompatActivity implements HDZClient.
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                            ListView listView = (ListView) parent;
-                            try {
-                                View targetView = listView.getChildAt(position);
-                                listView.getAdapter().getView(position,targetView,parent);
-                            } catch (Exception e) {
-                                Log.d("########","Failed : ListView reflesh");
+                            if (id == 0) {
+                                //遷移
+                                Intent intent = new Intent( _self.getApplication(), ActivityStaticItemDetail.class);
+//                                intent.putExtra("supplier_id",_self.mySupplierId);
+                                _self.startActivity(intent);
                             }
-
+                            else {
+                                ListView listView = (ListView) parent;
+                                try {
+                                    View targetView = listView.getChildAt(position);
+                                    listView.getAdapter().getView(position,targetView,parent);
+                                } catch (Exception e) {
+                                    Log.d("########","Failed : ListView reflesh");
+                                }
+                            }
                         }
                     });
                     listView.setAdapter(aastaticitem);
@@ -103,9 +117,9 @@ public class ActivityStaticItems extends AppCompatActivity implements HDZClient.
             });
         }
     }
-    public void HDZClientError(String message) {
-        Log.d("########",message);
-    }
+//    public void HDZClientError(String message) {
+//        Log.d("########",message);
+//    }
 
     /**
      * ツールバー

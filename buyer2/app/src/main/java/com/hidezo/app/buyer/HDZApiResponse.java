@@ -2,7 +2,7 @@ package com.hidezo.app.buyer;
 
 import android.util.Log;
 
-import org.json.JSONArray;
+//import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -10,7 +10,7 @@ import org.json.JSONObject;
  * Created by dezami on 2016/09/13.
  *
  */
-public class HDZApiResponse {
+class HDZApiResponse {
 
     public String message = "";
     public boolean result = false;

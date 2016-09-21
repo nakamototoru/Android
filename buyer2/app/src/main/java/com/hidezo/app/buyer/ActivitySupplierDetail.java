@@ -1,36 +1,32 @@
 package com.hidezo.app.buyer;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+//import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
+//import android.support.v7.widget.Toolbar;
+//import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
+//import android.view.View;
+//import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 
-public class ActivitySupplierDetail extends AppCompatActivity implements HDZClient.HDZCallbacks {
+/**
+ *
+ */
+public class ActivitySupplierDetail extends CustomAppCompatActivity {
 
     private static ActivitySupplierDetail _self;
     private HDZApiResponseFriend responseFriend = new HDZApiResponseFriend();
 
     private String mySupplierId = "";
 
-    // グローバル
-    AppGlobals sGlobals;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_supplier_detail);
-
-
-        // getApplication()でアプリケーションクラスのインスタンスを拾う
-        sGlobals = (AppGlobals) this.getApplication();
 
         _self = this;
 
@@ -39,14 +35,16 @@ public class ActivitySupplierDetail extends AppCompatActivity implements HDZClie
 
         // HTTP GET
         HDZApiRequestPackage.Friend req = new HDZApiRequestPackage.Friend();
-        req.begin( sGlobals.getUserId(), sGlobals.getUuid(), this);
+        AppGlobals globals = (AppGlobals) this.getApplication();
+        req.begin( globals.getUserId(), globals.getUuid(), this);
 
         // ツールバー初期化
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+//        String supplier_name = intent.getStringExtra("supplier_name");
+//        toolbar.setTitle(supplier_name);
+//        setSupportActionBar(toolbar);
         String supplier_name = intent.getStringExtra("supplier_name");
-        toolbar.setTitle(supplier_name);
-        setSupportActionBar(toolbar);
-
+        setNavigationBar(supplier_name);
     }
 
     /**
@@ -61,8 +59,6 @@ public class ActivitySupplierDetail extends AppCompatActivity implements HDZClie
 
             for (HDZFriendInfo object : responseFriend.friendInfoList) {
                 if (object.id.equals(mySupplierId)) {
-
-//                    Log.d("########",object.name);
 
                     final ArrayList<HDZProfile> profileList = new ArrayList<HDZProfile>();
                     HDZProfile pName = new HDZProfile("店舗名",object.name);
@@ -94,9 +90,9 @@ public class ActivitySupplierDetail extends AppCompatActivity implements HDZClie
             }
         }
     }
-    public void HDZClientError(String message) {
-        Log.d("########",message);
-    }
+//    public void HDZClientError(String message) {
+//        Log.d("########",message);
+//    }
 
     /**
      * ツールバー

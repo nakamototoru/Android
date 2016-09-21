@@ -9,30 +9,29 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
 import okhttp3.Headers;
-import okhttp3.MediaType;
+//import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import okhttp3.RequestBody;
+//import okhttp3.RequestBody;
 
 /**
  * Created by dezami on 2016/09/13.
  *
  */
-public class HDZClient {
+class HDZClient {
 
-    public interface HDZCallbacks {
+    interface HDZCallbacks {
         void HDZClientComplete(String response,String apiname);
         void HDZClientError(String message);
     }
 
-    public static final String _baseUrl = "https://dev-api.hidezo.co/"; // "https://api.hidezo.co/store/";
-    public static final String _baseUrlRelease = "https://api.hidezo.co/";
+    private static final String _baseUrl = "https://dev-api.hidezo.co/"; // "https://api.hidezo.co/store/";
+    private static final String _baseUrlRelease = "https://api.hidezo.co/";
 
-//    private static HDZClientCallbacksGet _myCallbacksGet = null;
     private static HDZCallbacks hdzCallbacks = null;
 
-    public static class Get {
+    static class Get {
 
         private void runAsync(final String url, HDZCallbacks callbacks, final String apiname) {
 
@@ -66,7 +65,7 @@ public class HDZClient {
          * @param params : Request Parameter Map
          * @param callbacks : Result After
          */
-        public void runAsync(final String apiname, final HashMap<String,String> params, HDZCallbacks callbacks) {
+        void runAsync(final String apiname, final HashMap<String,String> params, HDZCallbacks callbacks) {
 
             String requestUrl;
             if (BuildConfig.DEBUG) {
@@ -89,9 +88,9 @@ public class HDZClient {
 
     }
 
-    public static class Post {
+    static class Post {
 
-        public static final MediaType MEDIA_TYPE_MARKDOWN = MediaType.parse("text/x-markdown; charset=utf-8");
+//        private static final MediaType MEDIA_TYPE_MARKDOWN = MediaType.parse("text/x-markdown; charset=utf-8");
 
 //        public void run() throws Exception {
 //            String postBody = ""
@@ -114,7 +113,7 @@ public class HDZClient {
 //            System.out.println(response.body().string());
 //        }
 
-        public void runAsync(final String apiname, final HashMap<String ,String> paramMap, HDZCallbacks callbacks) {
+        void runAsync(final String apiname, final HashMap<String ,String> paramMap, HDZCallbacks callbacks) {
 
             hdzCallbacks = callbacks;
 

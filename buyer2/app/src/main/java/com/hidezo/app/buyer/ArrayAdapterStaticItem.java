@@ -17,13 +17,13 @@ import java.util.ArrayList;
  * Created by dezami on 2016/09/15.
  *
  */
-public class ArrayAdapterStaticItem extends ArrayAdapter<HDZItemInfo.StaticItem> {
+class ArrayAdapterStaticItem extends ArrayAdapter<HDZItemInfo.StaticItem> {
 
     ArrayList<HDZItemInfo.StaticItem> staticItemList = new ArrayList<HDZItemInfo.StaticItem>();
 
     ArrayList<AppGlobals.CartCount> countInCartList = new ArrayList<AppGlobals.CartCount>();
 
-    public ArrayAdapterStaticItem(Context context, ArrayList<HDZItemInfo.StaticItem> items) {
+    ArrayAdapterStaticItem(Context context, ArrayList<HDZItemInfo.StaticItem> items) {
         super(context, 0, items);
         this.staticItemList = items;
 
@@ -50,6 +50,12 @@ public class ArrayAdapterStaticItem extends ArrayAdapter<HDZItemInfo.StaticItem>
         // Lookup view for data population
         TextView tvName = (TextView) convertView.findViewById(R.id.textViewName);
         tvName.setText(staticItem.name);
+        tvName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((ListView) parent).performItemClick(null, position, 0);
+            }
+        });
 
         TextView tvPrice = (TextView) convertView.findViewById(R.id.textViewPrice);
         String str_price = "単価：" + staticItem.price + "円";
@@ -70,7 +76,7 @@ public class ArrayAdapterStaticItem extends ArrayAdapter<HDZItemInfo.StaticItem>
         tvBtnPlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("########","R.id.tvBtnPlus");
+//                Log.d("########","R.id.tvBtnPlus");
 
                 if (countInCartList.get(position).count < 100) {
                     countInCartList.get(position).count++;
@@ -83,7 +89,7 @@ public class ArrayAdapterStaticItem extends ArrayAdapter<HDZItemInfo.StaticItem>
         tvBtnMinus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("########","R.id.tvBtnMinus");
+//                Log.d("########","R.id.tvBtnMinus");
 
                 if (countInCartList.get(position).count > 0) {
                     countInCartList.get(position).count--;

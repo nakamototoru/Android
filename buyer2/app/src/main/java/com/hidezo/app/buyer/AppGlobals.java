@@ -2,20 +2,23 @@ package com.hidezo.app.buyer;
 
 import android.app.Application;
 import android.content.DialogInterface;
+//import android.content.Intent;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
-import java.util.ArrayList;
+//import java.util.ArrayList;
 import java.util.UUID;
 
 /**
  * Created by dezami on 2016/09/14.
  *
  */
-public class AppGlobals extends Application implements HDZClient.HDZCallbacks {
+public class AppGlobals extends Application {
+    //  implements HDZClient.HDZCallbacks
 
     /**
      * UUID
@@ -31,6 +34,8 @@ public class AppGlobals extends Application implements HDZClient.HDZCallbacks {
         SharedPreferences.Editor ed = sp.edit();
         SharedPreferences.Editor result = ed.putString("uuid", uuid);
         result.commit();
+
+        Log.d("########",uuid);
 
         return uuid;
     }
@@ -52,21 +57,21 @@ public class AppGlobals extends Application implements HDZClient.HDZCallbacks {
         // データを取得する(第2引数はデフォルト値)
         return sp.getString("uuid", "F0CAC7E8-D81C-4667-BE8B-588869EF5D25");
     }
-    public void removeUuid() {
-        // インスタンスを取得する
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
-        // データを保存する
-        SharedPreferences.Editor ed = sp.edit();
-        SharedPreferences.Editor result = ed.putString("uuid", "");
-        result.commit();
-    }
+//    public void removeUuid() {
+//        // インスタンスを取得する
+//        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+//        // データを保存する
+//        SharedPreferences.Editor ed = sp.edit();
+//        SharedPreferences.Editor result = ed.putString("uuid", "");
+//        result.commit();
+//    }
 
     /**
      * USER ID
      * @param value user_id
      */
-    public void setUserId(String value) {
-        //
+    public void setUserId(final String value) {
+
         // インスタンスを取得する
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         // データを保存する
@@ -83,58 +88,78 @@ public class AppGlobals extends Application implements HDZClient.HDZCallbacks {
     }
 
     /**
+     * ログイン状態
+     */
+    public void setLoginState(final boolean isLogin) {
+
+        // インスタンスを取得する
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        // データを保存する
+        SharedPreferences.Editor ed = sp.edit();
+        SharedPreferences.Editor result = ed.putBoolean("is_login",isLogin);
+        result.commit();
+    }
+    public boolean getLoginState() {
+
+        // インスタンスを取得する
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        // データを取得する(第2引数はデフォルト値)
+        return sp.getBoolean("is_login",false);
+    }
+
+    /**
      * ログインチェック
      */
-    private static CheckLoginCallbacks sCheckLoginCallbacks;
-    public interface CheckLoginCallbacks {
-        void responseLoginState(boolean isLogin);
-    }
-    public void checkLogin(CheckLoginCallbacks callbacks) {
-        sCheckLoginCallbacks = callbacks;
-
-        HDZApiRequestPackage.LoginCheck req = new HDZApiRequestPackage.LoginCheck();
-        req.begin( getUserId(), getUuid(), this);
-    }
+//    private static CheckLoginCallbacks sCheckLoginCallbacks;
+//    public interface CheckLoginCallbacks {
+//        void responseLoginState(boolean isLogin);
+//    }
+//    public void checkLogin(CheckLoginCallbacks callbacks) {
+//        sCheckLoginCallbacks = callbacks;
+//
+//        HDZApiRequestPackage.LoginCheck req = new HDZApiRequestPackage.LoginCheck();
+//        req.begin( getUserId(), getUuid(), this);
+//    }
     /**
      * HDZClientCallbacksGet
      * データ取得時
      */
-    public void HDZClientComplete(String response,String apiname) {
-        if (apiname.equals("login_check/store")) {
-
-            HDZApiResponse responseLoginCheck = new HDZApiResponse();
-
-            if (responseLoginCheck.parseJson(response)) {
-                if (responseLoginCheck.result) {
-
-                    //ログインしている
-                    sCheckLoginCallbacks.responseLoginState(true);
-                }
-                else {
-                    //ログインしていない
-                    sCheckLoginCallbacks.responseLoginState(false);
-                }
-            }
-        }
-//        else if (apiname.equals("login/store")) {
-//            if (responseLogin.parseJson(response)) {
-//                if (responseLogin.result) {
+//    public void HDZClientComplete(final String response,final String apiname) {
+//        if (apiname.equals("login_check/store")) {
 //
-//                    //ログイン状態に
-//                    // 画面遷移
-//                    Intent intent = new Intent(getApplication(), ActivitySuppliers.class);
-//                    startActivity(intent);
+//            HDZApiResponseLoginCheck responseLoginCheck = new HDZApiResponseLoginCheck();
+//
+//            if (responseLoginCheck.parseJson(response)) {
+//                if (responseLoginCheck.result) {
+//
+//                    //ログインしている
+//                    sCheckLoginCallbacks.responseLoginState(true);
 //                }
 //                else {
-//                    //ログイン失敗
-//                    sGlobals.openWarning("login/store","ログイン失敗",this);
+//                    //ログインしていない
+//                    sCheckLoginCallbacks.responseLoginState(false);
 //                }
 //            }
 //        }
-
-    }
-    public void HDZClientError(String error) {
-    }
+////        else if (apiname.equals("login/store")) {
+////            if (responseLogin.parseJson(response)) {
+////                if (responseLogin.result) {
+////
+////                    //ログイン状態に
+////                    // 画面遷移
+////                    Intent intent = new Intent(getApplication(), ActivitySuppliers.class);
+////                    startActivity(intent);
+////                }
+////                else {
+////                    //ログイン失敗
+////                    sGlobals.openWarning("login/store","ログイン失敗",this);
+////                }
+////            }
+////        }
+//
+//    }
+//    public void HDZClientError(final String error) {
+//    }
 
     /**
      * ALERT DIALOG
@@ -155,6 +180,31 @@ public class AppGlobals extends Application implements HDZClient.HDZCallbacks {
                             @Override
                             public void onClick(DialogInterface dialog, int id) {
 
+                            }
+                        })
+                        .show();
+            }
+        });
+    }
+    public void openAlertSessionOut(final AppCompatActivity activity) {
+
+        //UIスレッド上で呼び出してもらう
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+
+                new AlertDialog.Builder(activity)
+                        .setTitle("他のデバイスがログインしたかタイムアウトしました")
+                        .setMessage("ログインしなおしてください")
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int id) {
+
+                                setLoginState(false);
+
+                                // ログインフォーム画面遷移
+                                Intent intent = new Intent(activity.getApplication(), MainActivity.class);
+                                activity.startActivity(intent);
                             }
                         })
                         .show();

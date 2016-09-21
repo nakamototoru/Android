@@ -1,7 +1,7 @@
 package com.hidezo.app.buyer;
 
 import android.content.Context;
-import android.util.Log;
+//import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,7 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
+//import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -17,7 +17,7 @@ import java.util.ArrayList;
  * Created by dezami on 2016/09/16.
  *
  */
-public class ArrayAdapterDynamicItem extends ArrayAdapter<HDZItemInfo.DynamicItem> {
+class ArrayAdapterDynamicItem extends ArrayAdapter<HDZItemInfo.DynamicItem> {
 
     ArrayList<HDZItemInfo.DynamicItem> dynamicItemList = new ArrayList<HDZItemInfo.DynamicItem>();
 
@@ -39,7 +39,7 @@ public class ArrayAdapterDynamicItem extends ArrayAdapter<HDZItemInfo.DynamicIte
     @Override
     public View getView(final int position, View convertView, final ViewGroup parent) {
 
-        Log.d("########","ArrayAdapterDynamicItem : getView");
+//        Log.d("########","ArrayAdapterDynamicItem : getView");
 
         // Get the data item for this position
         HDZItemInfo.DynamicItem dynamicItem = getItem(position);

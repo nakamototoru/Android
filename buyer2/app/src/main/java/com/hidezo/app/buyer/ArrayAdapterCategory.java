@@ -1,7 +1,7 @@
 package com.hidezo.app.buyer;
 
 import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
+//import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +14,7 @@ import java.util.ArrayList;
  * Created by dezami on 2016/09/15.
  *
  */
-public class ArrayAdapterCategory extends ArrayAdapter<HDZItemInfo.Category> {
+class ArrayAdapterCategory extends ArrayAdapter<HDZItemInfo.Category> {
 
     ArrayList<HDZItemInfo.Category> categoryArrayList = new ArrayList<HDZItemInfo.Category>();
 

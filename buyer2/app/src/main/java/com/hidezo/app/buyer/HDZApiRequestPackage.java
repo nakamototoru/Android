@@ -7,9 +7,9 @@ import java.util.HashMap;
  * Created by dezami on 2016/09/13.
  *
  */
-public class HDZApiRequestPackage {
+class HDZApiRequestPackage {
 
-    public static class LoginCheck {
+    static class LoginCheck {
 
         public void begin(final String id,final String uuid, HDZClient.HDZCallbacks callbacks) {
 
@@ -21,7 +21,7 @@ public class HDZApiRequestPackage {
         }
     }
 
-    public static class Login {
+    static class Login {
 
         public void begin(final String id,final String uuid,final String password, HDZClient.HDZCallbacks callbacks) {
 
@@ -36,7 +36,7 @@ public class HDZApiRequestPackage {
         }
     }
 
-    public static class Friend {
+    static class Friend {
 
         public void begin(final String id,final String uuid, HDZClient.HDZCallbacks callbacks) {
 
@@ -48,7 +48,7 @@ public class HDZApiRequestPackage {
         }
     }
 
-    public static class Item {
+    static class Item {
 
         public void begin(final String id,final String uuid,final String supplier_id, HDZClient.HDZCallbacks callbacks) {
 
@@ -61,7 +61,7 @@ public class HDZApiRequestPackage {
         }
     }
 
-    public static class OrderList {
+     static class OrderList {
 
         public void begin(final String id,final String uuid,final int page, HDZClient.HDZCallbacks callbacks) {
 
@@ -74,7 +74,7 @@ public class HDZApiRequestPackage {
         }
     }
 
-    public static class OrderDetail {
+    static class OrderDetail {
 
         public void begin(final String id,final String uuid,final String order_no, HDZClient.HDZCallbacks callbacks) {
 
@@ -87,7 +87,7 @@ public class HDZApiRequestPackage {
         }
     }
 
-    public static class Order {
+    static class Order {
 
         public void begin(final String id, final String uuid, final String supplier_id, final ArrayList<String> static_item, final ArrayList<String> dynamic_item, final String deliver_to, final String delivery_day, final String charge, HDZClient.HDZCallbacks callbacks) {
 
@@ -111,7 +111,7 @@ public class HDZApiRequestPackage {
         }
     }
 
-    public static class Message {
+    static class Message {
 
         public void begin(final String id,final String uuid,final String order_no, HDZClient.HDZCallbacks callbacks) {
 
@@ -124,7 +124,7 @@ public class HDZApiRequestPackage {
         }
     }
 
-    public static class AddMessage {
+    static class AddMessage {
 
         public void begin(final String id,final String uuid,final String charge, final String message, final String order_no, HDZClient.HDZCallbacks callbacks) {
 

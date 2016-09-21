@@ -1,6 +1,6 @@
 package com.hidezo.app.buyer;
 
-import android.util.Log;
+//import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * Created by dezami on 2016/09/14.
  *
  */
-public class HDZApiResponseItem extends HDZApiResponse {
+class HDZApiResponseItem extends HDZApiResponse {
 
     public HDZItemInfo.Supplier supplierInfo = new HDZItemInfo.Supplier();
     public ArrayList<HDZItemInfo.StaticItem> staticItemList = new ArrayList<HDZItemInfo.StaticItem>();
@@ -27,10 +27,8 @@ public class HDZApiResponseItem extends HDZApiResponse {
                 JSONObject json = new JSONObject(strjson);
 
                 JSONObject json_supplier = json.getJSONObject("supplier");
-//                supplierInfo = new HDZItemInfo.Supplier();
                 supplierInfo.supplier_id = json_supplier.getString("supplier_id");
                 supplierInfo.supplier_name = json_supplier.getString("supplier_name");
-
 
 //                Log.d("########",json_staticItem.toString());
 

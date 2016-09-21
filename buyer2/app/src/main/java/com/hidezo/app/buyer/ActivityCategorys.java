@@ -1,8 +1,7 @@
 package com.hidezo.app.buyer;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
+//import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.content.Intent;
 import android.view.Menu;
@@ -14,40 +13,24 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.StringTokenizer;
+//import java.util.StringTokenizer;
 
-public class ActivityCategorys extends AppCompatActivity implements HDZClient.HDZCallbacks {
+/**
+ *
+ */
+public class ActivityCategorys extends CustomAppCompatActivity {
 
     private static ActivityCategorys _self;
 
     private String mySupplierId = "";
     private HDZApiResponseItem responseItem = new HDZApiResponseItem();
 
-    // グローバル
-    AppGlobals sGlobals;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_categorys);
 
-        // ツールバー初期化
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setTitle("カテゴリ一覧");
-        setSupportActionBar(toolbar);
-
-
-        // getApplication()でアプリケーションクラスのインスタンスを拾う
-        sGlobals = (AppGlobals) this.getApplication();
-
         _self = this;
-
-        Intent intent = getIntent();
-        mySupplierId = intent.getStringExtra("supplier_id");
-
-        // HTTP GET
-        HDZApiRequestPackage.Item req = new HDZApiRequestPackage.Item();
-        req.begin(sGlobals.getUserId(), sGlobals.getUuid(), mySupplierId, this);
 
         // TouchEvent
         TextView tvOrderCheck = (TextView)findViewById(R.id.textViewButtonOrderCheck);
@@ -60,6 +43,22 @@ public class ActivityCategorys extends AppCompatActivity implements HDZClient.HD
                 startActivity(intent);
             }
         });
+
+        // ツールバー初期化
+        setNavigationBar("カテゴリ一覧");
+
+        // ログインチェック
+        if (isLogin()) {
+
+            // ゲット・商品一覧
+            Intent intent = getIntent();
+            mySupplierId = intent.getStringExtra("supplier_id");
+            // HTTP GET
+            HDZApiRequestPackage.Item req = new HDZApiRequestPackage.Item();
+            AppGlobals globals = (AppGlobals) this.getApplication();
+            req.begin(globals.getUserId(), globals.getUuid(), mySupplierId, this);
+        }
+
     }
 
     /**
@@ -68,17 +67,13 @@ public class ActivityCategorys extends AppCompatActivity implements HDZClient.HD
      */
     public void HDZClientComplete(String response,String apiname) {
         if (responseItem.parseJson(response)) {
-//            if (responseItem.supplierInfo != null) {
-//                String name = responseItem.supplierInfo.supplier_name;
-//                Log.d("########",name);
-//            }
 
             //UIスレッド上で呼び出してもらう
             this.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
 
-                    ArrayList<HDZItemInfo.Category> categorys = new ArrayList<HDZItemInfo.Category>();
+                    ArrayList<HDZItemInfo.Category> categorys = new ArrayList<>(); // HDZItemInfo.Category
 
                     // 動的商品
                     if (responseItem.dynamicItemList.size() > 0) {
@@ -88,18 +83,20 @@ public class ActivityCategorys extends AppCompatActivity implements HDZClient.HD
                     }
 
                     // 静的商品
-                    HashMap<String,String> hashmap = new HashMap<String, String>();
+                    HashMap<String,String> hashmap = new HashMap<>(); // String, String
                     for (int i = 0; i < responseItem.staticItemList.size(); i++) {
                         HDZItemInfo.StaticItem item = responseItem.staticItemList.get(i);
 
                         String cid = item.category.id;
                         // keyが存在しているか確認
-                        if ( hashmap.containsKey(cid) ){
-                            // すでにある＝なにもしない
-                        } else {
+                        if ( !hashmap.containsKey(cid) ){
+                            // 存在しないなら登録
                             categorys.add( item.category );
                             hashmap.put(cid,item.category.name);
                         }
+//                        else {
+//                            // すでにある＝なにもしない
+//                        }
                     }
 
                     //リストビュー作成
@@ -135,9 +132,9 @@ public class ActivityCategorys extends AppCompatActivity implements HDZClient.HD
             });
         }
     }
-    public void HDZClientError(String message) {
-        Log.d("########",message);
-    }
+//    public void HDZClientError(String message) {
+//        Log.d("########",message);
+//    }
 
     /**
      * ツールバー
