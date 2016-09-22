@@ -21,7 +21,7 @@ public class ActivityOrderDetail extends CustomAppCompatActivity {
         _self = this;
 
         // ツールナビゲーションバー
-        setNavigationBar("（自分の店舗名）宛");
+        setNavigationBar("orderinfo.supplier_name様宛");
 
         Intent intent = getIntent();
         String order_no = intent.getStringExtra("order_no");

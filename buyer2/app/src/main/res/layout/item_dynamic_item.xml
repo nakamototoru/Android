@@ -64,31 +64,15 @@
                     android:layout_height="match_parent"></LinearLayout>
 
                 <TextView
-                    android:layout_width="@dimen/abc_action_bar_default_height_material"
                     android:layout_height="@dimen/abc_action_bar_default_height_material"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="+"
-                    android:id="@+id/textViewButtonPlus"
+                    android:text="@string/Update"
+                    android:id="@+id/textViewButtonUpdate"
                     android:gravity="center_vertical|center_horizontal"
-                    android:textSize="@dimen/abc_action_bar_progress_bar_size"
+                    android:textSize="24sp"
                     android:background="@color/colorPrimary"
-                    android:textColor="@android:color/white" />
-
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="@dimen/abc_action_bar_elevation_material"
-                    android:layout_height="match_parent"></LinearLayout>
-
-                <TextView
-                    android:layout_width="@dimen/abc_action_bar_default_height_material"
-                    android:layout_height="@dimen/abc_action_bar_default_height_material"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="-"
-                    android:id="@+id/textViewButtonMinus"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:textSize="@dimen/abc_action_bar_progress_bar_size"
-                    android:background="@color/colorPrimary"
-                    android:textColor="@android:color/white" />
+                    android:textColor="@android:color/white"
+                    android:layout_width="100dp" />
 
             </LinearLayout>
 

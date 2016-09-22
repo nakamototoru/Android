@@ -30,9 +30,9 @@ import java.io.File;
  *
  */
 public class DBHelper {
-    public static final String TAG = "DBHelper";
+//    public static final String TAG = "DBHelper";
 
-    public SQLiteDatabase db;
+    public SQLiteDatabase db = null;
     private final DBOpenHelper dbOpenHelper;
 
     public DBHelper(final Context context) {
@@ -55,8 +55,8 @@ public class DBHelper {
 
     /**
      * Databaseが削除できればtrue。できなければfalse
-     * @param context
-     * @return
+     * @param context application_context
+     * @return result
      */
     public boolean isDatabaseDelete(final Context context) {
         boolean result = false;

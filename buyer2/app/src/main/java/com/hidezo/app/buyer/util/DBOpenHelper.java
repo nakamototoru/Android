@@ -36,11 +36,11 @@ import java.util.ArrayList;
  * Created by msuzuki on 2016/06/24.
  *
  */
-public class DBOpenHelper extends SQLiteOpenHelper {
-    public Context m_context;
-    public static final String TAG = "DBOpenHelper";
-    public static final String DB_NAME = "android_sqlite_demo";
-    public static final int DB_VERSION = 1;
+class DBOpenHelper extends SQLiteOpenHelper {
+    private Context m_context;
+    private static final String TAG = "DBOpenHelper";
+    private static final String DB_NAME = "com_hidezo_app_buyer_cart";
+    private static final int DB_VERSION = 1;
 
     public DBOpenHelper(final Context context) {
         super(context, DB_NAME, null, DB_VERSION);
@@ -75,8 +75,8 @@ public class DBOpenHelper extends SQLiteOpenHelper {
 
     /**
      * assetsフォルダのSQLファイルを実行する
-     * @param db
-     * @param fileName
+     * @param db database
+     * @param fileName file_name
      */
     private void execFileSQL(SQLiteDatabase db, String fileName){
         InputStream in = null;
@@ -133,9 +133,9 @@ public class DBOpenHelper extends SQLiteOpenHelper {
 
     /**
      * insertを実行します
-     * @param context
-     * @param cvList
-     * @return
+     * @param context application_context
+     * @param cvList contentvalues_list
+     * @return boolean
      */
     public static boolean insertTransactionExcute(final Context context, final String tableName,
                                                   ArrayList<ContentValues> cvList) {
@@ -147,9 +147,9 @@ public class DBOpenHelper extends SQLiteOpenHelper {
             // トランザクション開始
             dbhelper.db.beginTransaction();
 
-            long result = -1;
+//            long result = -1;
             for (ContentValues cv : cvList) {
-                result = dbhelper.db.insert(tableName, null, cv);
+                long result = dbhelper.db.insert(tableName, null, cv);
                 if (result == -1) {
                     return false;
                 }

@@ -1,16 +1,24 @@
 package com.hidezo.app.buyer;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 //import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 //import android.support.v7.widget.Toolbar;
+import android.support.v7.app.AlertDialog;
+import android.text.method.CharacterPickerDialog;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.DatePicker;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.hidezo.app.buyer.CustomView.PickerView;
 
 import java.util.ArrayList;
 //import java.util.HashMap;
@@ -19,9 +27,9 @@ public class ActivityStaticItems extends CustomAppCompatActivity {
 
     private static ActivityStaticItems _self;
 
-//    private String mySupplierId = "";
     private String myCategoryId = "";
     private HDZApiResponseItem responseItem = new HDZApiResponseItem();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,10 +60,6 @@ public class ActivityStaticItems extends CustomAppCompatActivity {
         });
 
         // ツールバー初期化
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        String title = intent.getStringExtra("category_name");
-//        toolbar.setTitle(title);
-//        setSupportActionBar(toolbar);
         String title = intent.getStringExtra("category_name");
         setNavigationBar(title);
     }
@@ -76,7 +80,7 @@ public class ActivityStaticItems extends CustomAppCompatActivity {
                 @Override
                 public void run() {
 
-                    ArrayList<HDZItemInfo.StaticItem> staticItems = new ArrayList<HDZItemInfo.StaticItem>();
+                    final ArrayList<HDZItemInfo.StaticItem> staticItems = new ArrayList<HDZItemInfo.StaticItem>();
 
                     // 静的商品
                     for (HDZItemInfo.StaticItem item : responseItem.staticItemList) {
@@ -103,12 +107,37 @@ public class ActivityStaticItems extends CustomAppCompatActivity {
                             }
                             else {
                                 ListView listView = (ListView) parent;
-                                try {
-                                    View targetView = listView.getChildAt(position);
-                                    listView.getAdapter().getView(position,targetView,parent);
-                                } catch (Exception e) {
-                                    Log.d("########","Failed : ListView reflesh");
-                                }
+//                                try {
+//                                    View targetView = listView.getChildAt(position);
+//                                    listView.getAdapter().getView(position,targetView,parent);
+//                                } catch (Exception e) {
+//                                    Log.d("########","Failed : ListView reflesh");
+//                                }
+
+//                                AppGlobals globals = (AppGlobals) _self.getApplication();
+//                                String[] str_num_scale = new String[];
+//                                globals.openDialogNumScale(staticItems.get(position).num_scale);
+
+                                final PickerView pickerView = new PickerView(_self);
+                                pickerView.setData(staticItems.get(position).num_scale);
+
+                                //UIスレッド上で呼び出してもらう
+                                _self.runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+
+                                        new AlertDialog.Builder(_self)
+                                                .setTitle("選択")
+                                                .setView(pickerView)
+                                                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialog, int id) {
+
+                                                    }
+                                                })
+                                                .show();
+                                    }
+                                });
                             }
                         }
                     });
@@ -146,4 +175,5 @@ public class ActivityStaticItems extends CustomAppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 }

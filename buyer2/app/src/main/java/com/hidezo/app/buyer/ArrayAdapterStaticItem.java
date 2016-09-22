@@ -1,6 +1,8 @@
 package com.hidezo.app.buyer;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,9 +21,9 @@ import java.util.ArrayList;
  */
 class ArrayAdapterStaticItem extends ArrayAdapter<HDZItemInfo.StaticItem> {
 
-    ArrayList<HDZItemInfo.StaticItem> staticItemList = new ArrayList<HDZItemInfo.StaticItem>();
+    ArrayList<HDZItemInfo.StaticItem> staticItemList = new ArrayList<>(); // HDZItemInfo.StaticItem
 
-    ArrayList<AppGlobals.CartCount> countInCartList = new ArrayList<AppGlobals.CartCount>();
+    ArrayList<AppGlobals.CartCount> countInCartList = new ArrayList<>(); // AppGlobals.CartCount
 
     ArrayAdapterStaticItem(Context context, ArrayList<HDZItemInfo.StaticItem> items) {
         super(context, 0, items);
@@ -41,6 +43,9 @@ class ArrayAdapterStaticItem extends ArrayAdapter<HDZItemInfo.StaticItem> {
 
         // Get the data item for this position
         HDZItemInfo.StaticItem staticItem = getItem(position);
+        if (staticItem == null) {
+            return convertView;
+        }
 
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
@@ -72,31 +77,35 @@ class ArrayAdapterStaticItem extends ArrayAdapter<HDZItemInfo.StaticItem> {
         tvRow.setText( String.valueOf(position+1) );
 
         // Touch Event
-        TextView tvBtnPlus = (TextView)convertView.findViewById(R.id.textViewButtonPlus);
+        TextView tvBtnPlus = (TextView)convertView.findViewById(R.id.textViewButtonUpdate);
         tvBtnPlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 //                Log.d("########","R.id.tvBtnPlus");
 
-                if (countInCartList.get(position).count < 100) {
-                    countInCartList.get(position).count++;
-                    ((ListView) parent).performItemClick(null, position, 1);
-                }
+//                if (countInCartList.get(position).count < 100) {
+//                    countInCartList.get(position).count++;
+//                    ((ListView) parent).performItemClick(null, position, 1);
+//                }
+                // TODO: 変更ダイアログ
+                Log.d("########","R.id.tvBtn・TODO: 変更ダイアログ");
+
+                ((ListView) parent).performItemClick(null, position, -1);
             }
         });
 
-        TextView tvBtnMinus = (TextView)convertView.findViewById(R.id.textViewButtonMinus);
-        tvBtnMinus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                Log.d("########","R.id.tvBtnMinus");
-
-                if (countInCartList.get(position).count > 0) {
-                    countInCartList.get(position).count--;
-                    ((ListView) parent).performItemClick(null, position, -1);
-                }
-            }
-        });
+//        TextView tvBtnMinus = (TextView)convertView.findViewById(R.id.textViewButtonMinus);
+//        tvBtnMinus.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+////                Log.d("########","R.id.tvBtnMinus");
+//
+//                if (countInCartList.get(position).count > 0) {
+//                    countInCartList.get(position).count--;
+//                    ((ListView) parent).performItemClick(null, position, -1);
+//                }
+//            }
+//        });
 
         // Return the completed view to render on screen
         return convertView;

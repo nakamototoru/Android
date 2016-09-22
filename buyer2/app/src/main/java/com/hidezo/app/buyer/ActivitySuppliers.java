@@ -1,10 +1,12 @@
 package com.hidezo.app.buyer;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 //import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 //import android.support.v7.widget.Toolbar;
 //import android.util.Log;
+import android.support.v7.app.AlertDialog;
 import android.view.Menu;
 //import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -126,12 +128,33 @@ public class ActivitySuppliers extends CustomAppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_logout) {
 
-            AppGlobals globals = (AppGlobals) this.getApplication();
-            globals.setLoginState(false);
+            //UIスレッド上で呼び出してもらう
+            _self.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
 
-            // ログインフォーム画面遷移
-            Intent intent = new Intent(getApplication(), MainActivity.class);
-            startActivity(intent);
+                    new AlertDialog.Builder(_self)
+                            .setTitle("ログアウトします")
+                            .setMessage("よろしいですか？")
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int id) {
+                                    AppGlobals globals = (AppGlobals) _self.getApplication();
+                                    globals.setLoginState(false);
+
+                                    // ログインフォーム画面遷移
+                                    Intent intent = new Intent(getApplication(), MainActivity.class);
+                                    startActivity(intent);
+                                }
+                            })
+                            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                }
+                            })
+                            .show();
+                }
+            });
             return true;
         }
 

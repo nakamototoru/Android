@@ -34,58 +34,55 @@ import java.util.List;
  */
 public class Dau implements Parcelable {
 
-    public static final String TAG = "Dau";
+//    public static final String TAG = "Dau";
     // table name
     public static final String TABLE_NAME = "dau";
     // table name aliases
     public static final String TABLE_NAME_OMISSION = "d";
     // column list constant
-    public static final List<String> COL = Collections
-            .unmodifiableList(new LinkedList<String>() {
-                {
-                    add("id");
-                    add("dau_date");
-                    add("opening_price");
-                    add("high_price");
-                    add("low_price");
-                    add("closing_price");
-                    add("change_price");
-                    add("deleted_at");
-                    add("created_at");
-                    add("updated_at");
-
-                }
-            });
-
+    public static final List<String> COL = Collections.unmodifiableList(new LinkedList<String>() {
+        {
+            // カラム名登録
+            add("id");
+            add("dau_date");
+            add("opening_price");
+            add("high_price");
+            add("low_price");
+            add("closing_price");
+            add("change_price");
+            add("deleted_at");
+            add("created_at");
+            add("updated_at");
+        }
+    });
 
     // id
     public int id;
     // dau_date
-    public String dau_date;
+    public String dau_date = "";
     // opening_price
-    public String opening_price;
+    public String opening_price = "";
     // high_price
-    public String high_price;
+    public String high_price = "";
     // low_price
-    public String low_price;
+    public String low_price = "";
     // closing_price
-    public String closing_price;
+    public String closing_price = "";
     // change_price
-    public String change_price;
+    public String change_price = "";
     // deleted_at
-    public String deleted_at;
+    public String deleted_at = "";
     // created_at
-    public String created_at;
+    public String created_at = "";
     // updated_at
-    public String updated_at;
+    public String updated_at = "";
 
     public Dau() {}
-    public static final Parcelable.Creator<Dau> CREATOR
-            = new Parcelable.Creator<Dau>() {
+    public static final Parcelable.Creator<Dau> CREATOR = new Parcelable.Creator<Dau>() {
+
         public Dau createFromParcel(Parcel in) {
             return new Dau(in);
         }
-
         public Dau[] newArray(int size) {
             return new Dau[size];
         }

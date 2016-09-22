@@ -1,15 +1,12 @@
 package com.hidezo.app.buyer;
 
 import android.content.Context;
-//import android.util.Log;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
-
-//import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -43,6 +40,9 @@ class ArrayAdapterDynamicItem extends ArrayAdapter<HDZItemInfo.DynamicItem> {
 
         // Get the data item for this position
         HDZItemInfo.DynamicItem dynamicItem = getItem(position);
+        if (dynamicItem == null) {
+            return convertView;
+        }
 
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
@@ -63,31 +63,35 @@ class ArrayAdapterDynamicItem extends ArrayAdapter<HDZItemInfo.DynamicItem> {
         tvRow.setText( String.valueOf(position+1) );
 
         // Touch Event
-        TextView tvBtnPlus = (TextView)convertView.findViewById(R.id.textViewButtonPlus);
+        TextView tvBtnPlus = (TextView)convertView.findViewById(R.id.textViewButtonUpdate);
         tvBtnPlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
 //                Log.d("########","R.id.tvBtnPlus");
-                if (countInCartList.get(position).count < 100) {
-                    countInCartList.get(position).count++;
-                    ((ListView) parent).performItemClick(null, position, 1);
-                }
+//                if (countInCartList.get(position).count < 100) {
+//                    countInCartList.get(position).count++;
+//                    ((ListView) parent).performItemClick(null, position, 1);
+//                }
+
+                // TODO: 変更ダイアログ
+                Log.d("########","R.id.tvBtn・TODO: 変更ダイアログ");
+
             }
         });
 
-        TextView tvBtnMinus = (TextView)convertView.findViewById(R.id.textViewButtonMinus);
-        tvBtnMinus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-//                Log.d("########","R.id.tvBtnMinus");
-                if (countInCartList.get(position).count > 0) {
-                    countInCartList.get(position).count--;
-                    ((ListView) parent).performItemClick(null, position, -1);
-                }
-            }
-        });
+//        TextView tvBtnMinus = (TextView)convertView.findViewById(R.id.textViewButtonMinus);
+//        tvBtnMinus.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+////                Log.d("########","R.id.tvBtnMinus");
+//                if (countInCartList.get(position).count > 0) {
+//                    countInCartList.get(position).count--;
+//                    ((ListView) parent).performItemClick(null, position, -1);
+//                }
+//            }
+//        });
 
         // Return the completed view to render on screen
         return convertView;

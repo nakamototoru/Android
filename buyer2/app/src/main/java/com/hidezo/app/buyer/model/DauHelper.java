@@ -28,13 +28,13 @@ import android.util.Log;
 
 import com.hidezo.app.buyer.BuildConfig;
 import com.hidezo.app.buyer.util.DBHelper;
-//import com.hidezo.app.buyer.util.DBOpenHelper;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * An ModelHelper class for DauHelper
+ *
  */
 public class DauHelper {
 
@@ -224,7 +224,7 @@ public class DauHelper {
      * update
      *
      * @param context you should use ApplicationContext. ApplicationContext can get getApplicationContext().
-     * @param contentValues
+     * @param contentValues key&value
      * @param id is primary key
      * @return the number of rows affected
      */
@@ -239,7 +239,7 @@ public class DauHelper {
      * insert
      *
      * @param context you should use ApplicationContext. ApplicationContext can get getApplicationContext().
-     * @param contentValues
+     * @param contentValues key&value
      * @return the row ID of the newly inserted row, or -1 if an error occurred
      */
     public static long insert(final Context context, final ContentValues contentValues) {

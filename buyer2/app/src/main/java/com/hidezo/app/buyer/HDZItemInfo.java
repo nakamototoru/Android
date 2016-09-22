@@ -1,5 +1,7 @@
 package com.hidezo.app.buyer;
 
+import android.support.annotation.NonNull;
+
 import java.util.ArrayList;
 
 /**

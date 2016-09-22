@@ -8,4 +8,5 @@
     <string name="OrderCheck">OrderCheck</string>
     <string name="PlusMark">+</string>
     <string name="MinusMark">-</string>
+    <string name="Update">Update</string>
 </resources>

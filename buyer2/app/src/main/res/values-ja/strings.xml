@@ -4,4 +4,5 @@
     <string name="OrderHistory">注文履歴</string>
     <string name="SupplierList">取引先</string>
     <string name="OrderCheck">注文確認</string>
+    <string name="Update">変更</string>
 </resources>
