@@ -69,13 +69,13 @@ public class ActivityStaticItems extends CustomAppCompatActivity {
      * HDZClientCallbacksGet
      * データ取得時
      */
-    public void HDZClientComplete(String response,String apiname) {
-        if (responseItem.parseJson(response)) {
-//            if (responseItem.staticItemList != null && responseItem.staticItemList.size() > 0) {
-//                String name = responseItem.staticItemList.get(0).name;
-//                Log.d("########", name);
-//            }
+    public void HDZClientComplete(String response,String apiName) {
 
+        if ( checkLogOut(response) ) {
+            return;
+        }
+
+        if (responseItem.parseJson(response)) {
             //UIスレッド上で呼び出してもらう
             this.runOnUiThread(new Runnable() {
                 @Override

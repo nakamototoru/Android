@@ -65,7 +65,13 @@ public class ActivityCategorys extends CustomAppCompatActivity {
      * HDZClientCallbacksGet
      * データ取得時
      */
-    public void HDZClientComplete(String response,String apiname) {
+//    @Override
+    public void HDZClientComplete(String response,String apiName) {
+
+        if ( checkLogOut(response) ) {
+            return;
+        }
+
         if (responseItem.parseJson(response)) {
 
             //UIスレッド上で呼び出してもらう

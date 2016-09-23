@@ -78,9 +78,9 @@ public class MainActivity extends AppCompatActivity implements HDZClient.HDZCall
      * HDZClientCallbacksGet
      * データ取得時
      */
-    public void HDZClientComplete(String response,String apiname) {
+    public void HDZClientComplete(String response,String apiName) {
 
-        if (apiname.equals("login/store")) {
+        if (apiName.equals("login/store")) {
             if (responseLogin.parseJson(response)) {
                 if (responseLogin.result) {
 
@@ -99,6 +99,9 @@ public class MainActivity extends AppCompatActivity implements HDZClient.HDZCall
         }
     }
     public void HDZClientError(String error) {
+        AppGlobals globals = (AppGlobals) this.getApplication();
+        // 警告
+        globals.openWarning("アクセスエラー","ネットワークにアクセス出来ませんでしたので時間を置いて再試行して下さい。",this);
     }
 
 

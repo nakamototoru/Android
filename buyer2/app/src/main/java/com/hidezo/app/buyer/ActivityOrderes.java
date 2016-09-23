@@ -40,7 +40,13 @@ public class ActivityOrderes extends CustomAppCompatActivity {
      * HDZClientCallbacksGet
      * データ取得時
      */
-    public void HDZClientComplete(final String response, final String apiname) {
+//    @Override
+    public void HDZClientComplete(final String response, final String apiName) {
+
+        if ( checkLogOut(response) ) {
+            return;
+        }
+
         if ( responseOrderedList.parseJson(response) ) {
             if (responseOrderedList.orderedList.size() == 0) {
                 Log.d("########","orderedList is ZERO");

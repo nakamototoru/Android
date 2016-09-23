@@ -109,8 +109,19 @@ public class AppGlobals extends Application {
     }
 
     /**
-     * ログインチェック
+     * ログアウトチェック
      */
+    public boolean checkLogOut(boolean result, String message) {
+
+        if (message.equals("データがありません")) {
+            return false;
+        }
+        else if (result) {
+            return false;
+        }
+        return true;
+    }
+
 //    private static CheckLoginCallbacks sCheckLoginCallbacks;
 //    public interface CheckLoginCallbacks {
 //        void responseLoginState(boolean isLogin);
@@ -195,8 +206,8 @@ public class AppGlobals extends Application {
             public void run() {
 
                 new AlertDialog.Builder(activity)
-                        .setTitle("他のデバイスがログインしたかタイムアウトしました")
-                        .setMessage("ログインしなおしてください")
+                        .setTitle("アクセスエラー")
+                        .setMessage("他の端末でお客様のアカウントにログインしたか、サーバーの不具合でログアウトされました。")
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int id) {

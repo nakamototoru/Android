@@ -14,35 +14,10 @@ public class CustomAppCompatActivity extends AppCompatActivity implements HDZCli
     /**
      * ログインチェック
      */
-//    public void checkLogin() {
-//        AppGlobals globals = (AppGlobals) this.getApplication();
-//        globals.checkLogin(this);
-//    }
     public boolean isLogin() {
         AppGlobals globals = (AppGlobals) this.getApplication();
         return globals.getLoginState();
     }
-
-    /**
-     * ログインチェック結果
-     */
-//    public void responseLoginState(boolean isLogin) {
-//
-//        if (!isLogin) {
-//            AppGlobals globals = (AppGlobals) this.getApplication();
-////            globals.openWarning("別デバイスでログインされた","TODO:ログアウト処理",this);
-//            globals.openAlertSessionOut(this);
-//        }
-//        else {
-//            onLoginPassed();
-//        }
-//    }
-    /**
-     * ログイン状態の時の処理
-     */
-//    public void onLoginPassed() {
-//        // サブクラスで定義
-//    }
 
     /**
      * ツールバー初期化
@@ -58,15 +33,42 @@ public class CustomAppCompatActivity extends AppCompatActivity implements HDZCli
      * HDZClientCallbacksGet
      * データ取得時
      */
-    public void HDZClientComplete(String response,String apiname) {
+    public void HDZClientComplete(String response,String apiName) {
         // サブクラスで定義
     }
     public void HDZClientError(String message) {
         Log.d("########",message);
 
-        // ログアウト
-//        AppGlobals globals = (AppGlobals) this.getApplication();
+        AppGlobals globals = (AppGlobals) this.getApplication();
+        // 警告
+        globals.openWarning("アクセスエラー","ネットワークにアクセス出来ませんでしたので時間を置いて再試行して下さい。",this);
+
+        // ログアウトチェック
 //        globals.openAlertSessionOut(this);
     }
 
+    /**
+     * ログアウトチェック
+     */
+    public boolean checkLogOut(String response) {
+
+        HDZApiResponse apiRes = new HDZApiResponse();
+
+        AppGlobals globals = (AppGlobals) this.getApplication();
+
+        if (!apiRes.parseJson(response)) {
+            // アクセスエラー
+            globals.openAlertSessionOut(this);
+            return true;
+        }
+
+        // ログアウトチェック
+        if (globals.checkLogOut( apiRes.result, apiRes.message )) {
+            globals.openAlertSessionOut(this);
+            return true;
+        }
+
+        // ログアウトしていない
+        return false;
+    }
 }

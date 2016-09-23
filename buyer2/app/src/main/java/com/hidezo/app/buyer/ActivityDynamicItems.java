@@ -69,7 +69,12 @@ public class ActivityDynamicItems extends CustomAppCompatActivity {
      * HDZClientCallbacksGet
      * データ取得時
      */
-    public void HDZClientComplete(String response,String apiname) {
+    public void HDZClientComplete(String response,String apiName) {
+
+        if ( checkLogOut(response) ) {
+            return;
+        }
+
         if (responseItem.parseJson(response)) {
 //            if (responseItem.dynamicItemList != null && responseItem.dynamicItemList.size() > 0) {
 //                String name = responseItem.dynamicItemList.get(0).item_name;
@@ -80,12 +85,6 @@ public class ActivityDynamicItems extends CustomAppCompatActivity {
             this.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-
-//                    final ArrayList<HDZItemInfo.DynamicItem> dynamicItems = new ArrayList<>();
-//                    // 動的商品
-//                    for (HDZItemInfo.DynamicItem item : responseItem.dynamicItemList) {
-//
-//                    }
 
                     //リストビュー作成
                     ArrayAdapterDynamicItem aadynamicitem = new ArrayAdapterDynamicItem(_self, responseItem.dynamicItemList);

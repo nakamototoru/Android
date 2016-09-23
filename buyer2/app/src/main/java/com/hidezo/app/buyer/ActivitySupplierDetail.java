@@ -47,7 +47,12 @@ public class ActivitySupplierDetail extends CustomAppCompatActivity {
      * HDZClientCallbacksGet
      * データ取得時
      */
-    public void HDZClientComplete(String response, String apiname) {
+    public void HDZClientComplete(String response, String apiName) {
+
+        if ( checkLogOut(response) ) {
+            return;
+        }
+
         if (responseFriend.parseJson(response)) {
             if (responseFriend.friendInfoList.size() == 0) {
                 return;

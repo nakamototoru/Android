@@ -36,7 +36,13 @@ public class ActivityOrderDetail extends CustomAppCompatActivity {
      * HDZClientCallbacksGet
      * データ取得時
      */
-    public void HDZClientComplete(final String response, final String apiname) {
+//    @Override
+    public void HDZClientComplete(final String response, final String apiName) {
+
+        if ( checkLogOut(response) ) {
+            return;
+        }
+
         if ( responseOrderDetail.parseJson(response) ) {
 
             Log.d("########",response);

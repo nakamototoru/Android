@@ -22,7 +22,7 @@ import okhttp3.Response;
 class HDZClient {
 
     interface HDZCallbacks {
-        void HDZClientComplete(String response,String apiname);
+        void HDZClientComplete(String response,String apiName);
         void HDZClientError(String message);
     }
 
@@ -33,7 +33,7 @@ class HDZClient {
 
     static class Get {
 
-        private void runAsync(final String url, HDZCallbacks callbacks, final String apiname) {
+        private void runAsync(final String url, HDZCallbacks callbacks, final String apiName) {
 
             hdzCallbacks = callbacks;
             //リクエスト開始
@@ -50,29 +50,29 @@ class HDZClient {
                 public void onResponse(Call call, Response response) throws IOException {
                     if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
 
-                    Headers responseHeaders = response.headers();
-                    for (int i = 0, size = responseHeaders.size(); i < size; i++) {
-                        System.out.println(responseHeaders.name(i) + ": " + responseHeaders.value(i));
-                    }
-                    hdzCallbacks.HDZClientComplete(response.body().string(),apiname);
+//                    Headers responseHeaders = response.headers();
+//                    for (int i = 0, size = responseHeaders.size(); i < size; i++) {
+//                        System.out.println(responseHeaders.name(i) + ": " + responseHeaders.value(i));
+//                    }
+                    hdzCallbacks.HDZClientComplete(response.body().string(),apiName);
                 }
             });
         }
 
         /**
          *
-         * @param apiname : ApiName
+         * @param apiName : ApiName
          * @param params : Request Parameter Map
          * @param callbacks : Result After
          */
-        void runAsync(final String apiname, final HashMap<String,String> params, HDZCallbacks callbacks) {
+        void runAsync(final String apiName, final HashMap<String,String> params, HDZCallbacks callbacks) {
 
             String requestUrl;
             if (BuildConfig.DEBUG) {
-                requestUrl = _baseUrl + apiname + "?";
+                requestUrl = _baseUrl + apiName + "?";
             }
             else {
-                requestUrl = _baseUrlRelease + apiname + "?";
+                requestUrl = _baseUrlRelease + apiName + "?";
             }
             int count = 0;
             for ( HashMap.Entry<String, String> e : params.entrySet() ) {
@@ -83,46 +83,23 @@ class HDZClient {
                 count++;
             }
             Log.d("########",requestUrl);
-            runAsync(requestUrl,callbacks,apiname);
+            runAsync(requestUrl,callbacks,apiName);
         }
 
     }
 
     static class Post {
 
-//        private static final MediaType MEDIA_TYPE_MARKDOWN = MediaType.parse("text/x-markdown; charset=utf-8");
-
-//        public void run() throws Exception {
-//            String postBody = ""
-//                    + "Releases\n"
-//                    + "--------\n"
-//                    + "\n"
-//                    + " * _1.0_ May 6, 2013\n"
-//                    + " * _1.1_ June 15, 2013\n"
-//                    + " * _1.2_ August 11, 2013\n";
-//
-//            Request request = new Request.Builder()
-//                    .url("https://api.github.com/markdown/raw")
-//                    .post(RequestBody.create(MEDIA_TYPE_MARKDOWN, postBody))
-//                    .build();
-//
-//            OkHttpClient client = new OkHttpClient();
-//            Response response = client.newCall(request).execute();
-//            if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
-//
-//            System.out.println(response.body().string());
-//        }
-
-        void runAsync(final String apiname, final HashMap<String ,String> paramMap, HDZCallbacks callbacks) {
+        void runAsync(final String apiName, final HashMap<String ,String> paramMap, HDZCallbacks callbacks) {
 
             hdzCallbacks = callbacks;
 
             String requestUrl;
             if (BuildConfig.DEBUG) {
-                requestUrl = _baseUrl + apiname;
+                requestUrl = _baseUrl + apiName;
             }
             else {
-                requestUrl = _baseUrlRelease + apiname;
+                requestUrl = _baseUrlRelease + apiName;
             }
 
             OkHttpClient client = new OkHttpClient();
@@ -148,11 +125,11 @@ class HDZClient {
                 public void onResponse(Call call, Response response) throws IOException {
                     if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
 
-                    Headers responseHeaders = response.headers();
-                    for (int i = 0, size = responseHeaders.size(); i < size; i++) {
-                        System.out.println(responseHeaders.name(i) + ": " + responseHeaders.value(i));
-                    }
-                    hdzCallbacks.HDZClientComplete(response.body().string(),apiname);
+//                    Headers responseHeaders = response.headers();
+//                    for (int i = 0, size = responseHeaders.size(); i < size; i++) {
+//                        System.out.println(responseHeaders.name(i) + ": " + responseHeaders.value(i));
+//                    }
+                    hdzCallbacks.HDZClientComplete(response.body().string(),apiName);
                 }
             });
 

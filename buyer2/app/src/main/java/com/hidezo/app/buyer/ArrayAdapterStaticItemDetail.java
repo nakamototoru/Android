@@ -18,7 +18,7 @@ import java.util.ArrayList;
  * 
  */
 
-public class ArrayAdapterStaticItemDetail extends ArrayAdapter<HDZProfile> {
+class ArrayAdapterStaticItemDetail extends ArrayAdapter<HDZProfile> {
 
     ArrayList<HDZProfile> staticItemDetailList = new ArrayList<>();
 
@@ -49,35 +49,6 @@ public class ArrayAdapterStaticItemDetail extends ArrayAdapter<HDZProfile> {
         tvTitle.setText(profileInfo.title);
         TextView tvContent = (TextView) convertView.findViewById(R.id.textViewContent);
         tvContent.setText(profileInfo.content);
-
-
-//        TextView tvContent = (TextView) convertView.findViewById(R.id.textViewContent);
-//
-//
-//        TextView tvPrice = (TextView) convertView.findViewById(R.id.textViewPrice);
-//        String str_price = "単価：" + staticItem.price + "円";
-//        tvPrice.setText(str_price);
-//
-//        TextView tvStandard = (TextView) convertView.findViewById(R.id.textViewStandard);
-//        String str_standard = "(" + staticItem.standard + "・" + staticItem.loading + "/" + staticItem.scale + ")";
-//        tvStandard.setText( str_standard );
-//
-//
-//        TextView tvRow = (TextView) convertView.findViewById(R.id.textViewRow);
-//        tvRow.setText( String.valueOf(position+1) );
-
-//        TextView tvBtnMinus = (TextView)convertView.findViewById(R.id.textViewButtonMinus);
-//        tvBtnMinus.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-////                Log.d("########","R.id.tvBtnMinus");
-//
-//                if (countInCartList.get(position).count > 0) {
-//                    countInCartList.get(position).count--;
-//                    ((ListView) parent).performItemClick(null, position, -1);
-//                }
-//            }
-//        });
 
         // Return the completed view to render on screen
         return convertView;

@@ -52,7 +52,12 @@ public class ActivityStaticItemDetail extends CustomAppCompatActivity {
      * HDZClientCallbacksGet
      * データ取得時
      */
-    public void HDZClientComplete(String response,String apiname) {
+    public void HDZClientComplete(String response,String apiName) {
+
+        if ( checkLogOut(response) ) {
+            return;
+        }
+
         if (responseItem.parseJson(response)) {
 
             //UIスレッド上で呼び出してもらう
