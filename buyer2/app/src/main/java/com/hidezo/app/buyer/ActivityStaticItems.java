@@ -27,9 +27,10 @@ public class ActivityStaticItems extends CustomAppCompatActivity {
 
     private static ActivityStaticItems _self;
 
-    private String myCategoryId = "";
     private HDZApiResponseItem responseItem = new HDZApiResponseItem();
-
+    private String myCategoryId = "";
+    private String mySupplierId = "";
+//    private String myCategoryName = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +40,7 @@ public class ActivityStaticItems extends CustomAppCompatActivity {
         _self = this;
 
         Intent intent = getIntent();
-        String mySupplierId = intent.getStringExtra("supplier_id");
+        mySupplierId = intent.getStringExtra("supplier_id");
         myCategoryId = intent.getStringExtra("category_id");
 
         // HTTP GET
@@ -101,6 +102,9 @@ public class ActivityStaticItems extends CustomAppCompatActivity {
                             if (id == 0) {
                                 //遷移
                                 Intent intent = new Intent( _self.getApplication(), ActivityStaticItemDetail.class);
+                                intent.putExtra("supplier_id", _self.mySupplierId);
+                                intent.putExtra("item_id", staticItems.get(position).id);
+                                intent.putExtra("category_id", _self.myCategoryId);
                                 _self.startActivity(intent);
                             }
                             else {

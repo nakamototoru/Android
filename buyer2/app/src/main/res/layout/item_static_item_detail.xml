@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/abc_action_bar_overflow_padding_end_material">
+    android:padding="10dp">
 
     <LinearLayout
         android:orientation="vertical"
@@ -10,20 +10,22 @@
         android:layout_height="match_parent">
 
         <TextView
+            android:text="title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="店舗名"
             android:id="@+id/textViewTitle"
             android:textColor="@android:color/black"
+            android:textSize="18sp"
             android:background="@color/colorOrderBar" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:text="content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="なんとかかんとか"
             android:id="@+id/textViewContent"
+            android:textColor="@android:color/black"
             android:textSize="18sp" />
+
     </LinearLayout>
+
 </RelativeLayout>

@@ -39,10 +39,6 @@ public class ActivitySupplierDetail extends CustomAppCompatActivity {
         req.begin( globals.getUserId(), globals.getUuid(), this);
 
         // ツールバー初期化
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        String supplier_name = intent.getStringExtra("supplier_name");
-//        toolbar.setTitle(supplier_name);
-//        setSupportActionBar(toolbar);
         String supplier_name = intent.getStringExtra("supplier_name");
         setNavigationBar(supplier_name);
     }
@@ -60,7 +56,7 @@ public class ActivitySupplierDetail extends CustomAppCompatActivity {
             for (HDZFriendInfo object : responseFriend.friendInfoList) {
                 if (object.id.equals(mySupplierId)) {
 
-                    final ArrayList<HDZProfile> profileList = new ArrayList<HDZProfile>();
+                    final ArrayList<HDZProfile> profileList = new ArrayList<>();
                     HDZProfile pName = new HDZProfile("店舗名",object.name);
                     profileList.add(pName);
                     HDZProfile pAddress = new HDZProfile("本社所在地",object.address);
@@ -79,9 +75,9 @@ public class ActivitySupplierDetail extends CustomAppCompatActivity {
                         @Override
                         public void run(){
                             //リストビュー作成
-                            ArrayAdapterSupplierDetail aasupplier = new ArrayAdapterSupplierDetail(_self, profileList);
+                            ArrayAdapterSupplierDetail adapter = new ArrayAdapterSupplierDetail(_self, profileList);
                             ListView listView = (ListView) findViewById(R.id.listViewSupplierDetail);
-                            listView.setAdapter(aasupplier);
+                            listView.setAdapter(adapter);
                         }
                     });
 

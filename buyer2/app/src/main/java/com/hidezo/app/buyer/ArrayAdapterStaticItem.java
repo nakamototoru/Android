@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -21,9 +22,9 @@ import java.util.ArrayList;
  */
 class ArrayAdapterStaticItem extends ArrayAdapter<HDZItemInfo.StaticItem> {
 
-    ArrayList<HDZItemInfo.StaticItem> staticItemList = new ArrayList<>(); // HDZItemInfo.StaticItem
+    ArrayList<HDZItemInfo.StaticItem> staticItemList = new ArrayList<>();
 
-    ArrayList<AppGlobals.CartCount> countInCartList = new ArrayList<>(); // AppGlobals.CartCount
+    ArrayList<AppGlobals.CartCount> countInCartList = new ArrayList<>();
 
     ArrayAdapterStaticItem(Context context, ArrayList<HDZItemInfo.StaticItem> items) {
         super(context, 0, items);
@@ -56,6 +57,13 @@ class ArrayAdapterStaticItem extends ArrayAdapter<HDZItemInfo.StaticItem> {
         TextView tvName = (TextView) convertView.findViewById(R.id.textViewName);
         tvName.setText(staticItem.name);
         tvName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((ListView) parent).performItemClick(null, position, 0);
+            }
+        });
+        ImageView ivItem = (ImageView) convertView.findViewById(R.id.imageViewItem);
+        ivItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ((ListView) parent).performItemClick(null, position, 0);
