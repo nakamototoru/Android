@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -68,30 +69,11 @@ class ArrayAdapterDynamicItem extends ArrayAdapter<HDZItemInfo.DynamicItem> {
             @Override
             public void onClick(View view) {
 
-//                Log.d("########","R.id.tvBtnPlus");
-//                if (countInCartList.get(position).count < 100) {
-//                    countInCartList.get(position).count++;
-//                    ((ListView) parent).performItemClick(null, position, 1);
-//                }
-
-                // TODO: 変更ダイアログ
+                // 親アクティビティへ
                 Log.d("########","R.id.tvBtn・TODO: 変更ダイアログ");
-
+                ((ListView) parent).performItemClick(null, position, -1);
             }
         });
-
-//        TextView tvBtnMinus = (TextView)convertView.findViewById(R.id.textViewButtonMinus);
-//        tvBtnMinus.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-////                Log.d("########","R.id.tvBtnMinus");
-//                if (countInCartList.get(position).count > 0) {
-//                    countInCartList.get(position).count--;
-//                    ((ListView) parent).performItemClick(null, position, -1);
-//                }
-//            }
-//        });
 
         // Return the completed view to render on screen
         return convertView;

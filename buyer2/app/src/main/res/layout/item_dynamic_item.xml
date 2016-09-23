@@ -14,7 +14,9 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="商品名"
-            android:id="@+id/textViewName" />
+            android:id="@+id/textViewName"
+            android:textSize="18sp"
+            android:fontFamily="sans-serif" />
 
         <LinearLayout
             android:orientation="horizontal"
@@ -27,7 +29,8 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="row"
-                android:id="@+id/textViewRow" />
+                android:id="@+id/textViewRow"
+                android:textColor="@android:color/black" />
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -40,7 +43,8 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="price"
                 android:id="@+id/textViewPrice"
-                android:textColor="@android:color/holo_red_dark" />
+                android:textColor="@android:color/holo_red_dark"
+                android:textSize="14sp" />
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -56,7 +60,8 @@
                     android:text="0"
                     android:id="@+id/textViewCount"
                     android:textColor="@color/colorPrimary"
-                    android:gravity="right" />
+                    android:gravity="right"
+                    android:textSize="24sp" />
 
                 <LinearLayout
                     android:orientation="horizontal"
@@ -64,7 +69,7 @@
                     android:layout_height="match_parent"></LinearLayout>
 
                 <TextView
-                    android:layout_height="@dimen/abc_action_bar_default_height_material"
+                    android:layout_height="@android:dimen/app_icon_size"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="@string/Update"
                     android:id="@+id/textViewButtonUpdate"

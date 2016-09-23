@@ -1,8 +1,11 @@
 package com.hidezo.app.buyer;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 //import android.support.v7.app.AppCompatActivity;
+import android.graphics.Canvas;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -11,6 +14,11 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.hidezo.app.buyer.CustomView.PickerView;
+
+import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 //import java.util.ArrayList;
 
@@ -73,6 +81,12 @@ public class ActivityDynamicItems extends CustomAppCompatActivity {
                 @Override
                 public void run() {
 
+//                    final ArrayList<HDZItemInfo.DynamicItem> dynamicItems = new ArrayList<>();
+//                    // 動的商品
+//                    for (HDZItemInfo.DynamicItem item : responseItem.dynamicItemList) {
+//
+//                    }
+
                     //リストビュー作成
                     ArrayAdapterDynamicItem aadynamicitem = new ArrayAdapterDynamicItem(_self, responseItem.dynamicItemList);
                     ListView listView = (ListView) findViewById(R.id.listViewDynamicItem);
@@ -82,14 +96,32 @@ public class ActivityDynamicItems extends CustomAppCompatActivity {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-//                            Log.d("########","ActivityDynamicItems : onItemClick");
-                            ListView listView = (ListView) parent;
-                            try {
-                                View targetView = listView.getChildAt(position);
-                                listView.getAdapter().getView(position,targetView,parent);
-                            } catch (Exception e) {
-                                Log.d("########","Failed : ListView reflesh");
-                            }
+                            ArrayList<String> pickerList = new ArrayList<>();
+                            pickerList.add("0");
+                            pickerList.addAll(responseItem.dynamicItemList.get(position).num_scale);
+
+                            final PickerView pickerView = new PickerView(_self);
+                            pickerView.setData(pickerList);
+                            pickerView.setSelected(0);
+
+                            //UIスレッド上で呼び出してもらう
+                            _self.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+
+                                    new AlertDialog.Builder(_self)
+                                            .setTitle("選択")
+                                            .setView(pickerView)
+                                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int id) {
+
+                                                }
+                                            })
+                                            .show();
+                                }
+                            });
+
                         }
                     });
                     listView.setAdapter(aadynamicitem);

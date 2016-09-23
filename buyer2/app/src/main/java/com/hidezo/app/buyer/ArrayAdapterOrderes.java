@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 class ArrayAdapterOrderes extends ArrayAdapter<HDZordered> {
 
-    private ArrayList<HDZordered> orderedList = new ArrayList<HDZordered>();
+    public ArrayList<HDZordered> orderedList = new ArrayList<>(); // HDZordered
 
     public ArrayAdapterOrderes(Context context, ArrayList<HDZordered> orderes) {
         super(context, 0, orderes);
@@ -41,16 +41,18 @@ class ArrayAdapterOrderes extends ArrayAdapter<HDZordered> {
 
         // Lookup view for data population
         TextView tvOrderAt = (TextView) convertView.findViewById(R.id.textViewOrderAt);
-        tvOrderAt.setText(orderInfo.order_at);
+        tvOrderAt.setText( orderInfo.order_at );
 
 //        TextView tvName = (TextView) convertView.findViewById(R.id.tvName);
-//        TextView tvRow = (TextView) convertView.findViewById(R.id.tvRow);
-//        TextView tvOrder = (TextView) convertView.findViewById(R.id.textViewOrder);
+        TextView tvRow = (TextView) convertView.findViewById(R.id.textViewOrderRow);
+        tvRow.setText( String.valueOf(position+1) );
 
-        // Populate the data into the template view using the data object
-//        tvRow.setText( String.valueOf(position+1) );
+        TextView tvSupplier = (TextView) convertView.findViewById(R.id.textViewSupplier);
+        tvSupplier.setText( orderInfo.supplier_name );
 
-//        tvName.setText(friendInfo.name);
+        TextView tvDeliverAt = (TextView) convertView.findViewById(R.id.textViewDeliverAt);
+        tvDeliverAt.setText( orderInfo.deliver_at );
+
 //        tvName.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {

@@ -80,11 +80,10 @@ public class ActivityStaticItems extends CustomAppCompatActivity {
                 @Override
                 public void run() {
 
-                    final ArrayList<HDZItemInfo.StaticItem> staticItems = new ArrayList<HDZItemInfo.StaticItem>();
-
+                    final ArrayList<HDZItemInfo.StaticItem> staticItems = new ArrayList<>(); // HDZItemInfo.StaticItem
                     // 静的商品
                     for (HDZItemInfo.StaticItem item : responseItem.staticItemList) {
-                        String cid =item.category.id;
+                        String cid = item.category.id;
                         if ( cid.equals(myCategoryId) ) {
                             staticItems.add(item);
                         }
@@ -102,24 +101,16 @@ public class ActivityStaticItems extends CustomAppCompatActivity {
                             if (id == 0) {
                                 //遷移
                                 Intent intent = new Intent( _self.getApplication(), ActivityStaticItemDetail.class);
-//                                intent.putExtra("supplier_id",_self.mySupplierId);
                                 _self.startActivity(intent);
                             }
                             else {
-                                ListView listView = (ListView) parent;
-//                                try {
-//                                    View targetView = listView.getChildAt(position);
-//                                    listView.getAdapter().getView(position,targetView,parent);
-//                                } catch (Exception e) {
-//                                    Log.d("########","Failed : ListView reflesh");
-//                                }
-
-//                                AppGlobals globals = (AppGlobals) _self.getApplication();
-//                                String[] str_num_scale = new String[];
-//                                globals.openDialogNumScale(staticItems.get(position).num_scale);
+                                ArrayList<String> pickerList = new ArrayList<>();
+                                pickerList.add("0");
+                                pickerList.addAll(staticItems.get(position).num_scale);
 
                                 final PickerView pickerView = new PickerView(_self);
-                                pickerView.setData(staticItems.get(position).num_scale);
+                                pickerView.setData( pickerList );
+                                pickerView.setSelected(0);
 
                                 //UIスレッド上で呼び出してもらう
                                 _self.runOnUiThread(new Runnable() {
