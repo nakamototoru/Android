@@ -2,7 +2,7 @@ package com.hidezo.app.buyer;
 
 import android.os.Bundle;
 //import android.support.v7.widget.Toolbar;
-import android.util.Log;
+//import android.util.Log;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -37,9 +37,10 @@ public class ActivityCategorys extends CustomAppCompatActivity {
         tvOrderCheck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("########","R.id.textViewButtonOrderCheck");
+//                Log.d("########","R.id.textViewButtonOrderCheck");
 
                 Intent intent = new Intent( _self.getApplication(), ActivityUserOrders.class);
+                intent.putExtra("supplier_id",mySupplierId);
                 startActivity(intent);
             }
         });
@@ -47,17 +48,13 @@ public class ActivityCategorys extends CustomAppCompatActivity {
         // ツールバー初期化
         setNavigationBar("カテゴリ一覧");
 
-        // ログインチェック
-        if (isLogin()) {
-
-            // ゲット・商品一覧
-            Intent intent = getIntent();
-            mySupplierId = intent.getStringExtra("supplier_id");
-            // HTTP GET
-            HDZApiRequestPackage.Item req = new HDZApiRequestPackage.Item();
-            AppGlobals globals = (AppGlobals) this.getApplication();
-            req.begin(globals.getUserId(), globals.getUuid(), mySupplierId, this);
-        }
+        // ゲット・商品一覧
+        Intent intent = getIntent();
+        mySupplierId = intent.getStringExtra("supplier_id");
+        // HTTP GET
+        HDZApiRequestPackage.Item req = new HDZApiRequestPackage.Item();
+        AppGlobals globals = (AppGlobals) this.getApplication();
+        req.begin(globals.getUserId(), globals.getUuid(), mySupplierId, this);
 
     }
 
@@ -65,7 +62,6 @@ public class ActivityCategorys extends CustomAppCompatActivity {
      * HDZClientCallbacksGet
      * データ取得時
      */
-//    @Override
     public void HDZClientComplete(String response,String apiName) {
 
         if ( checkLogOut(response) ) {

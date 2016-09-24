@@ -23,17 +23,13 @@ public class ActivityOrderes extends CustomAppCompatActivity {
 
         _self = this;
 
+        // ゲット・注文履歴
+        AppGlobals globals = (AppGlobals) this.getApplication();
+        HDZApiRequestPackage.OrderList req = new HDZApiRequestPackage.OrderList();
+        req.begin(globals.getUserId(), globals.getUuid(), 1, this );
+
         // ツールナビゲーションバー
         setNavigationBar("注文履歴");
-
-        // ログインチェック
-        if (isLogin()) {
-
-            // ゲット・注文履歴
-            AppGlobals globals = (AppGlobals) this.getApplication();
-            HDZApiRequestPackage.OrderList req = new HDZApiRequestPackage.OrderList();
-            req.begin(globals.getUserId(), globals.getUuid(), 1, this );
-        }
     }
 
     /**
@@ -67,11 +63,11 @@ public class ActivityOrderes extends CustomAppCompatActivity {
 
                             ListView listView = (ListView)parent;
                             HDZordered order = (HDZordered)listView.getItemAtPosition(position);
-                            String order_no = order.order_no;
 
                             // 画面遷移
                             Intent intent = new Intent( _self.getApplication(), ActivityOrderDetail.class);
-                            intent.putExtra("order_no", order_no);
+                            intent.putExtra("order_no", order.order_no);
+                            intent.putExtra("supplier_name", order.supplier_name);
                             _self.startActivity(intent);
                         }
                     });

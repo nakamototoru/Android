@@ -27,7 +27,7 @@ class HDZApiRequestPackage {
 
             HDZApiRequest request = new HDZApiRequest();
 
-            HashMap<String,String> params = new HashMap<String, String>();
+            HashMap<String,String> params = new HashMap<>();
             params.put("id",id);
             params.put("uuid",uuid);
             params.put("password",password);

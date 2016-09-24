@@ -35,21 +35,30 @@ import java.util.List;
 public class Dau implements Parcelable {
 
 //    public static final String TAG = "Dau";
+
     // table name
-    public static final String TABLE_NAME = "dau";
+//    public static final String TABLE_NAME = "dau_hidezo_buyer";
+    static String getTableName() {
+        return "dau_hidezo_buyer";
+    }
+
     // table name aliases
-    public static final String TABLE_NAME_OMISSION = "d";
+//    public static final String TABLE_NAME_OMISSION = "d";
+    static String getTableNameOmission() {
+        return "d";
+    }
+
     // column list constant
     public static final List<String> COL = Collections.unmodifiableList(new LinkedList<String>() {
         {
             // カラム名登録
             add("id");
-            add("dau_date");
-            add("opening_price");
-            add("high_price");
-            add("low_price");
-            add("closing_price");
-            add("change_price");
+//            add("dau_date");
+//            add("opening_price");
+//            add("high_price");
+//            add("low_price");
+//            add("closing_price");
+//            add("change_price");
             add("deleted_at");
             add("created_at");
             add("updated_at");
@@ -59,17 +68,17 @@ public class Dau implements Parcelable {
     // id
     public int id;
     // dau_date
-    public String dau_date = "";
-    // opening_price
-    public String opening_price = "";
-    // high_price
-    public String high_price = "";
-    // low_price
-    public String low_price = "";
-    // closing_price
-    public String closing_price = "";
-    // change_price
-    public String change_price = "";
+//    public String dau_date = "";
+//    // opening_price
+//    public String opening_price = "";
+//    // high_price
+//    public String high_price = "";
+//    // low_price
+//    public String low_price = "";
+//    // closing_price
+//    public String closing_price = "";
+//    // change_price
+//    public String change_price = "";
     // deleted_at
     public String deleted_at = "";
     // created_at
@@ -90,12 +99,12 @@ public class Dau implements Parcelable {
 
     private Dau(Parcel in) {
         id = in.readInt();
-        dau_date = in.readString();
-        opening_price = in.readString();
-        high_price = in.readString();
-        low_price = in.readString();
-        closing_price = in.readString();
-        change_price = in.readString();
+//        dau_date = in.readString();
+//        opening_price = in.readString();
+//        high_price = in.readString();
+//        low_price = in.readString();
+//        closing_price = in.readString();
+//        change_price = in.readString();
         deleted_at = in.readString();
         created_at = in.readString();
         updated_at = in.readString();
@@ -108,12 +117,12 @@ public class Dau implements Parcelable {
 
     public void writeToParcel(Parcel out, int flags) {
         out.writeInt(id);
-        out.writeString(dau_date);
-        out.writeString(opening_price);
-        out.writeString(high_price);
-        out.writeString(low_price);
-        out.writeString(closing_price);
-        out.writeString(change_price);
+//        out.writeString(dau_date);
+//        out.writeString(opening_price);
+//        out.writeString(high_price);
+//        out.writeString(low_price);
+//        out.writeString(closing_price);
+//        out.writeString(change_price);
         out.writeString(deleted_at);
         out.writeString(created_at);
         out.writeString(updated_at);
@@ -124,24 +133,24 @@ public class Dau implements Parcelable {
         StringBuffer str = new StringBuffer();
         str.append("Dau [");
         str.append(" id=" + id);
-        if (!TextUtils.isEmpty(dau_date)) {
-            str.append(", dau_date=" + dau_date);
-        }
-        if (!TextUtils.isEmpty(opening_price)) {
-            str.append(", opening_price=" + opening_price);
-        }
-        if (!TextUtils.isEmpty(high_price)) {
-            str.append(", high_price=" + high_price);
-        }
-        if (!TextUtils.isEmpty(low_price)) {
-            str.append(", low_price=" + low_price);
-        }
-        if (!TextUtils.isEmpty(closing_price)) {
-            str.append(", closing_price=" + closing_price);
-        }
-        if (!TextUtils.isEmpty(change_price)) {
-            str.append(", change_price=" + change_price);
-        }
+//        if (!TextUtils.isEmpty(dau_date)) {
+//            str.append(", dau_date=" + dau_date);
+//        }
+//        if (!TextUtils.isEmpty(opening_price)) {
+//            str.append(", opening_price=" + opening_price);
+//        }
+//        if (!TextUtils.isEmpty(high_price)) {
+//            str.append(", high_price=" + high_price);
+//        }
+//        if (!TextUtils.isEmpty(low_price)) {
+//            str.append(", low_price=" + low_price);
+//        }
+//        if (!TextUtils.isEmpty(closing_price)) {
+//            str.append(", closing_price=" + closing_price);
+//        }
+//        if (!TextUtils.isEmpty(change_price)) {
+//            str.append(", change_price=" + change_price);
+//        }
         str.append(", deleted_at=" + deleted_at);
         str.append(", created_at=" + created_at);
         str.append(", updated_at=" + updated_at);

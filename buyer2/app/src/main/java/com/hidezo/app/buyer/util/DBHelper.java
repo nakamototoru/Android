@@ -68,4 +68,8 @@ public class DBHelper {
         }
         return result;
     }
+
+    public void sendSuccess() {
+
+    }
 }

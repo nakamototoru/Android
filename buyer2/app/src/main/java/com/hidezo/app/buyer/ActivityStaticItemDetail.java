@@ -44,7 +44,7 @@ public class ActivityStaticItemDetail extends CustomAppCompatActivity {
         req.begin( globals.getUserId(), globals.getUuid(), supplier_id, this);
 
         // ツールバー初期化
-        String title = "商品詳細"; //intent.getStringExtra("category_name");
+        String title = "商品詳細";
         setNavigationBar(title);
     }
 

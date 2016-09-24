@@ -6,10 +6,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+//import android.widget.Filter;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+//import java.util.List;
+
+//import com.hidezo.app.buyer.CustomView.FiltableArrayAdapter;
 
 /**
  * Created by dezami on 2016/09/16.
@@ -17,9 +21,9 @@ import java.util.ArrayList;
  */
 class ArrayAdapterDynamicItem extends ArrayAdapter<HDZItemInfo.DynamicItem> {
 
-    ArrayList<HDZItemInfo.DynamicItem> dynamicItemList = new ArrayList<HDZItemInfo.DynamicItem>();
+    ArrayList<HDZItemInfo.DynamicItem> dynamicItemList = new ArrayList<>();
 
-    ArrayList<AppGlobals.CartCount> countInCartList = new ArrayList<AppGlobals.CartCount>();
+    ArrayList<AppGlobals.CartCount> countInCartList = new ArrayList<>();
 
     public ArrayAdapterDynamicItem(Context context, ArrayList<HDZItemInfo.DynamicItem> items) {
         super(context, 0, items);
@@ -36,8 +40,6 @@ class ArrayAdapterDynamicItem extends ArrayAdapter<HDZItemInfo.DynamicItem> {
     }
     @Override
     public View getView(final int position, View convertView, final ViewGroup parent) {
-
-//        Log.d("########","ArrayAdapterDynamicItem : getView");
 
         // Get the data item for this position
         HDZItemInfo.DynamicItem dynamicItem = getItem(position);
@@ -68,9 +70,7 @@ class ArrayAdapterDynamicItem extends ArrayAdapter<HDZItemInfo.DynamicItem> {
         tvBtnPlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 // 親アクティビティへ
-                Log.d("########","R.id.tvBtn・TODO: 変更ダイアログ");
                 ((ListView) parent).performItemClick(null, position, -1);
             }
         });
@@ -81,27 +81,59 @@ class ArrayAdapterDynamicItem extends ArrayAdapter<HDZItemInfo.DynamicItem> {
 
     /**
      * リストをリフレッシュ
-     * @param itemList arraylist
      */
+    public void refleshRow(int position) {
+    }
 //    public void refleshItemList(ArrayList<HDZItemInfo.DynamicItem> itemList){
-//        sourceList.clear();
-//        sourceList = new ArrayList<HogeItem>(itemList);
+//        dynamicItemList.clear();
+//        dynamicItemList = new ArrayList<>(itemList);
+//    }
+//    void refleshAll() {
+//
 //    }
 
-    /**
-     * num_scaleを連結
-     */
-//    public String bindNumScale(ArrayList<String> list) {
+//    public class TestFilter extends Filter {
 //
-//        String response = "";
-//        int count = 0;
-//        for (String str : list) {
-//            if (count != 0) {
-//                response += ",";
+//        @Override
+//        protected FilterResults performFiltering(CharSequence constraint) {
+//
+//            List<HDZItemInfo.DynamicItem> items = new ArrayList<>();
+//
+//            // getCount及びgetItemはAdapterのメソッド
+//            for(int i = 0, size = getCount(); i < size; i++) {
+//                HDZItemInfo.DynamicItem data = getItem(i);
+//                if((data.getId() != null && data.getId().contains(constraint))
+////                        || (data.getText() != null && data.getText().contains(constraint))
+//                        )
+//                {
+//                    items.add(data);
+//                }
 //            }
-//            response += str;
-//            count++;
+//
+//            FilterResults r = new FilterResults();
+//            r.count = items.size();
+//            r.values = items;
+//
+//            return r;
 //        }
-//        return response;
+//
+//        @SuppressWarnings("unchecked")
+//        @Override
+//        protected void publishResults(CharSequence constraint, FilterResults results) {
+//
+//            // Adapterのメソッドでデータの内容を更新する
+//            if(results.count > 0) {
+//                List<HDZItemInfo.DynamicItem> items = (List<HDZItemInfo.DynamicItem>) results.values;
+//
+//                clear();
+//                addAll(items);
+//                notifyDataSetChanged();
+//
+//            } else {
+//                notifyDataSetInvalidated();
+//            }
+//        }
+//
 //    }
+
 }

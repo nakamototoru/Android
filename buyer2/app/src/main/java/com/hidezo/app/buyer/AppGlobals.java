@@ -27,7 +27,6 @@ import java.util.UUID;
  *
  */
 public class AppGlobals extends Application {
-    //  implements HDZClient.HDZCallbacks
 
     /**
      * UUID
@@ -48,23 +47,12 @@ public class AppGlobals extends Application {
 
         return uuid;
     }
-//    public void setUuid(String value) {
-//
-//        // インスタンスを取得する
-//        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
-//        // データを保存する
-//        SharedPreferences.Editor ed = sp.edit();
-//        SharedPreferences.Editor result = ed.putString("uuid", value);
-//        result.commit();
-//
-////        sp.edit().putString("uuid", value);//.commit();
-//    }
     public String getUuid() {
 
         // インスタンスを取得する
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         // データを取得する(第2引数はデフォルト値)
-        return sp.getString("uuid", "F0CAC7E8-D81C-4667-BE8B-588869EF5D25");
+        return sp.getString("uuid", ""); // F0CAC7E8-D81C-4667-BE8B-588869EF5D25
     }
 
     /**
@@ -85,7 +73,7 @@ public class AppGlobals extends Application {
         // インスタンスを取得する
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         // データを取得する(第2引数はデフォルト値)
-        return sp.getString("user_id", "6146740737615597570");
+        return sp.getString("user_id", ""); // 6146740737615597570
     }
 
     /**

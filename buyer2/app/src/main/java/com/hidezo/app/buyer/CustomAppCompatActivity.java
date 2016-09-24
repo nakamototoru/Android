@@ -9,7 +9,18 @@ import android.util.Log;
  *
  */
 public class CustomAppCompatActivity extends AppCompatActivity implements HDZClient.HDZCallbacks {
-    // AppGlobals.CheckLoginCallbacks,
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // ログインチェック
+        if (!isLogin()) {
+            // ログアウト促す
+            AppGlobals globals = (AppGlobals) this.getApplication();
+            globals.openAlertSessionOut(this);
+        }
+    }
 
     /**
      * ログインチェック

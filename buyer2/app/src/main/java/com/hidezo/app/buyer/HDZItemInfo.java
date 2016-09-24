@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * Created by dezami on 2016/09/14.
  *
  */
-class HDZItemInfo {
+public class HDZItemInfo {
 
     String attr_flg = "";
     ArrayList<String> charge_list = new ArrayList<String>();
@@ -44,7 +44,14 @@ class HDZItemInfo {
         String id = "";
         String item_name = "";
         String price = "";
-        ArrayList<String> num_scale = new ArrayList<String>();
+        ArrayList<String> num_scale = new ArrayList<>();
+
+        public String getId() {
+            return this.id;
+        }
+        public void setId(String str) {
+            this.id = str;
+        }
     }
 
     static class DynamicItemInfo {

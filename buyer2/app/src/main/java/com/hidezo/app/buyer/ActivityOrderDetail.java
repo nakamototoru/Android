@@ -20,9 +20,6 @@ public class ActivityOrderDetail extends CustomAppCompatActivity {
 
         _self = this;
 
-        // ツールナビゲーションバー
-        setNavigationBar("orderinfo.supplier_name様宛");
-
         Intent intent = getIntent();
         String order_no = intent.getStringExtra("order_no");
 
@@ -30,6 +27,11 @@ public class ActivityOrderDetail extends CustomAppCompatActivity {
         HDZApiRequestPackage.OrderDetail req = new HDZApiRequestPackage.OrderDetail();
         AppGlobals globals = (AppGlobals) this.getApplication();
         req.begin(globals.getUserId(), globals.getUuid(), order_no, this);
+
+        String supplier_name = intent.getStringExtra("supplier_name");
+        // ツールナビゲーションバー
+        setNavigationBar(supplier_name + "様宛");
+
     }
 
     /**

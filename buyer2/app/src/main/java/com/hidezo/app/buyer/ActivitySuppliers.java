@@ -42,18 +42,6 @@ public class ActivitySuppliers extends CustomAppCompatActivity {
         req.begin( globals.getUserId(), globals.getUuid(), this);
    }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        // ログインチェック
-        if (!isLogin()) {
-            // ログアウト促す
-            AppGlobals globals = (AppGlobals) this.getApplication();
-            globals.openAlertSessionOut(this);
-        }
-    }
-
     /**
      * HDZClientCallbacksGet
      * データ取得時
