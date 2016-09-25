@@ -9,4 +9,5 @@
     <string name="PlusMark">+</string>
     <string name="MinusMark">-</string>
     <string name="Update">Update</string>
+    <string name="Delete">Delete</string>
 </resources>

@@ -1,0 +1,1 @@
+CREATE TABLE IF NOT EXISTS dau (id text,supplier_id text,item_id text,order_size text,created_at text,updated_at text,deleted_at text);

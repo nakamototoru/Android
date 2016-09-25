@@ -38,7 +38,7 @@ import java.util.List;
  */
 public class DauHelper {
 
-    public static final String TAG = "DauHelper";
+    public static final String TAG = "## DauHelper";
 
     /**
      * return Dau List
@@ -47,8 +47,8 @@ public class DauHelper {
      * @return the list objects of rows, null otherwise.
      */
     public static List<Dau> getDauList(final Context context) {
-        List<Dau> list = new ArrayList<Dau>();
-        Dau dau = null;
+        List<Dau> list = new ArrayList<>();
+        Dau dau;
         Cursor c = null;
         DBHelper dBHelper = null;
         try {
@@ -56,21 +56,18 @@ public class DauHelper {
 
             StringBuffer sql = new StringBuffer();
             sql.append("select ");
-            sql.append(" " + Dau.getTableNameOmission() + "." + Dau.COL.get(0) + ",");
-            sql.append(" " + Dau.getTableNameOmission() + "." + Dau.COL.get(1) + ",");
-            sql.append(" " + Dau.getTableNameOmission() + "." + Dau.COL.get(2) + ",");
-            sql.append(" " + Dau.getTableNameOmission() + "." + Dau.COL.get(3) + ",");
-            sql.append(" " + Dau.getTableNameOmission() + "." + Dau.COL.get(4) + ",");
-            sql.append(" " + Dau.getTableNameOmission() + "." + Dau.COL.get(5) + ",");
-            sql.append(" " + Dau.getTableNameOmission() + "." + Dau.COL.get(6) + ",");
-            sql.append(" " + Dau.getTableNameOmission() + "." + Dau.COL.get(7) + ",");
-            sql.append(" " + Dau.getTableNameOmission() + "." + Dau.COL.get(8) + ",");
-            sql.append(" " + Dau.getTableNameOmission() + "." + Dau.COL.get(9));
+            sql.append(" " + Dau.getTableNameOmission() + "." + Dau.getKeyId() + ","); // COL.get(0)
+            sql.append(" " + Dau.getTableNameOmission() + "." + Dau.getKeySupplierId() + ",");
+            sql.append(" " + Dau.getTableNameOmission() + "." + Dau.getKeyItemId() + ",");
+            sql.append(" " + Dau.getTableNameOmission() + "." + Dau.getKeyOrderSize() + ",");
+            sql.append(" " + Dau.getTableNameOmission() + "." + Dau.getKeyCreatedAt() + ","); // COL.get(6)
+            sql.append(" " + Dau.getTableNameOmission() + "." + Dau.getKeyUpdatedAt() + ","); // COL.get(7)
+            sql.append(" " + Dau.getTableNameOmission() + "." + Dau.getKeyDeletedAt()); // COL.get(9)
             sql.append(" from ");
             sql.append(" " + Dau.getTableName() + " " + Dau.getTableNameOmission());
 
             if (BuildConfig.DEBUG) {
-                Log.d(TAG, "sql" + sql.toString());
+                Log.d(TAG, "sql:" + sql.toString());
             }
 
             c = dBHelper.db.rawQuery(sql.toString(), null);
@@ -79,16 +76,69 @@ public class DauHelper {
 
             while (isResult) {
                 dau = new Dau();
-                dau.id = c.getInt(0);
-//                dau.dau_date = c.getString(1);
-//                dau.opening_price = c.getString(2);
-//                dau.high_price = c.getString(3);
-//                dau.low_price = c.getString(4);
-//                dau.closing_price = c.getString(5);
-//                dau.change_price = c.getString(6);
-                dau.deleted_at = c.getString(7);
-                dau.created_at = c.getString(8);
-                dau.updated_at = c.getString(9);
+                dau.id = c.getString( Dau.getIndexId() );
+                dau.supplier_id = c.getString( Dau.getIndexSupplierId() );
+                dau.item_id = c.getString( Dau.getIndexItemId() );
+                dau.order_size = c.getString( Dau.getIndexOrderSize() );
+                dau.created_at = c.getString( Dau.getIndexCreatedAt() );
+                dau.updated_at = c.getString( Dau.getIndexUpdatedAt() );
+                dau.deleted_at = c.getString( Dau.getIndexDeletedAt() );
+                list.add(dau);
+                isResult = c.moveToNext();
+            }
+
+        } catch (Exception e) {
+            Log.e(TAG, "error occured!! cause : " + e.getMessage());
+        } finally {
+
+            if (c != null) {
+                c.close();
+            }
+
+            if (dBHelper != null) {
+                dBHelper.cleanup();
+            }
+        }
+        return list;
+    }
+    public static List<Dau> getDauList(final Context context, final String supplier_id) {
+        List<Dau> list = new ArrayList<>();
+        Dau dau;
+        Cursor c = null;
+        DBHelper dBHelper = null;
+        try {
+            dBHelper = new DBHelper(context);
+
+            StringBuffer sql = new StringBuffer();
+            sql.append("select ");
+            sql.append(" " + Dau.getTableNameOmission() + "." + Dau.getKeyId() + ","); // COL.get(0)
+            sql.append(" " + Dau.getTableNameOmission() + "." + Dau.getKeySupplierId() + ",");
+            sql.append(" " + Dau.getTableNameOmission() + "." + Dau.getKeyItemId() + ",");
+            sql.append(" " + Dau.getTableNameOmission() + "." + Dau.getKeyOrderSize() + ",");
+            sql.append(" " + Dau.getTableNameOmission() + "." + Dau.getKeyCreatedAt() + ","); // COL.get(6)
+            sql.append(" " + Dau.getTableNameOmission() + "." + Dau.getKeyUpdatedAt() + ","); // COL.get(7)
+            sql.append(" " + Dau.getTableNameOmission() + "." + Dau.getKeyDeletedAt()); // COL.get(9)
+            sql.append(" from ");
+            sql.append(" " + Dau.getTableName() + " " + Dau.getTableNameOmission());
+            sql.append(" where " + Dau.getTableNameOmission() + "." + Dau.getKeySupplierId() + "=\"" +  supplier_id + "\"");
+
+            if (BuildConfig.DEBUG) {
+                Log.d(TAG, "sql:" + sql.toString());
+            }
+
+            c = dBHelper.db.rawQuery(sql.toString(), null);
+
+            boolean isResult = c.moveToFirst();
+
+            while (isResult) {
+                dau = new Dau();
+                dau.id = c.getString( Dau.getIndexId() );
+                dau.supplier_id = c.getString( Dau.getIndexSupplierId() );
+                dau.item_id = c.getString( Dau.getIndexItemId() );
+                dau.order_size = c.getString( Dau.getIndexOrderSize() );
+                dau.created_at = c.getString( Dau.getIndexCreatedAt() );
+                dau.updated_at = c.getString( Dau.getIndexUpdatedAt() );
+                dau.deleted_at = c.getString( Dau.getIndexDeletedAt() );
                 list.add(dau);
                 isResult = c.moveToNext();
             }
@@ -124,21 +174,18 @@ public class DauHelper {
 
             StringBuffer sql = new StringBuffer();
             sql.append("select ");
-            sql.append(" " + Dau.getTableNameOmission() + "." + Dau.COL.get(0) + ",");
-            sql.append(" " + Dau.getTableNameOmission() + "." + Dau.COL.get(1) + ",");
-            sql.append(" " + Dau.getTableNameOmission() + "." + Dau.COL.get(2) + ",");
-            sql.append(" " + Dau.getTableNameOmission() + "." + Dau.COL.get(3) + ",");
-            sql.append(" " + Dau.getTableNameOmission() + "." + Dau.COL.get(4) + ",");
-            sql.append(" " + Dau.getTableNameOmission() + "." + Dau.COL.get(5) + ",");
-            sql.append(" " + Dau.getTableNameOmission() + "." + Dau.COL.get(6) + ",");
-            sql.append(" " + Dau.getTableNameOmission() + "." + Dau.COL.get(7) + ",");
-            sql.append(" " + Dau.getTableNameOmission() + "." + Dau.COL.get(8) + ",");
-            sql.append(" " + Dau.getTableNameOmission() + "." + Dau.COL.get(9));
+            sql.append(" " + Dau.getTableNameOmission() + "." + Dau.getKeyId() + ","); // COL.get(0)
+            sql.append(" " + Dau.getTableNameOmission() + "." + Dau.getKeySupplierId() + ",");
+            sql.append(" " + Dau.getTableNameOmission() + "." + Dau.getKeyItemId() + ",");
+            sql.append(" " + Dau.getTableNameOmission() + "." + Dau.getKeyOrderSize() + ",");
+            sql.append(" " + Dau.getTableNameOmission() + "." + Dau.getKeyCreatedAt() + ","); // COL.get(7)
+            sql.append(" " + Dau.getTableNameOmission() + "." + Dau.getKeyUpdatedAt() + ","); // COL.get(8)
+            sql.append(" " + Dau.getTableNameOmission() + "." + Dau.getKeyDeletedAt()); // COL.get(9)
             sql.append(" from ");
             sql.append(" " + Dau.getTableName() + " " + Dau.getTableNameOmission());
-            sql.append(" where " + Dau.getTableNameOmission() + "." + Dau.COL.get(0) + "=\"" +  id + "\"");
+            sql.append(" where " + Dau.getTableNameOmission() + "." + Dau.getKeyId() + "=\"" +  id + "\"");
             if (BuildConfig.DEBUG) {
-                Log.d(TAG, "sql" + sql.toString());
+                Log.d(TAG, "sql:" + sql.toString());
             }
 
             c = dBHelper.db.rawQuery(sql.toString(), null);
@@ -147,17 +194,17 @@ public class DauHelper {
 
             if (isResult) {
                 dau = new Dau();
-                dau.id = c.getInt(0);
-//                dau.dau_date = c.getString(1);
-//                dau.opening_price = c.getString(2);
-//                dau.high_price = c.getString(3);
-//                dau.low_price = c.getString(4);
-//                dau.closing_price = c.getString(5);
-//                dau.change_price = c.getString(6);
-                dau.deleted_at = c.getString(7);
-                dau.created_at = c.getString(8);
-                dau.updated_at = c.getString(9);
+                dau.id = c.getString( Dau.getIndexId() );
+                dau.supplier_id = c.getString( Dau.getIndexSupplierId() );
+                dau.item_id = c.getString( Dau.getIndexItemId() );
+                dau.order_size = c.getString( Dau.getIndexOrderSize() );
+                dau.created_at = c.getString( Dau.getIndexCreatedAt() );
+                dau.updated_at = c.getString( Dau.getIndexUpdatedAt() );
+                dau.deleted_at = c.getString( Dau.getIndexDeletedAt() );
                 isResult = c.moveToNext();
+                if (isResult) {
+                    Log.d(TAG, "moveToNext is Succeded");
+                }
             }
 
         } catch (Exception e) {
@@ -230,7 +277,7 @@ public class DauHelper {
      */
     public static long update(final Context context, final ContentValues contentValues, String id) {
         DBHelper dBHelper = new DBHelper(context);
-        long result = dBHelper.db.update(Dau.getTableName(), contentValues, Dau.COL.get(0) + "=" + id, null);
+        long result = dBHelper.db.update(Dau.getTableName(), contentValues, Dau.getKeyId() + "=" + id, null); // COL.get(0)
         dBHelper.cleanup();
         return result;
     }
@@ -260,7 +307,7 @@ public class DauHelper {
      */
     public static long delete(final Context context, String id) {
         DBHelper dBHelper = new DBHelper(context);
-        int result = dBHelper.db.delete(Dau.getTableName(), Dau.COL.get(0) + "=" + id, null);
+        int result = dBHelper.db.delete(Dau.getTableName(), Dau.getKeyId() + "=" + id, null); // COL.get(0)
         dBHelper.cleanup();
         return result;
     }

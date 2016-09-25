@@ -25,6 +25,9 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.text.TextUtils;
 
+import com.hidezo.app.buyer.util.DBOpenHelper;
+
+
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -34,58 +37,91 @@ import java.util.List;
  */
 public class Dau implements Parcelable {
 
-//    public static final String TAG = "Dau";
+//    public static final String TAG = "## Dau";
 
     // table name
 //    public static final String TABLE_NAME = "dau_hidezo_buyer";
-    static String getTableName() {
-        return "dau_hidezo_buyer";
+    public static String getTableName() {
+        return DBOpenHelper.TABLE_NAME;
     }
 
     // table name aliases
 //    public static final String TABLE_NAME_OMISSION = "d";
-    static String getTableNameOmission() {
+    public static String getTableNameOmission() {
         return "d";
     }
 
     // column list constant
-    public static final List<String> COL = Collections.unmodifiableList(new LinkedList<String>() {
-        {
-            // カラム名登録
-            add("id");
-//            add("dau_date");
-//            add("opening_price");
-//            add("high_price");
-//            add("low_price");
-//            add("closing_price");
-//            add("change_price");
-            add("deleted_at");
-            add("created_at");
-            add("updated_at");
-        }
-    });
+//    public static final List<String> COL = Collections.unmodifiableList(new LinkedList<String>() {
+//        {
+//            // カラム名登録
+//            add("id"); // 0
+//            add("supplier_id"); // 1
+//            add("item_id"); // 2
+//            add("order_size"); // 3
+//            add("created_at"); // 4
+//            add("updated_at"); // 5
+//            add("deleted_at"); // 6
+//        }
+//    });
 
-    // id
-    public int id;
-    // dau_date
-//    public String dau_date = "";
-//    // opening_price
-//    public String opening_price = "";
-//    // high_price
-//    public String high_price = "";
-//    // low_price
-//    public String low_price = "";
-//    // closing_price
-//    public String closing_price = "";
-//    // change_price
-//    public String change_price = "";
-    // deleted_at
-    public String deleted_at = "";
-    // created_at
+    public static String getKeyId() {
+        return "id";
+    }
+    public static String getKeySupplierId() {
+        return "supplier_id";
+    }
+    public static String getKeyItemId() {
+        return "item_id";
+    }
+    public static String getKeyOrderSize() {
+        return "order_size";
+    }
+    public static String getKeyCreatedAt() {
+        return "created_at";
+    }
+    public static String getKeyUpdatedAt() {
+        return "updated_at";
+    }
+    public static String getKeyDeletedAt() {
+        return "deleted_at";
+    }
+    public static int getIndexId() {
+        return 0;
+    }
+    public static int getIndexSupplierId() {
+        return 1;
+    }
+    public static int getIndexItemId() {
+        return 2;
+    }
+    public static int getIndexOrderSize() {
+        return 3;
+    }
+    public static int getIndexCreatedAt() {
+        return 4;
+    }
+    public static int getIndexUpdatedAt() {
+        return 5;
+    }
+    public static int getIndexDeletedAt() {
+        return 6;
+    }
+
+    // id = UUID
+    public String id;
+
+    public String supplier_id = "";
+    public String item_id = "";
+    public String order_size = "";
+
     public String created_at = "";
-    // updated_at
     public String updated_at = "";
+    public String deleted_at = "";
 
+    /**
+     * コンストラクタ
+     */
     public Dau() {}
     public static final Parcelable.Creator<Dau> CREATOR = new Parcelable.Creator<Dau>() {
 
@@ -98,16 +134,13 @@ public class Dau implements Parcelable {
     };
 
     private Dau(Parcel in) {
-        id = in.readInt();
-//        dau_date = in.readString();
-//        opening_price = in.readString();
-//        high_price = in.readString();
-//        low_price = in.readString();
-//        closing_price = in.readString();
-//        change_price = in.readString();
-        deleted_at = in.readString();
+        id = in.readString();
+        supplier_id = in.readString();
+        item_id = in.readString();
+        order_size = in.readString();
         created_at = in.readString();
         updated_at = in.readString();
+        deleted_at = in.readString();
     }
 
     @Override
@@ -116,16 +149,13 @@ public class Dau implements Parcelable {
     }
 
     public void writeToParcel(Parcel out, int flags) {
-        out.writeInt(id);
-//        out.writeString(dau_date);
-//        out.writeString(opening_price);
-//        out.writeString(high_price);
-//        out.writeString(low_price);
-//        out.writeString(closing_price);
-//        out.writeString(change_price);
-        out.writeString(deleted_at);
+        out.writeString(id);
+        out.writeString(supplier_id);
+        out.writeString(item_id);
+        out.writeString(order_size);
         out.writeString(created_at);
         out.writeString(updated_at);
+        out.writeString(deleted_at);
     }
 
     @Override
@@ -133,27 +163,18 @@ public class Dau implements Parcelable {
         StringBuffer str = new StringBuffer();
         str.append("Dau [");
         str.append(" id=" + id);
-//        if (!TextUtils.isEmpty(dau_date)) {
-//            str.append(", dau_date=" + dau_date);
-//        }
-//        if (!TextUtils.isEmpty(opening_price)) {
-//            str.append(", opening_price=" + opening_price);
-//        }
-//        if (!TextUtils.isEmpty(high_price)) {
-//            str.append(", high_price=" + high_price);
-//        }
-//        if (!TextUtils.isEmpty(low_price)) {
-//            str.append(", low_price=" + low_price);
-//        }
-//        if (!TextUtils.isEmpty(closing_price)) {
-//            str.append(", closing_price=" + closing_price);
-//        }
-//        if (!TextUtils.isEmpty(change_price)) {
-//            str.append(", change_price=" + change_price);
-//        }
-        str.append(", deleted_at=" + deleted_at);
+        if (!TextUtils.isEmpty(supplier_id)) {
+            str.append(", supplier_id=" + supplier_id);
+        }
+        if (!TextUtils.isEmpty(item_id)) {
+            str.append(", item_id=" + item_id);
+        }
+        if (!TextUtils.isEmpty(order_size)) {
+            str.append(", order_size=" + order_size);
+        }
         str.append(", created_at=" + created_at);
         str.append(", updated_at=" + updated_at);
+        str.append(", deleted_at=" + deleted_at);
         str.append("]");
         return str.toString();
     }

@@ -22,6 +22,7 @@ package com.hidezo.app.buyer.util;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
+import android.util.Log;
 
 import java.io.File;
 
@@ -30,7 +31,8 @@ import java.io.File;
  *
  */
 public class DBHelper {
-//    public static final String TAG = "DBHelper";
+
+    private static final String TAG = "## DBHelper";
 
     public SQLiteDatabase db = null;
     private final DBOpenHelper dbOpenHelper;
@@ -70,6 +72,7 @@ public class DBHelper {
     }
 
     public void sendSuccess() {
-
+        Log.d(TAG,"sendSuccess");
     }
+
 }

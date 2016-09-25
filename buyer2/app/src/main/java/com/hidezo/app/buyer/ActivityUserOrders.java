@@ -2,6 +2,7 @@ package com.hidezo.app.buyer;
 
 import android.content.Intent;
 //import android.support.v7.app.AppCompatActivity;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -10,8 +11,15 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.appindexing.Thing;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.hidezo.app.buyer.model.Dau;
+
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  *
@@ -22,6 +30,11 @@ public class ActivityUserOrders extends CustomAppCompatActivity {
 
     private String mySupplierId = "";
     private HDZApiResponseItem responseItem = new HDZApiResponseItem();
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,51 +53,72 @@ public class ActivityUserOrders extends CustomAppCompatActivity {
 
         // ツールバー初期化
         setNavigationBar("注文確認");
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
     /**
      * HDZClientCallbacksGet
      * データ取得時
      */
-    public void HDZClientComplete(String response,String apiName) {
+    public void HDZClientComplete(String response, String apiName) {
 
-        if ( checkLogOut(response) ) {
+        if (checkLogOut(response)) {
             return;
         }
 
         if (responseItem.parseJson(response)) {
 
             //UIスレッド上で呼び出してもらう
-//            this.runOnUiThread(new Runnable() {
-//                @Override
-//                public void run() {
-//
-//                    ArrayList<HDZItemInfo.Category> categorys = new ArrayList<>(); // HDZItemInfo.Category
-//
-//                    // 動的商品
-//                    if (responseItem.dynamicItemList.size() > 0) {
-//                        HDZItemInfo.Category object = new HDZItemInfo.Category();
-//                        object.name = "新着";
-//                        categorys.add(object);
-//                    }
-//
-//                    // 静的商品
-//                    HashMap<String,String> hashmap = new HashMap<>(); // String, String
-//                    for (int i = 0; i < responseItem.staticItemList.size(); i++) {
-//                        HDZItemInfo.StaticItem item = responseItem.staticItemList.get(i);
-//
-//                        String cid = item.category.id;
-//                        // keyが存在しているか確認
-//                        if ( !hashmap.containsKey(cid) ){
-//                            // 存在しないなら登録
-//                            categorys.add( item.category );
-//                            hashmap.put(cid,item.category.name);
-//                        }
-//                    }
-//
-//                    //リストビュー作成
-//                    ArrayAdapterCategory aacategory = new ArrayAdapterCategory(_self, categorys);
-//                    ListView listView = (ListView) findViewById(R.id.listViewCategory);
+            this.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+
+                    // 表示リスト
+                    ArrayList<HDZUserOrder> userOrders = new ArrayList<>();
+
+                    AppGlobals globals = (AppGlobals) _self.getApplication();
+                    List<Dau> cartList = globals.selectCartList(mySupplierId);
+                    for (Dau dau : cartList) {
+                        // 動的商品チェック
+                        for (HDZItemInfo.DynamicItem item : responseItem.dynamicItemList) {
+                            if (item.id.equals(dau.item_id)) {
+                                HDZUserOrder order = new HDZUserOrder();
+                                order.supplierId = dau.supplier_id;
+                                order.itemId = dau.item_id;
+                                order.isDynamic = true;
+                                userOrders.add(order);
+                                break;
+                            }
+                        }
+                        // 静的商品チェック
+                        for (HDZItemInfo.StaticItem item : responseItem.staticItemList) {
+                            if (item.id.equals(dau.item_id)) {
+                                HDZUserOrder order = new HDZUserOrder();
+                                order.supplierId = dau.supplier_id;
+                                order.itemId = dau.item_id;
+                                userOrders.add(order);
+                                break;
+                            }
+                        }
+                    }
+
+                    if (userOrders.size() == 0) {
+                        // カート空の場合
+                        ArrayList<HDZApiResponse> emptyList = new ArrayList<>();
+                        HDZApiResponse object = new HDZApiResponse();
+                        object.message = "カートが空です";
+                        emptyList.add(object);
+                        ArrayAdapterEmpty emptyAdapter = new ArrayAdapterEmpty(_self,emptyList);
+                        ListView listView = (ListView) findViewById(R.id.listViewUserOrders);
+                        listView.setAdapter(emptyAdapter);
+                        return;
+                    }
+
+                    //リストビュー作成
+                    ArrayAdapterUserOrder adapter = new ArrayAdapterUserOrder(_self, userOrders);
+                    ListView listView = (ListView) findViewById(R.id.listViewUserOrders);
 //                    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //
 //                        //行タッチイベント
@@ -110,14 +144,15 @@ public class ActivityUserOrders extends CustomAppCompatActivity {
 //                            }
 //                        }
 //                    });
-//                    listView.setAdapter(aacategory);
-//                }
-//            });
+                    listView.setAdapter(adapter);
+                }
+            });
         }
     }
 
     /**
      * ツールバー
+     *
      * @param menu menu
      * @return result
      */
@@ -127,6 +162,7 @@ public class ActivityUserOrders extends CustomAppCompatActivity {
 //        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -145,5 +181,41 @@ public class ActivityUserOrders extends CustomAppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    public Action getIndexApiAction() {
+        Thing object = new Thing.Builder()
+                .setName("ActivityUserOrders Page") // TODO: Define a title for the content shown.
+                // TODO: Make sure this auto-generated URL is correct.
+                .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
+                .build();
+        return new Action.Builder(Action.TYPE_VIEW)
+                .setObject(object)
+                .setActionStatus(Action.STATUS_TYPE_COMPLETED)
+                .build();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.connect();
+        AppIndex.AppIndexApi.start(client, getIndexApiAction());
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        AppIndex.AppIndexApi.end(client, getIndexApiAction());
+        client.disconnect();
     }
 }

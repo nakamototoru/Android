@@ -65,17 +65,6 @@ public class ActivityStaticItems extends CustomAppCompatActivity {
         setNavigationBar(title);
     }
 
-//    @Override
-//    protected void onResume() {
-//        super.onResume();
-//
-//        // ログインチェック
-//        if (!isLogin()) {
-//            // ログアウト促す
-//            AppGlobals globals = (AppGlobals) this.getApplication();
-//            globals.openAlertSessionOut(this);
-//        }
-//    }
 
     /**
      * HDZClientCallbacksGet

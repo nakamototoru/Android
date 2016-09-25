@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:text="TextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewName"
+            android:textColor="@android:color/black" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="top|left">
+
+                <TextView
+                    android:text="row"
+                    android:layout_width="@dimen/layoutWidthTextRow"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textViewRow"
+                    android:textColor="@android:color/black"
+                    android:layout_weight="1" />
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="@dimen/length_liner_space"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"></LinearLayout>
+
+                <TextView
+                    android:text="@string/Delete"
+                    android:layout_width="@android:dimen/notification_large_icon_width"
+                    android:layout_height="@dimen/layoutWidthTextRow"
+                    android:id="@+id/textViewButtonDelete"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:background="@android:color/holo_red_dark"
+                    android:textColor="@android:color/white" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="top|right">
+
+                <TextView
+                    android:text="count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textViewCount"
+                    android:textColor="@android:color/holo_blue_dark" />
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="@dimen/length_liner_space"
+                    android:layout_height="match_parent"></LinearLayout>
+
+                <TextView
+                    android:text="@string/Update"
+                    android:layout_width="@android:dimen/notification_large_icon_height"
+                    android:layout_height="@dimen/layoutWidthTextRow"
+                    android:id="@+id/textViewButtonChange"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:background="@color/colorPrimary"
+                    android:textColor="@android:color/white" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</RelativeLayout>

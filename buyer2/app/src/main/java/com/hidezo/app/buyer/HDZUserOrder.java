@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 /**
  * Created by dezami on 2016/09/24.
+ *
  */
 
 public class HDZUserOrder {
@@ -11,8 +12,9 @@ public class HDZUserOrder {
     String id = "";
     String supplierId = "";
     String itemId = "";
-    String size = "";
-    boolean dynamic = false;
+    String orderSize = "";
+    boolean isDynamic = false;
     ArrayList<String> numScale = new ArrayList<>();
+    String itemName = "";
 
 }

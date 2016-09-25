@@ -5,4 +5,5 @@
     <string name="SupplierList">取引先</string>
     <string name="OrderCheck">注文確認</string>
     <string name="Update">変更</string>
+    <string name="Delete">削除</string>
 </resources>

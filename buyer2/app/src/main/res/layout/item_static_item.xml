@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/abc_action_bar_overflow_padding_end_material">
@@ -35,7 +36,8 @@
                 android:layout_width="@dimen/abc_action_bar_content_inset_with_nav"
                 android:layout_height="@dimen/abc_action_bar_content_inset_with_nav"
                 android:id="@+id/imageViewItem"
-                android:src="@mipmap/sakana180" />
+                android:src="@drawable/sakana180"
+                app:srcCompat="@drawable/sakana180" />
 
             <LinearLayout
                 android:orientation="horizontal"

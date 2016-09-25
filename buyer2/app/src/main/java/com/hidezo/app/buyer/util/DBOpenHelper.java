@@ -36,41 +36,66 @@ import java.util.ArrayList;
  * Created by msuzuki on 2016/06/24.
  *
  */
-class DBOpenHelper extends SQLiteOpenHelper {
-    private Context m_context;
-    private static final String TAG = "DBOpenHelper";
-    private static final String DB_NAME = "com_hidezo_app_buyer_cart";
-    private static final int DB_VERSION = 1;
+public class DBOpenHelper extends SQLiteOpenHelper {
 
+    private Context m_context;
+    private static final String TAG = "## DBOpenHelper";
+    private static final int DB_VERSION = 1;
+    /**
+     * DBファイル名
+     */
+    private static final String DATABASE_NAME = "hidezo_buyer.db";
+    public static final String TABLE_NAME = "cart";
+
+    /**
+     * コンストラクタ
+     */
     public DBOpenHelper(final Context context) {
-        super(context, DB_NAME, null, DB_VERSION);
+        super(context, DATABASE_NAME, null, DB_VERSION);
         this.m_context = context;
     }
 
     @Override
     public void onCreate(final SQLiteDatabase db) {
         Log.d(TAG, "onCreate version : " + db.getVersion());
-        this.execFileSQL(db, "create_table.sql");
+//        this.execFileSQL(db, "create_table.sql"); // assetsフォルダにあるファイルを読む
+        String sql = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (id text,supplier_id text,item_id text,order_size text,created_at text,updated_at text,deleted_at text);";
+        try {
+            db.execSQL(sql);
+        } catch (Exception e) {
+            Log.d(TAG,e.getMessage());
+        }
+        // "CREATE TABLE IF NOT EXISTS dau (id text,supplier_id text,item_id text,order_size text,created_at text,updated_at text,deleted_at text);"
     }
 
     @Override
     public void onUpgrade(final SQLiteDatabase db, final int oldVersion, final int newVersion) {
+
         Log.d(TAG, "onUpgrade version : " + db.getVersion());
         Log.d(TAG, "onUpgrade oldVersion : " + oldVersion);
         Log.d(TAG, "onUpgrade newVersion : " + newVersion);
         // 1 → 2
-        if (oldVersion == 1 && newVersion == 2) {
-            this.execFileSQL(db, "change_table_1.0.3.sql"); // v1.0.0
-        }
+//        if (oldVersion == 1 && newVersion == 2) {
+//            this.execFileSQL(db, "change_table_1.0.3.sql"); // v1.0.0
+//        }
+//
+//        if (oldVersion == 1 && newVersion == 3) {
+//            this.execFileSQL(db, "change_table_1.0.3.sql"); // v1.0.0
+//            this.execFileSQL(db, "create_table_1.2.0.sql"); // v1.0.0
+//        }
+//
+//        if (oldVersion == 2 && newVersion == 3) {
+//            this.execFileSQL(db, "create_table_1.2.0.sql"); // v1.0.0
+//        }
 
-        if (oldVersion == 1 && newVersion == 3) {
-            this.execFileSQL(db, "change_table_1.0.3.sql"); // v1.0.0
-            this.execFileSQL(db, "create_table_1.2.0.sql"); // v1.0.0
-        }
+        // 指定したテーブルのカラム構成をチェックし、
+        // 同名のカラムについてはアップグレード後もデータを引き継ぎます。
+        // 同名のカラムで型に互換性がない場合はエラーになるので注意。
 
-        if (oldVersion == 2 && newVersion == 3) {
-            this.execFileSQL(db, "create_table_1.2.0.sql"); // v1.0.0
-        }
+    }
+    @Override
+    public void onDowngrade(final SQLiteDatabase db, final int oldVersion, final int newVersion) {
+
     }
 
     /**
@@ -102,7 +127,10 @@ class DBOpenHelper extends SQLiteOpenHelper {
             }
 
         } catch (IOException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
+
+            Log.d(TAG,e.getMessage());
+
         } finally {
 
             if (in != null) {

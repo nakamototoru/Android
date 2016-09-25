@@ -1,5 +1,6 @@
 package com.hidezo.app.buyer;
 
+//import android.content.ContentValues;
 import android.content.Intent;
 //import android.support.v4.app.FragmentActivity;
 //import android.support.v4.content.ContextCompat;
@@ -16,7 +17,11 @@ import android.widget.Button;
 //import android.support.v4.app.FragmentTabHost;
 import android.widget.TextView;
 
-import com.hidezo.app.buyer.util.DBHelper;
+//import com.hidezo.app.buyer.model.Dau;
+//import com.hidezo.app.buyer.model.DauHelper;
+//import com.hidezo.app.buyer.util.DBHelper;
+
+//import java.util.List;
 
 //import org.w3c.dom.Text;
 
@@ -25,7 +30,7 @@ import com.hidezo.app.buyer.util.DBHelper;
  */
 public class MainActivity extends AppCompatActivity implements HDZClient.HDZCallbacks {
 
-    private static MainActivity _self;
+    private MainActivity _self;
 
     private HDZApiResponse responseLogin = new HDZApiResponse();
 
@@ -45,13 +50,12 @@ public class MainActivity extends AppCompatActivity implements HDZClient.HDZCall
         sGlobals = (AppGlobals) this.getApplication();
 
         // データベース作成
-        DBHelper dBHelper;
-        try {
-            dBHelper = new DBHelper(getApplicationContext());
-            dBHelper.sendSuccess();
-        } catch(Exception e) {
-            Log.d("## DBHelper", e.getMessage());
-        }
+        sGlobals.createCart();
+
+//        if (BuildConfig.DEBUG) {
+//            sGlobals.selectCartAll();
+//            sGlobals.insertCart("FISH SHOp","DYNAMIC01","1/2");
+//        }
 
         // エディットテキスト
         TextView tvEditId = (TextView) findViewById(R.id.editTextUserId);

@@ -14,6 +14,8 @@ import android.widget.TextView;
 
 //import org.w3c.dom.Text;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 
 /**
@@ -69,6 +71,18 @@ class ArrayAdapterStaticItem extends ArrayAdapter<HDZItemInfo.StaticItem> {
                 ((ListView) parent).performItemClick(null, position, 0);
             }
         });
+        Context context = this.getContext();
+        try {
+            Picasso.with(context)
+                    .load(staticItem.image)
+//                .centerInside()
+                    .placeholder(R.drawable.sakana180)
+                    .error(R.drawable.sakana180)
+                    .into(ivItem);
+
+        } catch (Exception e) {
+            Log.d("## Picasso",e.getMessage());
+        }
 
         TextView tvPrice = (TextView) convertView.findViewById(R.id.textViewPrice);
         String str_price = "単価：" + staticItem.price + "円";
@@ -91,29 +105,12 @@ class ArrayAdapterStaticItem extends ArrayAdapter<HDZItemInfo.StaticItem> {
             public void onClick(View view) {
 //                Log.d("########","R.id.tvBtnPlus");
 
-//                if (countInCartList.get(position).count < 100) {
-//                    countInCartList.get(position).count++;
-//                    ((ListView) parent).performItemClick(null, position, 1);
-//                }
-                // TODO: 変更ダイアログ
-                Log.d("########","R.id.tvBtn・TODO: 変更ダイアログ");
+//                // 変更ダイアログ
+//                Log.d("########","R.id.tvBtn・変更ダイアログ");
 
                 ((ListView) parent).performItemClick(null, position, -1);
             }
         });
-
-//        TextView tvBtnMinus = (TextView)convertView.findViewById(R.id.textViewButtonMinus);
-//        tvBtnMinus.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-////                Log.d("########","R.id.tvBtnMinus");
-//
-//                if (countInCartList.get(position).count > 0) {
-//                    countInCartList.get(position).count--;
-//                    ((ListView) parent).performItemClick(null, position, -1);
-//                }
-//            }
-//        });
 
         // Return the completed view to render on screen
         return convertView;

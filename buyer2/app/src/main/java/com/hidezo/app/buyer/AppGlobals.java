@@ -256,47 +256,63 @@ public class AppGlobals extends Application {
     }
 
     public void createCart() {
-        DBHelper dBHelper = null;
+        DBHelper dBHelper;
         try {
             // 一度クリエイトすれば次からはスキップされる
             dBHelper = new DBHelper(getApplicationContext());
+            dBHelper.sendSuccess();
         } catch(Exception e) {
             Log.d(DauHelper.TAG, e.getMessage());
         }
     }
-    public void selectCart() {
-        Dau dau = DauHelper.getDau(getApplicationContext(), "1");
-        if (dau != null) {
-            Log.d(DauHelper.TAG, dau.toString());
-        }
-        List<Dau> list = DauHelper.getDauList(getApplicationContext());
-        Log.d(DauHelper.TAG, " list result : " + list.size());
+//    public void selectCart(final String id) {
+//        Dau dau = DauHelper.getDau(getApplicationContext(), id);
+//        if (dau != null) {
+//            Log.d(DauHelper.TAG, dau.toString());
+//        }
+//        List<Dau> list = DauHelper.getDauList(getApplicationContext());
+//        Log.d(DauHelper.TAG, " list result : " + list.size());
+//    }
+    public List<Dau> selectCartList(final String supplier_id) {
+        List<Dau> list_dau = DauHelper.getDauList(getApplicationContext(),supplier_id);
+        List<Dau> response = new ArrayList<>();
+        response.addAll(list_dau);
+        return response;
     }
-    public void insertCart() {
+//    public void selectCartAll() {
+//        List<Dau> list_dau = DauHelper.getDauList(getApplicationContext());
+//        if (list_dau.size() > 0) {
+//            for (Dau dau : list_dau) {
+//                Log.d(DauHelper.TAG, dau.toString());
+//            }
+//        }
+//        Log.d(DauHelper.TAG, " list result : " + list_dau.size());
+//    }
+    public void insertCart(final String supplier_id, final String item_id, final String order_size) {
         ContentValues contentValues = new ContentValues();
         // "カラム名","値"
-        contentValues.put(Dau.COL.get(0) ,"2");
-        contentValues.put(Dau.COL.get(1), "20160601");
-        contentValues.put(Dau.COL.get(2), "7000");
-        contentValues.put(Dau.COL.get(3), "7200");
-        contentValues.put(Dau.COL.get(4), System.currentTimeMillis());
-        contentValues.put(Dau.COL.get(5), System.currentTimeMillis());
+        contentValues.put(Dau.getKeyId() ,UUID.randomUUID().toString());
+        contentValues.put(Dau.getKeySupplierId(), supplier_id);
+        contentValues.put(Dau.getKeyItemId(), item_id);
+        contentValues.put(Dau.getKeyOrderSize(), order_size);
+        contentValues.put(Dau.getKeyCreatedAt(), System.currentTimeMillis());
+        contentValues.put(Dau.getKeyUpdatedAt(), System.currentTimeMillis());
         long result = DauHelper.insert(getApplicationContext(), contentValues);
         Log.d(DauHelper.TAG, " insert result : " + result);
     }
-    public void updateCart() {
+    public void updateCart(final String id) {
         ContentValues contentValues = new ContentValues();
         // "カラム名","値"
-        contentValues.put(Dau.COL.get(0) ,"2");
-        contentValues.put(Dau.COL.get(1), "20160601");
-        contentValues.put(Dau.COL.get(2), "7300");
-        contentValues.put(Dau.COL.get(3), "8000");
-        contentValues.put(Dau.COL.get(9), System.currentTimeMillis());
-        long result = DauHelper.update(getApplicationContext(), contentValues, "1");
+//        contentValues.put(Dau.getKeyId() ,"2");
+        contentValues.put(Dau.getKeySupplierId(), "20160601");
+        contentValues.put(Dau.getKeyItemId(), "7300");
+        contentValues.put(Dau.getKeyOrderSize(), "8000");
+        contentValues.put(Dau.getKeyUpdatedAt(), System.currentTimeMillis());
+        long result = DauHelper.update(getApplicationContext(), contentValues, id);
         Log.d(DauHelper.TAG, " update result : " + result);
     }
-    public void deleteCart() {
-        long result = DauHelper.delete(getApplicationContext(), "2");
+    public void deleteCart(final String id) {
+        long result = DauHelper.delete(getApplicationContext(), id);
         Log.d(DauHelper.TAG, " delete result : " + result);
     }
 }
