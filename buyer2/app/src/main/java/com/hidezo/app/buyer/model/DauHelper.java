@@ -161,11 +161,9 @@ public class DauHelper {
     /**
      * return Dau
      *
-     * @param context you should use ApplicationContext. ApplicationContext can get getApplicationContext().
-     * @param id Dau's id
      * @return the object of rows affected if id is passed in, null otherwise.
      */
-    public static Dau getDau(final Context context, final String id) {
+    public static Dau getDau(final Context context, final String supplier_id, final String item_id) {
         Dau dau = null;
         Cursor c = null;
         DBHelper dBHelper = null;
@@ -183,7 +181,7 @@ public class DauHelper {
             sql.append(" " + Dau.getTableNameOmission() + "." + Dau.getKeyDeletedAt()); // COL.get(9)
             sql.append(" from ");
             sql.append(" " + Dau.getTableName() + " " + Dau.getTableNameOmission());
-            sql.append(" where " + Dau.getTableNameOmission() + "." + Dau.getKeyId() + "=\"" +  id + "\"");
+            sql.append(" where " + Dau.getTableNameOmission() + "." + Dau.getKeySupplierId() + "=" + supplier_id + " and " + Dau.getKeyItemId() + "=" + item_id);
             if (BuildConfig.DEBUG) {
                 Log.d(TAG, "sql:" + sql.toString());
             }
@@ -268,16 +266,35 @@ public class DauHelper {
     }
 
     /**
-     * update
+     * replace
      *
-     * @param context you should use ApplicationContext. ApplicationContext can get getApplicationContext().
-     * @param contentValues key&value
-     * @param id is primary key
      * @return the number of rows affected
      */
-    public static long update(final Context context, final ContentValues contentValues, String id) {
+//    public static long replace(final Context context, final ContentValues contentValues, String supplier_id, String item_id) {
+//
+//        DBHelper dBHelper = new DBHelper(context);
+//
+//        Dau dau = getDau(context, supplier_id, item_id);
+//
+//        long result;
+//        if (dau == null) {
+//            result = insert(context, contentValues);
+//        }
+//        else {
+//            result = update(context, contentValues, supplier_id, item_id);
+//        }
+//        dBHelper.cleanup();
+//        return result;
+//    }
+
+    /**
+     * update
+     *
+     * @return the number of rows affected
+     */
+    public static long update(final Context context, final ContentValues contentValues, String supplier_id, String item_id) {
         DBHelper dBHelper = new DBHelper(context);
-        long result = dBHelper.db.update(Dau.getTableName(), contentValues, Dau.getKeyId() + "=" + id, null); // COL.get(0)
+        long result = dBHelper.db.update(Dau.getTableName(), contentValues, Dau.getKeySupplierId() + "=" + supplier_id + " and " + Dau.getKeyItemId() + "=" + item_id, null);
         dBHelper.cleanup();
         return result;
     }
@@ -285,8 +302,6 @@ public class DauHelper {
     /**
      * insert
      *
-     * @param context you should use ApplicationContext. ApplicationContext can get getApplicationContext().
-     * @param contentValues key&value
      * @return the row ID of the newly inserted row, or -1 if an error occurred
      */
     public static long insert(final Context context, final ContentValues contentValues) {
@@ -299,15 +314,13 @@ public class DauHelper {
     /**
      * delete
      *
-     * @param context you should use ApplicationContext. ApplicationContext can get getApplicationContext().
-     * @param id is primary key
      * @return the number of rows affected if a whereClause is passed in, 0
      *         otherwise. To remove all rows and get a count pass "1" as the
      *         whereClause.
      */
-    public static long delete(final Context context, String id) {
+    public static long delete(final Context context, String supplier_id, String item_id) {
         DBHelper dBHelper = new DBHelper(context);
-        int result = dBHelper.db.delete(Dau.getTableName(), Dau.getKeyId() + "=" + id, null); // COL.get(0)
+        int result = dBHelper.db.delete(Dau.getTableName(), Dau.getKeySupplierId() + "=" + supplier_id + " and " + Dau.getKeyItemId() + "=" + item_id, null);
         dBHelper.cleanup();
         return result;
     }

@@ -1,6 +1,7 @@
 package com.hidezo.app.buyer;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +37,8 @@ class ArrayAdapterUserOrder extends ArrayAdapter<HDZUserOrder> {
         if (userOrder == null) {
             return convertView;
         }
+
+        Log.d("## UserOrder","NAME = " + userOrder.itemName);
 
         // Lookup view for data population
         TextView tvTitle = (TextView) convertView.findViewById(R.id.textViewName);

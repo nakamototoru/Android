@@ -81,6 +81,7 @@ public class ActivityUserOrders extends CustomAppCompatActivity {
                     AppGlobals globals = (AppGlobals) _self.getApplication();
                     List<Dau> cartList = globals.selectCartList(mySupplierId);
                     for (Dau dau : cartList) {
+                        boolean isFound = false;
                         // 動的商品チェック
                         for (HDZItemInfo.DynamicItem item : responseItem.dynamicItemList) {
                             if (item.id.equals(dau.item_id)) {
@@ -88,18 +89,25 @@ public class ActivityUserOrders extends CustomAppCompatActivity {
                                 order.supplierId = dau.supplier_id;
                                 order.itemId = dau.item_id;
                                 order.isDynamic = true;
+                                order.orderSize = dau.order_size;
+                                order.itemName = item.item_name;
                                 userOrders.add(order);
+                                isFound = true;
                                 break;
                             }
                         }
-                        // 静的商品チェック
-                        for (HDZItemInfo.StaticItem item : responseItem.staticItemList) {
-                            if (item.id.equals(dau.item_id)) {
-                                HDZUserOrder order = new HDZUserOrder();
-                                order.supplierId = dau.supplier_id;
-                                order.itemId = dau.item_id;
-                                userOrders.add(order);
-                                break;
+                        if (!isFound) {
+                            // 静的商品チェック
+                            for (HDZItemInfo.StaticItem item : responseItem.staticItemList) {
+                                if (item.id.equals(dau.item_id)) {
+                                    HDZUserOrder order = new HDZUserOrder();
+                                    order.supplierId = dau.supplier_id;
+                                    order.itemId = dau.item_id;
+                                    order.orderSize = dau.order_size;
+                                    order.itemName = item.name;
+                                    userOrders.add(order);
+                                    break;
+                                }
                             }
                         }
                     }

@@ -16,6 +16,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.hidezo.app.buyer.CustomView.PickerView;
+import com.hidezo.app.buyer.model.Dau;
 
 import java.util.ArrayList;
 //import java.util.StringTokenizer;
@@ -30,11 +31,13 @@ public class ActivityDynamicItems extends CustomAppCompatActivity {
     private ActivityDynamicItems _self;
 
     private HDZApiResponseItem responseItem = new HDZApiResponseItem();
+    private ArrayList<HDZUserOrder> displayItemList = new ArrayList<>();
 
-    private String numScaleSelected = "0";
+    private String mySupplierId = "";
 
     private ListView myListView = null;
-    private int indexSelected = 0;
+//    private int indexSelected = 0;
+//    private String numScaleSelected = "0";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +47,7 @@ public class ActivityDynamicItems extends CustomAppCompatActivity {
         _self = this;
 
         Intent intent = getIntent();
-        String mySupplierId = intent.getStringExtra("supplier_id");
+        mySupplierId = intent.getStringExtra("supplier_id");
 
         // HTTP GET
         HDZApiRequestPackage.Item req = new HDZApiRequestPackage.Item();
@@ -56,9 +59,9 @@ public class ActivityDynamicItems extends CustomAppCompatActivity {
         tvOrderCheck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("########","R.id.textViewButtonOrderCheck");
-
+//                Log.d("########","R.id.textViewButtonOrderCheck");
                 Intent intent = new Intent( _self.getApplication(), ActivityUserOrders.class);
+                intent.putExtra("supplier_id",mySupplierId);
                 startActivity(intent);
             }
         });
@@ -78,65 +81,59 @@ public class ActivityDynamicItems extends CustomAppCompatActivity {
         }
 
         if (responseItem.parseJson(response)) {
-//            if (responseItem.dynamicItemList != null && responseItem.dynamicItemList.size() > 0) {
-//                String name = responseItem.dynamicItemList.get(0).item_name;
-//                Log.d("########", name);
-//            }
-
             //UIスレッド上で呼び出してもらう
             this.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
 
+                    final AppGlobals globals = (AppGlobals) _self.getApplication();
+                    // 表示リスト
+                    for (HDZItemInfo.DynamicItem src : responseItem.dynamicItemList) {
+                        HDZUserOrder item = new HDZUserOrder();
+                        item.itemName = src.item_name;
+                        item.supplierId = responseItem.supplierInfo.supplier_id;
+                        item.itemId = src.id;
+                        item.price = src.price;
+                        Dau dau = globals.selectCartDau(item.supplierId,item.itemId);
+                        if (dau != null) {
+                            item.orderSize = dau.order_size;
+                        }
+                        else {
+                            item.orderSize = AppGlobals.STR_ZERO;
+                        }
+                        _self.displayItemList.add(item);
+                    }
+
                     //リストビュー作成
-                    ArrayAdapterDynamicItem adapter = new ArrayAdapterDynamicItem(_self, responseItem.dynamicItemList);
+                    ArrayAdapterDynamicItem adapter = new ArrayAdapterDynamicItem(_self, _self.displayItemList);
                     _self.myListView = (ListView) findViewById(R.id.listViewDynamicItem);
                     _self.myListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
                         //行タッチイベント
                         @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
 
+                            // ピッカーの作成
                             ArrayList<String> pickerList = new ArrayList<>();
-                            pickerList.add("0");
+                            pickerList.add( AppGlobals.STR_ZERO );
                             pickerList.addAll(responseItem.dynamicItemList.get(position).num_scale);
-
-                            final PickerView pickerView = new PickerView(_self);
-                            pickerView.setData(pickerList);
-                            pickerView.setOnSelectListener(new PickerView.onSelectListener() {
-                                @Override
-                                public void onSelect(String text) {
-                                    _self.numScaleSelected = text;
-                                }
-                            });
-                            indexSelected = 0;
-                            int loop = 0;
-                            for (String scale : pickerList) {
-                                if (scale.equals(_self.numScaleSelected)) {
-                                    indexSelected = loop;
-                                    break;
-                                }
-                                loop++;
-                            }
-                            pickerView.setSelected(indexSelected);
+                            final CustomPickerView pickerView = new CustomPickerView(_self, pickerList, _self.displayItemList.get(position).orderSize);
 
                             //UIスレッド上で呼び出してもらう
                             _self.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-
                                     new AlertDialog.Builder(_self)
                                             .setTitle("選択")
                                             .setView(pickerView)
                                             .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                                 @Override
                                                 public void onClick(DialogInterface dialog, int id) {
-                                                    // TODO:カート更新
-                                                    // 更新対象のViewを取得
-//                                                    View targetView = _self.myListView.getChildAt(_self.indexSelected);
-//                                                    // getViewで対象のViewを更新
-//                                                    _self.myListView.getAdapter().getView(_self.indexSelected, targetView, _self.myListView);
+//                                                    Log.d("## Cart","POS[" + String.valueOf(position) + "]SELECTED = " + String.valueOf(pickerView.getIndexSelected()));
 
+                                                    HDZUserOrder order = _self.displayItemList.get(position);
+                                                    globals.replaceCart(order.supplierId, order.itemId, pickerView.getTextSelected());
+                                                    order.orderSize = pickerView.getTextSelected();
+                                                    // カート更新
                                                     _self.refleshListView();
                                                 }
                                             })
@@ -157,9 +154,6 @@ public class ActivityDynamicItems extends CustomAppCompatActivity {
             });
         }
     }
-//    public void HDZClientError(String message) {
-//        Log.d("########",message);
-//    }
 
     /**
      * リストビューの更新処理。
@@ -172,9 +166,6 @@ public class ActivityDynamicItems extends CustomAppCompatActivity {
 
             Log.d("########","refleshListView");
         }
-//        adapter.refleshItemList(hogeItemList);
-//        adapter.refleshAll();
-//        adapter.getFilter().filter(s);//フィルタ実行。ソートもここで実行する。再描画も担当する
     }
 
     /**

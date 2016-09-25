@@ -44,7 +44,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
     /**
      * DBファイル名
      */
-    private static final String DATABASE_NAME = "hidezo_buyer.db";
+    private static final String DATABASE_NAME = "hidezo_buyer_cart.db";
     public static final String TABLE_NAME = "cart";
 
     /**

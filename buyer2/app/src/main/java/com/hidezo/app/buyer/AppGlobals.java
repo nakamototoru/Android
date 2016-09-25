@@ -29,6 +29,11 @@ import java.util.UUID;
 public class AppGlobals extends Application {
 
     /**
+     * 定数
+     */
+    public static final String STR_ZERO = "0";
+
+    /**
      * UUID
      * @return uuid
      */
@@ -110,57 +115,6 @@ public class AppGlobals extends Application {
         return true;
     }
 
-//    private static CheckLoginCallbacks sCheckLoginCallbacks;
-//    public interface CheckLoginCallbacks {
-//        void responseLoginState(boolean isLogin);
-//    }
-//    public void checkLogin(CheckLoginCallbacks callbacks) {
-//        sCheckLoginCallbacks = callbacks;
-//
-//        HDZApiRequestPackage.LoginCheck req = new HDZApiRequestPackage.LoginCheck();
-//        req.begin( getUserId(), getUuid(), this);
-//    }
-    /**
-     * HDZClientCallbacksGet
-     * データ取得時
-     */
-//    public void HDZClientComplete(final String response,final String apiname) {
-//        if (apiname.equals("login_check/store")) {
-//
-//            HDZApiResponseLoginCheck responseLoginCheck = new HDZApiResponseLoginCheck();
-//
-//            if (responseLoginCheck.parseJson(response)) {
-//                if (responseLoginCheck.result) {
-//
-//                    //ログインしている
-//                    sCheckLoginCallbacks.responseLoginState(true);
-//                }
-//                else {
-//                    //ログインしていない
-//                    sCheckLoginCallbacks.responseLoginState(false);
-//                }
-//            }
-//        }
-////        else if (apiname.equals("login/store")) {
-////            if (responseLogin.parseJson(response)) {
-////                if (responseLogin.result) {
-////
-////                    //ログイン状態に
-////                    // 画面遷移
-////                    Intent intent = new Intent(getApplication(), ActivitySuppliers.class);
-////                    startActivity(intent);
-////                }
-////                else {
-////                    //ログイン失敗
-////                    sGlobals.openWarning("login/store","ログイン失敗",this);
-////                }
-////            }
-////        }
-//
-//    }
-//    public void HDZClientError(final String error) {
-//    }
-
     /**
      * ALERT DIALOG
      * @param title title
@@ -172,7 +126,6 @@ public class AppGlobals extends Application {
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-
                 new AlertDialog.Builder(activity)
                         .setTitle(title)
                         .setMessage(message)
@@ -192,7 +145,6 @@ public class AppGlobals extends Application {
         activity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-
                 new AlertDialog.Builder(activity)
                         .setTitle("アクセスエラー")
                         .setMessage("他の端末でお客様のアカウントにログインしたか、サーバーの不具合でログアウトされました。")
@@ -211,42 +163,6 @@ public class AppGlobals extends Application {
             }
         });
     }
-//    private static String numScaleTemp = "0";
-//    public void openDialogNumScale(final AppCompatActivity activity, final String[] listNumScale, final ListView listView, final int position, final AdapterView<?> parent) {
-//
-//        //UIスレッド上で呼び出してもらう
-//        activity.runOnUiThread(new Runnable() {
-//            @Override
-//            public void run() {
-//                new AlertDialog.Builder(activity)
-//
-//                        .setTitle("選択")
-//                        .setItems(listNumScale, new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int which) {
-//                                // 選択
-//                                numScaleTemp = listNumScale[which];
-//                            }
-//                        })
-//                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int id) {
-//                                // 転送
-//                                Log.d("########",numScaleTemp);
-//                                View targetView = listView.getChildAt(position);
-//                                listView.getAdapter().getView(position,targetView,parent);
-//                            }
-//                        })
-//                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int which) {
-//                            }
-//                        })
-//                        .show();
-//            }
-//        });
-//
-//    }
 
     /**
      * 注文カート
@@ -265,14 +181,16 @@ public class AppGlobals extends Application {
             Log.d(DauHelper.TAG, e.getMessage());
         }
     }
-//    public void selectCart(final String id) {
-//        Dau dau = DauHelper.getDau(getApplicationContext(), id);
-//        if (dau != null) {
-//            Log.d(DauHelper.TAG, dau.toString());
-//        }
-//        List<Dau> list = DauHelper.getDauList(getApplicationContext());
-//        Log.d(DauHelper.TAG, " list result : " + list.size());
-//    }
+    public Dau selectCartDau(final String supplier_id, final String item_id) {
+        Dau dau = DauHelper.getDau(getApplicationContext(), supplier_id, item_id);
+        if (dau != null) {
+            Log.d(DauHelper.TAG, dau.toString());
+        }
+        List<Dau> list = DauHelper.getDauList(getApplicationContext());
+        Log.d(DauHelper.TAG, " list result : " + list.size());
+
+        return dau;
+    }
     public List<Dau> selectCartList(final String supplier_id) {
         List<Dau> list_dau = DauHelper.getDauList(getApplicationContext(),supplier_id);
         List<Dau> response = new ArrayList<>();
@@ -288,7 +206,7 @@ public class AppGlobals extends Application {
 //        }
 //        Log.d(DauHelper.TAG, " list result : " + list_dau.size());
 //    }
-    public void insertCart(final String supplier_id, final String item_id, final String order_size) {
+    public long insertCart(final String supplier_id, final String item_id, final String order_size) {
         ContentValues contentValues = new ContentValues();
         // "カラム名","値"
         contentValues.put(Dau.getKeyId() ,UUID.randomUUID().toString());
@@ -298,21 +216,42 @@ public class AppGlobals extends Application {
         contentValues.put(Dau.getKeyCreatedAt(), System.currentTimeMillis());
         contentValues.put(Dau.getKeyUpdatedAt(), System.currentTimeMillis());
         long result = DauHelper.insert(getApplicationContext(), contentValues);
+
         Log.d(DauHelper.TAG, " insert result : " + result);
+
+        return result;
     }
-    public void updateCart(final String id) {
+    public long updateCart(final String supplier_id, final String item_id, final String order_size) {
         ContentValues contentValues = new ContentValues();
         // "カラム名","値"
 //        contentValues.put(Dau.getKeyId() ,"2");
-        contentValues.put(Dau.getKeySupplierId(), "20160601");
-        contentValues.put(Dau.getKeyItemId(), "7300");
-        contentValues.put(Dau.getKeyOrderSize(), "8000");
+//        contentValues.put(Dau.getKeySupplierId(), "20160601");
+//        contentValues.put(Dau.getKeyItemId(), "7300");
+        contentValues.put(Dau.getKeyOrderSize(), order_size);
         contentValues.put(Dau.getKeyUpdatedAt(), System.currentTimeMillis());
-        long result = DauHelper.update(getApplicationContext(), contentValues, id);
+        long result = DauHelper.update(getApplicationContext(), contentValues, supplier_id, item_id);
+
         Log.d(DauHelper.TAG, " update result : " + result);
+
+        return result;
     }
-    public void deleteCart(final String id) {
-        long result = DauHelper.delete(getApplicationContext(), id);
+    public long replaceCart(final String supplier_id, final String item_id, final String order_size) {
+
+        Dau dau = selectCartDau(supplier_id,item_id);
+        long result;
+        if (dau == null) {
+            // 新規
+            result = insertCart(supplier_id,item_id,order_size);
+        }
+        else {
+            // 更新
+            result = updateCart(supplier_id,item_id,order_size);
+        }
+        return result;
+    }
+
+    public void deleteCart(final String supplier_id, final String item_id) {
+        long result = DauHelper.delete(getApplicationContext(), supplier_id,item_id);
         Log.d(DauHelper.TAG, " delete result : " + result);
     }
 }

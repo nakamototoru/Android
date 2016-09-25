@@ -7,7 +7,7 @@ import java.util.ArrayList;
  *
  */
 
-public class HDZUserOrder {
+class HDZUserOrder {
 
     String id = "";
     String supplierId = "";
@@ -16,5 +16,8 @@ public class HDZUserOrder {
     boolean isDynamic = false;
     ArrayList<String> numScale = new ArrayList<>();
     String itemName = "";
+    String subText = "";
+    String subText2 = "";
+    String price = "";
 
 }

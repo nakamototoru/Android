@@ -53,9 +53,10 @@ public class ActivityStaticItems extends CustomAppCompatActivity {
         tvOrderCheck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("########","R.id.textViewButtonOrderCheck");
+//                Log.d("########","R.id.textViewButtonOrderCheck");
 
                 Intent intent = new Intent( _self.getApplication(), ActivityUserOrders.class);
+                intent.putExtra("supplier_id",mySupplierId);
                 startActivity(intent);
             }
         });
