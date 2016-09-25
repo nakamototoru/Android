@@ -165,11 +165,11 @@ public class AppGlobals extends Application {
     }
 
     /**
-     * 注文カート
+     * 注文カート操作
      */
-    public static class CartCount {
-        int count = 0;
-    }
+//    public static class CartCount {
+//        int count = 0;
+//    }
 
     public void createCart() {
         DBHelper dBHelper;

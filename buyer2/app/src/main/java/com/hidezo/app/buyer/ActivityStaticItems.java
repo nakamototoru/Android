@@ -28,9 +28,14 @@ public class ActivityStaticItems extends CustomAppCompatActivity {
     private static ActivityStaticItems _self;
 
     private HDZApiResponseItem responseItem = new HDZApiResponseItem();
+    private ArrayList<HDZUserOrder> displayItemList = new ArrayList<>();
+
     private String myCategoryId = "";
     private String mySupplierId = "";
 //    private String myCategoryName = "";
+
+    private ListView myListView = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,17 +97,18 @@ public class ActivityStaticItems extends CustomAppCompatActivity {
                         }
                     }
 
-                    //リストビュー作成
-                    ArrayAdapterStaticItem aastaticitem = new ArrayAdapterStaticItem(_self, staticItems);
-                    ListView listView = (ListView) findViewById(R.id.listViewStaticItem);
-                    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    // 表示リスト作成
+                    HDZUserOrder.transFromStatic(_self, responseItem.staticItemList, mySupplierId, _self.displayItemList);
 
+                    //リストビュー作成
+                    ArrayAdapterStaticItem adapter = new ArrayAdapterStaticItem(_self, _self.displayItemList);
+                    myListView = (ListView) findViewById(R.id.listViewStaticItem);
+                    myListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         //行タッチイベント
                         @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                        public void onItemClick(AdapterView<?> parent, View view, final int position, final long id) {
                             if (id == 0) {
-                                //遷移
+                                // 遷移・詳細画面
                                 Intent intent = new Intent( _self.getApplication(), ActivityStaticItemDetail.class);
                                 intent.putExtra("supplier_id", _self.mySupplierId);
                                 intent.putExtra("item_id", staticItems.get(position).id);
@@ -110,26 +116,41 @@ public class ActivityStaticItems extends CustomAppCompatActivity {
                                 _self.startActivity(intent);
                             }
                             else {
+                                // ピッカーの作成
                                 ArrayList<String> pickerList = new ArrayList<>();
-                                pickerList.add("0");
-                                pickerList.addAll(staticItems.get(position).num_scale);
-
-                                final PickerView pickerView = new PickerView(_self);
-                                pickerView.setData( pickerList );
-                                pickerView.setSelected(0);
+                                pickerList.add( AppGlobals.STR_ZERO );
+                                pickerList.addAll(responseItem.staticItemList.get(position).num_scale);
+                                final CustomPickerView pickerView = new CustomPickerView(_self, pickerList, _self.displayItemList.get(position).orderSize);
 
                                 //UIスレッド上で呼び出してもらう
                                 _self.runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-
                                         new AlertDialog.Builder(_self)
                                                 .setTitle("選択")
                                                 .setView(pickerView)
                                                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                                     @Override
                                                     public void onClick(DialogInterface dialog, int id) {
+//                                                    Log.d("## Cart","POS[" + String.valueOf(position) + "]SELECTED = " + String.valueOf(pickerView.getIndexSelected()));
 
+                                                        HDZUserOrder order = _self.displayItemList.get(position);
+                                                        final AppGlobals globals = (AppGlobals) _self.getApplication();
+                                                        String numScale = pickerView.getTextSelected();
+                                                        if (numScale.equals(AppGlobals.STR_ZERO)) {
+                                                            globals.deleteCart(order.supplierId, order.itemId);
+                                                        }
+                                                        else {
+                                                            globals.replaceCart(order.supplierId, order.itemId, numScale);
+                                                        }
+                                                        order.orderSize = pickerView.getTextSelected();
+                                                        // カート更新
+                                                        _self.refleshListView();
+                                                    }
+                                                })
+                                                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialog, int which) {
                                                     }
                                                 })
                                                 .show();
@@ -138,7 +159,7 @@ public class ActivityStaticItems extends CustomAppCompatActivity {
                             }
                         }
                     });
-                    listView.setAdapter(aastaticitem);
+                    myListView.setAdapter(adapter);
                 }
             });
         }
@@ -146,6 +167,18 @@ public class ActivityStaticItems extends CustomAppCompatActivity {
 //    public void HDZClientError(String message) {
 //        Log.d("########",message);
 //    }
+
+    /**
+     * リストビューの更新処理。
+     */
+    public void refleshListView() {
+        if (myListView != null) {
+            ArrayAdapterStaticItem adapter = (ArrayAdapterStaticItem) myListView.getAdapter();
+            adapter.notifyDataSetChanged();
+
+            Log.d("########","refleshListView");
+        }
+    }
 
     /**
      * ツールバー

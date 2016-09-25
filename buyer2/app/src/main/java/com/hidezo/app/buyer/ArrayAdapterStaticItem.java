@@ -22,20 +22,20 @@ import java.util.ArrayList;
  * Created by dezami on 2016/09/15.
  *
  */
-class ArrayAdapterStaticItem extends ArrayAdapter<HDZItemInfo.StaticItem> {
+class ArrayAdapterStaticItem extends ArrayAdapter<HDZUserOrder> {
 
-    ArrayList<HDZItemInfo.StaticItem> staticItemList = new ArrayList<>();
+//    ArrayList<HDZItemInfo.StaticItem> staticItemList = new ArrayList<>();
+//
+//    ArrayList<AppGlobals.CartCount> countInCartList = new ArrayList<>();
 
-    ArrayList<AppGlobals.CartCount> countInCartList = new ArrayList<>();
-
-    ArrayAdapterStaticItem(Context context, ArrayList<HDZItemInfo.StaticItem> items) {
+    ArrayAdapterStaticItem(Context context, ArrayList<HDZUserOrder> items) {
         super(context, 0, items);
-        this.staticItemList = items;
-
-        for (int i = 0; i < this.staticItemList.size(); i++) {
-            AppGlobals.CartCount object = new AppGlobals.CartCount();
-            countInCartList.add(object);
-        }
+//        this.staticItemList = items;
+//
+//        for (int i = 0; i < this.staticItemList.size(); i++) {
+//            AppGlobals.CartCount object = new AppGlobals.CartCount();
+//            countInCartList.add(object);
+//        }
     }
     @Override
     public boolean isEnabled(int position) {
@@ -45,8 +45,8 @@ class ArrayAdapterStaticItem extends ArrayAdapter<HDZItemInfo.StaticItem> {
     public View getView(final int position, View convertView, final ViewGroup parent) {
 
         // Get the data item for this position
-        HDZItemInfo.StaticItem staticItem = getItem(position);
-        if (staticItem == null) {
+        HDZUserOrder item = getItem(position);
+        if (item == null) {
             return convertView;
         }
 
@@ -57,10 +57,11 @@ class ArrayAdapterStaticItem extends ArrayAdapter<HDZItemInfo.StaticItem> {
 
         // Lookup view for data population
         TextView tvName = (TextView) convertView.findViewById(R.id.textViewName);
-        tvName.setText(staticItem.name);
+        tvName.setText(item.itemName);
         tvName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // 詳細画面
                 ((ListView) parent).performItemClick(null, position, 0);
             }
         });
@@ -68,13 +69,14 @@ class ArrayAdapterStaticItem extends ArrayAdapter<HDZItemInfo.StaticItem> {
         ivItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // 詳細画面
                 ((ListView) parent).performItemClick(null, position, 0);
             }
         });
         Context context = this.getContext();
         try {
             Picasso.with(context)
-                    .load(staticItem.image)
+                    .load(item.image)
 //                .centerInside()
                     .placeholder(R.drawable.sakana180)
                     .error(R.drawable.sakana180)
@@ -85,15 +87,15 @@ class ArrayAdapterStaticItem extends ArrayAdapter<HDZItemInfo.StaticItem> {
         }
 
         TextView tvPrice = (TextView) convertView.findViewById(R.id.textViewPrice);
-        String str_price = "単価：" + staticItem.price + "円";
+        String str_price = "単価：" + item.price + "円";
         tvPrice.setText(str_price);
 
         TextView tvStandard = (TextView) convertView.findViewById(R.id.textViewStandard);
-        String str_standard = "(" + staticItem.standard + "・" + staticItem.loading + "/" + staticItem.scale + ")";
+        String str_standard = "(" + item.standard + "・" + item.loading + "/" + item.scale + ")";
         tvStandard.setText( str_standard );
 
         TextView tvCount = (TextView) convertView.findViewById(R.id.textViewCount);
-        tvCount.setText( String.valueOf(countInCartList.get(position).count) );
+        tvCount.setText( item.orderSize );
 
         TextView tvRow = (TextView) convertView.findViewById(R.id.textViewRow);
         tvRow.setText( String.valueOf(position+1) );
@@ -103,11 +105,7 @@ class ArrayAdapterStaticItem extends ArrayAdapter<HDZItemInfo.StaticItem> {
         tvBtnPlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Log.d("########","R.id.tvBtnPlus");
-
-//                // 変更ダイアログ
-//                Log.d("########","R.id.tvBtn・変更ダイアログ");
-
+                // 変更ダイアログ
                 ((ListView) parent).performItemClick(null, position, -1);
             }
         });

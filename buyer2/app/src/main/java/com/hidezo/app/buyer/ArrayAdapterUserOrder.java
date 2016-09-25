@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 /**
  * Created by dezami on 2016/09/25.
@@ -19,7 +20,6 @@ class ArrayAdapterUserOrder extends ArrayAdapter<HDZUserOrder> {
 
     public ArrayAdapterUserOrder(Context context, ArrayList<HDZUserOrder> userOrders) {
         super(context, 0, userOrders);
-//        this.profileList = profiles;
     }
     @Override
     public boolean isEnabled(int position) {
@@ -45,6 +45,8 @@ class ArrayAdapterUserOrder extends ArrayAdapter<HDZUserOrder> {
         tvTitle.setText(userOrder.itemName);
         TextView tvContent = (TextView) convertView.findViewById(R.id.textViewCount);
         tvContent.setText(userOrder.orderSize);
+        TextView tvRow = (TextView) convertView.findViewById(R.id.textViewRow);
+        tvRow.setText(String.valueOf(position+1));
 
         // Return the completed view to render on screen
         return convertView;

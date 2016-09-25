@@ -59,7 +59,6 @@ public class ActivityDynamicItems extends CustomAppCompatActivity {
         tvOrderCheck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Log.d("########","R.id.textViewButtonOrderCheck");
                 Intent intent = new Intent( _self.getApplication(), ActivityUserOrders.class);
                 intent.putExtra("supplier_id",mySupplierId);
                 startActivity(intent);
@@ -86,23 +85,8 @@ public class ActivityDynamicItems extends CustomAppCompatActivity {
                 @Override
                 public void run() {
 
-                    final AppGlobals globals = (AppGlobals) _self.getApplication();
-                    // 表示リスト
-                    for (HDZItemInfo.DynamicItem src : responseItem.dynamicItemList) {
-                        HDZUserOrder item = new HDZUserOrder();
-                        item.itemName = src.item_name;
-                        item.supplierId = responseItem.supplierInfo.supplier_id;
-                        item.itemId = src.id;
-                        item.price = src.price;
-                        Dau dau = globals.selectCartDau(item.supplierId,item.itemId);
-                        if (dau != null) {
-                            item.orderSize = dau.order_size;
-                        }
-                        else {
-                            item.orderSize = AppGlobals.STR_ZERO;
-                        }
-                        _self.displayItemList.add(item);
-                    }
+                    // 表示リスト作成
+                    HDZUserOrder.transFromDynamic(_self, responseItem.dynamicItemList, mySupplierId, _self.displayItemList);
 
                     //リストビュー作成
                     ArrayAdapterDynamicItem adapter = new ArrayAdapterDynamicItem(_self, _self.displayItemList);
@@ -131,7 +115,14 @@ public class ActivityDynamicItems extends CustomAppCompatActivity {
 //                                                    Log.d("## Cart","POS[" + String.valueOf(position) + "]SELECTED = " + String.valueOf(pickerView.getIndexSelected()));
 
                                                     HDZUserOrder order = _self.displayItemList.get(position);
-                                                    globals.replaceCart(order.supplierId, order.itemId, pickerView.getTextSelected());
+                                                    final AppGlobals globals = (AppGlobals) _self.getApplication();
+                                                    String numScale = pickerView.getTextSelected();
+                                                    if (numScale.equals(AppGlobals.STR_ZERO)) {
+                                                        globals.deleteCart(order.supplierId, order.itemId);
+                                                    }
+                                                    else {
+                                                        globals.replaceCart(order.supplierId, order.itemId, numScale);
+                                                    }
                                                     order.orderSize = pickerView.getTextSelected();
                                                     // カート更新
                                                     _self.refleshListView();
