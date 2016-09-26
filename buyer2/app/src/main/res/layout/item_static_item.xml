@@ -99,8 +99,8 @@
                     android:gravity="center_vertical|center_horizontal"
                     android:textColor="@android:color/white"
                     android:background="@color/colorPrimary"
-                    android:textSize="24sp"
-                    android:layout_width="100dp" />
+                    android:textSize="18sp"
+                    android:layout_width="@dimen/button_size_width" />
 
             </LinearLayout>
 

@@ -6,8 +6,8 @@ import android.content.Intent;
 //import android.graphics.Canvas;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
+//import android.support.v7.widget.Toolbar;
+//import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,8 +15,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.hidezo.app.buyer.CustomView.PickerView;
-import com.hidezo.app.buyer.model.Dau;
+//import com.hidezo.app.buyer.CustomView.PickerView;
+//import com.hidezo.app.buyer.model.Dau;
 
 import java.util.ArrayList;
 //import java.util.StringTokenizer;
@@ -30,12 +30,12 @@ public class ActivityDynamicItems extends CustomAppCompatActivity {
 
     private ActivityDynamicItems _self;
 
-    private HDZApiResponseItem responseItem = new HDZApiResponseItem();
+//    private HDZApiResponseItem responseItem = new HDZApiResponseItem();
     private ArrayList<HDZUserOrder> displayItemList = new ArrayList<>();
 
     private String mySupplierId = "";
 
-    private ListView myListView = null;
+//    private ListView myListView = null;
 //    private int indexSelected = 0;
 //    private String numScaleSelected = "0";
 
@@ -79,6 +79,7 @@ public class ActivityDynamicItems extends CustomAppCompatActivity {
             return;
         }
 
+        final HDZApiResponseItem responseItem = new HDZApiResponseItem();
         if (responseItem.parseJson(response)) {
             //UIスレッド上で呼び出してもらう
             this.runOnUiThread(new Runnable() {
@@ -90,8 +91,8 @@ public class ActivityDynamicItems extends CustomAppCompatActivity {
 
                     //リストビュー作成
                     ArrayAdapterDynamicItem adapter = new ArrayAdapterDynamicItem(_self, _self.displayItemList);
-                    _self.myListView = (ListView) findViewById(R.id.listViewDynamicItem);
-                    _self.myListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    ListView listView = (ListView) findViewById(R.id.listViewDynamicItem);
+                    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         //行タッチイベント
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
@@ -125,7 +126,7 @@ public class ActivityDynamicItems extends CustomAppCompatActivity {
                                                     }
                                                     order.orderSize = pickerView.getTextSelected();
                                                     // カート更新
-                                                    _self.refleshListView();
+                                                    reFleshListView();
                                                 }
                                             })
                                             .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -139,7 +140,7 @@ public class ActivityDynamicItems extends CustomAppCompatActivity {
 
                         }
                     });
-                    myListView.setAdapter(adapter);
+                    listView.setAdapter(adapter);
 
                 }
             });
@@ -149,14 +150,10 @@ public class ActivityDynamicItems extends CustomAppCompatActivity {
     /**
      * リストビューの更新処理。
      */
-    public void refleshListView() {
-//        ListView listView = (ListView) findViewById(R.id.listViewDynamicItem);
-        if (myListView != null) {
-            ArrayAdapterDynamicItem adapter = (ArrayAdapterDynamicItem) myListView.getAdapter();
-            adapter.notifyDataSetChanged();
-
-            Log.d("########","refleshListView");
-        }
+    public void reFleshListView() {
+        ListView listView = (ListView) findViewById(R.id.listViewDynamicItem);
+        ArrayAdapterDynamicItem adapter = (ArrayAdapterDynamicItem) listView.getAdapter();
+        adapter.notifyDataSetChanged();
     }
 
     /**

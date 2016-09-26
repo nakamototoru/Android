@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -28,17 +29,18 @@ class ArrayAdapterUserOrder extends ArrayAdapter<HDZUserOrder> {
     @Override
     public View getView(final int position, View convertView, final ViewGroup parent) {
 
-        // Check if an existing view is being reused, otherwise inflate the view
-        if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_user_order, parent, false);
-        }
         // Get the data item for this position
         HDZUserOrder userOrder = getItem(position);
         if (userOrder == null) {
             return convertView;
         }
 
-        Log.d("## UserOrder","NAME = " + userOrder.itemName);
+        // Check if an existing view is being reused, otherwise inflate the view
+        if (convertView == null) {
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_user_order, parent, false);
+        }
+
+//        Log.d("## UserOrder","NAME = " + userOrder.itemName);
 
         // Lookup view for data population
         TextView tvTitle = (TextView) convertView.findViewById(R.id.textViewName);
@@ -47,6 +49,26 @@ class ArrayAdapterUserOrder extends ArrayAdapter<HDZUserOrder> {
         tvContent.setText(userOrder.orderSize);
         TextView tvRow = (TextView) convertView.findViewById(R.id.textViewRow);
         tvRow.setText(String.valueOf(position+1));
+
+        // Touch Event
+        TextView tvBtnDelete = (TextView) convertView.findViewById(R.id.textViewButtonDelete);
+        tvBtnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("##","TODO: カートから削除");
+                // 親アクティビティへ
+                ((ListView) parent).performItemClick(null, position, -1);
+            }
+        });
+        TextView tvBtnUpdate = (TextView) convertView.findViewById(R.id.textViewButtonUpdate);
+        tvBtnUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("##","TODO: カート変更");
+                // 親アクティビティへ
+                ((ListView) parent).performItemClick(null, position, 0);
+            }
+        });
 
         // Return the completed view to render on screen
         return convertView;

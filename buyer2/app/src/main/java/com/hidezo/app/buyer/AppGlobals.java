@@ -170,7 +170,6 @@ public class AppGlobals extends Application {
 //    public static class CartCount {
 //        int count = 0;
 //    }
-
     public void createCart() {
         DBHelper dBHelper;
         try {

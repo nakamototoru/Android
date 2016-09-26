@@ -6,4 +6,5 @@
     <string name="OrderCheck">注文確認</string>
     <string name="Update">変更</string>
     <string name="Delete">削除</string>
+    <string name="Order">注文する</string>
 </resources>

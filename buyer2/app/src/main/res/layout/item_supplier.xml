@@ -4,35 +4,52 @@
     android:layout_height="match_parent"
     android:padding="@dimen/abc_action_bar_overflow_padding_end_material">
 
-    <TextView
-        android:layout_width="24dp"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="row"
-        android:id="@+id/tvRow"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentBottom="true" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Medium Text"
-        android:id="@+id/tvName"
-        android:layout_alignParentTop="false"
-        android:layout_alignWithParentIfMissing="false"
-        android:layout_centerHorizontal="true"
-        android:layout_toRightOf="@+id/tvRow"
-        android:layout_alignParentBottom="true" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="left|center_vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="注文する"
-        android:id="@+id/textViewOrder"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="false"
-        android:layout_alignParentBottom="true" />
+            <TextView
+                android:layout_width="@dimen/layoutWidthTextRow"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="row"
+                android:id="@+id/tvRow" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Medium Text"
+                android:id="@+id/tvName"
+                android:layout_weight="1" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right|center_vertical">
+
+                <TextView
+                    android:layout_width="@dimen/button_size_width"
+                    android:layout_height="@dimen/button_size_height"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="@string/Order"
+                    android:id="@+id/textViewOrder"
+                    android:background="@color/colorPrimary"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:textColor="@android:color/white"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </RelativeLayout>

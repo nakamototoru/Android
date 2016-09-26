@@ -8,7 +8,7 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <TextView
             android:text="TextView"
@@ -20,13 +20,13 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:gravity="left|center_vertical">
 
             <TextView
                 android:text="row"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/layoutWidthTextRow"
                 android:id="@+id/textViewOrderRow"
                 android:textColor="@android:color/black" />
 

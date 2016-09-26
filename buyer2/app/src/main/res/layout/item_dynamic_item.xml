@@ -10,18 +10,17 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="商品名"
             android:id="@+id/textViewName"
-            android:textSize="18sp"
-            android:fontFamily="sans-serif" />
+            android:textSize="18sp" />
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/abc_action_bar_default_height_material"
+            android:layout_height="wrap_content"
             android:gravity="left|center_vertical">
 
             <TextView
@@ -69,15 +68,15 @@
                     android:layout_height="match_parent"></LinearLayout>
 
                 <TextView
-                    android:layout_height="@android:dimen/app_icon_size"
+                    android:layout_height="@dimen/button_size_height"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="@string/Update"
                     android:id="@+id/textViewButtonUpdate"
                     android:gravity="center_vertical|center_horizontal"
-                    android:textSize="24sp"
+                    android:textSize="18sp"
                     android:background="@color/colorPrimary"
                     android:textColor="@android:color/white"
-                    android:layout_width="100dp" />
+                    android:layout_width="@dimen/button_size_width" />
 
             </LinearLayout>
 
