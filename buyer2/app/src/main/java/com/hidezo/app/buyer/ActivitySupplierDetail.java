@@ -18,17 +18,12 @@ import java.util.ArrayList;
  */
 public class ActivitySupplierDetail extends CustomAppCompatActivity {
 
-    private static ActivitySupplierDetail _self;
-    private HDZApiResponseFriend responseFriend = new HDZApiResponseFriend();
-
     private String mySupplierId = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_supplier_detail);
-
-        _self = this;
 
         Intent intent = getIntent();
         mySupplierId = intent.getStringExtra("supplier_id");
@@ -41,6 +36,7 @@ public class ActivitySupplierDetail extends CustomAppCompatActivity {
         // ツールバー初期化
         String supplier_name = intent.getStringExtra("supplier_name");
         setNavigationBar(supplier_name);
+
     }
 
     /**
@@ -53,6 +49,8 @@ public class ActivitySupplierDetail extends CustomAppCompatActivity {
             return;
         }
 
+        final ActivitySupplierDetail _self = this;
+        final HDZApiResponseFriend responseFriend = new HDZApiResponseFriend();
         if (responseFriend.parseJson(response)) {
             if (responseFriend.friendInfoList.size() == 0) {
                 return;
@@ -91,9 +89,7 @@ public class ActivitySupplierDetail extends CustomAppCompatActivity {
             }
         }
     }
-//    public void HDZClientError(String message) {
-//        Log.d("########",message);
-//    }
+
 
     /**
      * ツールバー

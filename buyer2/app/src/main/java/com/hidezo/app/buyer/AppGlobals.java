@@ -65,7 +65,6 @@ public class AppGlobals extends Application {
      * @param value user_id
      */
     public void setUserId(final String value) {
-
         // インスタンスを取得する
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         // データを保存する
@@ -74,7 +73,6 @@ public class AppGlobals extends Application {
         result.commit();
     }
     public String getUserId() {
-
         // インスタンスを取得する
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         // データを取得する(第2引数はデフォルト値)
@@ -85,7 +83,6 @@ public class AppGlobals extends Application {
      * ログイン状態
      */
     public void setLoginState(final boolean isLogin) {
-
         // インスタンスを取得する
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         // データを保存する
@@ -94,7 +91,6 @@ public class AppGlobals extends Application {
         result.commit();
     }
     public boolean getLoginState() {
-
         // インスタンスを取得する
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         // データを取得する(第2引数はデフォルト値)
@@ -114,6 +110,83 @@ public class AppGlobals extends Application {
         }
         return true;
     }
+
+    /**
+     * 注文前入力・メッセージ
+     */
+    private static final String keyMessage = "message";
+    public void setOrderMessage(final String text) {
+        // インスタンスを取得する
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        // データを保存する
+        SharedPreferences.Editor ed = sp.edit();
+        SharedPreferences.Editor result = ed.putString(keyMessage, text);
+        result.commit();
+    }
+    public String getOrderMessage() {
+        // インスタンスを取得する
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        // データを取得する(第2引数はデフォルト値)
+        return sp.getString(keyMessage, "");
+    }
+
+    /**
+     * 注文前入力・納品日
+     */
+    private static final String keyDeliverDay = "deliver_day";
+    public void setOrderDeliverDay(final String text) {
+        // インスタンスを取得する
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        // データを保存する
+        SharedPreferences.Editor ed = sp.edit();
+        SharedPreferences.Editor result = ed.putString(keyDeliverDay, text);
+        result.commit();
+    }
+    public String getOrderDeliverDay() {
+        // インスタンスを取得する
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        // データを取得する(第2引数はデフォルト値)
+        return sp.getString(keyDeliverDay, "最短納品日");
+    }
+
+    /**
+     * 注文前入力・担当者
+     */
+    private static final String keyCharge = "charge";
+    public void setOrderCharge(final String text) {
+        // インスタンスを取得する
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        // データを保存する
+        SharedPreferences.Editor ed = sp.edit();
+        SharedPreferences.Editor result = ed.putString(keyCharge, text);
+        result.commit();
+    }
+    public String getOrderCharge() {
+        // インスタンスを取得する
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        // データを取得する(第2引数はデフォルト値)
+        return sp.getString(keyCharge, "");
+    }
+
+    /**
+     * 注文前入力・配送先
+     */
+    private static final String keyDeliverPlace = "deliver_place";
+    public void setOrderDeliverPlace(final String text) {
+        // インスタンスを取得する
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        // データを保存する
+        SharedPreferences.Editor ed = sp.edit();
+        SharedPreferences.Editor result = ed.putString(keyDeliverPlace, text);
+        result.commit();
+    }
+    public String getOrderDeliverPlace() {
+        // インスタンスを取得する
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        // データを取得する(第2引数はデフォルト値)
+        return sp.getString(keyDeliverPlace, "");
+    }
+
 
     /**
      * ALERT DIALOG

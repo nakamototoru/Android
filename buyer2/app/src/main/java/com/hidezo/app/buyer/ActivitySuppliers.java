@@ -23,15 +23,12 @@ import android.widget.ListView;
  */
 public class ActivitySuppliers extends CustomAppCompatActivity {
 
-    private static ActivitySuppliers _self;
-    private HDZApiResponseFriend responseFriend = new HDZApiResponseFriend();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_suppliers);
 
-        _self = this;
+        final ActivitySuppliers _self = this;
 
         // ツールナビゲーションバー
         setNavigationBar("取引先一覧");
@@ -53,6 +50,8 @@ public class ActivitySuppliers extends CustomAppCompatActivity {
             return;
         }
 
+        final ActivitySuppliers _self = this;
+        final HDZApiResponseFriend responseFriend = new HDZApiResponseFriend();
         if ( responseFriend.parseJson(response) ) {
             if (responseFriend.friendInfoList.size() == 0) {
                 return;
@@ -117,6 +116,8 @@ public class ActivitySuppliers extends CustomAppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+
+        final ActivitySuppliers _self = this;
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_logout) {

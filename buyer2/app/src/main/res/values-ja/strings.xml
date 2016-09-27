@@ -7,4 +7,6 @@
     <string name="Update">変更</string>
     <string name="Delete">削除</string>
     <string name="Order">注文する</string>
+    <string name="OrderDecide">注文確定</string>
+    <string name="OrderExec">注文実行</string>
 </resources>

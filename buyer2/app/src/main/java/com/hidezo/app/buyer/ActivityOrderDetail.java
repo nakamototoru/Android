@@ -4,21 +4,24 @@ import android.content.Intent;
 //import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
+//import android.view.View;
+//import android.widget.AdapterView;
+//import android.widget.ListView;
 
+/**
+ *
+ */
 public class ActivityOrderDetail extends CustomAppCompatActivity {
 
-    private static ActivityOrderDetail _self;
-    private HDZApiResponseOrderDetail responseOrderDetail = new HDZApiResponseOrderDetail();
+//    private static ActivityOrderDetail _self;
+//    private HDZApiResponseOrderDetail responseOrderDetail = new HDZApiResponseOrderDetail();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_detail);
 
-        _self = this;
+//        _self = this;
 
         Intent intent = getIntent();
         String order_no = intent.getStringExtra("order_no");
@@ -28,10 +31,9 @@ public class ActivityOrderDetail extends CustomAppCompatActivity {
         AppGlobals globals = (AppGlobals) this.getApplication();
         req.begin(globals.getUserId(), globals.getUuid(), order_no, this);
 
-        String supplier_name = intent.getStringExtra("supplier_name");
         // ツールナビゲーションバー
+        String supplier_name = intent.getStringExtra("supplier_name");
         setNavigationBar(supplier_name + "様宛");
-
     }
 
     /**
@@ -45,6 +47,8 @@ public class ActivityOrderDetail extends CustomAppCompatActivity {
             return;
         }
 
+        final ActivityOrderDetail _self = this;
+        final HDZApiResponseOrderDetail responseOrderDetail = new HDZApiResponseOrderDetail();
         if ( responseOrderDetail.parseJson(response) ) {
 
             Log.d("########",response);

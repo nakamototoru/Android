@@ -1,67 +1,38 @@
 package com.hidezo.app.buyer;
 
-//import android.content.ContentValues;
 import android.content.Intent;
-//import android.support.v4.app.FragmentActivity;
-//import android.support.v4.content.ContextCompat;
-//import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
-//import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-//import android.widget.TabHost;
-//import android.support.v4.app.FragmentTabHost;
 import android.widget.TextView;
 
-//import com.hidezo.app.buyer.model.Dau;
-//import com.hidezo.app.buyer.model.DauHelper;
-//import com.hidezo.app.buyer.util.DBHelper;
-
-//import java.util.List;
-
-//import org.w3c.dom.Text;
 
 /**
- *
+ * ログインフォーム画面・最初に呼び出される
  */
 public class MainActivity extends AppCompatActivity implements HDZClient.HDZCallbacks {
 
-    private MainActivity _self;
-
-    private HDZApiResponse responseLogin = new HDZApiResponse();
-
     private String myUserId = "";
-
-    // グローバル
-    private AppGlobals sGlobals;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        _self = this;
+        final MainActivity _self = this;
 
         // getApplication()でアプリケーションクラスのインスタンスを拾う
-        sGlobals = (AppGlobals) this.getApplication();
+        final AppGlobals globals = (AppGlobals) this.getApplication();
 
         // データベース作成
-        sGlobals.createCart();
-
-//        if (BuildConfig.DEBUG) {
-//            sGlobals.selectCartAll();
-//            sGlobals.insertCart("FISH SHOp","DYNAMIC01","1/2");
-//        }
+        globals.createCart();
 
         // エディットテキスト
         TextView tvEditId = (TextView) findViewById(R.id.editTextUserId);
-        tvEditId.setText(sGlobals.getUserId());
-//        TextView tvEditPass = (TextView) findViewById(R.id.editTextPassword);
-//        tvEditPass.setText("test");
+        tvEditId.setText(globals.getUserId());
 
         // クリックイベントを取得したいボタン
         Button button = (Button) findViewById(R.id.buttonLogin);
@@ -77,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements HDZClient.HDZCall
                 myUserId = tvId.getText().toString();
                 TextView tvPass = (TextView) findViewById(R.id.editTextPassword);
                 String password = tvPass.getText().toString();
-                String uuid = sGlobals.createUuid();
+                String uuid = globals.createUuid();
                 // HTTP POST
                 HDZApiRequestPackage.Login req = new HDZApiRequestPackage.Login();
                 req.begin( myUserId, uuid, password, _self);
@@ -89,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements HDZClient.HDZCall
         setSupportActionBar(toolbar);
 
         // ログインチェック
-        if (sGlobals.getLoginState()) {
+        if (globals.getLoginState()) {
             // 画面遷移
             Intent intent = new Intent(getApplication(), ActivitySuppliers.class);
             startActivity(intent);
@@ -103,30 +74,33 @@ public class MainActivity extends AppCompatActivity implements HDZClient.HDZCall
     public void HDZClientComplete(String response,String apiName) {
 
         if (apiName.equals("login/store")) {
+            // ログイン処理
+            final AppGlobals globals = (AppGlobals) this.getApplication();
+            final HDZApiResponse responseLogin = new HDZApiResponse();
             if (responseLogin.parseJson(response)) {
                 if (responseLogin.result) {
 
-                    sGlobals.setUserId(myUserId);
-                    sGlobals.setLoginState(true);
+                    globals.setUserId(myUserId);
+                    globals.setLoginState(true);
                     // 画面遷移
                     Intent intent = new Intent(getApplication(), ActivitySuppliers.class);
                     startActivity(intent);
                 }
                 else {
                     //ログイン失敗
-                    sGlobals.setLoginState(false);
-                    sGlobals.openWarning("エラー",responseLogin.message,this);
+                    globals.setLoginState(false);
+                    globals.openWarning("エラー",responseLogin.message,this);
                 }
             }
             else {
                 //ログイン失敗
-                sGlobals.setLoginState(false);
-                sGlobals.openWarning("エラー",responseLogin.message,this);
+                globals.setLoginState(false);
+                globals.openWarning("エラー",responseLogin.message,this);
             }
         }
     }
     public void HDZClientError(String error) {
-        AppGlobals globals = (AppGlobals) this.getApplication();
+        final AppGlobals globals = (AppGlobals) this.getApplication();
         // 警告
         globals.openWarning("アクセスエラー","ネットワークにアクセス出来ませんでしたので時間を置いて再試行して下さい。",this);
     }

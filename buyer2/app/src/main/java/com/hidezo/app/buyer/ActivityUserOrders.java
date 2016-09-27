@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
@@ -29,12 +30,7 @@ import java.util.List;
  */
 public class ActivityUserOrders extends CustomAppCompatActivity {
 
-    private ActivityUserOrders _self;
-
     private String mySupplierId = "";
-
-//    private HDZApiResponseItem responseItem = new HDZApiResponseItem();
-//    private ArrayList<HDZUserOrder> displayItemList = new ArrayList<>();
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -46,8 +42,6 @@ public class ActivityUserOrders extends CustomAppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_orders);
-
-        _self = this;
 
         Intent intent = getIntent();
         mySupplierId = intent.getStringExtra("supplier_id");
@@ -71,12 +65,13 @@ public class ActivityUserOrders extends CustomAppCompatActivity {
      */
     public void HDZClientComplete(final String response, String apiName) {
 
-        final AppGlobals globals = (AppGlobals) _self.getApplication();
+        final AppGlobals globals = (AppGlobals) this.getApplication();
 
         if (checkLogOut(response)) {
             return;
         }
 
+        final ActivityUserOrders _self = this;
         final HDZApiResponseItem responseItem = new HDZApiResponseItem();
         if (responseItem.parseJson(response)) {
 
@@ -86,8 +81,6 @@ public class ActivityUserOrders extends CustomAppCompatActivity {
             this.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-
-                    Log.d("######","UserOrderList");
                     // 表示リスト
                     displayItemList.clear();
                     List<Dau> cartList = globals.selectCartList(mySupplierId);
@@ -134,6 +127,18 @@ public class ActivityUserOrders extends CustomAppCompatActivity {
                         listView.setAdapter(emptyAdapter);
                         return;
                     }
+
+                    // 注文確定ボタンを有効に
+                    TextView tvOrderDecide = (TextView) findViewById(R.id.textViewButtonOrderDecide);
+                    tvOrderDecide.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            // 遷移
+                            Intent intent = new Intent( _self.getApplication(), ActivityUserOrdersCheck.class);
+                            intent.putExtra("supplier_id", mySupplierId);
+                            _self.startActivity(intent);
+                        }
+                    });
 
                     //リストビュー作成
                     ArrayAdapterUserOrder adapter = new ArrayAdapterUserOrder(_self, displayItemList);

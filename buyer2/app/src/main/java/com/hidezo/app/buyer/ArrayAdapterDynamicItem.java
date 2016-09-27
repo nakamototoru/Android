@@ -32,15 +32,15 @@ class ArrayAdapterDynamicItem extends ArrayAdapter<HDZUserOrder> {
     @Override
     public View getView(final int position, View convertView, final ViewGroup parent) {
 
-        // Check if an existing view is being reused, otherwise inflate the view
-        if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_dynamic_item, parent, false);
-        }
-
         // Get the data item for this position
         HDZUserOrder item = getItem(position);
         if (item == null) {
             return convertView;
+        }
+
+        // Check if an existing view is being reused, otherwise inflate the view
+        if (convertView == null) {
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_dynamic_item, parent, false);
         }
 
         // Lookup view for data population

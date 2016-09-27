@@ -4,7 +4,6 @@ package com.hidezo.app.buyer;
  * Created by dezami on 2016/09/21.
  *
  */
-
 class HDZordered {
 
     String order_no = "";

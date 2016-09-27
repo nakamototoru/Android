@@ -18,11 +18,11 @@ import java.util.ArrayList;
 
 class ArrayAdapterOrderes extends ArrayAdapter<HDZordered> {
 
-    public ArrayList<HDZordered> orderedList = new ArrayList<>(); // HDZordered
+//    public ArrayList<HDZordered> orderedList = new ArrayList<>(); // HDZordered
 
     public ArrayAdapterOrderes(Context context, ArrayList<HDZordered> orderes) {
         super(context, 0, orderes);
-        this.orderedList = orderes;
+//        this.orderedList = orderes;
     }
 //    @Override
 //    public boolean isEnabled(int position) {
@@ -33,6 +33,9 @@ class ArrayAdapterOrderes extends ArrayAdapter<HDZordered> {
 
         // Get the data item for this position
         HDZordered orderInfo = getItem(position);
+        if (orderInfo == null) {
+            return convertView;
+        }
 
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
@@ -43,7 +46,6 @@ class ArrayAdapterOrderes extends ArrayAdapter<HDZordered> {
         TextView tvOrderAt = (TextView) convertView.findViewById(R.id.textViewOrderAt);
         tvOrderAt.setText( orderInfo.order_at );
 
-//        TextView tvName = (TextView) convertView.findViewById(R.id.tvName);
         TextView tvRow = (TextView) convertView.findViewById(R.id.textViewOrderRow);
         tvRow.setText( String.valueOf(position+1) );
 

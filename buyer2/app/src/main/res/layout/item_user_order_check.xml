@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/layout_padding_item_layout">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:text="title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewTitle"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:background="@color/colorOrderBar" />
+
+        <TextView
+            android:text="contentContentCon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewContent"
+            android:textColor="@android:color/black"
+            android:textSize="18sp" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="top|right">
+
+            <TextView
+                android:text="@string/Update"
+                android:layout_width="@dimen/button_size_width"
+                android:layout_height="@dimen/button_size_height"
+                android:id="@+id/textViewButtonUpdate"
+                android:gravity="center_vertical|center_horizontal"
+                android:background="@color/colorPrimary"
+                android:textSize="18sp"
+                android:textColor="@android:color/white" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

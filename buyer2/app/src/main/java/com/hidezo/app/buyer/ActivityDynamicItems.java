@@ -28,23 +28,14 @@ import java.util.ArrayList;
  */
 public class ActivityDynamicItems extends CustomAppCompatActivity {
 
-    private ActivityDynamicItems _self;
-
-//    private HDZApiResponseItem responseItem = new HDZApiResponseItem();
-    private ArrayList<HDZUserOrder> displayItemList = new ArrayList<>();
-
     private String mySupplierId = "";
-
-//    private ListView myListView = null;
-//    private int indexSelected = 0;
-//    private String numScaleSelected = "0";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dynamic_items);
 
-        _self = this;
+        final ActivityDynamicItems _self = this;
 
         Intent intent = getIntent();
         mySupplierId = intent.getStringExtra("supplier_id");
@@ -79,6 +70,7 @@ public class ActivityDynamicItems extends CustomAppCompatActivity {
             return;
         }
 
+        final ActivityDynamicItems _self = this;
         final HDZApiResponseItem responseItem = new HDZApiResponseItem();
         if (responseItem.parseJson(response)) {
             //UIスレッド上で呼び出してもらう
@@ -86,11 +78,13 @@ public class ActivityDynamicItems extends CustomAppCompatActivity {
                 @Override
                 public void run() {
 
+                    final ArrayList<HDZUserOrder> displayItemList = new ArrayList<>();
+
                     // 表示リスト作成
-                    HDZUserOrder.transFromDynamic(_self, responseItem.dynamicItemList, mySupplierId, _self.displayItemList);
+                    HDZUserOrder.transFromDynamic(_self, responseItem.dynamicItemList, mySupplierId, displayItemList);
 
                     //リストビュー作成
-                    ArrayAdapterDynamicItem adapter = new ArrayAdapterDynamicItem(_self, _self.displayItemList);
+                    ArrayAdapterDynamicItem adapter = new ArrayAdapterDynamicItem(_self, displayItemList);
                     ListView listView = (ListView) findViewById(R.id.listViewDynamicItem);
                     listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         //行タッチイベント
@@ -101,7 +95,7 @@ public class ActivityDynamicItems extends CustomAppCompatActivity {
                             ArrayList<String> pickerList = new ArrayList<>();
                             pickerList.add( AppGlobals.STR_ZERO );
                             pickerList.addAll(responseItem.dynamicItemList.get(position).num_scale);
-                            final CustomPickerView pickerView = new CustomPickerView(_self, pickerList, _self.displayItemList.get(position).orderSize);
+                            final CustomPickerView pickerView = new CustomPickerView(_self, pickerList, displayItemList.get(position).orderSize);
 
                             //UIスレッド上で呼び出してもらう
                             _self.runOnUiThread(new Runnable() {
@@ -115,7 +109,7 @@ public class ActivityDynamicItems extends CustomAppCompatActivity {
                                                 public void onClick(DialogInterface dialog, int id) {
 //                                                    Log.d("## Cart","POS[" + String.valueOf(position) + "]SELECTED = " + String.valueOf(pickerView.getIndexSelected()));
 
-                                                    HDZUserOrder order = _self.displayItemList.get(position);
+                                                    HDZUserOrder order = displayItemList.get(position);
                                                     final AppGlobals globals = (AppGlobals) _self.getApplication();
                                                     String numScale = pickerView.getTextSelected();
                                                     if (numScale.equals(AppGlobals.STR_ZERO)) {

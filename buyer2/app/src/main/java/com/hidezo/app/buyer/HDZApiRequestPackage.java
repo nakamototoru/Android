@@ -103,7 +103,7 @@ class HDZApiRequestPackage {
     let delivery_day: String
     let charge: String
              */
-            HashMap<String,String> params = new HashMap<String, String>();
+            HashMap<String,String> params = new HashMap<>();
             params.put("id",id);
             params.put("uuid",uuid);
 

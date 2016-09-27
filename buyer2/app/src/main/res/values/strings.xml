@@ -11,4 +11,6 @@
     <string name="Update">Update</string>
     <string name="Delete">Delete</string>
     <string name="Order">order</string>
+    <string name="OrderDecide">OrderDecide</string>
+    <string name="OrderExec">OrderExec</string>
 </resources>

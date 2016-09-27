@@ -3,17 +3,15 @@ package com.hidezo.app.buyer;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 
 /**
  * Created by dezami on 2016/09/21.
  *
  */
-
 class HDZApiResponseOrderedList extends HDZApiResponse {
 
-    public ArrayList<HDZordered> orderedList = new ArrayList<HDZordered>();
+    public ArrayList<HDZordered> orderedList = new ArrayList<>();
 
     @Override
     public boolean parseJson(final String strjson) {

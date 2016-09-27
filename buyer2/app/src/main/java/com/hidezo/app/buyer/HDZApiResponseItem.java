@@ -1,7 +1,5 @@
 package com.hidezo.app.buyer;
 
-//import android.util.Log;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -14,9 +12,10 @@ import java.util.ArrayList;
  */
 class HDZApiResponseItem extends HDZApiResponse {
 
+    public HDZItemInfo itemInfo = new HDZItemInfo();
     public HDZItemInfo.Supplier supplierInfo = new HDZItemInfo.Supplier();
-    public ArrayList<HDZItemInfo.StaticItem> staticItemList = new ArrayList<HDZItemInfo.StaticItem>();
-    public ArrayList<HDZItemInfo.DynamicItem> dynamicItemList = new ArrayList<HDZItemInfo.DynamicItem>();
+    public ArrayList<HDZItemInfo.StaticItem> staticItemList = new ArrayList<>();
+    public ArrayList<HDZItemInfo.DynamicItem> dynamicItemList = new ArrayList<>();
     public HDZItemInfo.DynamicItemInfo dynamicItemInfo = new HDZItemInfo.DynamicItemInfo();
 
     @Override
@@ -25,6 +24,16 @@ class HDZApiResponseItem extends HDZApiResponse {
         if (isSuccess) {
             try {
                 JSONObject json = new JSONObject(strjson);
+
+                itemInfo.attr_flg = json.getString("attr_flg");
+                JSONArray json_charge_list = json.getJSONArray("charge_list");
+                for (int i = 0; i < json_charge_list.length(); i++) {
+                    itemInfo.charge_list.add( json_charge_list.getString(i) );
+                }
+                JSONArray json_deliver_to_list = json.getJSONArray("deliver_to_list");
+                for (int i = 0; i < json_deliver_to_list.length(); i++) {
+                    itemInfo.deliver_to_list.add( json_deliver_to_list.getString(i) );
+                }
 
                 JSONObject json_supplier = json.getJSONObject("supplier");
                 supplierInfo.supplier_id = json_supplier.getString("supplier_id");

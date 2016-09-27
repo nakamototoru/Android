@@ -1,7 +1,5 @@
 package com.hidezo.app.buyer;
 
-//import android.util.Log;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -13,7 +11,7 @@ import java.util.ArrayList;
  */
 class HDZApiResponseFriend extends HDZApiResponse {
 
-    ArrayList<HDZFriendInfo> friendInfoList = new ArrayList<HDZFriendInfo>();
+    ArrayList<HDZFriendInfo> friendInfoList = new ArrayList<>();
 
     @Override
     public boolean parseJson(final String strjson) {

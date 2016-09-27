@@ -8,7 +8,7 @@ import java.util.HashMap;
  */
 class HDZApiRequest {
 
-    private final HashMap<String, String> mapParams = new HashMap<String,String>(); // 連想配列に格納
+    private final HashMap<String, String> mapParams = new HashMap<>(); // 連想配列に格納
 
     void putKeyAndValue(final String key, final String value) {
         mapParams.put(key,value);

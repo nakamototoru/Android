@@ -1,7 +1,6 @@
 package com.hidezo.app.buyer;
 
 import com.hidezo.app.buyer.model.Dau;
-
 import java.util.ArrayList;
 
 /**
@@ -40,12 +39,6 @@ class HDZUserOrder {
         // 表示リスト
         for (HDZItemInfo.DynamicItem src : srcList) {
             HDZUserOrder item = new HDZUserOrder();
-//            item.isDynamic = true;
-//            item.numScale = src.num_scale;
-//            item.itemName = src.item_name;
-//            item.supplierId = supplier_id;
-//            item.itemId = src.id;
-//            item.price = src.price;
             item.getFromDynamic(src, supplier_id);
             // カート内容
             Dau dau = globals.selectCartDau(item.supplierId,item.itemId);
@@ -78,15 +71,6 @@ class HDZUserOrder {
         // 表示リスト
         for (HDZItemInfo.StaticItem src : srcList) {
             HDZUserOrder item = new HDZUserOrder();
-//            item.numScale = src.num_scale;
-//            item.itemName = src.name;
-//            item.supplierId = supplier_id;
-//            item.itemId = src.id;
-//            item.price = src.price;
-//            item.standard = src.standard;
-//            item.loading = src.loading;
-//            item.scale = src.scale;
-//            item.image = src.image;
             item.getFromStatic(src, supplier_id);
             // カート内容
             Dau dau = globals.selectCartDau(item.supplierId,item.itemId);

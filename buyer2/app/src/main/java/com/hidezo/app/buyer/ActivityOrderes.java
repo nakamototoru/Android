@@ -13,15 +13,15 @@ import android.widget.ListView;
  */
 public class ActivityOrderes extends CustomAppCompatActivity {
 
-    private static ActivityOrderes _self;
-    private HDZApiResponseOrderedList responseOrderedList = new HDZApiResponseOrderedList();
+//    private static ActivityOrderes _self;
+//    private HDZApiResponseOrderedList responseOrderedList = new HDZApiResponseOrderedList();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_orderes);
 
-        _self = this;
+        final ActivityOrderes _self = this;
 
         // ゲット・注文履歴
         AppGlobals globals = (AppGlobals) this.getApplication();
@@ -43,6 +43,8 @@ public class ActivityOrderes extends CustomAppCompatActivity {
             return;
         }
 
+        final ActivityOrderes _self = this;
+        final HDZApiResponseOrderedList responseOrderedList = new HDZApiResponseOrderedList();
         if ( responseOrderedList.parseJson(response) ) {
             if (responseOrderedList.orderedList.size() == 0) {
                 Log.d("########","orderedList is ZERO");

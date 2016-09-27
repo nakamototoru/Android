@@ -16,11 +16,11 @@ import java.util.ArrayList;
  */
 class ArrayAdapterCategory extends ArrayAdapter<HDZItemInfo.Category> {
 
-    ArrayList<HDZItemInfo.Category> categoryArrayList = new ArrayList<HDZItemInfo.Category>();
+//    ArrayList<HDZItemInfo.Category> categoryArrayList = new ArrayList<HDZItemInfo.Category>();
 
     public ArrayAdapterCategory(Context context, ArrayList<HDZItemInfo.Category> categorys) {
         super(context, 0, categorys);
-        this.categoryArrayList = categorys;
+//        this.categoryArrayList = categorys;
     }
 
     @Override
@@ -28,6 +28,9 @@ class ArrayAdapterCategory extends ArrayAdapter<HDZItemInfo.Category> {
 
         // Get the data item for this position
         HDZItemInfo.Category categoryInfo = getItem(position);
+        if (categoryInfo == null) {
+            return convertView;
+        }
 
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {

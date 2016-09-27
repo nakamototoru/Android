@@ -1,11 +1,7 @@
 package com.hidezo.app.buyer;
 
-
-//import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-//import java.util.ArrayList;
 
 /**
  * Created by dezami on 2016/09/21.

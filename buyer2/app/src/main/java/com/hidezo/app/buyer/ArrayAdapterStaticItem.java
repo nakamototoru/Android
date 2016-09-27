@@ -1,8 +1,8 @@
 package com.hidezo.app.buyer;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentManager;
+//import android.support.annotation.NonNull;
+//import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,18 +24,8 @@ import java.util.ArrayList;
  */
 class ArrayAdapterStaticItem extends ArrayAdapter<HDZUserOrder> {
 
-//    ArrayList<HDZItemInfo.StaticItem> staticItemList = new ArrayList<>();
-//
-//    ArrayList<AppGlobals.CartCount> countInCartList = new ArrayList<>();
-
     ArrayAdapterStaticItem(Context context, ArrayList<HDZUserOrder> items) {
         super(context, 0, items);
-//        this.staticItemList = items;
-//
-//        for (int i = 0; i < this.staticItemList.size(); i++) {
-//            AppGlobals.CartCount object = new AppGlobals.CartCount();
-//            countInCartList.add(object);
-//        }
     }
     @Override
     public boolean isEnabled(int position) {

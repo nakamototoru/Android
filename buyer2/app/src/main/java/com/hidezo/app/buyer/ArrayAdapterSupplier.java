@@ -22,11 +22,11 @@ import java.util.ArrayList;
  */
 class ArrayAdapterSupplier extends ArrayAdapter<HDZFriendInfo> {
 
-    private ArrayList<HDZFriendInfo> friendInfoList = new ArrayList<HDZFriendInfo>();
+//    private ArrayList<HDZFriendInfo> friendInfoList = new ArrayList<HDZFriendInfo>();
 
     public ArrayAdapterSupplier(Context context, ArrayList<HDZFriendInfo> friends) {
         super(context, 0, friends);
-        this.friendInfoList = friends;
+//        this.friendInfoList = friends;
     }
     @Override
     public boolean isEnabled(int position) {
@@ -37,6 +37,9 @@ class ArrayAdapterSupplier extends ArrayAdapter<HDZFriendInfo> {
 
         // Get the data item for this position
         HDZFriendInfo friendInfo = getItem(position);
+        if (friendInfo == null) {
+            return convertView;
+        }
 
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {

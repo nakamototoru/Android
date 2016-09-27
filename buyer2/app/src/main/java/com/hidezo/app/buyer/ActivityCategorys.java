@@ -20,33 +20,26 @@ import java.util.HashMap;
  */
 public class ActivityCategorys extends CustomAppCompatActivity {
 
-    private static ActivityCategorys _self;
-
     private String mySupplierId = "";
-    private HDZApiResponseItem responseItem = new HDZApiResponseItem();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_categorys);
 
-        _self = this;
+        final ActivityCategorys _self = this;
 
         // TouchEvent
         TextView tvOrderCheck = (TextView)findViewById(R.id.textViewButtonOrderCheck);
         tvOrderCheck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Log.d("########","R.id.textViewButtonOrderCheck");
 
                 Intent intent = new Intent( _self.getApplication(), ActivityUserOrders.class);
                 intent.putExtra("supplier_id",mySupplierId);
                 startActivity(intent);
             }
         });
-
-        // ツールバー初期化
-        setNavigationBar("カテゴリ一覧");
 
         // ゲット・商品一覧
         Intent intent = getIntent();
@@ -56,6 +49,8 @@ public class ActivityCategorys extends CustomAppCompatActivity {
         AppGlobals globals = (AppGlobals) this.getApplication();
         req.begin(globals.getUserId(), globals.getUuid(), mySupplierId, this);
 
+        // ツールバー初期化
+        setNavigationBar("カテゴリ一覧");
     }
 
     /**
@@ -68,6 +63,8 @@ public class ActivityCategorys extends CustomAppCompatActivity {
             return;
         }
 
+        final ActivityCategorys _self = this;
+        final HDZApiResponseItem responseItem = new HDZApiResponseItem();
         if (responseItem.parseJson(response)) {
 
             //UIスレッド上で呼び出してもらう
@@ -134,9 +131,6 @@ public class ActivityCategorys extends CustomAppCompatActivity {
             });
         }
     }
-//    public void HDZClientError(String message) {
-//        Log.d("########",message);
-//    }
 
     /**
      * ツールバー

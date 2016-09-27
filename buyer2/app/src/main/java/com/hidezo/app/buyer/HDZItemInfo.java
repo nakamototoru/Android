@@ -1,6 +1,6 @@
 package com.hidezo.app.buyer;
 
-import android.support.annotation.NonNull;
+//import android.support.annotation.NonNull;
 
 import java.util.ArrayList;
 
@@ -8,11 +8,11 @@ import java.util.ArrayList;
  * Created by dezami on 2016/09/14.
  *
  */
-public class HDZItemInfo {
+class HDZItemInfo {
 
-    String attr_flg = "";
-    ArrayList<String> charge_list = new ArrayList<String>();
-    ArrayList<String> deliver_to_list = new ArrayList<String>();
+    public String attr_flg = "";
+    public ArrayList<String> charge_list = new ArrayList<>();
+    public ArrayList<String> deliver_to_list = new ArrayList<>();
 
     static class Supplier {
         String supplier_id = "";

@@ -6,4 +6,5 @@
     <dimen name="length_liner_space">8dp</dimen>
     <dimen name="button_size_width">100dp</dimen>
     <dimen name="button_size_height">40dp</dimen>
+    <dimen name="layout_padding_item_layout">10dp</dimen>
 </resources>

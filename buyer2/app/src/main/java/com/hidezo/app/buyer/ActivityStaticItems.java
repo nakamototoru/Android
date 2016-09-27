@@ -1,48 +1,43 @@
 package com.hidezo.app.buyer;
 
-import android.app.DatePickerDialog;
-import android.app.Dialog;
+//import android.app.DatePickerDialog;
+//import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 //import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 //import android.support.v7.widget.Toolbar;
 import android.support.v7.app.AlertDialog;
-import android.text.method.CharacterPickerDialog;
-import android.util.Log;
+//import android.text.method.CharacterPickerDialog;
+//import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.DatePicker;
+//import android.widget.DatePicker;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.hidezo.app.buyer.CustomView.PickerView;
+//import com.hidezo.app.buyer.CustomView.PickerView;
 
 import java.util.ArrayList;
 //import java.util.HashMap;
 
 public class ActivityStaticItems extends CustomAppCompatActivity {
 
-    private static ActivityStaticItems _self;
-
+//    private static ActivityStaticItems _self;
 //    private HDZApiResponseItem responseItem = new HDZApiResponseItem();
 //    private ArrayList<HDZUserOrder> displayItemList = new ArrayList<>();
 
     private String myCategoryId = "";
     private String mySupplierId = "";
 //    private String myCategoryName = "";
-
 //    private ListView myListView = null;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_static_items);
-
-        _self = this;
 
         Intent intent = getIntent();
         mySupplierId = intent.getStringExtra("supplier_id");
@@ -54,11 +49,11 @@ public class ActivityStaticItems extends CustomAppCompatActivity {
         req.begin( globals.getUserId(), globals.getUuid(), mySupplierId, this);
 
         // TouchEvent
+        final ActivityStaticItems _self = this;
         TextView tvOrderCheck = (TextView)findViewById(R.id.textViewButtonOrderCheck);
         tvOrderCheck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Log.d("########","R.id.textViewButtonOrderCheck");
 
                 Intent intent = new Intent( _self.getApplication(), ActivityUserOrders.class);
                 intent.putExtra("supplier_id",mySupplierId);
@@ -78,31 +73,33 @@ public class ActivityStaticItems extends CustomAppCompatActivity {
      */
     public void HDZClientComplete(String response,String apiName) {
 
-        final AppGlobals globals = (AppGlobals) _self.getApplication();
-
         if ( checkLogOut(response) ) {
             return;
         }
 
+        final ActivityStaticItems _self = this;
         final HDZApiResponseItem responseItem = new HDZApiResponseItem();
         if (responseItem.parseJson(response)) {
+
+            final AppGlobals globals = (AppGlobals) _self.getApplication();
+
+            // 商品選別
+            final ArrayList<HDZItemInfo.StaticItem> staticItems = new ArrayList<>();
+            // 静的商品
+            for (HDZItemInfo.StaticItem item : responseItem.staticItemList) {
+                if ( myCategoryId.equals(item.category.id) ) {
+                    staticItems.add(item);
+                }
+            }
+
+            // 表示リスト作成
+            final ArrayList<HDZUserOrder> displayItemList = new ArrayList<>();
+            HDZUserOrder.transFromStatic(_self, staticItems, mySupplierId, displayItemList);
+
             //UIスレッド上で呼び出してもらう
             this.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    // 商品選別
-                    final ArrayList<HDZItemInfo.StaticItem> staticItems = new ArrayList<>();
-                    // 静的商品
-                    for (HDZItemInfo.StaticItem item : responseItem.staticItemList) {
-                        if ( myCategoryId.equals(item.category.id) ) {
-                            staticItems.add(item);
-                        }
-                    }
-
-                    // 表示リスト作成
-                    final ArrayList<HDZUserOrder> displayItemList = new ArrayList<>();
-                    HDZUserOrder.transFromStatic(_self, staticItems, mySupplierId, displayItemList);
-
                     //リストビュー作成
                     ArrayAdapterStaticItem adapter = new ArrayAdapterStaticItem(_self, displayItemList);
                     ListView listView = (ListView) findViewById(R.id.listViewStaticItem);

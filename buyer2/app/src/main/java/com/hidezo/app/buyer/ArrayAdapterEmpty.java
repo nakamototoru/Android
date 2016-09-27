@@ -29,14 +29,14 @@ class ArrayAdapterEmpty extends ArrayAdapter<HDZApiResponse> {
     @Override
     public View getView(final int position, View convertView, final ViewGroup parent) {
 
-        // Check if an existing view is being reused, otherwise inflate the view
-        if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_empty, parent, false);
-        }
-
         HDZApiResponse res = getItem(position);
         if (res == null) {
             return convertView;
+        }
+
+        // Check if an existing view is being reused, otherwise inflate the view
+        if (convertView == null) {
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_empty, parent, false);
         }
 
         TextView tvMessage = (TextView) convertView.findViewById(R.id.textViewMessage);

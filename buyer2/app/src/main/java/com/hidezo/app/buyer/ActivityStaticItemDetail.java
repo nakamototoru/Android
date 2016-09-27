@@ -1,16 +1,16 @@
 package com.hidezo.app.buyer;
 
-import android.content.DialogInterface;
+//import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
+//import android.support.v7.app.AlertDialog;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
+//import android.view.View;
+//import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.hidezo.app.buyer.CustomView.PickerView;
+//import com.hidezo.app.buyer.CustomView.PickerView;
 
 import java.util.ArrayList;
 
@@ -20,9 +20,6 @@ import java.util.ArrayList;
  */
 public class ActivityStaticItemDetail extends CustomAppCompatActivity {
 
-    private static ActivityStaticItemDetail _self;
-    private HDZApiResponseItem responseItem = new HDZApiResponseItem();
-
     private String myItemId = "";
     private String myCategoryId = "";
 
@@ -30,8 +27,6 @@ public class ActivityStaticItemDetail extends CustomAppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_static_item_detail);
-
-        _self = this;
 
         Intent intent = getIntent();
         myItemId = intent.getStringExtra("item_id");
@@ -58,6 +53,8 @@ public class ActivityStaticItemDetail extends CustomAppCompatActivity {
             return;
         }
 
+        final ActivityStaticItemDetail _self = this;
+        final HDZApiResponseItem responseItem = new HDZApiResponseItem();
         if (responseItem.parseJson(response)) {
 
             //UIスレッド上で呼び出してもらう
