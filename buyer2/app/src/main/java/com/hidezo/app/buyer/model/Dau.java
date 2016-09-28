@@ -77,6 +77,9 @@ public class Dau implements Parcelable {
     public static String getKeyOrderSize() {
         return "order_size";
     }
+    public static String getKeyIsDYnamic() {
+        return "is_dynamic";
+    }
     public static String getKeyCreatedAt() {
         return "created_at";
     }
@@ -98,14 +101,17 @@ public class Dau implements Parcelable {
     public static int getIndexOrderSize() {
         return 3;
     }
-    public static int getIndexCreatedAt() {
+    public static int getIndexIsDynamic() {
         return 4;
     }
-    public static int getIndexUpdatedAt() {
+    public static int getIndexCreatedAt() {
         return 5;
     }
-    public static int getIndexDeletedAt() {
+    public static int getIndexUpdatedAt() {
         return 6;
+    }
+    public static int getIndexDeletedAt() {
+        return 7;
     }
 
     // id = UUID
@@ -114,6 +120,7 @@ public class Dau implements Parcelable {
     public String supplier_id = "";
     public String item_id = "";
     public String order_size = "";
+    public boolean is_dynamic = false;
 
     public String created_at = "";
     public String updated_at = "";
@@ -138,6 +145,7 @@ public class Dau implements Parcelable {
         supplier_id = in.readString();
         item_id = in.readString();
         order_size = in.readString();
+        is_dynamic = in.readByte() != 0;
         created_at = in.readString();
         updated_at = in.readString();
         deleted_at = in.readString();
@@ -153,6 +161,7 @@ public class Dau implements Parcelable {
         out.writeString(supplier_id);
         out.writeString(item_id);
         out.writeString(order_size);
+        out.writeByte( (byte)(is_dynamic ? 1 : 0) );
         out.writeString(created_at);
         out.writeString(updated_at);
         out.writeString(deleted_at);
@@ -172,6 +181,7 @@ public class Dau implements Parcelable {
         if (!TextUtils.isEmpty(order_size)) {
             str.append(", order_size=" + order_size);
         }
+        str.append(", is_dynamic=" + String.valueOf(is_dynamic));
         str.append(", created_at=" + created_at);
         str.append(", updated_at=" + updated_at);
         str.append(", deleted_at=" + deleted_at);

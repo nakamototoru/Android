@@ -116,7 +116,7 @@ public class ActivityDynamicItems extends CustomAppCompatActivity {
                                                         globals.deleteCart(order.supplierId, order.itemId);
                                                     }
                                                     else {
-                                                        globals.replaceCart(order.supplierId, order.itemId, numScale);
+                                                        globals.replaceCart(order.supplierId, order.itemId, numScale, true);
                                                     }
                                                     order.orderSize = pickerView.getTextSelected();
                                                     // カート更新

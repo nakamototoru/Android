@@ -102,10 +102,18 @@ public class AppGlobals extends Application {
      */
     public boolean checkLogOut(boolean result, String message) {
 
+        Log.d("## Global","checkLogOut");
+
         if (message.equals("データがありません")) {
+
+            Log.d("##", "データがありません");
+
             return false;
         }
         else if (result) {
+
+            Log.d("##", "result = true");
+
             return false;
         }
         return true;
@@ -240,9 +248,6 @@ public class AppGlobals extends Application {
     /**
      * 注文カート操作
      */
-//    public static class CartCount {
-//        int count = 0;
-//    }
     public void createCart() {
         DBHelper dBHelper;
         try {
@@ -278,13 +283,14 @@ public class AppGlobals extends Application {
 //        }
 //        Log.d(DauHelper.TAG, " list result : " + list_dau.size());
 //    }
-    public long insertCart(final String supplier_id, final String item_id, final String order_size) {
+    public long insertCart(final String supplier_id, final String item_id, final String order_size, boolean is_dynamic) {
         ContentValues contentValues = new ContentValues();
         // "カラム名","値"
         contentValues.put(Dau.getKeyId() ,UUID.randomUUID().toString());
         contentValues.put(Dau.getKeySupplierId(), supplier_id);
         contentValues.put(Dau.getKeyItemId(), item_id);
         contentValues.put(Dau.getKeyOrderSize(), order_size);
+        contentValues.put(Dau.getKeyIsDYnamic(), is_dynamic);
         contentValues.put(Dau.getKeyCreatedAt(), System.currentTimeMillis());
         contentValues.put(Dau.getKeyUpdatedAt(), System.currentTimeMillis());
         long result = DauHelper.insert(getApplicationContext(), contentValues);
@@ -293,13 +299,11 @@ public class AppGlobals extends Application {
 
         return result;
     }
-    public long updateCart(final String supplier_id, final String item_id, final String order_size) {
+    public long updateCart(final String supplier_id, final String item_id, final String order_size, boolean is_dynamic) {
         ContentValues contentValues = new ContentValues();
         // "カラム名","値"
-//        contentValues.put(Dau.getKeyId() ,"2");
-//        contentValues.put(Dau.getKeySupplierId(), "20160601");
-//        contentValues.put(Dau.getKeyItemId(), "7300");
         contentValues.put(Dau.getKeyOrderSize(), order_size);
+        contentValues.put(Dau.getKeyIsDYnamic(), is_dynamic);
         contentValues.put(Dau.getKeyUpdatedAt(), System.currentTimeMillis());
         long result = DauHelper.update(getApplicationContext(), contentValues, supplier_id, item_id);
 
@@ -307,17 +311,17 @@ public class AppGlobals extends Application {
 
         return result;
     }
-    public long replaceCart(final String supplier_id, final String item_id, final String order_size) {
+    public long replaceCart(final String supplier_id, final String item_id, final String order_size, boolean is_dynamic) {
 
         Dau dau = selectCartDau(supplier_id,item_id);
         long result;
         if (dau == null) {
             // 新規
-            result = insertCart(supplier_id,item_id,order_size);
+            result = insertCart(supplier_id,item_id,order_size, is_dynamic);
         }
         else {
             // 更新
-            result = updateCart(supplier_id,item_id,order_size);
+            result = updateCart(supplier_id,item_id,order_size, is_dynamic);
         }
         return result;
     }

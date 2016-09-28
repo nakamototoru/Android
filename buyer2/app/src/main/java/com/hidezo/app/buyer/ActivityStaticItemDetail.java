@@ -1,16 +1,17 @@
 package com.hidezo.app.buyer;
 
-//import android.content.DialogInterface;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-//import android.support.v7.app.AlertDialog;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-//import android.view.View;
-//import android.widget.AdapterView;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.ListView;
 
-//import com.hidezo.app.buyer.CustomView.PickerView;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -22,6 +23,7 @@ public class ActivityStaticItemDetail extends CustomAppCompatActivity {
 
     private String myItemId = "";
     private String myCategoryId = "";
+    private String imageURL = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,9 +63,8 @@ public class ActivityStaticItemDetail extends CustomAppCompatActivity {
             this.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-
+                    // 表示リスト
                     final ArrayList<HDZProfile> profileList = new ArrayList<>();
-
                     // 静的商品
                     for (HDZItemInfo.StaticItem item : responseItem.staticItemList) {
                         String cid = item.category.id;
@@ -83,14 +84,35 @@ public class ActivityStaticItemDetail extends CustomAppCompatActivity {
                             profileList.add(pScale);
                             HDZProfile pMinOrderCount = new HDZProfile("最小注文本数",item.min_order_count);
                             profileList.add(pMinOrderCount);
+                            imageURL = item.image;
 
                             break;
                         }
                     }
-
                     //リストビュー作成
                     ArrayAdapterStaticItemDetail adapter = new ArrayAdapterStaticItemDetail(_self, profileList);
                     ListView listView = (ListView) findViewById(R.id.listViewStaticItemDetail);
+
+                    //ヘッダー追加
+                    if (listView.getHeaderViewsCount() == 0) {
+                        //
+                        View header = getLayoutInflater().inflate(R.layout.item_static_item_detail_header,null);
+                        listView.addHeaderView(header, null, false); // タッチ無効
+
+                        ImageView ivItem = (ImageView) findViewById(R.id.imageViewItem);
+                        Context context = header.getContext();
+                        try {
+                            Picasso.with(context)
+                                    .load(imageURL)
+                                    //                .centerInside()
+                                    .placeholder(R.drawable.sakana180)
+                                    .error(R.drawable.sakana180)
+                                    .into(ivItem);
+                        } catch (Exception e) {
+                            Log.d("## Picasso",e.getMessage());
+                        }
+                    }
+
                     listView.setAdapter(adapter);
                 }
             });

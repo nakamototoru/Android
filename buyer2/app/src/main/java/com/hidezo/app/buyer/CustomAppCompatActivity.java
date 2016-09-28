@@ -63,9 +63,9 @@ public class CustomAppCompatActivity extends AppCompatActivity implements HDZCli
      */
     public boolean checkLogOut(String response) {
 
-        HDZApiResponse apiRes = new HDZApiResponse();
+        final HDZApiResponse apiRes = new HDZApiResponse();
 
-        AppGlobals globals = (AppGlobals) this.getApplication();
+        final AppGlobals globals = (AppGlobals) this.getApplication();
 
         if (!apiRes.parseJson(response)) {
             // アクセスエラー

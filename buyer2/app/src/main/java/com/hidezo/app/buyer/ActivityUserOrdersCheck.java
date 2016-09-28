@@ -6,9 +6,16 @@ import android.os.Bundle;
 //import android.sax.StartElementListener;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ListView;
+import android.widget.TextView;
+
+import com.hidezo.app.buyer.model.Dau;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ActivityUserOrdersCheck extends CustomAppCompatActivity {
 
@@ -58,6 +65,7 @@ public class ActivityUserOrdersCheck extends CustomAppCompatActivity {
             if ( strCharge.equals("") ) {
                 strCharge = responseItem.itemInfo.charge_list.get(0);
             }
+            globals.setOrderCharge(strCharge);
             HDZProfile pCharge = new HDZProfile("担当者", strCharge );
             profileList.add(pCharge);
 
@@ -65,6 +73,7 @@ public class ActivityUserOrdersCheck extends CustomAppCompatActivity {
             if ( strDeliverTo.equals("") ) {
                 strDeliverTo = "選択なし";
             }
+            globals.setOrderDeliverPlace(strDeliverTo);
 //            if ( responseItem.itemInfo.deliver_to_list.size() > 0 ) {
 //                strDeliverTo = responseItem.itemInfo.deliver_to_list.get(0);
 //            }
@@ -82,6 +91,17 @@ public class ActivityUserOrdersCheck extends CustomAppCompatActivity {
                 }
             });
 
+            // 注文実行ボタン
+            TextView txBtnOrderExec = (TextView)findViewById(R.id.textViewButtonOrderExec);
+            txBtnOrderExec.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // 画面遷移
+                    Intent intent = new Intent(getApplication(), ActivityUserOrdersExec.class);
+                    intent.putExtra("supplier_id",mySupplierId);
+                    startActivity(intent);
+                }
+            });
         }
     }
 

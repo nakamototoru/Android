@@ -56,13 +56,14 @@ public class DauHelper {
 
             StringBuffer sql = new StringBuffer();
             sql.append("select ");
-            sql.append(" " + Dau.getTableNameOmission() + "." + Dau.getKeyId() + ","); // COL.get(0)
+            sql.append(" " + Dau.getTableNameOmission() + "." + Dau.getKeyId() + ",");
             sql.append(" " + Dau.getTableNameOmission() + "." + Dau.getKeySupplierId() + ",");
             sql.append(" " + Dau.getTableNameOmission() + "." + Dau.getKeyItemId() + ",");
             sql.append(" " + Dau.getTableNameOmission() + "." + Dau.getKeyOrderSize() + ",");
-            sql.append(" " + Dau.getTableNameOmission() + "." + Dau.getKeyCreatedAt() + ","); // COL.get(6)
-            sql.append(" " + Dau.getTableNameOmission() + "." + Dau.getKeyUpdatedAt() + ","); // COL.get(7)
-            sql.append(" " + Dau.getTableNameOmission() + "." + Dau.getKeyDeletedAt()); // COL.get(9)
+            sql.append(" " + Dau.getTableNameOmission() + "." + Dau.getKeyIsDYnamic() + ",");
+            sql.append(" " + Dau.getTableNameOmission() + "." + Dau.getKeyCreatedAt() + ",");
+            sql.append(" " + Dau.getTableNameOmission() + "." + Dau.getKeyUpdatedAt() + ",");
+            sql.append(" " + Dau.getTableNameOmission() + "." + Dau.getKeyDeletedAt());
             sql.append(" from ");
             sql.append(" " + Dau.getTableName() + " " + Dau.getTableNameOmission());
 
@@ -80,6 +81,7 @@ public class DauHelper {
                 dau.supplier_id = c.getString( Dau.getIndexSupplierId() );
                 dau.item_id = c.getString( Dau.getIndexItemId() );
                 dau.order_size = c.getString( Dau.getIndexOrderSize() );
+                dau.is_dynamic = c.getInt( Dau.getIndexIsDynamic() ) != 0;
                 dau.created_at = c.getString( Dau.getIndexCreatedAt() );
                 dau.updated_at = c.getString( Dau.getIndexUpdatedAt() );
                 dau.deleted_at = c.getString( Dau.getIndexDeletedAt() );
@@ -111,13 +113,14 @@ public class DauHelper {
 
             StringBuffer sql = new StringBuffer();
             sql.append("select ");
-            sql.append(" " + Dau.getTableNameOmission() + "." + Dau.getKeyId() + ","); // COL.get(0)
+            sql.append(" " + Dau.getTableNameOmission() + "." + Dau.getKeyId() + ",");
             sql.append(" " + Dau.getTableNameOmission() + "." + Dau.getKeySupplierId() + ",");
             sql.append(" " + Dau.getTableNameOmission() + "." + Dau.getKeyItemId() + ",");
             sql.append(" " + Dau.getTableNameOmission() + "." + Dau.getKeyOrderSize() + ",");
-            sql.append(" " + Dau.getTableNameOmission() + "." + Dau.getKeyCreatedAt() + ","); // COL.get(6)
-            sql.append(" " + Dau.getTableNameOmission() + "." + Dau.getKeyUpdatedAt() + ","); // COL.get(7)
-            sql.append(" " + Dau.getTableNameOmission() + "." + Dau.getKeyDeletedAt()); // COL.get(9)
+            sql.append(" " + Dau.getTableNameOmission() + "." + Dau.getKeyIsDYnamic() + ",");
+            sql.append(" " + Dau.getTableNameOmission() + "." + Dau.getKeyCreatedAt() + ",");
+            sql.append(" " + Dau.getTableNameOmission() + "." + Dau.getKeyUpdatedAt() + ",");
+            sql.append(" " + Dau.getTableNameOmission() + "." + Dau.getKeyDeletedAt());
             sql.append(" from ");
             sql.append(" " + Dau.getTableName() + " " + Dau.getTableNameOmission());
             sql.append(" where " + Dau.getTableNameOmission() + "." + Dau.getKeySupplierId() + "=\"" +  supplier_id + "\"");
@@ -136,6 +139,7 @@ public class DauHelper {
                 dau.supplier_id = c.getString( Dau.getIndexSupplierId() );
                 dau.item_id = c.getString( Dau.getIndexItemId() );
                 dau.order_size = c.getString( Dau.getIndexOrderSize() );
+                dau.is_dynamic = c.getInt( Dau.getIndexIsDynamic() ) != 0;
                 dau.created_at = c.getString( Dau.getIndexCreatedAt() );
                 dau.updated_at = c.getString( Dau.getIndexUpdatedAt() );
                 dau.deleted_at = c.getString( Dau.getIndexDeletedAt() );
@@ -176,6 +180,7 @@ public class DauHelper {
             sql.append(" " + Dau.getTableNameOmission() + "." + Dau.getKeySupplierId() + ",");
             sql.append(" " + Dau.getTableNameOmission() + "." + Dau.getKeyItemId() + ",");
             sql.append(" " + Dau.getTableNameOmission() + "." + Dau.getKeyOrderSize() + ",");
+            sql.append(" " + Dau.getTableNameOmission() + "." + Dau.getKeyIsDYnamic() + ",");
             sql.append(" " + Dau.getTableNameOmission() + "." + Dau.getKeyCreatedAt() + ","); // COL.get(7)
             sql.append(" " + Dau.getTableNameOmission() + "." + Dau.getKeyUpdatedAt() + ","); // COL.get(8)
             sql.append(" " + Dau.getTableNameOmission() + "." + Dau.getKeyDeletedAt()); // COL.get(9)
@@ -196,6 +201,7 @@ public class DauHelper {
                 dau.supplier_id = c.getString( Dau.getIndexSupplierId() );
                 dau.item_id = c.getString( Dau.getIndexItemId() );
                 dau.order_size = c.getString( Dau.getIndexOrderSize() );
+                dau.is_dynamic = c.getInt( Dau.getIndexIsDynamic() ) != 0;
                 dau.created_at = c.getString( Dau.getIndexCreatedAt() );
                 dau.updated_at = c.getString( Dau.getIndexUpdatedAt() );
                 dau.deleted_at = c.getString( Dau.getIndexDeletedAt() );
@@ -264,28 +270,6 @@ public class DauHelper {
         // TODO something
         return contentValues;
     }
-
-    /**
-     * replace
-     *
-     * @return the number of rows affected
-     */
-//    public static long replace(final Context context, final ContentValues contentValues, String supplier_id, String item_id) {
-//
-//        DBHelper dBHelper = new DBHelper(context);
-//
-//        Dau dau = getDau(context, supplier_id, item_id);
-//
-//        long result;
-//        if (dau == null) {
-//            result = insert(context, contentValues);
-//        }
-//        else {
-//            result = update(context, contentValues, supplier_id, item_id);
-//        }
-//        dBHelper.cleanup();
-//        return result;
-//    }
 
     /**
      * update

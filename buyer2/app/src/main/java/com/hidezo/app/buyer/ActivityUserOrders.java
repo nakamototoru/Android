@@ -7,7 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 //import android.support.v7.widget.Toolbar;
-import android.util.Log;
+//import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -82,7 +82,6 @@ public class ActivityUserOrders extends CustomAppCompatActivity {
                 @Override
                 public void run() {
                     // 表示リスト
-                    displayItemList.clear();
                     List<Dau> cartList = globals.selectCartList(mySupplierId);
                     for (Dau dau : cartList) {
                         if (dau.order_size.equals(AppGlobals.STR_ZERO)) {
@@ -97,7 +96,7 @@ public class ActivityUserOrders extends CustomAppCompatActivity {
                                 order.orderSize = dau.order_size;
                                 displayItemList.add(order);
                                 isFound = true;
-                                Log.d("## NAME",item.item_name);
+//                                Log.d("## NAME",item.item_name);
                                 break;
                             }
                         }
@@ -109,7 +108,7 @@ public class ActivityUserOrders extends CustomAppCompatActivity {
                                     order.getFromStatic(item, mySupplierId);
                                     order.orderSize = dau.order_size;
                                     displayItemList.add(order);
-                                    Log.d("## NAME",item.name);
+//                                    Log.d("## NAME",item.name);
                                     break;
                                 }
                             }
@@ -180,10 +179,12 @@ public class ActivityUserOrders extends CustomAppCompatActivity {
 //                                                        final AppGlobals globals = (AppGlobals) _self.getApplication();
                                                         String numScale = pickerView.getTextSelected();
                                                         if (numScale.equals(AppGlobals.STR_ZERO)) {
+                                                            //削除
                                                             globals.deleteCart(order.supplierId, order.itemId);
+                                                            displayItemList.remove(position);
                                                         }
                                                         else {
-                                                            globals.replaceCart(order.supplierId, order.itemId, numScale);
+                                                            globals.replaceCart(order.supplierId, order.itemId, numScale, order.isDynamic);
                                                         }
                                                         order.orderSize = pickerView.getTextSelected();
                                                         // カート更新
@@ -213,10 +214,37 @@ public class ActivityUserOrders extends CustomAppCompatActivity {
      * リストビューの更新処理。
      */
     public void reFleshListView() {
+        //
         ListView listView = (ListView) findViewById(R.id.listViewUserOrders);
-        ArrayAdapterUserOrder adapter = (ArrayAdapterUserOrder) listView.getAdapter();
-        adapter.notifyDataSetChanged();
+
+        final AppGlobals globals = (AppGlobals) this.getApplication();
+
+        // 表示リスト
+        List<Dau> cartList = globals.selectCartList(mySupplierId);
+
+        if (cartList.size() <= 0) {
+            // カート空の場合
+            ArrayList<HDZApiResponse> emptyList = new ArrayList<>();
+            HDZApiResponse object = new HDZApiResponse();
+            object.message = "カートが空です";
+            emptyList.add(object);
+            ArrayAdapterEmpty emptyAdapter = new ArrayAdapterEmpty(this,emptyList);
+            listView.setAdapter(emptyAdapter);
+            // 注文確定ボタンを無効に
+            TextView tvOrderDecide = (TextView) findViewById(R.id.textViewButtonOrderDecide);
+            tvOrderDecide.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                }
+            });
+        }
+        else {
+            ArrayAdapterUserOrder adapter = (ArrayAdapterUserOrder) listView.getAdapter();
+            adapter.notifyDataSetChanged();
+        }
+
     }
+
 
     /**
      * ツールバー

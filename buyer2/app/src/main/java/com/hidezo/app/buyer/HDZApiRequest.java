@@ -1,5 +1,7 @@
 package com.hidezo.app.buyer;
 
+import android.util.Log;
+
 import java.util.HashMap;
 
 /**
@@ -14,25 +16,34 @@ class HDZApiRequest {
         mapParams.put(key,value);
     }
 
-    public HashMap<String, String> getParams() {
-        return mapParams;
-    }
+//    public HashMap<String, String> getParams() {
+//        return mapParams;
+//    }
 
-    void beginRequest(final String apiname, HDZClient.HDZCallbacks callbacks) {
+    void beginRequest(final String apiName, HDZClient.HDZCallbacks callbacks) {
 
-        final HDZClient.Get httpget = new HDZClient.Get();
+        final HDZClient.Get httpGet = new HDZClient.Get();
         if (mapParams.size() == 0) {
             return;
         }
-        httpget.runAsync(apiname, mapParams, callbacks);
+        httpGet.runAsync(apiName, mapParams, callbacks);
     }
 
-    void beginPost(final String apiname, final HashMap<String,String> paramMap, HDZClient.HDZCallbacks callbacks) {
+    void beginPost(final String apiName, final HashMap<String,String> paramMap, HDZClient.HDZCallbacks callbacks) {
 
-        final HDZClient.Post httppost = new HDZClient.Post();
+        final HDZClient.Post httpPost = new HDZClient.Post();
         if (paramMap.size() == 0) {
             return;
         }
-        httppost.runAsync(apiname, paramMap, callbacks);
+
+        if (BuildConfig.DEBUG) {
+            for (HashMap.Entry<String,String> entry : paramMap.entrySet()) {
+                String key = entry.getKey();
+                String val = entry.getValue();
+                Log.d("## Order", key + ":" + val);
+            }
+        }
+
+        httpPost.runAsync(apiName, paramMap, callbacks);
     }
 }

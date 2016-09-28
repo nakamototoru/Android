@@ -141,7 +141,7 @@ public class ActivityStaticItems extends CustomAppCompatActivity {
                                                             globals.deleteCart(order.supplierId, order.itemId);
                                                         }
                                                         else {
-                                                            globals.replaceCart(order.supplierId, order.itemId, numScale);
+                                                            globals.replaceCart(order.supplierId, order.itemId, numScale, false);
                                                         }
                                                         order.orderSize = pickerView.getTextSelected();
                                                         // カート更新

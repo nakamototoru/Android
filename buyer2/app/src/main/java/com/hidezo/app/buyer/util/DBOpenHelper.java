@@ -59,7 +59,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
     public void onCreate(final SQLiteDatabase db) {
         Log.d(TAG, "onCreate version : " + db.getVersion());
 //        this.execFileSQL(db, "create_table.sql"); // assetsフォルダにあるファイルを読む
-        String sql = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (id text,supplier_id text,item_id text,order_size text,created_at text,updated_at text,deleted_at text);";
+        String sql = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (id text,supplier_id text,item_id text,order_size text, is_dynamic integer, created_at text,updated_at text,deleted_at text);";
         try {
             db.execSQL(sql);
         } catch (Exception e) {
