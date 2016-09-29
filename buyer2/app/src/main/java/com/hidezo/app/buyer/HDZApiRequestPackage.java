@@ -89,7 +89,7 @@ class HDZApiRequestPackage {
 
     static class Order {
 
-        public void begin(final String id,final String uuid,final String supplier_id,final ArrayList<String> static_items,final ArrayList<String> dynamic_items,final String delivery_day,final String charge,final String deliver_to, HDZClient.HDZCallbacks callbacks) {
+        public void begin(final String id,final String uuid,final String supplier_id,final ArrayList<String> dynamic_items,final ArrayList<String> static_items,final String delivery_day,final String charge,final String deliver_to, HDZClient.HDZCallbacks callbacks) {
             //
             HDZApiRequest request = new HDZApiRequest();
             /*
@@ -103,16 +103,16 @@ class HDZApiRequestPackage {
             params.put("delivery_day",delivery_day);
             params.put("deliver_to",deliver_to);
             params.put("charge",charge);
-            for (int i = 0; i < static_items.size(); i++) {
-                String str = static_items.get(i);
-                params.put("static_item", str); // [" + String.valueOf(i) + "]
-            }
-            for (int i = 0; i < dynamic_items.size(); i++) {
-                String str = dynamic_items.get(i);
-                params.put("dynamic_item", str); // [" + String.valueOf(i) + "]
-            }
+//            for (int i = 0; i < static_items.size(); i++) {
+//                String str = static_items.get(i);
+//                params.put("static_item", str); // [" + String.valueOf(i) + "]
+//            }
+//            for (int i = 0; i < dynamic_items.size(); i++) {
+//                String str = dynamic_items.get(i);
+//                params.put("dynamic_item", str); // [" + String.valueOf(i) + "]
+//            }
 
-            request.beginPost("store/order", params, callbacks);
+            request.beginOrder("store/order", params, dynamic_items, static_items, callbacks);
         }
     }
 

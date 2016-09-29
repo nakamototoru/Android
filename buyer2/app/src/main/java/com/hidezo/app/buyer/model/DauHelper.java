@@ -308,4 +308,15 @@ public class DauHelper {
         dBHelper.cleanup();
         return result;
     }
+
+    /**
+     *
+     */
+    public static long deleteAll(final Context context) {
+
+        DBHelper dBHelper = new DBHelper(context);
+        int result = dBHelper.db.delete(Dau.getTableName(), null, null);
+        dBHelper.cleanup();
+        return result;
+    }
 }

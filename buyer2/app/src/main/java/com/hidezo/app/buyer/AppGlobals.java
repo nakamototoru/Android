@@ -18,6 +18,8 @@ import com.hidezo.app.buyer.model.DauHelper;
 import com.hidezo.app.buyer.util.DBHelper;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 
@@ -142,6 +144,19 @@ public class AppGlobals extends Application {
      * 注文前入力・納品日
      */
     private static final String keyDeliverDay = "deliver_day";
+    public static final List<String> deliverDayList = Collections.unmodifiableList(new LinkedList<String>() {
+        {
+            // 登録
+            add("最短納品日"); // 0
+            add("月曜日"); // 1
+            add("火曜日"); // 2
+            add("水曜日"); // 3
+            add("木曜日"); // 4
+            add("金曜日"); // 5
+            add("土曜日"); // 6
+            add("日曜日"); // 6
+        }
+    });
     public void setOrderDeliverDay(final String text) {
         // インスタンスを取得する
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
@@ -154,7 +169,7 @@ public class AppGlobals extends Application {
         // インスタンスを取得する
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         // データを取得する(第2引数はデフォルト値)
-        return sp.getString(keyDeliverDay, "最短納品日");
+        return sp.getString(keyDeliverDay, deliverDayList.get(0));
     }
 
     /**
@@ -328,6 +343,11 @@ public class AppGlobals extends Application {
 
     public void deleteCart(final String supplier_id, final String item_id) {
         long result = DauHelper.delete(getApplicationContext(), supplier_id,item_id);
+        Log.d(DauHelper.TAG, " delete result : " + result);
+    }
+
+    public void deleteAllCart() {
+        long result = DauHelper.deleteAll(getApplicationContext());
         Log.d(DauHelper.TAG, " delete result : " + result);
     }
 }

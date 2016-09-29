@@ -186,6 +186,9 @@ public class PickerView extends View {
 //        }
 
         int data_half_size = mDataList.size()/2;
+        if (data_half_size < 2) {
+            data_half_size = 2;
+        }
         // 上方向への描画
         for ( int i = 1; i < data_half_size; i++) {
 

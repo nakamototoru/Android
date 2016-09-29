@@ -1,12 +1,17 @@
 package com.hidezo.app.buyer;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 //import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 //import android.sax.StartElementListener;
+import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -58,9 +63,12 @@ public class ActivityUserOrdersCheck extends CustomAppCompatActivity {
             HDZProfile pMessage = new HDZProfile("メッセージ", globals.getOrderMessage() );
             profileList.add(pMessage);
 
+            // 注文情報
+            // 納品日
             HDZProfile pDate = new HDZProfile("納品日", globals.getOrderDeliverDay() );
             profileList.add(pDate);
 
+            // 担当者
             String strCharge = globals.getOrderCharge();
             if ( strCharge.equals("") ) {
                 strCharge = responseItem.itemInfo.charge_list.get(0);
@@ -69,16 +77,19 @@ public class ActivityUserOrdersCheck extends CustomAppCompatActivity {
             HDZProfile pCharge = new HDZProfile("担当者", strCharge );
             profileList.add(pCharge);
 
+            // 配達先
+            final ArrayList<String> deliverPlaceList = new ArrayList<>();
+            deliverPlaceList.add("選択なし");
+            deliverPlaceList.addAll(responseItem.itemInfo.deliver_to_list);
+
             String strDeliverTo = globals.getOrderDeliverPlace();
             if ( strDeliverTo.equals("") ) {
-                strDeliverTo = "選択なし";
+                strDeliverTo = deliverPlaceList.get(0);
             }
             globals.setOrderDeliverPlace(strDeliverTo);
-//            if ( responseItem.itemInfo.deliver_to_list.size() > 0 ) {
-//                strDeliverTo = responseItem.itemInfo.deliver_to_list.get(0);
-//            }
             HDZProfile pDeliverTo = new HDZProfile("配達先",strDeliverTo);
             profileList.add(pDeliverTo);
+
 
             //UIスレッド上で呼び出してもらう
             this.runOnUiThread(new Runnable(){
@@ -87,6 +98,104 @@ public class ActivityUserOrdersCheck extends CustomAppCompatActivity {
                     //リストビュー作成
                     ArrayAdapterUserOrderCheck adapter = new ArrayAdapterUserOrderCheck(_self, profileList);
                     ListView listView = (ListView) findViewById(R.id.listViewUserOrdersCheck);
+                    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                        @Override
+                        public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+
+                            if (position == 0) {
+//                                Log.d("## OrderCheck", "TODO: メッセージ入力");
+
+                                // テキストエディット
+                                final EditText editText = new EditText(ActivityUserOrdersCheck.this);
+                                editText.setLines(10);
+                                editText.setText( globals.getOrderMessage() );
+//                                editText.setText("メッセージ入力");
+                                //UIスレッド上で呼び出してもらう
+                                _self.runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        new AlertDialog.Builder(_self)
+                                                .setTitle("メッセージ入力")
+                                                .setView(editText)
+                                                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialog, int id) {
+
+                                                        String content = editText.getText().toString();
+                                                        globals.setOrderMessage(content);
+                                                        profileList.get(position).content = content;
+                                                        reFleshListView();
+                                                    }
+                                                })
+                                                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialog, int which) {
+                                                    }
+                                                })
+                                                .show();
+                                    }
+                                });
+
+                            }
+                            else {
+                                // ピッカーの作成
+                                final ArrayList<String> pickerList = new ArrayList<>();
+                                // 場合分け
+                                switch (position) {
+                                    case 1: // 納品日
+                                        pickerList.addAll( AppGlobals.deliverDayList );
+                                        break;
+                                    case 2: // 担当者
+                                        pickerList.addAll( responseItem.itemInfo.charge_list );
+                                        break;
+                                    case 3: // 配達先
+                                        pickerList.addAll( deliverPlaceList );
+                                        break;
+                                    default:
+                                        break;
+                                }
+                                final CustomPickerView pickerView = new CustomPickerView(_self, pickerList, globals.getOrderDeliverDay());
+
+                                //UIスレッド上で呼び出してもらう
+                                _self.runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        new AlertDialog.Builder(_self)
+                                                .setTitle("選択")
+                                                .setView(pickerView)
+                                                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialog, int id) {
+
+                                                        String content = pickerView.getTextSelected();
+                                                        switch (position) {
+                                                            case 1: // 納品日
+                                                                globals.setOrderDeliverDay(content);
+                                                                break;
+                                                            case 2: // 担当者
+                                                                globals.setOrderCharge(content);
+                                                                break;
+                                                            case 3: // 配達先
+                                                                globals.setOrderDeliverPlace(content);
+                                                                break;
+                                                            default:
+                                                                break;
+                                                        }
+                                                        profileList.get(position).content = content;
+                                                        reFleshListView();
+                                                    }
+                                                })
+                                                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialog, int which) {
+                                                    }
+                                                })
+                                                .show();
+                                    }
+                                });
+                            }
+                        }
+                    });
                     listView.setAdapter(adapter);
                 }
             });
@@ -96,13 +205,63 @@ public class ActivityUserOrdersCheck extends CustomAppCompatActivity {
             txBtnOrderExec.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    // 画面遷移
-                    Intent intent = new Intent(getApplication(), ActivityUserOrdersExec.class);
-                    intent.putExtra("supplier_id",mySupplierId);
-                    startActivity(intent);
+//                    // 画面遷移
+//                    Intent intent = new Intent(getApplication(), ActivityUserOrdersExec.class);
+//                    intent.putExtra("supplier_id",mySupplierId);
+//                    startActivity(intent);
+
+                    openAlertOrderExec();
                 }
             });
         }
+    }
+    /**
+     * リストビューの更新処理。
+     */
+    public void reFleshListView() {
+        //
+        ListView listView = (ListView) findViewById(R.id.listViewUserOrdersCheck);
+
+//        final AppGlobals globals = (AppGlobals) this.getApplication();
+
+        ArrayAdapterUserOrderCheck adapter = (ArrayAdapterUserOrderCheck) listView.getAdapter();
+        adapter.notifyDataSetChanged();
+    }
+
+    /**
+     * ALERT DIALOG
+     */
+    public void openAlertOrderExec() {
+
+        final ActivityUserOrdersCheck _self = this;
+        final String title = "注文を実行します";
+        final String message = "よろしいですか？";
+
+        //UIスレッド上で呼び出してもらう
+        this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                new AlertDialog.Builder(_self)
+                        .setTitle(title)
+                        .setMessage(message)
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int id) {
+                                // 画面遷移
+                                Intent intent = new Intent(getApplication(), ActivityUserOrdersExec.class);
+                                intent.putExtra("supplier_id",mySupplierId);
+                                startActivity(intent);
+                            }
+                        })
+                        .setNegativeButton("キャンセル", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        })
+                        .show();
+            }
+        });
+
     }
 
     /**

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/layout_padding_item_layout">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="@android:dimen/thumbnail_height"
+            android:inputType="textMultiLine"
+            android:ems="10"
+            android:id="@+id/editTextMessage"
+            android:text="メッセージ" />
+    </LinearLayout>
+
+</LinearLayout>

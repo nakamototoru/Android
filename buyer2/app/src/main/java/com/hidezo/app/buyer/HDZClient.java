@@ -12,6 +12,7 @@ import okhttp3.FormBody;
 //import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 /**
@@ -105,9 +106,9 @@ class HDZClient {
             Request.Builder builder = new Request.Builder().url(requestUrl);
 
             if (paramMap != null) {
+                // Body
                 FormBody.Builder postData = new FormBody.Builder();
                 for(HashMap.Entry<String, String> e : paramMap.entrySet()) {
-                    //System.out.println(e.getKey() + " : " + e.getValue());
                     postData.add(e.getKey(),e.getValue());
                 }
                 builder.post(postData.build());
@@ -132,6 +133,43 @@ class HDZClient {
                 }
             });
 
+        }
+
+        void runAsync(final String apiName, final FormBody.Builder postData, HDZCallbacks callbacks) {
+
+            hdzCallbacks = callbacks;
+
+            String requestUrl;
+            if (BuildConfig.DEBUG) {
+                requestUrl = _baseUrl + apiName;
+            }
+            else {
+                requestUrl = _baseUrlRelease + apiName;
+            }
+
+            OkHttpClient client = new OkHttpClient();
+            Request.Builder builder = new Request.Builder().url(requestUrl);
+
+            // Body
+            builder.post(postData.build());
+
+            Request request = builder.build();
+            client.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    hdzCallbacks.HDZClientError("Error:HDZClient.runAsync");
+                }
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    if (!response.isSuccessful()) throw new IOException("Unexpected code " + response);
+
+//                    Headers responseHeaders = response.headers();
+//                    for (int i = 0, size = responseHeaders.size(); i < size; i++) {
+//                        System.out.println(responseHeaders.name(i) + ": " + responseHeaders.value(i));
+//                    }
+                    hdzCallbacks.HDZClientComplete(response.body().string(),apiName);
+                }
+            });
         }
     }
 }

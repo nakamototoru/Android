@@ -146,8 +146,7 @@ public class ActivityUserOrders extends CustomAppCompatActivity {
                         //行タッチイベント
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, final int position, final long id) {
-
-//                            final AppGlobals globals = (AppGlobals) _self.getApplication();
+                            // 場合分け
                             if (id == -1) {
                                 // カート削除
                                 HDZUserOrder order = displayItemList.get(position);
