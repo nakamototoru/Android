@@ -32,6 +32,21 @@
         android:layout_alignParentBottom="true"
         android:gravity="center_vertical|center_horizontal">
 
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="@dimen/toolbar_range_width"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:text="@string/GoHome"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/textViewButtonHome"
+                android:gravity="left|center_vertical"
+                android:textSize="18sp"
+                android:textColor="@color/colorOrderButton" />
+        </LinearLayout>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -39,6 +54,11 @@
             android:text="@string/OrderCheck"
             android:id="@+id/textViewButtonOrderCheck"
             android:textColor="@color/colorOrderButton" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="@dimen/toolbar_range_width"
+            android:layout_height="match_parent"></LinearLayout>
     </LinearLayout>
 
 </RelativeLayout>

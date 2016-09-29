@@ -51,6 +51,17 @@ public class ActivityUserOrders extends CustomAppCompatActivity {
         AppGlobals globals = (AppGlobals) this.getApplication();
         req.begin(globals.getUserId(), globals.getUuid(), mySupplierId, this);
 
+        // Touch Event
+        TextView tvHome = (TextView)findViewById(R.id.textViewButtonHome);
+        tvHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent( getApplication(), ActivityCategorys.class);
+                intent.putExtra("supplier_id", mySupplierId);
+                startActivity(intent);
+            }
+        });
+
         // ツールバー初期化
         setNavigationBar("注文確認");
 

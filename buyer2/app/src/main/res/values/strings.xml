@@ -13,4 +13,6 @@
     <string name="Order">order</string>
     <string name="OrderDecide">OrderDecide</string>
     <string name="OrderExec">OrderExec</string>
+    <string name="GoHome">Go home</string>
+    <string name="GoTop">Go top</string>
 </resources>

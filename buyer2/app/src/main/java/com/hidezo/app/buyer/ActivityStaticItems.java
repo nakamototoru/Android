@@ -1,7 +1,5 @@
 package com.hidezo.app.buyer;
 
-//import android.app.DatePickerDialog;
-//import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 //import android.support.v7.app.AppCompatActivity;
@@ -21,18 +19,14 @@ import android.widget.TextView;
 //import com.hidezo.app.buyer.CustomView.PickerView;
 
 import java.util.ArrayList;
-//import java.util.HashMap;
 
+/**
+ *
+ */
 public class ActivityStaticItems extends CustomAppCompatActivity {
-
-//    private static ActivityStaticItems _self;
-//    private HDZApiResponseItem responseItem = new HDZApiResponseItem();
-//    private ArrayList<HDZUserOrder> displayItemList = new ArrayList<>();
 
     private String myCategoryId = "";
     private String mySupplierId = "";
-//    private String myCategoryName = "";
-//    private ListView myListView = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,8 +49,17 @@ public class ActivityStaticItems extends CustomAppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent( _self.getApplication(), ActivityUserOrders.class);
+                Intent intent = new Intent( getApplication(), ActivityUserOrders.class);
                 intent.putExtra("supplier_id",mySupplierId);
+                startActivity(intent);
+            }
+        });
+        TextView tvHome = (TextView)findViewById(R.id.textViewButtonHome);
+        tvHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent( getApplication(), ActivityCategorys.class);
+                intent.putExtra("supplier_id", mySupplierId);
                 startActivity(intent);
             }
         });

@@ -9,4 +9,6 @@
     <string name="Order">注文する</string>
     <string name="OrderDecide">注文へ</string>
     <string name="OrderExec">注文実行</string>
+    <string name="GoHome">ホームへ</string>
+    <string name="GoTop">トップへ</string>
 </resources>

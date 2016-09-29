@@ -103,11 +103,9 @@ public class ActivityUserOrdersCheck extends CustomAppCompatActivity {
                         public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
 
                             if (position == 0) {
-//                                Log.d("## OrderCheck", "TODO: メッセージ入力");
-
                                 // テキストエディット
                                 final EditText editText = new EditText(ActivityUserOrdersCheck.this);
-                                editText.setLines(10);
+                                editText.setLines(8);
                                 editText.setText( globals.getOrderMessage() );
 //                                editText.setText("メッセージ入力");
                                 //UIスレッド上で呼び出してもらう

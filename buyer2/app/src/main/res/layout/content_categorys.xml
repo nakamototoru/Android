@@ -32,13 +32,35 @@
         android:layout_alignParentBottom="true"
         android:gravity="center_vertical|center_horizontal">
 
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="@dimen/toolbar_range_width"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:text="@string/GoTop"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:id="@+id/textViewButtonTop"
+                android:gravity="left|center_vertical"
+                android:textSize="18sp"
+                android:textColor="@color/colorOrderButton" />
+        </LinearLayout>
+
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="@string/OrderCheck"
             android:id="@+id/textViewButtonOrderCheck"
-            android:textColor="@color/colorOrderButton" />
+            android:textColor="@color/colorOrderButton"
+            android:gravity="center_vertical|center_horizontal" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="@dimen/toolbar_range_width"
+            android:layout_height="match_parent"></LinearLayout>
+
     </LinearLayout>
 
 </RelativeLayout>

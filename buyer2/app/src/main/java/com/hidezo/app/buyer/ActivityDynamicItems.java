@@ -50,8 +50,17 @@ public class ActivityDynamicItems extends CustomAppCompatActivity {
         tvOrderCheck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent( _self.getApplication(), ActivityUserOrders.class);
+                Intent intent = new Intent( getApplication(), ActivityUserOrders.class);
                 intent.putExtra("supplier_id",mySupplierId);
+                startActivity(intent);
+            }
+        });
+        TextView tvHome = (TextView)findViewById(R.id.textViewButtonHome);
+        tvHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent( getApplication(), ActivityCategorys.class);
+                intent.putExtra("supplier_id", mySupplierId);
                 startActivity(intent);
             }
         });

@@ -11,11 +11,12 @@
 
         <EditText
             android:layout_width="match_parent"
-            android:layout_height="@android:dimen/thumbnail_height"
+            android:layout_height="@dimen/button_size_width"
             android:inputType="textMultiLine"
             android:ems="10"
             android:id="@+id/editTextMessage"
-            android:text="メッセージ" />
+            android:text="メッセージ"
+            android:textSize="14sp" />
     </LinearLayout>
 
 </LinearLayout>

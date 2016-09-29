@@ -29,21 +29,31 @@ public class ActivityCategorys extends CustomAppCompatActivity {
 
         final ActivityCategorys _self = this;
 
+        Intent intent = getIntent();
+        mySupplierId = intent.getStringExtra("supplier_id");
+
         // TouchEvent
         TextView tvOrderCheck = (TextView)findViewById(R.id.textViewButtonOrderCheck);
         tvOrderCheck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                Intent intent = new Intent( _self.getApplication(), ActivityUserOrders.class);
+                // 遷移
+                Intent intent = new Intent( getApplication(), ActivityUserOrders.class);
                 intent.putExtra("supplier_id",mySupplierId);
+                startActivity(intent);
+            }
+        });
+        TextView tvTop = (TextView)findViewById(R.id.textViewButtonTop);
+        tvTop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 遷移
+                Intent intent = new Intent(getApplication(), ActivitySuppliers.class);
                 startActivity(intent);
             }
         });
 
         // ゲット・商品一覧
-        Intent intent = getIntent();
-        mySupplierId = intent.getStringExtra("supplier_id");
         // HTTP GET
         HDZApiRequestPackage.Item req = new HDZApiRequestPackage.Item();
         AppGlobals globals = (AppGlobals) this.getApplication();
