@@ -40,8 +40,6 @@ class ArrayAdapterUserOrder extends ArrayAdapter<HDZUserOrder> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_user_order, parent, false);
         }
 
-//        Log.d("## UserOrder","NAME = " + userOrder.itemName);
-
         // Lookup view for data population
         TextView tvTitle = (TextView) convertView.findViewById(R.id.textViewName);
         tvTitle.setText(userOrder.itemName);
@@ -55,7 +53,6 @@ class ArrayAdapterUserOrder extends ArrayAdapter<HDZUserOrder> {
         tvBtnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("##","TODO: カートから削除");
                 // 親アクティビティへ
                 ((ListView) parent).performItemClick(null, position, -1);
             }
@@ -64,7 +61,6 @@ class ArrayAdapterUserOrder extends ArrayAdapter<HDZUserOrder> {
         tvBtnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("##","TODO: カート変更");
                 // 親アクティビティへ
                 ((ListView) parent).performItemClick(null, position, 0);
             }

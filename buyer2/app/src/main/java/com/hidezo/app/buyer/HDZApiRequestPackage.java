@@ -124,13 +124,6 @@ class HDZApiRequestPackage {
 
             HDZApiRequest request = new HDZApiRequest();
 
-            /*
-             let id: String
-    let uuid: String
-    let charge: String
-    let message: String
-    let order_no: String
-             */
             HashMap<String,String> params = new HashMap<>();
             params.put("id",id);
             params.put("uuid",uuid);

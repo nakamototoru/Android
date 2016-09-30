@@ -50,8 +50,6 @@ class ArrayAdapterUserOrderCheck extends ArrayAdapter<HDZProfile> {
         tvBtnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Log.d("## OrderCheck","TODO: 変更");
-
                 // 親アクティビティへ
                 ((ListView) parent).performItemClick(null, position, 0);
             }

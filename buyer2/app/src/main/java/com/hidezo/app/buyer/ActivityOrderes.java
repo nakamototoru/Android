@@ -13,9 +13,6 @@ import android.widget.ListView;
  */
 public class ActivityOrderes extends CustomAppCompatActivity {
 
-//    private static ActivityOrderes _self;
-//    private HDZApiResponseOrderedList responseOrderedList = new HDZApiResponseOrderedList();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

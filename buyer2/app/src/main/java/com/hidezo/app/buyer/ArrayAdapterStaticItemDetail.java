@@ -19,11 +19,8 @@ import java.util.ArrayList;
  */
 class ArrayAdapterStaticItemDetail extends ArrayAdapter<HDZProfile> {
 
-//    ArrayList<HDZProfile> staticItemDetailList = new ArrayList<>();
-
     ArrayAdapterStaticItemDetail(Context context, ArrayList<HDZProfile> items) {
         super(context, 0, items);
-//        this.staticItemDetailList = items;
     }
     @Override
     public boolean isEnabled(int position) {

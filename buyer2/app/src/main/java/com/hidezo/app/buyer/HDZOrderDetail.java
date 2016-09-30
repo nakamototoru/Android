@@ -9,7 +9,6 @@ import java.util.ArrayList;
 class HDZOrderDetail {
 
     /*
-    "attr_flg": "2",
   "order": {
     "order_no": "6147055737622237186-00039",
     "deliver_to": "静岡",
@@ -17,6 +16,7 @@ class HDZOrderDetail {
     "charge": "中本",
     "order_at": "08/17 16:34"
   },
+    "attr_flg": "2",
   "deliveryFee": "1200",
   "subtotal": "1800",
   "total": "3000",
@@ -43,7 +43,11 @@ class HDZOrderDetail {
   ],
      */
 
-    static class Order {
+    static class Info {
+        String attr_flg = "";
+        String deliveryFee = "";
+        String subTotal = "";
+        String total = "";
         String order_no = "";
         String deliver_to = "";
         String delivery_day = "";
@@ -51,12 +55,16 @@ class HDZOrderDetail {
         String order_at = "";
     }
 
-    Order order = new Order();
-    String attr_flg = "";
-    String deliveryFee = "";
-    String subtotal = "";
-    String total = "";
-    ArrayList<HDZItemInfo.StaticItem> staticItemList = new ArrayList<HDZItemInfo.StaticItem>();
-    ArrayList<HDZItemInfo.DynamicItem> dynamicItemList = new ArrayList<HDZItemInfo.DynamicItem>();
+    static class Item {
+        String id = "";
+        String name = "";
+        String price = "";
+        String order_num = "";
+        String code = "";
+        String standard = "";
+        String scale = "";
+        String loading = "";
+        boolean isDynamc = false;
+    }
 
 }
