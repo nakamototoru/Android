@@ -9,9 +9,9 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
+//import android.view.View;
+//import android.widget.AdapterView;
+//import android.widget.ListView;
 
 import com.hidezo.app.buyer.model.Dau;
 import com.hidezo.app.buyer.model.DauHelper;

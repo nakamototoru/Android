@@ -1,19 +1,21 @@
 package com.hidezo.app.buyer;
 
-import android.content.Intent;
 //import android.support.v7.app.AppCompatActivity;
+//import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+//import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
+
 
 /**
  *
  */
-public class ActivityOrderDetail extends CustomAppCompatActivity {
+public class ActivityMessages extends CustomAppCompatActivity {
 
     String myOrderNo = "";
     String mySupplierName = "";
@@ -21,13 +23,13 @@ public class ActivityOrderDetail extends CustomAppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_order_detail);
+        setContentView(R.layout.activity_messages);
 
         Intent intent = getIntent();
         myOrderNo = intent.getStringExtra("order_no");
 
         // HTTP GET
-        HDZApiRequestPackage.OrderDetail req = new HDZApiRequestPackage.OrderDetail();
+        HDZApiRequestPackage.Message req = new HDZApiRequestPackage.Message();
         AppGlobals globals = (AppGlobals) this.getApplication();
         req.begin(globals.getUserId(), globals.getUuid(), myOrderNo, this);
 
@@ -46,34 +48,38 @@ public class ActivityOrderDetail extends CustomAppCompatActivity {
             return;
         }
 
-        final ActivityOrderDetail _self = this;
-        final HDZApiResponseOrderDetail responseOrderDetail = new HDZApiResponseOrderDetail();
-        if ( responseOrderDetail.parseJson(response) ) {
+        final ActivityMessages _self = this;
+        final HDZApiResponseMessage responseMessage = new HDZApiResponseMessage();
+        if ( responseMessage.parseJson(response) ) {
 
-            Log.d("########",response);
+//            Log.d("########",response);
 
             //UIスレッド上で呼び出してもらう
             this.runOnUiThread(new Runnable(){
                 @Override
                 public void run(){
                     //リストビュー作成
-                    ArrayAdapterOrderDetail adapter = new ArrayAdapterOrderDetail(_self,responseOrderDetail.itemList);
-                    ListView listView = (ListView) findViewById(R.id.listViewOrderDetail);
-                    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        //行タッチイベント
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//
-//                            ListView listView = (ListView)parent;
-//                            HDZordered order = (HDZordered)listView.getItemAtPosition(position);
-//                            String order_no = order.order_no;
-//
-//                            // 画面遷移
-//                            Intent intent = new Intent( _self.getApplication(), ActivityOrderDetail.class);
-//                            intent.putExtra("order_no", order_no);
-//                            _self.startActivity(intent);
-                        }
-                    });
+                    ArrayAdapterMessages adapter = new ArrayAdapterMessages(_self,responseMessage.messageList);
+                    ListView listView = (ListView) findViewById(R.id.listViewMessage);
+//                    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//                        //行タッチイベント
+//                        @Override
+//                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                        }
+//                    });
+
+                    //ヘッダー追加
+                    if (listView.getHeaderViewsCount() == 0) {
+                        //
+                        View header = getLayoutInflater().inflate(R.layout.item_message_header,null);
+                        listView.addHeaderView(header, null, false); // タッチ無効
+
+                        int count = responseMessage.messageList.size();
+                        String str = String.valueOf(count) + "件のコメントがあります。";
+                        TextView tvCount = (TextView)findViewById(R.id.textViewCommentCount);
+                        tvCount.setText(str);
+                    }
+
                     listView.setAdapter(adapter);
                 }
             });
@@ -89,7 +95,7 @@ public class ActivityOrderDetail extends CustomAppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_order_detail, menu);
+//        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
     @Override
@@ -99,20 +105,12 @@ public class ActivityOrderDetail extends CustomAppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-//        final ActivityOrderDetail _self = this;
-
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_message) {
-
-            // 画面遷移
-            Intent intent = new Intent( getApplication(), ActivityMessages.class);
-            intent.putExtra("order_no", myOrderNo);
-            intent.putExtra("supplier_name", mySupplierName);
-            startActivity(intent);
-
+        if (id == R.id.action_logout) {
             return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
+
 }

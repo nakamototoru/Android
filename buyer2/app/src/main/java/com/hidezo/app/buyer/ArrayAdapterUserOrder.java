@@ -1,7 +1,7 @@
 package com.hidezo.app.buyer;
 
 import android.content.Context;
-import android.util.Log;
+//import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,16 +10,15 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.StringTokenizer;
+//import java.util.StringTokenizer;
 
 /**
  * Created by dezami on 2016/09/25.
  *
  */
-
 class ArrayAdapterUserOrder extends ArrayAdapter<HDZUserOrder> {
 
-    public ArrayAdapterUserOrder(Context context, ArrayList<HDZUserOrder> userOrders) {
+    ArrayAdapterUserOrder(Context context, ArrayList<HDZUserOrder> userOrders) {
         super(context, 0, userOrders);
     }
     @Override

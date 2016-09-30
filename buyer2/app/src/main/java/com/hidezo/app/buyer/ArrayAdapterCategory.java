@@ -1,7 +1,6 @@
 package com.hidezo.app.buyer;
 
 import android.content.Context;
-//import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,13 +15,9 @@ import java.util.ArrayList;
  */
 class ArrayAdapterCategory extends ArrayAdapter<HDZItemInfo.Category> {
 
-//    ArrayList<HDZItemInfo.Category> categoryArrayList = new ArrayList<HDZItemInfo.Category>();
-
-    public ArrayAdapterCategory(Context context, ArrayList<HDZItemInfo.Category> categorys) {
-        super(context, 0, categorys);
-//        this.categoryArrayList = categorys;
+    ArrayAdapterCategory(Context context, ArrayList<HDZItemInfo.Category> list) {
+        super(context, 0, list);
     }
-
     @Override
     public View getView(final int position, View convertView, final ViewGroup parent) {
 

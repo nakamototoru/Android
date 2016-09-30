@@ -18,6 +18,10 @@ class ArrayAdapterOrderDetail extends ArrayAdapter<HDZOrderDetail.Item> {
         super(context, 0, items);
     }
     @Override
+    public boolean isEnabled(int position) {
+        return false;  // ListView アイテムの選択を無効にする場合
+    }
+    @Override
     public View getView(final int position, View convertView, final ViewGroup parent) {
 
         // Get the data item for this position

@@ -17,11 +17,8 @@ import java.util.ArrayList;
  */
 class ArrayAdapterSupplierDetail extends ArrayAdapter<HDZProfile> {
 
-//    private ArrayList<HDZProfile> profileList = new ArrayList<HDZProfile>();
-
-    public ArrayAdapterSupplierDetail(Context context, ArrayList<HDZProfile> profiles) {
-        super(context, 0, profiles);
-//        this.profileList = profiles;
+    ArrayAdapterSupplierDetail(Context context, ArrayList<HDZProfile> list) {
+        super(context, 0, list);
     }
     @Override
     public boolean isEnabled(int position) {

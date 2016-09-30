@@ -13,9 +13,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-//import android.widget.RadioButton;
-//import android.widget.RadioGroup;
-
 
 /**
  * Created by dezami on 2016/09/13.
@@ -28,7 +25,7 @@ public class ActivitySuppliers extends CustomAppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_suppliers);
 
-        final ActivitySuppliers _self = this;
+//        final ActivitySuppliers _self = this;
 
         // ツールナビゲーションバー
         setNavigationBar("取引先一覧");
@@ -94,10 +91,6 @@ public class ActivitySuppliers extends CustomAppCompatActivity {
             });
         }
     }
-//    public void HDZClientError(String message) {
-//        Log.d("########",message);
-//    }
-
 
     /**
      * ツールバー

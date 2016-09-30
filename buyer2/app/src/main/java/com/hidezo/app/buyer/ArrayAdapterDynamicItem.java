@@ -1,28 +1,24 @@
 package com.hidezo.app.buyer;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-//import android.widget.Filter;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import java.util.ArrayList;
-//import java.util.List;
 
-//import com.hidezo.app.buyer.CustomView.FiltableArrayAdapter;
+//import java.util.List;
+//import android.util.Log;
 
 /**
  * Created by dezami on 2016/09/16.
  *
  */
 class ArrayAdapterDynamicItem extends ArrayAdapter<HDZUserOrder> {
-    // HDZItemInfo.DynamicItem
 
-    public ArrayAdapterDynamicItem(Context context, ArrayList<HDZUserOrder> items) {
+    ArrayAdapterDynamicItem(Context context, ArrayList<HDZUserOrder> items) {
         super(context, 0, items);
     }
     @Override
@@ -69,18 +65,5 @@ class ArrayAdapterDynamicItem extends ArrayAdapter<HDZUserOrder> {
         // Return the completed view to render on screen
         return convertView;
     }
-
-    /**
-     * リストをリフレッシュ
-     */
-//    public void refleshRow(int position) {
-//    }
-//    public void refleshItemList(ArrayList<HDZItemInfo.DynamicItem> itemList){
-//        dynamicItemList.clear();
-//        dynamicItemList = new ArrayList<>(itemList);
-//    }
-//    void refleshAll() {
-//
-//    }
 
 }

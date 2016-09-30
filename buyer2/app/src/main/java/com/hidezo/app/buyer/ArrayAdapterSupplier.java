@@ -1,6 +1,5 @@
 package com.hidezo.app.buyer;
 
-//import android.app.Application;
 import android.content.Context;
 //import android.content.Intent;
 //import android.support.v7.app.AppCompatActivity;
@@ -22,11 +21,8 @@ import java.util.ArrayList;
  */
 class ArrayAdapterSupplier extends ArrayAdapter<HDZFriendInfo> {
 
-//    private ArrayList<HDZFriendInfo> friendInfoList = new ArrayList<HDZFriendInfo>();
-
-    public ArrayAdapterSupplier(Context context, ArrayList<HDZFriendInfo> friends) {
-        super(context, 0, friends);
-//        this.friendInfoList = friends;
+    ArrayAdapterSupplier(Context context, ArrayList<HDZFriendInfo> list) {
+        super(context, 0, list);
     }
     @Override
     public boolean isEnabled(int position) {

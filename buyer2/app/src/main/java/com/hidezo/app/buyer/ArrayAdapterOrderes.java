@@ -1,33 +1,22 @@
 package com.hidezo.app.buyer;
 
 import android.content.Context;
-//import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-//import android.widget.ListView;
 import android.widget.TextView;
-
 import java.util.ArrayList;
 
 /**
  * Created by dezami on 2016/09/21.
  *
  */
-
 class ArrayAdapterOrderes extends ArrayAdapter<HDZordered> {
 
-//    public ArrayList<HDZordered> orderedList = new ArrayList<>(); // HDZordered
-
-    public ArrayAdapterOrderes(Context context, ArrayList<HDZordered> orderes) {
-        super(context, 0, orderes);
-//        this.orderedList = orderes;
+    ArrayAdapterOrderes(Context context, ArrayList<HDZordered> list) {
+        super(context, 0, list);
     }
-//    @Override
-//    public boolean isEnabled(int position) {
-//        return false;  // ListView アイテムの選択を無効にする場合
-//    }
     @Override
     public View getView(final int position, View convertView, final ViewGroup parent) {
 
@@ -54,24 +43,6 @@ class ArrayAdapterOrderes extends ArrayAdapter<HDZordered> {
 
         TextView tvDeliverAt = (TextView) convertView.findViewById(R.id.textViewDeliverAt);
         tvDeliverAt.setText( orderInfo.deliver_at );
-
-//        tvName.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Log.d("########","R.id.tvName");
-//
-//                ((ListView) parent).performItemClick(null, position, 99);
-//            }
-//        });
-
-//        tvOrder.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Log.d("########","R.id.tvOrder");
-//
-//                ((ListView) parent).performItemClick(null, position, 0);
-//            }
-//        });
 
         // Return the completed view to render on screen
         return convertView;

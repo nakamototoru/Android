@@ -38,7 +38,8 @@
             android:value="@integer/google_play_services_version" />
 
         <activity android:name=".ActivityUserOrdersCheck" />
-        <activity android:name=".ActivityUserOrdersExec"></activity>
+        <activity android:name=".ActivityUserOrdersExec" />
+        <activity android:name=".ActivityMessages"></activity>
     </application>
 
 </manifest>

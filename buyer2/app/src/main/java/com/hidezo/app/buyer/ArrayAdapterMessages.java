@@ -10,14 +10,13 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 /**
- * Created by dezami on 2016/09/25.
+ * Created by dezami on 2016/09/30.
  *
  */
+class ArrayAdapterMessages extends ArrayAdapter<HDZApiResponseMessage.Detail> {
 
-class ArrayAdapterEmpty extends ArrayAdapter<HDZApiResponse> {
-
-    ArrayAdapterEmpty(Context context, ArrayList<HDZApiResponse> list) {
-        super(context, 0, list);
+    ArrayAdapterMessages(Context context, ArrayList<HDZApiResponseMessage.Detail> items) {
+        super(context, 0, items);
     }
     @Override
     public boolean isEnabled(int position) {
@@ -26,21 +25,21 @@ class ArrayAdapterEmpty extends ArrayAdapter<HDZApiResponse> {
     @Override
     public View getView(final int position, View convertView, final ViewGroup parent) {
 
-        HDZApiResponse res = getItem(position);
-        if (res == null) {
+        HDZApiResponseMessage.Detail detail = getItem(position);
+        if (detail == null) {
             return convertView;
         }
 
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_empty, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_message, parent, false);
         }
 
+        // Content
         TextView tvMessage = (TextView) convertView.findViewById(R.id.textViewMessage);
-        tvMessage.setText(res.message);
+        tvMessage.setText(detail.message);
 
         // Return the completed view to render on screen
         return convertView;
     }
-
 }
