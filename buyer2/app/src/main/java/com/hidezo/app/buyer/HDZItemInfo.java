@@ -45,6 +45,7 @@ class HDZItemInfo {
         String item_name = "";
         String price = "";
         ArrayList<String> num_scale = new ArrayList<>();
+        String change_date = "";
 
         public String getId() {
             return this.id;
@@ -56,7 +57,7 @@ class HDZItemInfo {
 
     static class DynamicItemInfo {
         String text = "";
-        ArrayList<String> imagePath = new ArrayList<String>();
+        ArrayList<String> imagePath = new ArrayList<>();
         String lastUpdate = "";
     }
 }

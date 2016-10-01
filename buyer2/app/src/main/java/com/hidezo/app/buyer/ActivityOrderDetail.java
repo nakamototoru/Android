@@ -17,6 +17,7 @@ public class ActivityOrderDetail extends CustomAppCompatActivity {
 
     String myOrderNo = "";
     String mySupplierName = "";
+    String myCharge = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +51,8 @@ public class ActivityOrderDetail extends CustomAppCompatActivity {
         final HDZApiResponseOrderDetail responseOrderDetail = new HDZApiResponseOrderDetail();
         if ( responseOrderDetail.parseJson(response) ) {
 
-            Log.d("########",response);
+//            Log.d("########",response);
+            myCharge = responseOrderDetail.orderInfo.charge;
 
             //UIスレッド上で呼び出してもらう
             this.runOnUiThread(new Runnable(){
@@ -108,6 +110,7 @@ public class ActivityOrderDetail extends CustomAppCompatActivity {
             Intent intent = new Intent( getApplication(), ActivityMessages.class);
             intent.putExtra("order_no", myOrderNo);
             intent.putExtra("supplier_name", mySupplierName);
+            intent.putExtra("charge", myCharge);
             startActivity(intent);
 
             return true;

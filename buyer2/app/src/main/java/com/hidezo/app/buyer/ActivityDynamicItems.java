@@ -2,26 +2,15 @@ package com.hidezo.app.buyer;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-//import android.support.v7.app.AppCompatActivity;
-//import android.graphics.Canvas;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
-//import android.support.v7.widget.Toolbar;
-//import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-
-//import com.hidezo.app.buyer.CustomView.PickerView;
-//import com.hidezo.app.buyer.model.Dau;
-
 import java.util.ArrayList;
-//import java.util.StringTokenizer;
-
-//import java.util.ArrayList;
 
 /**
  *
@@ -30,12 +19,14 @@ public class ActivityDynamicItems extends CustomAppCompatActivity {
 
     private String mySupplierId = "";
 
+    ArrayAdapterDynamicItem myAdapter = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dynamic_items);
 
-        final ActivityDynamicItems _self = this;
+//        final ActivityDynamicItems _self = this;
 
         Intent intent = getIntent();
         mySupplierId = intent.getStringExtra("supplier_id");
@@ -86,20 +77,17 @@ public class ActivityDynamicItems extends CustomAppCompatActivity {
             this.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-
-                    final ArrayList<HDZUserOrder> displayItemList = new ArrayList<>();
-
                     // 表示リスト作成
+                    final ArrayList<HDZUserOrder> displayItemList = new ArrayList<>();
                     HDZUserOrder.transFromDynamic(_self, responseItem.dynamicItemList, mySupplierId, displayItemList);
 
                     //リストビュー作成
-                    ArrayAdapterDynamicItem adapter = new ArrayAdapterDynamicItem(_self, displayItemList);
+                    myAdapter = new ArrayAdapterDynamicItem(_self, displayItemList);
                     ListView listView = (ListView) findViewById(R.id.listViewDynamicItem);
                     listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         //行タッチイベント
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-
                             // ピッカーの作成
                             ArrayList<String> pickerList = new ArrayList<>();
                             pickerList.add( AppGlobals.STR_ZERO );
@@ -116,8 +104,7 @@ public class ActivityDynamicItems extends CustomAppCompatActivity {
                                             .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                                 @Override
                                                 public void onClick(DialogInterface dialog, int id) {
-//                                                    Log.d("## Cart","POS[" + String.valueOf(position) + "]SELECTED = " + String.valueOf(pickerView.getIndexSelected()));
-
+                                                    // カート内容変更
                                                     HDZUserOrder order = displayItemList.get(position);
                                                     final AppGlobals globals = (AppGlobals) _self.getApplication();
                                                     String numScale = pickerView.getTextSelected();
@@ -143,8 +130,19 @@ public class ActivityDynamicItems extends CustomAppCompatActivity {
 
                         }
                     });
-                    listView.setAdapter(adapter);
 
+                    //ヘッダー追加
+                    if (listView.getHeaderViewsCount() == 0) {
+                        //
+                        View header = getLayoutInflater().inflate(R.layout.item_message_header,null);
+                        listView.addHeaderView(header, null, false); // タッチ無効
+
+                        String str = responseItem.dynamicItemInfo.lastUpdate;
+                        TextView tvCount = (TextView)findViewById(R.id.textViewCommentCount);
+                        tvCount.setText(str);
+                    }
+
+                    listView.setAdapter(myAdapter);
                 }
             });
         }
@@ -154,9 +152,13 @@ public class ActivityDynamicItems extends CustomAppCompatActivity {
      * リストビューの更新処理。
      */
     public void reFleshListView() {
-        ListView listView = (ListView) findViewById(R.id.listViewDynamicItem);
-        ArrayAdapterDynamicItem adapter = (ArrayAdapterDynamicItem) listView.getAdapter();
-        adapter.notifyDataSetChanged();
+//        ListView listView = (ListView) findViewById(R.id.listViewDynamicItem);
+//        ArrayAdapterDynamicItem adapter = (ArrayAdapterDynamicItem) listView.getAdapter();
+//        adapter.notifyDataSetChanged();
+
+        if (myAdapter != null) {
+            myAdapter.notifyDataSetChanged();
+        }
     }
 
     /**

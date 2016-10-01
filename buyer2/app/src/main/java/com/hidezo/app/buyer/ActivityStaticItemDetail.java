@@ -1,10 +1,12 @@
 package com.hidezo.app.buyer;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
-import android.view.LayoutInflater;
+//import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -58,7 +60,6 @@ public class ActivityStaticItemDetail extends CustomAppCompatActivity {
         final ActivityStaticItemDetail _self = this;
         final HDZApiResponseItem responseItem = new HDZApiResponseItem();
         if (responseItem.parseJson(response)) {
-
             //UIスレッド上で呼び出してもらう
             this.runOnUiThread(new Runnable() {
                 @Override
@@ -111,6 +112,40 @@ public class ActivityStaticItemDetail extends CustomAppCompatActivity {
                         } catch (Exception e) {
                             Log.d("## Picasso",e.getMessage());
                         }
+                        ivItem.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                //UIスレッド上で呼び出してもらう
+                                _self.runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        // 画像取得
+                                        final ImageView ivDetail = new ImageView(_self);
+                                        final Context ctx = ivDetail.getContext();
+                                        try {
+                                            Picasso.with(ctx)
+                                                    .load(imageURL)
+                                                    //                .centerInside()
+                                                    .placeholder(R.drawable.sakana180)
+                                                    .error(R.drawable.sakana180)
+                                                    .into(ivDetail);
+                                        } catch (Exception e) {
+                                            Log.d("## Picasso",e.getMessage());
+                                        }
+
+                                        new AlertDialog.Builder(_self)
+                                                .setTitle("商品画像")
+                                                .setView(ivDetail)
+                                                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialog, int id) {
+                                                    }
+                                                })
+                                                .show();
+                                    }
+                                });
+                            }
+                        });
                     }
 
                     listView.setAdapter(adapter);

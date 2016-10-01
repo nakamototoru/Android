@@ -133,7 +133,6 @@ public class ActivityUserOrdersCheck extends CustomAppCompatActivity {
                                                 .show();
                                     }
                                 });
-
                             }
                             else {
                                 // ピッカーの作成

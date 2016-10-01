@@ -11,4 +11,5 @@
     <string name="OrderExec">注文実行</string>
     <string name="GoHome">ホームへ</string>
     <string name="GoTop">トップへ</string>
+    <string name="SendComment">コメント送信</string>
 </resources>
