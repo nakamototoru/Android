@@ -12,4 +12,10 @@
     <string name="GoHome">ホームへ</string>
     <string name="GoTop">トップへ</string>
     <string name="SendComment">コメント送信</string>
+    <string name="MidasiSubTotal">小計：</string>
+    <string name="MidasiDeliverFee">送料：</string>
+    <string name="MidasiTotal">合計：</string>
+    <string name="MidasiCharge">担当者：</string>
+    <string name="MidasiDeliverDay">納品日：</string>
+    <string name="MidasiDeliverTo">納品場所：</string>
 </resources>

@@ -22,40 +22,6 @@ class HDZApiResponseOrderDetail extends HDZApiResponse {
             try {
                 JSONObject json = new JSONObject(strJson);
 
-                /*
-  "order": {
-    "order_no": "6147055737622237186-00039",
-    "deliver_to": "静岡",
-    "delivery_day": "明日",
-    "charge": "中本",
-    "order_at": "08/17 16:34"
-  },
-    "attr_flg": "2",
-  "deliveryFee": "1200",
-  "subtotal": "1800",
-  "total": "3000",
-  "staicItemList": [
-    {
-      "id": "117",
-      "name": "芋焼酎　赤霧島1820ml むらさきまさり",
-      "price": "1500",
-      "order_num": "1",
-      "standard": "1800ml",
-      "scale": "本",
-      "loading": "1",
-      "code": "a000-1234"
-    }
-  ],
-  "dynamicItemList": [
-    {
-      "id": "116",
-      "name": "山口県の宇部かまぼこ",
-      "price": "400,300,250",
-      "order_num": "1",
-      "code": "001-01"
-    }
-  ],
-     */
                 orderInfo.attr_flg = json.getString("attr_flg");
                 orderInfo.deliveryFee = json.getString("deliveryFee");
                 orderInfo.subTotal = json.getString("subtotal");

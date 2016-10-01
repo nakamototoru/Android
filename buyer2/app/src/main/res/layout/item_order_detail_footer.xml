@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/layout_padding_item_layout">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <TextView
+                    android:text="@string/MidasiSubTotal"
+                    android:layout_width="@android:dimen/notification_large_icon_width"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textViewMidasi0"
+                    android:textColor="@android:color/black"
+                    android:gravity="top|right" />
+
+                <TextView
+                    android:text="TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textViewSubTotal"
+                    android:layout_weight="1"
+                    android:textColor="@android:color/black"
+                    android:textStyle="normal|bold"
+                    android:gravity="top|right" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <TextView
+                    android:text="@string/MidasiDeliverFee"
+                    android:layout_width="@android:dimen/notification_large_icon_width"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textViewMidasi1"
+                    android:textColor="@android:color/black"
+                    android:gravity="top|right" />
+
+                <TextView
+                    android:text="TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textViewDeliverFee"
+                    android:layout_weight="1"
+                    android:textColor="@android:color/black"
+                    android:textStyle="normal|bold"
+                    android:gravity="top|right" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <TextView
+                    android:text="@string/MidasiTotal"
+                    android:layout_width="@android:dimen/notification_large_icon_width"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textViewMidasi2"
+                    android:textColor="@android:color/black"
+                    android:gravity="top|right" />
+
+                <TextView
+                    android:text="TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textViewTotal"
+                    android:layout_weight="1"
+                    android:textColor="@android:color/black"
+                    android:textStyle="normal|bold"
+                    android:gravity="top|right" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <TextView
+                    android:text="@string/MidasiCharge"
+                    android:layout_width="@android:dimen/notification_large_icon_width"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textViewMidasi3"
+                    android:textColor="@android:color/black"
+                    android:gravity="top|right" />
+
+                <TextView
+                    android:text="TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textViewCharge"
+                    android:layout_weight="1"
+                    android:textColor="@android:color/black"
+                    android:textStyle="normal|bold"
+                    android:gravity="top|right" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <TextView
+                    android:text="@string/MidasiDeliverDay"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textViewMidasi4"
+                    android:textColor="@android:color/black"
+                    android:gravity="top|right" />
+
+                <TextView
+                    android:text="TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textViewDeliverDay"
+                    android:layout_weight="1"
+                    android:gravity="top|right"
+                    android:textColor="@android:color/black"
+                    android:textStyle="normal|bold" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <TextView
+                    android:text="@string/MidasiDeliverTo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textViewMidasi5"
+                    android:textColor="@android:color/black"
+                    android:gravity="top|right" />
+
+                <TextView
+                    android:text="TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textViewDeliverTo"
+                    android:layout_weight="1"
+                    android:gravity="top|right"
+                    android:textColor="@android:color/black"
+                    android:textStyle="normal|bold" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+            </TableRow>
+
+        </TableLayout>
+
+        <TextView
+            android:text="※整数注文以外の計算は全て０円で行っています。"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView11"
+            android:textColor="@android:color/holo_red_dark"
+            android:textStyle="normal|bold"
+            android:gravity="top|center_horizontal" />
+    </LinearLayout>
+
+</RelativeLayout>

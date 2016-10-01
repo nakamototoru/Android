@@ -16,4 +16,10 @@
     <string name="GoHome">Go home</string>
     <string name="GoTop">Go top</string>
     <string name="SendComment">Send comment</string>
+    <string name="MidasiSubTotal">SUB TOTAL:</string>
+    <string name="MidasiDeliverFee">DELIVER FEE:</string>
+    <string name="MidasiTotal">TOTAL:</string>
+    <string name="MidasiCharge">Charge:</string>
+    <string name="MidasiDeliverDay">DELIVER DAY:</string>
+    <string name="MidasiDeliverTo">DELIVER TO:</string>
 </resources>

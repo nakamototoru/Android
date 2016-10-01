@@ -1,15 +1,21 @@
 package com.hidezo.app.buyer;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
+
 import java.util.ArrayList;
 
 /**
@@ -140,6 +146,43 @@ public class ActivityDynamicItems extends CustomAppCompatActivity {
                         String str = responseItem.dynamicItemInfo.lastUpdate;
                         TextView tvCount = (TextView)findViewById(R.id.textViewCommentCount);
                         tvCount.setText(str);
+                    }
+                    // フッター
+                    if (listView.getFooterViewsCount() == 0) {
+                        //
+                        View footer = getLayoutInflater().inflate(R.layout.item_dynamic_item_footer,null);
+                        listView.addFooterView(footer, null ,false); // タッチ無効
+
+                        ImageView ivItem00 = (ImageView) findViewById(R.id.imageViewIcon00);
+                        ImageView ivItem01 = (ImageView) findViewById(R.id.imageViewIcon01);
+                        ImageView ivItem02 = (ImageView) findViewById(R.id.imageViewIcon02);
+                        ImageView ivItem03 = (ImageView) findViewById(R.id.imageViewIcon03);
+                        ImageView ivItem04 = (ImageView) findViewById(R.id.imageViewIcon04);
+                        ImageView ivItem05 = (ImageView) findViewById(R.id.imageViewIcon05);
+                        ArrayList<ImageView> imageList = new ArrayList<>();
+                        imageList.add(ivItem00);
+                        imageList.add(ivItem01);
+                        imageList.add(ivItem02);
+                        imageList.add(ivItem03);
+                        imageList.add(ivItem04);
+                        imageList.add(ivItem05);
+                        Context context = footer.getContext();
+                        for (int i = 0; i < responseItem.dynamicItemInfo.imagePath.size() && i < 6; i++) {
+                            ImageView iv = imageList.get(i);
+                            String imageURL = responseItem.dynamicItemInfo.imagePath.get(i);
+                            try {
+                                Picasso.with(context)
+                                        .load(imageURL)
+                                        .placeholder(R.drawable.sakana180)
+                                        .error(R.drawable.sakana180)
+                                        .into(iv);
+                            } catch (Exception e) {
+                                Log.d("## Picasso",e.getMessage());
+                            }
+                        }
+
+                        TextView tvDescription = (TextView)findViewById(R.id.textViewDescription);
+                        tvDescription.setText(responseItem.dynamicItemInfo.text);
                     }
 
                     listView.setAdapter(myAdapter);

@@ -9,6 +9,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 /**
  *
@@ -51,7 +54,6 @@ public class ActivityOrderDetail extends CustomAppCompatActivity {
         final HDZApiResponseOrderDetail responseOrderDetail = new HDZApiResponseOrderDetail();
         if ( responseOrderDetail.parseJson(response) ) {
 
-//            Log.d("########",response);
             myCharge = responseOrderDetail.orderInfo.charge;
 
             //UIスレッド上で呼び出してもらう
@@ -65,7 +67,7 @@ public class ActivityOrderDetail extends CustomAppCompatActivity {
                         //行タッチイベント
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//
+                            //
 //                            ListView listView = (ListView)parent;
 //                            HDZordered order = (HDZordered)listView.getItemAtPosition(position);
 //                            String order_no = order.order_no;
@@ -76,6 +78,38 @@ public class ActivityOrderDetail extends CustomAppCompatActivity {
 //                            _self.startActivity(intent);
                         }
                     });
+
+                    // フッター
+                    if (listView.getFooterViewsCount() == 0) {
+                        //
+                        View footer = getLayoutInflater().inflate(R.layout.item_order_detail_footer,null);
+                        listView.addFooterView(footer, null ,false); // タッチ無効
+
+                        String subTotal = responseOrderDetail.orderInfo.subTotal + "円";
+                        TextView tvSubTotal = (TextView)findViewById(R.id.textViewSubTotal);
+                        tvSubTotal.setText(subTotal);
+
+                        String deliverFee = responseOrderDetail.orderInfo.deliveryFee + "円";
+                        TextView tvDeliverFee = (TextView)findViewById(R.id.textViewDeliverFee);
+                        tvDeliverFee.setText(deliverFee);
+
+                        String total = responseOrderDetail.orderInfo.total + "円";
+                        TextView tvTotal = (TextView)findViewById(R.id.textViewTotal);
+                        tvTotal.setText(total);
+
+                        String charge = responseOrderDetail.orderInfo.charge;
+                        TextView tvCharge = (TextView)findViewById(R.id.textViewCharge);
+                        tvCharge.setText(charge);
+
+                        String deliverDay = responseOrderDetail.orderInfo.delivery_day;
+                        TextView tvDay = (TextView)findViewById(R.id.textViewDeliverDay);
+                        tvDay.setText(deliverDay);
+
+                        String deliverTo = responseOrderDetail.orderInfo.deliver_to;
+                        TextView tvTo = (TextView)findViewById(R.id.textViewDeliverTo);
+                        tvTo.setText(deliverTo);
+                    }
+
                     listView.setAdapter(adapter);
                 }
             });
