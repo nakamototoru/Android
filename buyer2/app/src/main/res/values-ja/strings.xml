@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="PlusMark">+</string>
+    <string name="MinusMark">-</string>
     <string name="app_name">発注専用アプリ</string>
     <string name="OrderHistory">注文履歴</string>
     <string name="SupplierList">取引先</string>
