@@ -210,6 +210,17 @@ public class AppGlobals extends Application {
         return sp.getString(keyDeliverPlace, "");
     }
 
+    /**
+     * 注文前入力リセット
+     */
+    public void resetOrderInfoWithMessage(final boolean isMessageAlso) {
+        setOrderCharge("");
+        setOrderDeliverDay(deliverDayList.get(0));
+        setOrderDeliverPlace("");
+        if (isMessageAlso) {
+            setOrderMessage("");
+        }
+    }
 
     /**
      * ALERT DIALOG

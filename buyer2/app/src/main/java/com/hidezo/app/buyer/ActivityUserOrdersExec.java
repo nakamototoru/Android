@@ -92,10 +92,11 @@ public class ActivityUserOrdersExec extends CustomAppCompatActivity {
 
             // 記憶値クリア
             globals.deleteAllCart();
-            globals.setOrderCharge("");
-            globals.setOrderDeliverDay("");
-            globals.setOrderDeliverPlace("");
-            globals.setOrderMessage("");
+//            globals.setOrderCharge("");
+//            globals.setOrderDeliverDay(AppGlobals.deliverDayList.get(0));
+//            globals.setOrderDeliverPlace("");
+//            globals.setOrderMessage("");
+            globals.resetOrderInfoWithMessage(true);
 
             // 画面遷移
             Intent intent = new Intent(getApplication(), ActivityCategorys.class);
@@ -131,14 +132,15 @@ public class ActivityUserOrdersExec extends CustomAppCompatActivity {
                                 if ( globals.getOrderMessage().equals("") ) {
                                     // 記憶値クリア
                                     globals.deleteAllCart();
-                                    globals.setOrderCharge("");
-                                    globals.setOrderDeliverDay("");
-                                    globals.setOrderDeliverPlace("");
+//                                    globals.setOrderCharge("");
+//                                    globals.setOrderDeliverDay(AppGlobals.deliverDayList.get(0));
+//                                    globals.setOrderDeliverPlace("");
+                                    globals.resetOrderInfoWithMessage(false);
 
                                     // 画面遷移
-                                    Intent intent = new Intent(getApplication(), ActivityCategorys.class);
+                                    Intent intent = new Intent(_self.getApplication(), ActivityCategorys.class);
                                     intent.putExtra("supplier_id",mySupplierId);
-                                    startActivity(intent);
+                                    _self.startActivity(intent);
                                 }
                                 else {
                                     // メッセージ送信

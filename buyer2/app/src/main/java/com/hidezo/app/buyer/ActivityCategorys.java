@@ -1,14 +1,17 @@
 package com.hidezo.app.buyer;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 //import android.support.v7.widget.Toolbar;
 //import android.util.Log;
 import android.content.Intent;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -21,6 +24,8 @@ import java.util.HashMap;
 public class ActivityCategorys extends CustomAppCompatActivity {
 
     private String mySupplierId = "";
+
+    private ProgressDialog myProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,14 +58,21 @@ public class ActivityCategorys extends CustomAppCompatActivity {
             }
         });
 
+        // ツールバー初期化
+        setNavigationBar("カテゴリ一覧");
+
         // ゲット・商品一覧
         // HTTP GET
         HDZApiRequestPackage.Item req = new HDZApiRequestPackage.Item();
         AppGlobals globals = (AppGlobals) this.getApplication();
         req.begin(globals.getUserId(), globals.getUuid(), mySupplierId, this);
 
-        // ツールバー初期化
-        setNavigationBar("カテゴリ一覧");
+        // Progress Start
+        myProgressDialog = new ProgressDialog(this);
+        myProgressDialog.setTitle("データ取得中");
+        myProgressDialog.setMessage("お待ち下さい");
+        myProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        myProgressDialog.show();
     }
 
     /**
@@ -68,6 +80,9 @@ public class ActivityCategorys extends CustomAppCompatActivity {
      * データ取得時
      */
     public void HDZClientComplete(String response,String apiName) {
+
+        // Progress End
+        myProgressDialog.dismiss();
 
         if ( checkLogOut(response) ) {
             return;
