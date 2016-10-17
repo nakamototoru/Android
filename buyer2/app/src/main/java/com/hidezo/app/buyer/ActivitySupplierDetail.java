@@ -28,15 +28,17 @@ public class ActivitySupplierDetail extends CustomAppCompatActivity {
         Intent intent = getIntent();
         mySupplierId = intent.getStringExtra("supplier_id");
 
+        // ツールバー初期化
+        String supplier_name = intent.getStringExtra("supplier_name");
+        setNavigationBar(supplier_name);
+
         // HTTP GET
         HDZApiRequestPackage.Friend req = new HDZApiRequestPackage.Friend();
         AppGlobals globals = (AppGlobals) this.getApplication();
         req.begin( globals.getUserId(), globals.getUuid(), this);
 
-        // ツールバー初期化
-        String supplier_name = intent.getStringExtra("supplier_name");
-        setNavigationBar(supplier_name);
-
+        // Progress
+        openProgressDialog();
     }
 
     /**
@@ -44,6 +46,9 @@ public class ActivitySupplierDetail extends CustomAppCompatActivity {
      * データ取得時
      */
     public void HDZClientComplete(String response, String apiName) {
+
+        // Progress
+        closeProgressDialog();
 
         if ( checkLogOut(response) ) {
             return;

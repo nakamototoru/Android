@@ -223,55 +223,6 @@ public class AppGlobals extends Application {
     }
 
     /**
-     * ALERT DIALOG
-     * @param title title
-     * @param activity activity
-     */
-    public void openWarning(final String title, final String message, final AppCompatActivity activity) {
-
-        //UIスレッド上で呼び出してもらう
-        activity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                new AlertDialog.Builder(activity)
-                        .setTitle(title)
-                        .setMessage(message)
-                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int id) {
-
-                            }
-                        })
-                        .show();
-            }
-        });
-    }
-    public void openAlertSessionOut(final AppCompatActivity activity) {
-
-        //UIスレッド上で呼び出してもらう
-        activity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                new AlertDialog.Builder(activity)
-                        .setTitle("アクセスエラー")
-                        .setMessage("他の端末でお客様のアカウントにログインしたか、サーバーの不具合でログアウトされました。")
-                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int id) {
-
-                                setLoginState(false);
-
-                                // ログインフォーム画面遷移
-                                Intent intent = new Intent(activity.getApplication(), MainActivity.class);
-                                activity.startActivity(intent);
-                            }
-                        })
-                        .show();
-            }
-        });
-    }
-
-    /**
      * 注文カート操作
      */
     public void createCart() {

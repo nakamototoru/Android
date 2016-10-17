@@ -46,11 +46,6 @@ public class ActivityUserOrders extends CustomAppCompatActivity {
         Intent intent = getIntent();
         mySupplierId = intent.getStringExtra("supplier_id");
 
-        // HTTP GET
-        HDZApiRequestPackage.Item req = new HDZApiRequestPackage.Item();
-        AppGlobals globals = (AppGlobals) this.getApplication();
-        req.begin(globals.getUserId(), globals.getUuid(), mySupplierId, this);
-
         // Touch Event
         TextView tvHome = (TextView)findViewById(R.id.textViewButtonHome);
         tvHome.setOnClickListener(new View.OnClickListener() {
@@ -65,6 +60,14 @@ public class ActivityUserOrders extends CustomAppCompatActivity {
         // ツールバー初期化
         setNavigationBar("注文確認");
 
+        // HTTP GET
+        HDZApiRequestPackage.Item req = new HDZApiRequestPackage.Item();
+        AppGlobals globals = (AppGlobals) this.getApplication();
+        req.begin(globals.getUserId(), globals.getUuid(), mySupplierId, this);
+
+        // Progress
+        openProgressDialog();
+
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
@@ -76,12 +79,14 @@ public class ActivityUserOrders extends CustomAppCompatActivity {
      */
     public void HDZClientComplete(final String response, String apiName) {
 
-        final AppGlobals globals = (AppGlobals) this.getApplication();
+        // Progress
+        closeProgressDialog();
 
         if (checkLogOut(response)) {
             return;
         }
 
+        final AppGlobals globals = (AppGlobals) this.getApplication();
         final ActivityUserOrders _self = this;
         final HDZApiResponseItem responseItem = new HDZApiResponseItem();
         if (responseItem.parseJson(response)) {

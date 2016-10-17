@@ -22,15 +22,16 @@ public class ActivityOrderes extends CustomAppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_orderes);
 
-//        final ActivityOrderes _self = this;
+        // ツールナビゲーションバー
+        setNavigationBar("注文履歴");
 
         // ゲット・注文履歴
         AppGlobals globals = (AppGlobals) this.getApplication();
         HDZApiRequestPackage.OrderList req = new HDZApiRequestPackage.OrderList();
         req.begin(globals.getUserId(), globals.getUuid(), 1, this );
 
-        // ツールナビゲーションバー
-        setNavigationBar("注文履歴");
+        // Progress
+        openProgressDialog();
     }
 
     /**
@@ -39,6 +40,9 @@ public class ActivityOrderes extends CustomAppCompatActivity {
      */
 //    @Override
     public void HDZClientComplete(final String response, final String apiName) {
+
+        // Progress
+        closeProgressDialog();
 
         if ( checkLogOut(response) ) {
             return;
@@ -104,32 +108,33 @@ public class ActivityOrderes extends CustomAppCompatActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_logout) {
             //UIスレッド上で呼び出してもらう
-            _self.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-
-                    new AlertDialog.Builder(_self)
-                            .setTitle("ログアウトします")
-                            .setMessage("よろしいですか？")
-                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int id) {
-                                    AppGlobals globals = (AppGlobals) _self.getApplication();
-                                    globals.setLoginState(false);
-
-                                    // ログインフォーム画面遷移
-                                    Intent intent = new Intent(getApplication(), MainActivity.class);
-                                    startActivity(intent);
-                                }
-                            })
-                            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                }
-                            })
-                            .show();
-                }
-            });
+//            _self.runOnUiThread(new Runnable() {
+//                @Override
+//                public void run() {
+//
+//                    new AlertDialog.Builder(_self)
+//                            .setTitle("ログアウトします")
+//                            .setMessage("よろしいですか？")
+//                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//                                @Override
+//                                public void onClick(DialogInterface dialog, int id) {
+//                                    AppGlobals globals = (AppGlobals) _self.getApplication();
+//                                    globals.setLoginState(false);
+//
+//                                    // ログインフォーム画面遷移
+//                                    Intent intent = new Intent(getApplication(), MainActivity.class);
+//                                    startActivity(intent);
+//                                }
+//                            })
+//                            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+//                                @Override
+//                                public void onClick(DialogInterface dialog, int which) {
+//                                }
+//                            })
+//                            .show();
+//                }
+//            });
+            openLogoutDialog();
             return true;
         }
 

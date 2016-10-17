@@ -17,9 +17,9 @@ import android.widget.TextView;
  */
 public class ActivityMessages extends CustomAppCompatActivity {
 
-    String myOrderNo = "";
-    String mySupplierName = "";
-    String myCharge = "";
+    private String myOrderNo = "";
+    private String mySupplierName = "";
+    private String myCharge = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,10 +32,6 @@ public class ActivityMessages extends CustomAppCompatActivity {
 
         final AppGlobals globals = (AppGlobals) this.getApplication();
         final ActivityMessages _self = this;
-
-        // HTTP GET
-        HDZApiRequestPackage.Message req = new HDZApiRequestPackage.Message();
-        req.begin(globals.getUserId(), globals.getUuid(), myOrderNo, this);
 
         // ツールナビゲーションバー
         mySupplierName = intent.getStringExtra("supplier_name");
@@ -92,6 +88,13 @@ public class ActivityMessages extends CustomAppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        // HTTP GET
+        HDZApiRequestPackage.Message req = new HDZApiRequestPackage.Message();
+        req.begin(globals.getUserId(), globals.getUuid(), myOrderNo, this);
+
+        // Progress
+        openProgressDialog();
     }
 
     /**
@@ -99,6 +102,9 @@ public class ActivityMessages extends CustomAppCompatActivity {
      * データ取得時
      */
     public void HDZClientComplete(final String response, final String apiName) {
+
+        // Progress
+        closeProgressDialog();
 
         if ( checkLogOut(response) ) {
             return;

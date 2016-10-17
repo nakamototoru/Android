@@ -37,14 +37,17 @@ public class ActivityStaticItemDetail extends CustomAppCompatActivity {
         myCategoryId = intent.getStringExtra("category_id");
         String supplier_id = intent.getStringExtra("supplier_id");
 
+        // ツールバー初期化
+        String title = "商品詳細";
+        setNavigationBar(title);
+
         // HTTP GET
         HDZApiRequestPackage.Item req = new HDZApiRequestPackage.Item();
         AppGlobals globals = (AppGlobals) this.getApplication();
         req.begin( globals.getUserId(), globals.getUuid(), supplier_id, this);
 
-        // ツールバー初期化
-        String title = "商品詳細";
-        setNavigationBar(title);
+        // Progress
+        openProgressDialog();
     }
 
     /**
@@ -52,6 +55,9 @@ public class ActivityStaticItemDetail extends CustomAppCompatActivity {
      * データ取得時
      */
     public void HDZClientComplete(String response,String apiName) {
+
+        // Progress
+        closeProgressDialog();
 
         if ( checkLogOut(response) ) {
             return;

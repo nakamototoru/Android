@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.KeyEvent;
 //import android.support.v7.app.AppCompatActivity;
 //import android.util.Log;
 
@@ -50,6 +51,27 @@ public class ActivityUserOrdersExec extends CustomAppCompatActivity {
         // HTTP POST
         HDZApiRequestPackage.Order req = new HDZApiRequestPackage.Order();
         req.begin( globals.getUserId(), globals.getUuid(), mySupplierId, dynamic_items,static_items, globals.getOrderDeliverDay(), globals.getOrderCharge(), globals.getOrderDeliverPlace(), _self );
+
+        // Progress
+        openPostProgressDialog();
+    }
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            // 戻るボタンを無効
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * 画面遷移
+     */
+    void goOrdersFinish() {
+        // 画面遷移
+        Intent intent = new Intent(getApplication(), ActivityUserOrdersFinish.class);
+        intent.putExtra("supplier_id",mySupplierId);
+        startActivity(intent);
     }
 
     /**
@@ -58,30 +80,56 @@ public class ActivityUserOrdersExec extends CustomAppCompatActivity {
      */
     public void HDZClientComplete(String response,String apiName) {
 
-        final AppGlobals globals = (AppGlobals) this.getApplication();
-//        final ActivityUserOrdersExec _self = this;
+        // Progress
+//        closeProgressDialog();
 
+        final AppGlobals globals = (AppGlobals) this.getApplication();
         if (apiName.equals("store/order")) {
             // 注文処理
             final HDZApiResponseOrderResult responseOrderResult = new HDZApiResponseOrderResult();
             if (responseOrderResult.parseJson(response)) {
                 if (responseOrderResult.result) {
-
                     // 注文成功
                     myOrderNo = responseOrderResult.orderNo;
-                    openAlertCompleted();
+
+                    if ( globals.getOrderMessage().equals("") ) {
+                        // Progress
+                        closeProgressDialog();
+
+                        // 記憶値クリア
+                        globals.deleteAllCart();
+                        globals.resetOrderInfoWithMessage(true);
+
+                        // 画面遷移
+                        goOrdersFinish();
+                    }
+                    else {
+                        // メッセージ送信
+                        // HTTP POST
+                        HDZApiRequestPackage.AddMessage req = new HDZApiRequestPackage.AddMessage();
+                        req.begin( globals.getUserId(), globals.getUuid(), globals.getOrderCharge(), globals.getOrderMessage(), myOrderNo, this);
+                    }
                 }
                 else {
+                    // Progress
+                    closeProgressDialog();
+
                     //注文失敗
                     openAlertFailed();
                 }
             }
             else {
+                // Progress
+                closeProgressDialog();
+
                 //注文失敗
                 openAlertFailed();
             }
         }
         else {
+            // Progress
+            closeProgressDialog();
+
             final HDZApiResponse responseResult = new HDZApiResponse();
             if (responseResult.parseJson(response)) {
                 Log.d("## OrderExec","Completed");
@@ -92,68 +140,54 @@ public class ActivityUserOrdersExec extends CustomAppCompatActivity {
 
             // 記憶値クリア
             globals.deleteAllCart();
-//            globals.setOrderCharge("");
-//            globals.setOrderDeliverDay(AppGlobals.deliverDayList.get(0));
-//            globals.setOrderDeliverPlace("");
-//            globals.setOrderMessage("");
             globals.resetOrderInfoWithMessage(true);
 
             // 画面遷移
-            Intent intent = new Intent(getApplication(), ActivityCategorys.class);
-            intent.putExtra("supplier_id",mySupplierId);
-            startActivity(intent);
+            goOrdersFinish();
         }
     }
-//    public void HDZClientError(String error) {
-//        openAlertFailed();
-//    }
 
     /**
      * ALERT DIALOG
      */
-    public void openAlertCompleted() {
-
-        final AppGlobals globals = (AppGlobals) this.getApplication();
-        final ActivityUserOrdersExec _self = this;
-        final String title = "注文完了";
-        final String message = "注文が完了しました。";
-
-        //UIスレッド上で呼び出してもらう
-        this.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                new AlertDialog.Builder(_self)
-                        .setTitle(title)
-                        .setMessage(message)
-                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int id) {
-
-                                if ( globals.getOrderMessage().equals("") ) {
-                                    // 記憶値クリア
-                                    globals.deleteAllCart();
-//                                    globals.setOrderCharge("");
-//                                    globals.setOrderDeliverDay(AppGlobals.deliverDayList.get(0));
-//                                    globals.setOrderDeliverPlace("");
-                                    globals.resetOrderInfoWithMessage(false);
-
-                                    // 画面遷移
-                                    Intent intent = new Intent(_self.getApplication(), ActivityCategorys.class);
-                                    intent.putExtra("supplier_id",mySupplierId);
-                                    _self.startActivity(intent);
-                                }
-                                else {
-                                    // メッセージ送信
-                                    // HTTP POST
-                                    HDZApiRequestPackage.AddMessage req = new HDZApiRequestPackage.AddMessage();
-                                    req.begin( globals.getUserId(), globals.getUuid(), globals.getOrderCharge(), globals.getOrderMessage(), myOrderNo, _self);
-                                }
-                            }
-                        })
-                        .show();
-            }
-        });
-    }
+//    public void openAlertCompleted() {
+//
+//        final AppGlobals globals = (AppGlobals) this.getApplication();
+//        final ActivityUserOrdersExec _self = this;
+//        final String title = "注文完了";
+//        final String message = "注文が完了しました。";
+//
+//        //UIスレッド上で呼び出してもらう
+//        this.runOnUiThread(new Runnable() {
+//            @Override
+//            public void run() {
+//                new AlertDialog.Builder(_self)
+//                        .setTitle(title)
+//                        .setMessage(message)
+//                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int id) {
+//
+//                                if ( globals.getOrderMessage().equals("") ) {
+//                                    // 記憶値クリア
+//                                    globals.deleteAllCart();
+//                                    globals.resetOrderInfoWithMessage(true);
+//
+//                                    // 画面遷移
+//                                    goOrdersFinish();
+//                                }
+//                                else {
+//                                    // メッセージ送信
+//                                    // HTTP POST
+//                                    HDZApiRequestPackage.AddMessage req = new HDZApiRequestPackage.AddMessage();
+//                                    req.begin( globals.getUserId(), globals.getUuid(), globals.getOrderCharge(), globals.getOrderMessage(), myOrderNo, _self);
+//                                }
+//                            }
+//                        })
+//                        .show();
+//            }
+//        });
+//    }
 
     public void openAlertFailed() {
 
@@ -172,9 +206,9 @@ public class ActivityUserOrdersExec extends CustomAppCompatActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int id) {
                                 // 画面遷移
-                                Intent intent = new Intent( _self.getApplication(), ActivityUserOrdersCheck.class);
+                                Intent intent = new Intent( getApplication(), ActivityUserOrdersCheck.class);
                                 intent.putExtra("supplier_id", mySupplierId);
-                                _self.startActivity(intent);
+                                startActivity(intent);
                             }
                         })
                         .show();

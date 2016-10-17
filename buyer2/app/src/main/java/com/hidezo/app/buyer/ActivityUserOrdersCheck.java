@@ -34,13 +34,16 @@ public class ActivityUserOrdersCheck extends CustomAppCompatActivity {
         Intent intent = getIntent();
         mySupplierId = intent.getStringExtra("supplier_id");
 
+        // ツールバー初期化
+        setNavigationBar("注文前入力");
+
         // HTTP GET
         HDZApiRequestPackage.Item req = new HDZApiRequestPackage.Item();
         AppGlobals globals = (AppGlobals) this.getApplication();
         req.begin(globals.getUserId(), globals.getUuid(), mySupplierId, this);
 
-        // ツールバー初期化
-        setNavigationBar("注文前入力");
+        // Progress
+        openProgressDialog();
     }
 
     /**
@@ -48,6 +51,9 @@ public class ActivityUserOrdersCheck extends CustomAppCompatActivity {
      * データ取得時
      */
     public void HDZClientComplete(String response, String apiName) {
+
+        // Progress
+        closeProgressDialog();
 
         if ( checkLogOut(response) ) {
             return;

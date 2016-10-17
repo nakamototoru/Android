@@ -25,22 +25,15 @@ public class ActivityDynamicItems extends CustomAppCompatActivity {
 
     private String mySupplierId = "";
 
-    ArrayAdapterDynamicItem myAdapter = null;
+    private ArrayAdapterDynamicItem myAdapter = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dynamic_items);
 
-//        final ActivityDynamicItems _self = this;
-
         Intent intent = getIntent();
         mySupplierId = intent.getStringExtra("supplier_id");
-
-        // HTTP GET
-        HDZApiRequestPackage.Item req = new HDZApiRequestPackage.Item();
-        AppGlobals globals = (AppGlobals) this.getApplication();
-        req.begin(globals.getUserId(), globals.getUuid(), mySupplierId, this);
 
         // TouchEvent
         TextView tvOrderCheck = (TextView)findViewById(R.id.textViewButtonOrderCheck);
@@ -64,6 +57,14 @@ public class ActivityDynamicItems extends CustomAppCompatActivity {
 
         // ツールバー初期化
         setNavigationBar("新着");
+
+        // HTTP GET
+        HDZApiRequestPackage.Item req = new HDZApiRequestPackage.Item();
+        AppGlobals globals = (AppGlobals) this.getApplication();
+        req.begin(globals.getUserId(), globals.getUuid(), mySupplierId, this);
+
+        // Progress
+        openProgressDialog();
     }
 
     /**
@@ -71,6 +72,9 @@ public class ActivityDynamicItems extends CustomAppCompatActivity {
      * データ取得時
      */
     public void HDZClientComplete(String response,String apiName) {
+
+        // Progress
+        closeProgressDialog();
 
         if ( checkLogOut(response) ) {
             return;

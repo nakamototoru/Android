@@ -18,9 +18,9 @@ import org.w3c.dom.Text;
  */
 public class ActivityOrderDetail extends CustomAppCompatActivity {
 
-    String myOrderNo = "";
-    String mySupplierName = "";
-    String myCharge = "";
+    private String myOrderNo = "";
+    private String mySupplierName = "";
+    private String myCharge = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,14 +30,17 @@ public class ActivityOrderDetail extends CustomAppCompatActivity {
         Intent intent = getIntent();
         myOrderNo = intent.getStringExtra("order_no");
 
+        // ツールナビゲーションバー
+        mySupplierName = intent.getStringExtra("supplier_name");
+        setNavigationBar(mySupplierName + "様宛");
+
         // HTTP GET
         HDZApiRequestPackage.OrderDetail req = new HDZApiRequestPackage.OrderDetail();
         AppGlobals globals = (AppGlobals) this.getApplication();
         req.begin(globals.getUserId(), globals.getUuid(), myOrderNo, this);
 
-        // ツールナビゲーションバー
-        mySupplierName = intent.getStringExtra("supplier_name");
-        setNavigationBar(mySupplierName + "様宛");
+        // Progress
+        openProgressDialog();
     }
 
     /**
@@ -45,6 +48,9 @@ public class ActivityOrderDetail extends CustomAppCompatActivity {
      * データ取得時
      */
     public void HDZClientComplete(final String response, final String apiName) {
+
+        // Progress
+        closeProgressDialog();
 
         if ( checkLogOut(response) ) {
             return;

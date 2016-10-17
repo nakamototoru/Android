@@ -1,6 +1,8 @@
 package com.hidezo.app.buyer;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -79,9 +81,10 @@ public class MainActivity extends AppCompatActivity implements HDZClient.HDZCall
             final HDZApiResponse responseLogin = new HDZApiResponse();
             if (responseLogin.parseJson(response)) {
                 if (responseLogin.result) {
-
+                    // ログイン
                     globals.setUserId(myUserId);
                     globals.setLoginState(true);
+                    globals.resetOrderInfoWithMessage(true);
                     // 画面遷移
                     Intent intent = new Intent(getApplication(), ActivitySuppliers.class);
                     startActivity(intent);
@@ -89,22 +92,44 @@ public class MainActivity extends AppCompatActivity implements HDZClient.HDZCall
                 else {
                     //ログイン失敗
                     globals.setLoginState(false);
-                    globals.openWarning("エラー",responseLogin.message,this);
+                    openWarning("エラー",responseLogin.message);
                 }
             }
             else {
                 //ログイン失敗
                 globals.setLoginState(false);
-                globals.openWarning("エラー",responseLogin.message,this);
+                openWarning("エラー",responseLogin.message);
             }
         }
     }
     public void HDZClientError(String error) {
-        final AppGlobals globals = (AppGlobals) this.getApplication();
+//        final AppGlobals globals = (AppGlobals) this.getApplication();
         // 警告
-        globals.openWarning("アクセスエラー","ネットワークにアクセス出来ませんでしたので時間を置いて再試行して下さい。",this);
+        openWarning("アクセスエラー","ネットワークにアクセス出来ませんでしたので時間を置いて再試行して下さい。");
     }
 
+    /**
+     * ワーニング
+     */
+    public void openWarning(final String title, final String message) {
+        final MainActivity _self = this;
+
+        //UIスレッド上で呼び出してもらう
+        this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                new AlertDialog.Builder(_self)
+                        .setTitle(title)
+                        .setMessage(message)
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int id) {
+                            }
+                        })
+                        .show();
+            }
+        });
+    }
 
     /**
      * ツールバー

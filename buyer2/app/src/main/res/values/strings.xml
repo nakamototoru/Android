@@ -22,4 +22,6 @@
     <string name="MidasiCharge">Charge:</string>
     <string name="MidasiDeliverDay">DELIVER DAY:</string>
     <string name="MidasiDeliverTo">DELIVER TO:</string>
+    <string name="OrderIsFinished">Order is finished.</string>
+    <string name="Okey">OK</string>
 </resources>

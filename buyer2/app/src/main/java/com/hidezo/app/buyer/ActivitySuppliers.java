@@ -1,12 +1,12 @@
 package com.hidezo.app.buyer;
 
-import android.content.DialogInterface;
+//import android.content.DialogInterface;
 import android.content.Intent;
 //import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 //import android.support.v7.widget.Toolbar;
 //import android.util.Log;
-import android.support.v7.app.AlertDialog;
+//import android.support.v7.app.AlertDialog;
 import android.view.Menu;
 //import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -25,8 +25,6 @@ public class ActivitySuppliers extends CustomAppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_suppliers);
 
-//        final ActivitySuppliers _self = this;
-
         // ツールナビゲーションバー
         setNavigationBar("取引先一覧");
 
@@ -34,6 +32,9 @@ public class ActivitySuppliers extends CustomAppCompatActivity {
         HDZApiRequestPackage.Friend req = new HDZApiRequestPackage.Friend();
         AppGlobals globals = (AppGlobals) this.getApplication();
         req.begin( globals.getUserId(), globals.getUuid(), this);
+
+        // Progress
+        openProgressDialog();
    }
 
     /**
@@ -42,6 +43,9 @@ public class ActivitySuppliers extends CustomAppCompatActivity {
      */
 //    @Override
     public void HDZClientComplete(String response,String apiName) {
+
+        // Progress
+        closeProgressDialog();
 
         if ( checkLogOut(response) ) {
             return;
@@ -114,39 +118,39 @@ public class ActivitySuppliers extends CustomAppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_logout) {
-
             //UIスレッド上で呼び出してもらう
-            _self.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-
-                    new AlertDialog.Builder(_self)
-                            .setTitle("ログアウトします")
-                            .setMessage("よろしいですか？")
-                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int id) {
-                                    AppGlobals globals = (AppGlobals) _self.getApplication();
-                                    globals.setLoginState(false);
-
-                                    // ログインフォーム画面遷移
-                                    Intent intent = new Intent(getApplication(), MainActivity.class);
-                                    startActivity(intent);
-                                }
-                            })
-                            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                }
-                            })
-                            .show();
-                }
-            });
+//            _self.runOnUiThread(new Runnable() {
+//                @Override
+//                public void run() {
+//
+//                    new AlertDialog.Builder(_self)
+//                            .setTitle("ログアウトします")
+//                            .setMessage("よろしいですか？")
+//                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//                                @Override
+//                                public void onClick(DialogInterface dialog, int id) {
+//                                    AppGlobals globals = (AppGlobals)getApplication();
+//                                    globals.resetOrderInfoWithMessage(true);
+//                                    globals.setLoginState(false);
+//
+//                                    // ログインフォーム画面遷移
+//                                    Intent intent = new Intent(getApplication(), MainActivity.class);
+//                                    startActivity(intent);
+//                                }
+//                            })
+//                            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+//                                @Override
+//                                public void onClick(DialogInterface dialog, int which) {
+//                                }
+//                            })
+//                            .show();
+//                }
+//            });
+            openLogoutDialog();
             return true;
         }
 
         if (id == R.id.action_orderes) {
-
             // 注文履歴画面遷移
             Intent intent = new Intent(getApplication(), ActivityOrderes.class);
             startActivity(intent);

@@ -25,14 +25,12 @@ public class ActivityCategorys extends CustomAppCompatActivity {
 
     private String mySupplierId = "";
 
-    private ProgressDialog myProgressDialog;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_categorys);
 
-        final ActivityCategorys _self = this;
+//        final ActivityCategorys _self = this;
 
         Intent intent = getIntent();
         mySupplierId = intent.getStringExtra("supplier_id");
@@ -68,11 +66,7 @@ public class ActivityCategorys extends CustomAppCompatActivity {
         req.begin(globals.getUserId(), globals.getUuid(), mySupplierId, this);
 
         // Progress Start
-        myProgressDialog = new ProgressDialog(this);
-        myProgressDialog.setTitle("データ取得中");
-        myProgressDialog.setMessage("お待ち下さい");
-        myProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        myProgressDialog.show();
+        openProgressDialog();
     }
 
     /**
@@ -82,7 +76,7 @@ public class ActivityCategorys extends CustomAppCompatActivity {
     public void HDZClientComplete(String response,String apiName) {
 
         // Progress End
-        myProgressDialog.dismiss();
+        closeProgressDialog();
 
         if ( checkLogOut(response) ) {
             return;
