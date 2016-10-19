@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+//import java.util.StringTokenizer;
 
 /**
  * Created by dezami on 2016/09/15.
@@ -35,7 +37,7 @@ class ArrayAdapterStaticItem extends ArrayAdapter<HDZUserOrder> {
     public View getView(final int position, View convertView, final ViewGroup parent) {
 
         // Get the data item for this position
-        HDZUserOrder item = getItem(position);
+        final HDZUserOrder item = getItem(position);
         if (item == null) {
             return convertView;
         }
@@ -90,15 +92,63 @@ class ArrayAdapterStaticItem extends ArrayAdapter<HDZUserOrder> {
         TextView tvRow = (TextView) convertView.findViewById(R.id.textViewRow);
         tvRow.setText( String.valueOf(position+1) );
 
-        // Touch Event
-        TextView tvBtnPlus = (TextView)convertView.findViewById(R.id.textViewButtonUpdate);
-        tvBtnPlus.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // 変更ダイアログ
-                ((ListView) parent).performItemClick(null, position, -1);
-            }
-        });
+        // カート操作ボタン
+        if ( item.numScale.size() < 100) {
+            // 分数操作
+            // 変更したいレイアウトを取得する
+            LinearLayout layout = (LinearLayout)convertView.findViewById(R.id.layoutOrderCountStatic);
+            // レイアウトのビューをすべて削除する
+            layout.removeAllViews();
+            // レイアウトを変更する
+            LayoutInflater inflater = LayoutInflater.from(getContext());
+            inflater.inflate(R.layout.layout_order_fraction, layout);
+
+            // Touch Event
+            TextView tvBtnUpdate = (TextView)convertView.findViewById(R.id.textViewButtonUpdate);
+            tvBtnUpdate.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // 変更ダイアログ
+                    ((ListView) parent).performItemClick(null, position, 999);
+                }
+            });
+        }
+        else {
+            // 整数操作
+            // 変更したいレイアウトを取得する
+            LinearLayout layout = (LinearLayout)convertView.findViewById(R.id.layoutOrderCountStatic);
+            // レイアウトのビューをすべて削除する
+            layout.removeAllViews();
+            // レイアウトを変更する
+            LayoutInflater inflater = LayoutInflater.from(getContext());
+            inflater.inflate(R.layout.layout_order_decimal, layout);
+
+            // Touch Event
+            TextView tvBtnPlus = (TextView)convertView.findViewById(R.id.textViewButtonPlus);
+            tvBtnPlus.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // 操作制限
+                    int count = Integer.parseInt(item.orderSize);
+                    if (count < 100) {
+                        // 変更処理
+                        ((ListView) parent).performItemClick(null, position, 1);
+                    }
+                }
+            });
+            TextView tvBtnMinus = (TextView)convertView.findViewById(R.id.textViewButtonMinus);
+            tvBtnMinus.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // 操作制限
+                    int count = Integer.parseInt(item.orderSize);
+                    if (count > 0) {
+                        // 変更処理
+                        ((ListView) parent).performItemClick(null, position, -1);
+                    }
+                }
+            });
+        }
 
         // Return the completed view to render on screen
         return convertView;

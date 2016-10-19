@@ -8,4 +8,5 @@
     <dimen name="button_size_height">40dp</dimen>
     <dimen name="layout_padding_item_layout">10dp</dimen>
     <dimen name="toolbar_range_width">120dp</dimen>
+    <dimen name="length_ordercount_sppace">20dp</dimen>
 </resources>

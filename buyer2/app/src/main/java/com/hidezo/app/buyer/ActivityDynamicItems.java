@@ -83,6 +83,8 @@ public class ActivityDynamicItems extends CustomAppCompatActivity {
         final ActivityDynamicItems _self = this;
         final HDZApiResponseItem responseItem = new HDZApiResponseItem();
         if (responseItem.parseJson(response)) {
+            final AppGlobals globals = (AppGlobals) _self.getApplication();
+
             //UIスレッド上で呼び出してもらう
             this.runOnUiThread(new Runnable() {
                 @Override
@@ -98,46 +100,67 @@ public class ActivityDynamicItems extends CustomAppCompatActivity {
                         //行タッチイベント
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-                            // ピッカーの作成
-                            ArrayList<String> pickerList = new ArrayList<>();
-                            pickerList.add( AppGlobals.STR_ZERO );
-                            pickerList.addAll(responseItem.dynamicItemList.get(position).num_scale);
-                            final CustomPickerView pickerView = new CustomPickerView(_self, pickerList, displayItemList.get(position).orderSize);
-
-                            //UIスレッド上で呼び出してもらう
-                            _self.runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    new AlertDialog.Builder(_self)
-                                            .setTitle("選択")
-                                            .setView(pickerView)
-                                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                                @Override
-                                                public void onClick(DialogInterface dialog, int id) {
-                                                    // カート内容変更
-                                                    HDZUserOrder order = displayItemList.get(position);
-                                                    final AppGlobals globals = (AppGlobals) _self.getApplication();
-                                                    String numScale = pickerView.getTextSelected();
-                                                    if (numScale.equals(AppGlobals.STR_ZERO)) {
-                                                        globals.deleteCart(order.supplierId, order.itemId);
-                                                    }
-                                                    else {
-                                                        globals.replaceCart(order.supplierId, order.itemId, numScale, true);
-                                                    }
-                                                    order.orderSize = pickerView.getTextSelected();
-                                                    // カート更新
-                                                    reFleshListView();
-                                                }
-                                            })
-                                            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                                                @Override
-                                                public void onClick(DialogInterface dialog, int which) {
-                                                }
-                                            })
-                                            .show();
+                            // ボタン場合分け
+                            if (id == 1 || id == -1) {
+                                // 個数の増減
+                                HDZUserOrder order = displayItemList.get(position);
+                                int count = Integer.parseInt(order.orderSize);
+                                count += (int)id;
+                                if (count == 0) {
+                                    globals.deleteCart(order.supplierId, order.itemId);
+                                    order.orderSize = AppGlobals.STR_ZERO;
+                                    // カート更新
+                                    reFleshListView();
                                 }
-                            });
+                                else if (count <= 100) {
+                                    String numScale = String.valueOf(count);
+                                    globals.replaceCart(order.supplierId, order.itemId, numScale, true);
+                                    order.orderSize = numScale;
+                                    // カート更新
+                                    reFleshListView();
+                                }
+                            }
+                            else {
+                                // ピッカーの作成
+                                ArrayList<String> pickerList = new ArrayList<>();
+                                pickerList.add( AppGlobals.STR_ZERO );
+                                pickerList.addAll(responseItem.dynamicItemList.get(position).num_scale);
+                                final CustomPickerView pickerView = new CustomPickerView(_self, pickerList, displayItemList.get(position).orderSize);
 
+                                //UIスレッド上で呼び出してもらう
+                                _self.runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        new AlertDialog.Builder(_self)
+                                                .setTitle("選択")
+                                                .setView(pickerView)
+                                                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialog, int id) {
+                                                        // カート内容変更
+                                                        HDZUserOrder order = displayItemList.get(position);
+//                                                        final AppGlobals globals = (AppGlobals) _self.getApplication();
+                                                        String numScale = pickerView.getTextSelected();
+                                                        if (numScale.equals(AppGlobals.STR_ZERO)) {
+                                                            globals.deleteCart(order.supplierId, order.itemId);
+                                                        }
+                                                        else {
+                                                            globals.replaceCart(order.supplierId, order.itemId, numScale, true);
+                                                        }
+                                                        order.orderSize = pickerView.getTextSelected();
+                                                        // カート更新
+                                                        reFleshListView();
+                                                    }
+                                                })
+                                                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialog, int which) {
+                                                    }
+                                                })
+                                                .show();
+                                    }
+                                });
+                            }
                         }
                     });
 

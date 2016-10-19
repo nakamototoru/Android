@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -29,8 +30,8 @@ class ArrayAdapterUserOrder extends ArrayAdapter<HDZUserOrder> {
     public View getView(final int position, View convertView, final ViewGroup parent) {
 
         // Get the data item for this position
-        HDZUserOrder userOrder = getItem(position);
-        if (userOrder == null) {
+        final HDZUserOrder item = getItem(position);
+        if (item == null) {
             return convertView;
         }
 
@@ -41,9 +42,9 @@ class ArrayAdapterUserOrder extends ArrayAdapter<HDZUserOrder> {
 
         // Lookup view for data population
         TextView tvTitle = (TextView) convertView.findViewById(R.id.textViewName);
-        tvTitle.setText(userOrder.itemName);
+        tvTitle.setText(item.itemName);
         TextView tvContent = (TextView) convertView.findViewById(R.id.textViewCount);
-        tvContent.setText(userOrder.orderSize);
+        tvContent.setText(item.orderSize);
         TextView tvRow = (TextView) convertView.findViewById(R.id.textViewRow);
         tvRow.setText(String.valueOf(position+1));
 
@@ -53,17 +54,76 @@ class ArrayAdapterUserOrder extends ArrayAdapter<HDZUserOrder> {
             @Override
             public void onClick(View v) {
                 // 親アクティビティへ
-                ((ListView) parent).performItemClick(null, position, -1);
-            }
-        });
-        TextView tvBtnUpdate = (TextView) convertView.findViewById(R.id.textViewButtonUpdate);
-        tvBtnUpdate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // 親アクティビティへ
                 ((ListView) parent).performItemClick(null, position, 0);
             }
         });
+
+//        TextView tvBtnUpdate = (TextView) convertView.findViewById(R.id.textViewButtonUpdate);
+//        tvBtnUpdate.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // 親アクティビティへ
+//                ((ListView) parent).performItemClick(null, position, 0);
+//            }
+//        });
+
+        // カート操作ボタン
+        if ( item.numScale.size() < 100) {
+            // 分数操作
+            // 変更したいレイアウトを取得する
+            LinearLayout layout = (LinearLayout)convertView.findViewById(R.id.layoutOrderCountCart);
+            // レイアウトのビューをすべて削除する
+            layout.removeAllViews();
+            // レイアウトを変更する
+            LayoutInflater inflater = LayoutInflater.from(getContext());
+            inflater.inflate(R.layout.layout_order_fraction, layout);
+
+            // Touch Event
+            TextView tvBtnUpdate = (TextView)convertView.findViewById(R.id.textViewButtonUpdate);
+            tvBtnUpdate.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // 変更ダイアログ
+                    ((ListView) parent).performItemClick(null, position, 999);
+                }
+            });
+        }
+        else {
+            // 整数操作
+            // 変更したいレイアウトを取得する
+            LinearLayout layout = (LinearLayout)convertView.findViewById(R.id.layoutOrderCountCart);
+            // レイアウトのビューをすべて削除する
+            layout.removeAllViews();
+            // レイアウトを変更する
+            LayoutInflater inflater = LayoutInflater.from(getContext());
+            inflater.inflate(R.layout.layout_order_decimal, layout);
+
+            // Touch Event
+            TextView tvBtnPlus = (TextView)convertView.findViewById(R.id.textViewButtonPlus);
+            tvBtnPlus.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // 操作制限
+                    int count = Integer.parseInt(item.orderSize);
+                    if (count < 100) {
+                        // 変更処理
+                        ((ListView) parent).performItemClick(null, position, 1);
+                    }
+                }
+            });
+            TextView tvBtnMinus = (TextView)convertView.findViewById(R.id.textViewButtonMinus);
+            tvBtnMinus.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // 操作制限
+                    int count = Integer.parseInt(item.orderSize);
+                    if (count > 0) {
+                        // 変更処理
+                        ((ListView) parent).performItemClick(null, position, -1);
+                    }
+                }
+            });
+        }
 
         // Return the completed view to render on screen
         return convertView;

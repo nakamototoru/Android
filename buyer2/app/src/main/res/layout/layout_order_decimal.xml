@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:text="@string/PlusMark"
+        android:layout_width="@dimen/button_size_height"
+        android:layout_height="@dimen/button_size_height"
+        android:id="@+id/textViewButtonPlus"
+        android:textSize="30sp"
+        android:gravity="center_vertical|center_horizontal"
+        android:background="@color/colorPrimary"
+        android:textColor="@android:color/white" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="@dimen/length_ordercount_sppace"
+        android:layout_height="match_parent"></LinearLayout>
+
+    <TextView
+        android:text="@string/MinusMark"
+        android:layout_width="@dimen/button_size_height"
+        android:layout_height="@dimen/button_size_height"
+        android:id="@+id/textViewButtonMinus"
+        android:gravity="center_vertical|center_horizontal"
+        android:textSize="30sp"
+        android:textColor="@android:color/white"
+        android:background="@color/colorPrimary" />
+</LinearLayout>

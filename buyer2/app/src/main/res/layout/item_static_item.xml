@@ -91,16 +91,24 @@
                     android:layout_width="@dimen/abc_action_bar_overflow_padding_end_material"
                     android:layout_height="match_parent"></LinearLayout>
 
-                <TextView
-                    android:layout_height="@android:dimen/app_icon_size"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="@string/Update"
-                    android:id="@+id/textViewButtonUpdate"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:textColor="@android:color/white"
-                    android:background="@color/colorPrimary"
-                    android:textSize="18sp"
-                    android:layout_width="@dimen/button_size_width" />
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/layoutOrderCountStatic">
+
+                    <TextView
+                        android:layout_height="@dimen/button_size_height"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="@string/Update"
+                        android:id="@+id/textViewButtonUpdate"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:textColor="@android:color/white"
+                        android:background="@color/colorPrimary"
+                        android:textSize="18sp"
+                        android:layout_width="@dimen/button_size_width"
+                        android:layout_weight="1" />
+                </LinearLayout>
 
             </LinearLayout>
 

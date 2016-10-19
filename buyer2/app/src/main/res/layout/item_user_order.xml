@@ -69,15 +69,23 @@
                     android:layout_width="@dimen/length_liner_space"
                     android:layout_height="match_parent"></LinearLayout>
 
-                <TextView
-                    android:text="@string/Update"
-                    android:layout_width="@dimen/button_size_width"
-                    android:layout_height="@dimen/button_size_height"
-                    android:id="@+id/textViewButtonUpdate"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:background="@color/colorPrimary"
-                    android:textColor="@android:color/white"
-                    android:textSize="18sp" />
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/layoutOrderCountCart">
+
+                    <TextView
+                        android:text="@string/Update"
+                        android:layout_width="@dimen/button_size_width"
+                        android:layout_height="@dimen/button_size_height"
+                        android:id="@+id/textViewButtonUpdate"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:background="@color/colorPrimary"
+                        android:textColor="@android:color/white"
+                        android:textSize="18sp"
+                        android:layout_weight="1" />
+                </LinearLayout>
 
             </LinearLayout>
 

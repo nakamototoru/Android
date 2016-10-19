@@ -113,7 +113,7 @@ public class ActivityStaticItems extends CustomAppCompatActivity {
                     ArrayAdapterStaticItem adapter = new ArrayAdapterStaticItem(_self, displayItemList);
                     ListView listView = (ListView) findViewById(R.id.listViewStaticItem);
                     listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        //行タッチイベント
+                        //タッチイベント
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, final int position, final long id) {
                             if (id == 0) {
@@ -124,13 +124,36 @@ public class ActivityStaticItems extends CustomAppCompatActivity {
                                 intent.putExtra("category_id", myCategoryId);
                                 _self.startActivity(intent);
                             }
+                            else if (id == 1 || id == -1) {
+                                // 個数の増減
+                                HDZUserOrder order = displayItemList.get(position);
+                                int count = Integer.parseInt(order.orderSize);
+                                count += (int)id;
+                                if (count == 0) {
+                                    globals.deleteCart(order.supplierId, order.itemId);
+
+                                    order.orderSize = AppGlobals.STR_ZERO;
+
+                                    // カート更新
+                                    reFleshListView();
+                                }
+                                else if (count <= 100) {
+                                    String numScale = String.valueOf(count);
+                                    globals.replaceCart(order.supplierId, order.itemId, numScale, false);
+
+                                    order.orderSize = numScale;
+
+                                    // カート更新
+                                    reFleshListView();
+                                }
+                            }
                             else {
+                                // 分数指定
                                 // ピッカーの作成
                                 ArrayList<String> pickerList = new ArrayList<>();
                                 pickerList.add( AppGlobals.STR_ZERO );
                                 pickerList.addAll(displayItemList.get(position).numScale);
                                 final CustomPickerView pickerView = new CustomPickerView(_self, pickerList, displayItemList.get(position).orderSize);
-
                                 //UIスレッド上で呼び出してもらう
                                 _self.runOnUiThread(new Runnable() {
                                     @Override
@@ -144,7 +167,6 @@ public class ActivityStaticItems extends CustomAppCompatActivity {
 //                                                    Log.d("## Cart","POS[" + String.valueOf(position) + "]SELECTED = " + String.valueOf(pickerView.getIndexSelected()));
 
                                                         HDZUserOrder order = displayItemList.get(position);
-//                                                        final AppGlobals globals = (AppGlobals) _self.getApplication();
                                                         String numScale = pickerView.getTextSelected();
                                                         if (numScale.equals(AppGlobals.STR_ZERO)) {
                                                             globals.deleteCart(order.supplierId, order.itemId);

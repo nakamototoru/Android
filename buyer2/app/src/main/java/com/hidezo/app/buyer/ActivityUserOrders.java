@@ -162,8 +162,8 @@ public class ActivityUserOrders extends CustomAppCompatActivity {
                         //行タッチイベント
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, final int position, final long id) {
-                            // 場合分け
-                            if (id == -1) {
+                            // ボタン場合分け
+                            if (id == 0) {
                                 // カート削除
                                 HDZUserOrder order = displayItemList.get(position);
                                 globals.deleteCart(order.supplierId, order.itemId);
@@ -171,7 +171,27 @@ public class ActivityUserOrders extends CustomAppCompatActivity {
                                 // カート更新
                                 reFleshListView();
                             }
-                            else if (id == 0) {
+                            else if (id == 1 || id == -1) {
+                                // 個数の増減
+                                HDZUserOrder order = displayItemList.get(position);
+                                int count = Integer.parseInt(order.orderSize);
+                                count += (int)id;
+                                if (count == 0) {
+                                    globals.deleteCart(order.supplierId, order.itemId);
+//                                    order.orderSize = AppGlobals.STR_ZERO;
+                                    displayItemList.remove(position);
+                                    // カート更新
+                                    reFleshListView();
+                                }
+                                else if (count <= 100) {
+                                    String numScale = String.valueOf(count);
+                                    globals.replaceCart(order.supplierId, order.itemId, numScale, order.isDynamic);
+                                    order.orderSize = numScale;
+                                    // カート更新
+                                    reFleshListView();
+                                }
+                            }
+                            else {
                                 // ピッカーの作成
                                 ArrayList<String> pickerList = new ArrayList<>();
                                 pickerList.add( AppGlobals.STR_ZERO );
@@ -188,10 +208,8 @@ public class ActivityUserOrders extends CustomAppCompatActivity {
                                                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                                     @Override
                                                     public void onClick(DialogInterface dialog, int id) {
-//                                                    Log.d("## Cart","POS[" + String.valueOf(position) + "]SELECTED = " + String.valueOf(pickerView.getIndexSelected()));
-
+                                                        // カート更新
                                                         HDZUserOrder order = displayItemList.get(position);
-//                                                        final AppGlobals globals = (AppGlobals) _self.getApplication();
                                                         String numScale = pickerView.getTextSelected();
                                                         if (numScale.equals(AppGlobals.STR_ZERO)) {
                                                             //削除
