@@ -55,7 +55,6 @@ public class AppGlobals extends Application {
         return uuid;
     }
     public String getUuid() {
-
         // インスタンスを取得する
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         // データを取得する(第2引数はデフォルト値)

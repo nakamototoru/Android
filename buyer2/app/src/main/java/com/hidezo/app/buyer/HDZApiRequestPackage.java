@@ -10,7 +10,6 @@ import java.util.HashMap;
 class HDZApiRequestPackage {
 
     static class LoginCheck {
-
         public void begin(final String id,final String uuid, HDZClient.HDZCallbacks callbacks) {
 
             HDZApiRequest request = new HDZApiRequest();
@@ -22,7 +21,6 @@ class HDZApiRequestPackage {
     }
 
     static class Login {
-
         public void begin(final String id,final String uuid,final String password, HDZClient.HDZCallbacks callbacks) {
 
             HDZApiRequest request = new HDZApiRequest();
@@ -37,7 +35,6 @@ class HDZApiRequestPackage {
     }
 
     static class Friend {
-
         public void begin(final String id,final String uuid, HDZClient.HDZCallbacks callbacks) {
 
             HDZApiRequest request = new HDZApiRequest();
@@ -49,7 +46,6 @@ class HDZApiRequestPackage {
     }
 
     static class Item {
-
         public void begin(final String id,final String uuid,final String supplier_id, HDZClient.HDZCallbacks callbacks) {
 
             HDZApiRequest request = new HDZApiRequest();
@@ -62,7 +58,6 @@ class HDZApiRequestPackage {
     }
 
      static class OrderList {
-
         public void begin(final String id,final String uuid,final int page, HDZClient.HDZCallbacks callbacks) {
 
             HDZApiRequest request = new HDZApiRequest();
@@ -75,7 +70,6 @@ class HDZApiRequestPackage {
     }
 
     static class OrderDetail {
-
         public void begin(final String id,final String uuid,final String order_no, HDZClient.HDZCallbacks callbacks) {
 
             HDZApiRequest request = new HDZApiRequest();
@@ -88,7 +82,6 @@ class HDZApiRequestPackage {
     }
 
     static class Order {
-
         public void begin(final String id,final String uuid,final String supplier_id,final ArrayList<String> dynamic_items,final ArrayList<String> static_items,final String delivery_day,final String charge,final String deliver_to, HDZClient.HDZCallbacks callbacks) {
             //
             HDZApiRequest request = new HDZApiRequest();
@@ -106,7 +99,6 @@ class HDZApiRequestPackage {
     }
 
     static class Message {
-
         public void begin(final String id,final String uuid,final String order_no, HDZClient.HDZCallbacks callbacks) {
 
             HDZApiRequest request = new HDZApiRequest();
@@ -119,8 +111,7 @@ class HDZApiRequestPackage {
     }
 
     static class AddMessage {
-
-        public void begin(final String id,final String uuid,final String charge, final String message, final String order_no, HDZClient.HDZCallbacks callbacks) {
+        public void begin(final String id,final String uuid,final String charge, final String message,final String order_no, HDZClient.HDZCallbacks callbacks) {
 
             HDZApiRequest request = new HDZApiRequest();
 
@@ -132,6 +123,31 @@ class HDZApiRequestPackage {
             params.put("order_no",order_no);
 
             request.beginPost("store/add_message", params, callbacks);
+        }
+    }
+
+    static class Badge {
+        public void begin(final String id,final String uuid, HDZClient.HDZCallbacks callbacks) {
+
+            HDZApiRequest request = new HDZApiRequest();
+            request.putKeyAndValue("id", id);
+            request.putKeyAndValue("uuid", uuid);
+
+            request.beginRequest("store/badge",callbacks);
+        }
+    }
+
+    static class sendDeviceToken {
+        public void begin(final String id,final String uuid, final String device_token, HDZClient.HDZCallbacks callbacks) {
+            HDZApiRequest request = new HDZApiRequest();
+
+            HashMap<String,String> params = new HashMap<>();
+            params.put("id",id);
+            params.put("uuid",uuid);
+            params.put("device_token",device_token);
+            params.put("device_flg","2"); // Androidは２を送る
+
+            request.beginPost("store/device_token", params, callbacks);
         }
     }
 

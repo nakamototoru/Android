@@ -13,6 +13,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.hidezo.app.buyer.CustomView.CircleView;
+
 import java.util.ArrayList;
 
 /**
@@ -54,8 +56,7 @@ class ArrayAdapterSupplier extends ArrayAdapter<HDZFriendInfo> {
         tvName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("########","R.id.tvName");
-
+//                Log.d("########","R.id.tvName");
                 ((ListView) parent).performItemClick(null, position, 99);
             }
         });
@@ -63,11 +64,19 @@ class ArrayAdapterSupplier extends ArrayAdapter<HDZFriendInfo> {
         tvOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("########","R.id.tvOrder");
-
+//                Log.d("########","R.id.tvOrder");
                 ((ListView) parent).performItemClick(null, position, 0);
             }
         });
+
+        // 通知バッジ表示
+        CircleView circleView = (CircleView)convertView.findViewById(R.id.viewForBadge);
+        if (circleView != null) {
+            circleView.setColor(R.color.colorForBadge);
+        }
+        else {
+            Log.d("####","circleView is Null.");
+        }
 
         // Return the completed view to render on screen
         return convertView;

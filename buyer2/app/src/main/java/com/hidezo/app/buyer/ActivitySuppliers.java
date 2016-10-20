@@ -14,6 +14,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+//import com.hidezo.app.buyer.CustomView.CircleView;
+
 /**
  * Created by dezami on 2016/09/13.
  * 取引先一覧リストビュー
@@ -114,38 +116,11 @@ public class ActivitySuppliers extends CustomAppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        final ActivitySuppliers _self = this;
+//        final ActivitySuppliers _self = this;
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_logout) {
             //UIスレッド上で呼び出してもらう
-//            _self.runOnUiThread(new Runnable() {
-//                @Override
-//                public void run() {
-//
-//                    new AlertDialog.Builder(_self)
-//                            .setTitle("ログアウトします")
-//                            .setMessage("よろしいですか？")
-//                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-//                                @Override
-//                                public void onClick(DialogInterface dialog, int id) {
-//                                    AppGlobals globals = (AppGlobals)getApplication();
-//                                    globals.resetOrderInfoWithMessage(true);
-//                                    globals.setLoginState(false);
-//
-//                                    // ログインフォーム画面遷移
-//                                    Intent intent = new Intent(getApplication(), MainActivity.class);
-//                                    startActivity(intent);
-//                                }
-//                            })
-//                            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-//                                @Override
-//                                public void onClick(DialogInterface dialog, int which) {
-//                                }
-//                            })
-//                            .show();
-//                }
-//            });
             openLogoutDialog();
             return true;
         }

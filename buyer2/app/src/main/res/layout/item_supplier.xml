@@ -36,6 +36,28 @@
                 android:layout_height="wrap_content"
                 android:gravity="right|center_vertical">
 
+                <RelativeLayout
+                    android:layout_width="@dimen/layoutWidthTextRow"
+                    android:layout_height="@dimen/layoutWidthTextRow"
+                    android:layout_weight="1">
+
+                    <view
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        class="com.hidezo.app.buyer.CustomView.CircleView"
+                        android:id="@+id/viewForBadge"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:text="1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/textViewBadgeCount"
+                        android:textColor="@android:color/white"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:textSize="12sp" />
+                </RelativeLayout>
+
                 <TextView
                     android:layout_width="@dimen/button_size_width"
                     android:layout_height="@dimen/button_size_height"

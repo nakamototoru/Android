@@ -44,7 +44,9 @@ class HDZClient {
             client.newCall(request).enqueue(new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
-                    hdzCallbacks.HDZClientError("Error:HDZClient.runAsync");
+                    if (hdzCallbacks != null) {
+                        hdzCallbacks.HDZClientError("Error:HDZClient.runAsync");
+                    }
                 }
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
@@ -54,7 +56,9 @@ class HDZClient {
 //                    for (int i = 0, size = responseHeaders.size(); i < size; i++) {
 //                        System.out.println(responseHeaders.name(i) + ": " + responseHeaders.value(i));
 //                    }
-                    hdzCallbacks.HDZClientComplete(response.body().string(),apiName);
+                    if (hdzCallbacks != null) {
+                        hdzCallbacks.HDZClientComplete(response.body().string(), apiName);
+                    }
                 }
             });
         }
@@ -119,7 +123,9 @@ class HDZClient {
             client.newCall(request).enqueue(new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
-                    hdzCallbacks.HDZClientError("Error:HDZClient.runAsync");
+                    if (hdzCallbacks != null) {
+                        hdzCallbacks.HDZClientError("Error:HDZClient.runAsync");
+                    }
                 }
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
@@ -129,7 +135,9 @@ class HDZClient {
 //                    for (int i = 0, size = responseHeaders.size(); i < size; i++) {
 //                        System.out.println(responseHeaders.name(i) + ": " + responseHeaders.value(i));
 //                    }
-                    hdzCallbacks.HDZClientComplete(response.body().string(),apiName);
+                    if (hdzCallbacks != null) {
+                        hdzCallbacks.HDZClientComplete(response.body().string(), apiName);
+                    }
                 }
             });
 
@@ -157,7 +165,9 @@ class HDZClient {
             client.newCall(request).enqueue(new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
-                    hdzCallbacks.HDZClientError("Error:HDZClient.runAsync");
+                    if (hdzCallbacks != null) {
+                        hdzCallbacks.HDZClientError("Error:HDZClient.runAsync");
+                    }
                 }
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
@@ -167,7 +177,9 @@ class HDZClient {
 //                    for (int i = 0, size = responseHeaders.size(); i < size; i++) {
 //                        System.out.println(responseHeaders.name(i) + ": " + responseHeaders.value(i));
 //                    }
-                    hdzCallbacks.HDZClientComplete(response.body().string(),apiName);
+                    if (hdzCallbacks != null) {
+                        hdzCallbacks.HDZClientComplete(response.body().string(), apiName);
+                    }
                 }
             });
         }
