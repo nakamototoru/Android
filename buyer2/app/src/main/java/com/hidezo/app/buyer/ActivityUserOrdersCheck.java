@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 //import android.sax.StartElementListener;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
+//import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,17 +14,16 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import com.hidezo.app.buyer.model.Dau;
-
-import org.w3c.dom.Text;
-
+//import com.hidezo.app.buyer.model.Dau;
+//import org.w3c.dom.Text;
 import java.util.ArrayList;
-import java.util.List;
 
+/**
+ *
+ */
 public class ActivityUserOrdersCheck extends CustomAppCompatActivity {
 
-    private String mySupplierId = "";
+    String mySupplierId = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +50,6 @@ public class ActivityUserOrdersCheck extends CustomAppCompatActivity {
      * データ取得時
      */
     public void HDZClientComplete(String response, String apiName) {
-
         // Progress
         closeProgressDialog();
 
@@ -224,9 +222,6 @@ public class ActivityUserOrdersCheck extends CustomAppCompatActivity {
     public void reFleshListView() {
         //
         ListView listView = (ListView) findViewById(R.id.listViewUserOrdersCheck);
-
-//        final AppGlobals globals = (AppGlobals) this.getApplication();
-
         ArrayAdapterUserOrderCheck adapter = (ArrayAdapterUserOrderCheck) listView.getAdapter();
         adapter.notifyDataSetChanged();
     }

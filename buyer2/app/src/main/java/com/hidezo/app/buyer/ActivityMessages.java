@@ -17,9 +17,9 @@ import android.widget.TextView;
  */
 public class ActivityMessages extends CustomAppCompatActivity {
 
-    private String myOrderNo = "";
-    private String mySupplierName = "";
-    private String myCharge = "";
+    String myOrderNo = "";
+    String mySupplierName = "";
+    String myCharge = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,13 +123,6 @@ public class ActivityMessages extends CustomAppCompatActivity {
                         //リストビュー作成
                         ArrayAdapterMessages adapter = new ArrayAdapterMessages(_self,responseMessage.messageList);
                         ListView listView = (ListView) findViewById(R.id.listViewMessage);
-//                    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//                        //行タッチイベント
-//                        @Override
-//                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                        }
-//                    });
-
                         //ヘッダー追加
                         if (listView.getHeaderViewsCount() == 0) {
                             //

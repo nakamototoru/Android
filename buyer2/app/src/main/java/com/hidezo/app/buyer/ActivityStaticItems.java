@@ -25,8 +25,8 @@ import java.util.ArrayList;
  */
 public class ActivityStaticItems extends CustomAppCompatActivity {
 
-    private String myCategoryId = "";
-    private String mySupplierId = "";
+    String myCategoryId = "";
+    String mySupplierId = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +38,7 @@ public class ActivityStaticItems extends CustomAppCompatActivity {
         myCategoryId = intent.getStringExtra("category_id");
 
         // TouchEvent
-        final ActivityStaticItems _self = this;
+//        final ActivityStaticItems _self = this;
         TextView tvOrderCheck = (TextView)findViewById(R.id.textViewButtonOrderCheck);
         tvOrderCheck.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,7 +78,6 @@ public class ActivityStaticItems extends CustomAppCompatActivity {
      * データ取得時
      */
     public void HDZClientComplete(String response,String apiName) {
-
         // Progress
         closeProgressDialog();
 
@@ -131,18 +130,14 @@ public class ActivityStaticItems extends CustomAppCompatActivity {
                                 count += (int)id;
                                 if (count == 0) {
                                     globals.deleteCart(order.supplierId, order.itemId);
-
                                     order.orderSize = AppGlobals.STR_ZERO;
-
                                     // カート更新
                                     reFleshListView();
                                 }
                                 else if (count <= 100) {
                                     String numScale = String.valueOf(count);
                                     globals.replaceCart(order.supplierId, order.itemId, numScale, false);
-
                                     order.orderSize = numScale;
-
                                     // カート更新
                                     reFleshListView();
                                 }

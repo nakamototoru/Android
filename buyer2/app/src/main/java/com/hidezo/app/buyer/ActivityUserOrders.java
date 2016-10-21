@@ -30,7 +30,7 @@ import java.util.List;
  */
 public class ActivityUserOrders extends CustomAppCompatActivity {
 
-    private String mySupplierId = "";
+    String mySupplierId = "";
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -78,7 +78,6 @@ public class ActivityUserOrders extends CustomAppCompatActivity {
      * データ取得時
      */
     public void HDZClientComplete(final String response, String apiName) {
-
         // Progress
         closeProgressDialog();
 

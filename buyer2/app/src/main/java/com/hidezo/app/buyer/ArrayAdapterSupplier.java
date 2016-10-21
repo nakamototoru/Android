@@ -71,11 +71,13 @@ class ArrayAdapterSupplier extends ArrayAdapter<HDZFriendInfo> {
 
         // 通知バッジ表示
         CircleView circleView = (CircleView)convertView.findViewById(R.id.viewForBadge);
-        if (circleView != null) {
+        if (friendInfo.badgeCount > 0) {
             circleView.setColor(R.color.colorForBadge);
+            TextView tvCount = (TextView)convertView.findViewById(R.id.textViewBadgeCount);
+            tvCount.setText( String.valueOf(friendInfo.badgeCount) );
         }
         else {
-            Log.d("####","circleView is Null.");
+            circleView.setColor(R.color.colorForWhite);
         }
 
         // Return the completed view to render on screen

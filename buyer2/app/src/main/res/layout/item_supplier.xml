@@ -45,11 +45,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         class="com.hidezo.app.buyer.CustomView.CircleView"
-                        android:id="@+id/viewForBadge"
-                        android:layout_weight="1" />
+                        android:id="@+id/viewForBadge" />
 
                     <TextView
-                        android:text="1"
+                        android:text="@string/ZERO"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:id="@+id/textViewBadgeCount"

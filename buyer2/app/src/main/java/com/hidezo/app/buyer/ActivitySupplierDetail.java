@@ -18,7 +18,7 @@ import java.util.ArrayList;
  */
 public class ActivitySupplierDetail extends CustomAppCompatActivity {
 
-    private String mySupplierId = "";
+    String mySupplierId = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -13,5 +13,6 @@ class HDZFriendInfo {
     String mobile = "";
     String name = "";
     String tel = "";
+    int badgeCount = 0;
 
 }

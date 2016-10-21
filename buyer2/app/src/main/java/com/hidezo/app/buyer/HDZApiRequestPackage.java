@@ -137,6 +137,18 @@ class HDZApiRequestPackage {
         }
     }
 
+    static class CheckDynamicItems {
+        public void begin(final String id,final String uuid,final String supplier_id, HDZClient.HDZCallbacks callbacks) {
+
+            HDZApiRequest request = new HDZApiRequest();
+            request.putKeyAndValue("id", id);
+            request.putKeyAndValue("uuid", uuid);
+            request.putKeyAndValue("supplier_id", supplier_id);
+
+            request.beginRequest("store/check_dynamic_items",callbacks);
+        }
+    }
+
     static class sendDeviceToken {
         public void begin(final String id,final String uuid, final String device_token, HDZClient.HDZCallbacks callbacks) {
             HDZApiRequest request = new HDZApiRequest();

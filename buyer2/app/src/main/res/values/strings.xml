@@ -24,4 +24,5 @@
     <string name="MidasiDeliverTo">DELIVER TO:</string>
     <string name="OrderIsFinished">Order is finished.</string>
     <string name="Okey">OK</string>
+    <string name="ZERO">0</string>
 </resources>

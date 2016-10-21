@@ -11,5 +11,6 @@ class HDZordered {
     String supplier_name = "";
     String order_at = "";
     String deliver_at = "";
+    int badgeCount = 0;
 
 }

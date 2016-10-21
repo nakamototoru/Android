@@ -1,36 +1,36 @@
 package com.hidezo.app.buyer;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 //import android.support.v7.widget.Toolbar;
 //import android.util.Log;
 import android.content.Intent;
-import android.os.Handler;
+//import android.os.Handler;
+//import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.ProgressBar;
+//import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-//import java.util.StringTokenizer;
 
 /**
  *
  */
 public class ActivityCategorys extends CustomAppCompatActivity {
 
-    private String mySupplierId = "";
+    String mySupplierId = "";
+
+    ArrayList<HDZItemInfo.Category> displayList = new ArrayList<>();
+    boolean isFinishBadge = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_categorys);
-
-//        final ActivityCategorys _self = this;
 
         Intent intent = getIntent();
         mySupplierId = intent.getStringExtra("supplier_id");
@@ -74,7 +74,6 @@ public class ActivityCategorys extends CustomAppCompatActivity {
      * データ取得時
      */
     public void HDZClientComplete(String response,String apiName) {
-
         // Progress End
         closeProgressDialog();
 
@@ -83,72 +82,113 @@ public class ActivityCategorys extends CustomAppCompatActivity {
         }
 
         final ActivityCategorys _self = this;
-        final HDZApiResponseItem responseItem = new HDZApiResponseItem();
-        if (responseItem.parseJson(response)) {
+        if ( apiName.equals("store/badge") ) {
+            isFinishBadge = true;
 
-            //UIスレッド上で呼び出してもらう
-            this.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
+//            Log.d("####",response);
 
-                    ArrayList<HDZItemInfo.Category> categorys = new ArrayList<>(); // HDZItemInfo.Category
-
-                    // 動的商品
-                    if (responseItem.dynamicItemList.size() > 0) {
-                        HDZItemInfo.Category object = new HDZItemInfo.Category();
-                        object.name = "新着";
-                        categorys.add(object);
-                    }
-
-                    // 静的商品
-                    HashMap<String,String> hashmap = new HashMap<>(); // String, String
-                    for (int i = 0; i < responseItem.staticItemList.size(); i++) {
-                        HDZItemInfo.StaticItem item = responseItem.staticItemList.get(i);
-
-                        String cid = item.category.id;
-                        // keyが存在しているか確認
-                        if ( !hashmap.containsKey(cid) ){
-                            // 存在しないなら登録
-                            categorys.add( item.category );
-                            hashmap.put(cid,item.category.name);
-                        }
-//                        else {
-//                            // すでにある＝なにもしない
-//                        }
-                    }
-
-                    //リストビュー作成
-                    ArrayAdapterCategory aacategory = new ArrayAdapterCategory(_self, categorys);
-                    ListView listView = (ListView) findViewById(R.id.listViewCategory);
-                    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-                        //行タッチイベント
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                            ListView listView = (ListView) parent;
-                            HDZItemInfo.Category category = (HDZItemInfo.Category)listView.getItemAtPosition(position);
-
+            final HDZApiResponseBadge responseBadge = new HDZApiResponseBadge();
+            if (responseBadge.parseJson(response)) {
+                if (responseBadge.badgeSupplierList.size() > 0) {
+                    // バッジ情報追加
+                    ArrayList<HDZApiResponseBadge.SupplierUp> badgeSupplierList = responseBadge.badgeSupplierList;
+                    for (HDZApiResponseBadge.SupplierUp badge : badgeSupplierList) {
+                        if (mySupplierId.equals(badge.supplierId)) {
+                            HDZItemInfo.Category category = displayList.get(0);
                             if (!category.isStatic) {
-                                // 動的商品リストビュー
-                                Intent intent = new Intent( _self.getApplication(), ActivityDynamicItems.class);
-                                intent.putExtra("supplier_id",_self.mySupplierId);
-                                _self.startActivity(intent);
+                                category.badgeCount = 1;
                             }
-                            else if (position < listView.getCount() ) {
-                                // 静的商品リストビュー
-                                Intent intent = new Intent( _self.getApplication(), ActivityStaticItems.class);
-                                intent.putExtra("supplier_id", _self.mySupplierId);
-                                intent.putExtra("category_id", category.id);
-                                intent.putExtra("category_name", category.name);
-                                _self.startActivity(intent);
-                            }
+                            break;
                         }
-                    });
-                    listView.setAdapter(aacategory);
+                    }
+                    reFleshListView();
                 }
-            });
+            }
         }
+        else {
+            final HDZApiResponseItem responseItem = new HDZApiResponseItem();
+            if (responseItem.parseJson(response)) {
+
+                // 表示リスト作成
+                // 動的商品
+                if (responseItem.dynamicItemList.size() > 0) {
+                    HDZItemInfo.Category object = new HDZItemInfo.Category();
+                    object.name = "新着";
+                    displayList.add(object);
+                }
+
+                // 静的商品
+                HashMap<String,String> hashmap = new HashMap<>(); // String, String
+                for (int i = 0; i < responseItem.staticItemList.size(); i++) {
+                    HDZItemInfo.StaticItem item = responseItem.staticItemList.get(i);
+
+                    String cid = item.category.id;
+                    // keyが存在しているか確認
+                    if ( !hashmap.containsKey(cid) ){
+                        // 存在しないなら登録
+                        displayList.add( item.category );
+                        hashmap.put(cid,item.category.name);
+                    }
+                }
+
+                //UIスレッド上で呼び出してもらう
+                this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        //リストビュー作成
+                        ArrayAdapterCategory adapter = new ArrayAdapterCategory(_self, displayList);
+                        ListView listView = (ListView) findViewById(R.id.listViewCategory);
+                        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            //行タッチイベント
+                            @Override
+                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                                ListView listView = (ListView) parent;
+                                HDZItemInfo.Category category = (HDZItemInfo.Category)listView.getItemAtPosition(position);
+
+                                if (!category.isStatic) {
+                                    // 動的商品リストビュー
+                                    Intent intent = new Intent( _self.getApplication(), ActivityDynamicItems.class);
+                                    intent.putExtra("supplier_id",_self.mySupplierId);
+                                    _self.startActivity(intent);
+                                }
+                                else if (position < listView.getCount() ) {
+                                    // 静的商品リストビュー
+                                    Intent intent = new Intent( _self.getApplication(), ActivityStaticItems.class);
+                                    intent.putExtra("supplier_id", _self.mySupplierId);
+                                    intent.putExtra("category_id", category.id);
+                                    intent.putExtra("category_name", category.name);
+                                    _self.startActivity(intent);
+                                }
+                            }
+                        });
+                        listView.setAdapter(adapter);
+
+                        if (!isFinishBadge) {
+                            // HTTP GET
+                            HDZApiRequestPackage.Badge req = new HDZApiRequestPackage.Badge();
+                            AppGlobals globals = (AppGlobals) _self.getApplication();
+                            req.begin( globals.getUserId(), globals.getUuid(), _self);
+                        }
+                    }
+                });
+            }
+        }
+    }
+
+    /**
+     * リストビューの更新処理。
+     */
+    public void reFleshListView() {
+        //UIスレッド上で呼び出してもらう
+        this.runOnUiThread(new Runnable() {
+                               @Override
+                               public void run() {
+                                   ListView listView = (ListView) findViewById(R.id.listViewCategory);
+                                   ArrayAdapterCategory adapter = (ArrayAdapterCategory) listView.getAdapter();
+                                   adapter.notifyDataSetChanged();
+                               }
+                           });
     }
 
     /**

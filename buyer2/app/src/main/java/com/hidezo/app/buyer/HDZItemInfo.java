@@ -23,6 +23,7 @@ class HDZItemInfo {
         String id = "";
         String name = "";
         boolean isStatic = false;
+        int badgeCount = 0;
     }
 
     static class StaticItem {

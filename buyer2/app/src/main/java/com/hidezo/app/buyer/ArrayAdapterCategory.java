@@ -1,13 +1,17 @@
 package com.hidezo.app.buyer;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.hidezo.app.buyer.CustomView.CircleView;
+
 import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 /**
  * Created by dezami on 2016/09/15.
@@ -35,6 +39,17 @@ class ArrayAdapterCategory extends ArrayAdapter<HDZItemInfo.Category> {
         // Lookup view for data population
         TextView tvName = (TextView) convertView.findViewById(R.id.textViewCategoryName);
         tvName.setText(categoryInfo.name);
+
+        // 通知バッジ表示
+        CircleView circleView = (CircleView)convertView.findViewById(R.id.viewForBadge);
+        if (!categoryInfo.isStatic && categoryInfo.badgeCount > 0) {
+            TextView tvCount = (TextView)convertView.findViewById(R.id.textViewBadgeCount);
+            tvCount.setText( String.valueOf(categoryInfo.badgeCount) );
+            circleView.setColor(R.color.colorForBadge);
+        }
+        else {
+            circleView.setColor(R.color.colorForWhite);
+        }
 
         // Return the completed view to render on screen
         return convertView;

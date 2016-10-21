@@ -23,9 +23,9 @@ import java.util.ArrayList;
  */
 public class ActivityStaticItemDetail extends CustomAppCompatActivity {
 
-    private String myItemId = "";
-    private String myCategoryId = "";
-    private String imageURL = "";
+    String myItemId = "";
+    String myCategoryId = "";
+    String imageURL = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +55,6 @@ public class ActivityStaticItemDetail extends CustomAppCompatActivity {
      * データ取得時
      */
     public void HDZClientComplete(String response,String apiName) {
-
         // Progress
         closeProgressDialog();
 

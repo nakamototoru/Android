@@ -3,24 +3,23 @@ package com.hidezo.app.buyer;
 import android.content.Intent;
 //import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+//import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
+//import org.w3c.dom.Text;
 
 /**
  *
  */
 public class ActivityOrderDetail extends CustomAppCompatActivity {
 
-    private String myOrderNo = "";
-    private String mySupplierName = "";
-    private String myCharge = "";
+    String myOrderNo = "";
+    String mySupplierName = "";
+    String myCharge = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +47,6 @@ public class ActivityOrderDetail extends CustomAppCompatActivity {
      * データ取得時
      */
     public void HDZClientComplete(final String response, final String apiName) {
-
         // Progress
         closeProgressDialog();
 

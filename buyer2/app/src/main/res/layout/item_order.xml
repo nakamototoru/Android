@@ -20,7 +20,7 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:gravity="left|center_vertical">
 
             <TextView
@@ -34,18 +34,43 @@
                 android:text="OrderDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:id="@+id/textViewOrderAt"
                 android:textColor="@android:color/black" />
 
-            <TextView
-                android:text="DeliverAt"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:id="@+id/textViewDeliverAt"
-                android:textAlignment="textEnd"
-                android:textColor="@android:color/black" />
+                android:gravity="top|right">
+
+                <RelativeLayout
+                    android:layout_width="@dimen/layoutWidthTextRow"
+                    android:layout_height="@dimen/layoutWidthTextRow">
+
+                    <view
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        class="com.hidezo.app.buyer.CustomView.CircleView"
+                        android:id="@+id/viewForBadge" />
+
+                    <TextView
+                        android:text="@string/ZERO"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/textViewBadgeCount"
+                        android:textColor="@android:color/white"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:textSize="12sp" />
+                </RelativeLayout>
+
+                <TextView
+                    android:text="DeliverAt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textViewDeliverAt"
+                    android:textColor="@android:color/black"
+                    android:gravity="top|right" />
+            </LinearLayout>
 
         </LinearLayout>
     </LinearLayout>

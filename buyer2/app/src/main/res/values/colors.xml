@@ -6,4 +6,5 @@
     <color name="colorOrderBar">#dddddd</color>
     <color name="colorOrderButton">#007f00</color>
     <color name="colorForBadge">#ff0000</color>
+    <color name="colorForWhite">#ffffff</color>
 </resources>

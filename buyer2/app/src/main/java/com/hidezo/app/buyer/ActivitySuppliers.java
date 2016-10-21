@@ -1,26 +1,29 @@
 package com.hidezo.app.buyer;
 
-//import android.content.DialogInterface;
 import android.content.Intent;
 //import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 //import android.support.v7.widget.Toolbar;
 //import android.util.Log;
 //import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.Menu;
 //import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import java.util.ArrayList;
 
-//import com.hidezo.app.buyer.CustomView.CircleView;
 
 /**
  * Created by dezami on 2016/09/13.
  * 取引先一覧リストビュー
  */
 public class ActivitySuppliers extends CustomAppCompatActivity {
+
+    ArrayList<HDZFriendInfo> displayList = new ArrayList<>();
+    boolean isFinishBadge = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,9 +46,7 @@ public class ActivitySuppliers extends CustomAppCompatActivity {
      * HDZClientCallbacksGet
      * データ取得時
      */
-//    @Override
     public void HDZClientComplete(String response,String apiName) {
-
         // Progress
         closeProgressDialog();
 
@@ -54,48 +55,97 @@ public class ActivitySuppliers extends CustomAppCompatActivity {
         }
 
         final ActivitySuppliers _self = this;
-        final HDZApiResponseFriend responseFriend = new HDZApiResponseFriend();
-        if ( responseFriend.parseJson(response) ) {
-            if (responseFriend.friendInfoList.size() == 0) {
-                return;
-            }
+        if ( apiName.equals("store/badge") ) {
+            isFinishBadge = true;
 
-            //UIスレッド上で呼び出してもらう
-            this.runOnUiThread(new Runnable(){
-                @Override
-                public void run(){
-                    //リストビュー作成
-                    ArrayAdapterSupplier aasupplier = new ArrayAdapterSupplier(_self, responseFriend.friendInfoList);
-                    ListView listView = (ListView) findViewById(R.id.listViewSupplier);
-                    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                        //行タッチイベント
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            Log.d("####",response);
 
-                            ListView listView = (ListView)parent;
-                            HDZFriendInfo friend = (HDZFriendInfo)listView.getItemAtPosition(position);
-                            String supplier_id = friend.id;
-
-                            // 画面遷移
-                            if (id == 0) {
-                                // カテゴリ一覧
-                                Intent intent = new Intent( _self.getApplication(), ActivityCategorys.class);
-                                intent.putExtra("supplier_id", supplier_id);
-                                _self.startActivity(intent);
+            final HDZApiResponseBadge responseBadge = new HDZApiResponseBadge();
+            if (responseBadge.parseJson(response)) {
+                if (responseBadge.badgeSupplierList.size() > 0) {
+                    // バッジ情報追加
+                    ArrayList<HDZApiResponseBadge.SupplierUp> badgeSupplierList = responseBadge.badgeSupplierList;
+                    for (HDZFriendInfo friend : displayList) {
+                        for (HDZApiResponseBadge.SupplierUp badge : badgeSupplierList) {
+                            if (badge.supplierId.equals(friend.id)) {
+                                friend.badgeCount = 1;
+                                break;
                             }
-                            else {
-                                // 取引先詳細
-                                Intent intent = new Intent( _self.getApplication(), ActivitySupplierDetail.class);
-                                intent.putExtra("supplier_id", supplier_id);
-                                intent.putExtra("supplier_name", friend.name);
-                                _self.startActivity(intent);
+                        }
+                    }
+                    reFleshListView();
+                }
+            }
+        }
+        else {
+            final HDZApiResponseFriend responseFriend = new HDZApiResponseFriend();
+            if ( responseFriend.parseJson(response) ) {
+                if (responseFriend.friendInfoList.size() > 0) {
+                    // データ保存
+                    displayList = responseFriend.friendInfoList;
+
+                    //UIスレッド上で呼び出してもらう
+                    this.runOnUiThread(new Runnable(){
+                        @Override
+                        public void run(){
+
+                            //リストビュー作成
+                            ArrayAdapterSupplier adapter = new ArrayAdapterSupplier(_self, displayList); // responseFriend.friendInfoList
+                            ListView listView = (ListView) findViewById(R.id.listViewSupplier);
+                            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                //行タッチイベント
+                                @Override
+                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                                    ListView listView = (ListView)parent;
+                                    HDZFriendInfo friend = (HDZFriendInfo)listView.getItemAtPosition(position);
+                                    String supplier_id = friend.id;
+
+                                    // 画面遷移
+                                    if (id == 0) {
+                                        // カテゴリ一覧
+                                        Intent intent = new Intent( _self.getApplication(), ActivityCategorys.class);
+                                        intent.putExtra("supplier_id", supplier_id);
+                                        _self.startActivity(intent);
+                                    }
+                                    else {
+                                        // 取引先詳細
+                                        Intent intent = new Intent( _self.getApplication(), ActivitySupplierDetail.class);
+                                        intent.putExtra("supplier_id", supplier_id);
+                                        intent.putExtra("supplier_name", friend.name);
+                                        _self.startActivity(intent);
+                                    }
+                                }
+                            });
+                            listView.setAdapter(adapter);
+
+                            if (!isFinishBadge) {
+                                // HTTP GET
+                                HDZApiRequestPackage.Badge req = new HDZApiRequestPackage.Badge();
+                                AppGlobals globals = (AppGlobals) _self.getApplication();
+                                req.begin( globals.getUserId(), globals.getUuid(), _self);
                             }
                         }
                     });
-                    listView.setAdapter(aasupplier);
+
                 }
-            });
+            }
         }
+    }
+
+    /**
+     * リストビューの更新処理。
+     */
+    public void reFleshListView() {
+        //UIスレッド上で呼び出してもらう
+        this.runOnUiThread(new Runnable() {
+                               @Override
+                               public void run() {
+                                   ListView listView = (ListView) findViewById(R.id.listViewSupplier);
+                                   ArrayAdapterSupplier adapter = (ArrayAdapterSupplier) listView.getAdapter();
+                                   adapter.notifyDataSetChanged();
+                               }
+                           });
     }
 
     /**

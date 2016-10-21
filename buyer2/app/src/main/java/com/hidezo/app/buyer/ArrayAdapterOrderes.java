@@ -6,6 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+
+import com.hidezo.app.buyer.CustomView.CircleView;
+
 import java.util.ArrayList;
 
 /**
@@ -43,6 +46,17 @@ class ArrayAdapterOrderes extends ArrayAdapter<HDZordered> {
 
         TextView tvDeliverAt = (TextView) convertView.findViewById(R.id.textViewDeliverAt);
         tvDeliverAt.setText( orderInfo.deliver_at );
+
+        // 通知バッジ表示
+        CircleView circleView = (CircleView)convertView.findViewById(R.id.viewForBadge);
+        if (orderInfo.badgeCount > 0) {
+            circleView.setColor(R.color.colorForBadge);
+            TextView tvCount = (TextView)convertView.findViewById(R.id.textViewBadgeCount);
+            tvCount.setText( String.valueOf(orderInfo.badgeCount) );
+        }
+        else {
+            circleView.setColor(R.color.colorForWhite);
+        }
 
         // Return the completed view to render on screen
         return convertView;

@@ -17,7 +17,7 @@ import android.widget.TextView;
  */
 public class MainActivity extends AppCompatActivity implements HDZClient.HDZCallbacks {
 
-    private String myUserId = "";
+    String myUserId = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,7 +103,6 @@ public class MainActivity extends AppCompatActivity implements HDZClient.HDZCall
         }
     }
     public void HDZClientError(String error) {
-//        final AppGlobals globals = (AppGlobals) this.getApplication();
         // 警告
         openWarning("アクセスエラー","ネットワークにアクセス出来ませんでしたので時間を置いて再試行して下さい。");
     }
