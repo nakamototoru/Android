@@ -57,7 +57,7 @@ public class ActivityDynamicItems extends CustomAppCompatActivity {
         });
 
         // ツールバー初期化
-        setNavigationBar("新着");
+        setNavigationBar("新着",true);
 
         // HTTP GET
         HDZApiRequestPackage.Item req = new HDZApiRequestPackage.Item();

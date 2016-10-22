@@ -9,20 +9,19 @@ import java.util.HashMap;
  */
 class HDZApiRequestPackage {
 
-    static class LoginCheck {
-        public void begin(final String id,final String uuid, HDZClient.HDZCallbacks callbacks) {
-
-            HDZApiRequest request = new HDZApiRequest();
-            request.putKeyAndValue("id", id);
-            request.putKeyAndValue("uuid", uuid);
-
-            request.beginRequest("login_check/store",callbacks);
-        }
-    }
+//    static class LoginCheck {
+//        public void begin(final String id,final String uuid, HDZClient.HDZCallbacks callbacks) {
+//
+//            HDZApiRequest request = new HDZApiRequest();
+//            request.putKeyAndValue("id", id);
+//            request.putKeyAndValue("uuid", uuid);
+//
+//            request.beginRequest("login_check/store",callbacks);
+//        }
+//    }
 
     static class Login {
         public void begin(final String id,final String uuid,final String password, HDZClient.HDZCallbacks callbacks) {
-
             HDZApiRequest request = new HDZApiRequest();
 
             HashMap<String,String> params = new HashMap<>();
@@ -36,7 +35,6 @@ class HDZApiRequestPackage {
 
     static class Friend {
         public void begin(final String id,final String uuid, HDZClient.HDZCallbacks callbacks) {
-
             HDZApiRequest request = new HDZApiRequest();
             request.putKeyAndValue("id", id);
             request.putKeyAndValue("uuid", uuid);
@@ -47,7 +45,6 @@ class HDZApiRequestPackage {
 
     static class Item {
         public void begin(final String id,final String uuid,final String supplier_id, HDZClient.HDZCallbacks callbacks) {
-
             HDZApiRequest request = new HDZApiRequest();
             request.putKeyAndValue("id", id);
             request.putKeyAndValue("uuid", uuid);
@@ -59,7 +56,6 @@ class HDZApiRequestPackage {
 
      static class OrderList {
         public void begin(final String id,final String uuid,final int page, HDZClient.HDZCallbacks callbacks) {
-
             HDZApiRequest request = new HDZApiRequest();
             request.putKeyAndValue("id", id);
             request.putKeyAndValue("uuid", uuid);
@@ -71,7 +67,6 @@ class HDZApiRequestPackage {
 
     static class OrderDetail {
         public void begin(final String id,final String uuid,final String order_no, HDZClient.HDZCallbacks callbacks) {
-
             HDZApiRequest request = new HDZApiRequest();
             request.putKeyAndValue("id", id);
             request.putKeyAndValue("uuid", uuid);
@@ -100,7 +95,6 @@ class HDZApiRequestPackage {
 
     static class Message {
         public void begin(final String id,final String uuid,final String order_no, HDZClient.HDZCallbacks callbacks) {
-
             HDZApiRequest request = new HDZApiRequest();
             request.putKeyAndValue("id", id);
             request.putKeyAndValue("uuid", uuid);
@@ -112,7 +106,6 @@ class HDZApiRequestPackage {
 
     static class AddMessage {
         public void begin(final String id,final String uuid,final String charge, final String message,final String order_no, HDZClient.HDZCallbacks callbacks) {
-
             HDZApiRequest request = new HDZApiRequest();
 
             HashMap<String,String> params = new HashMap<>();
@@ -128,7 +121,6 @@ class HDZApiRequestPackage {
 
     static class Badge {
         public void begin(final String id,final String uuid, HDZClient.HDZCallbacks callbacks) {
-
             HDZApiRequest request = new HDZApiRequest();
             request.putKeyAndValue("id", id);
             request.putKeyAndValue("uuid", uuid);
@@ -139,13 +131,14 @@ class HDZApiRequestPackage {
 
     static class CheckDynamicItems {
         public void begin(final String id,final String uuid,final String supplier_id, HDZClient.HDZCallbacks callbacks) {
-
             HDZApiRequest request = new HDZApiRequest();
-            request.putKeyAndValue("id", id);
-            request.putKeyAndValue("uuid", uuid);
-            request.putKeyAndValue("supplier_id", supplier_id);
 
-            request.beginRequest("store/check_dynamic_items",callbacks);
+            HashMap<String,String> params = new HashMap<>();
+            params.put("id",id);
+            params.put("uuid",uuid);
+            params.put("supplier_id",supplier_id);
+
+            request.beginPost("store/check_dynamic_items", params, callbacks);
         }
     }
 

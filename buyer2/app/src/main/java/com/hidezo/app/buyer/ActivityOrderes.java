@@ -26,7 +26,7 @@ public class ActivityOrderes extends CustomAppCompatActivity {
         setContentView(R.layout.activity_orderes);
 
         // ツールナビゲーションバー
-        setNavigationBar("注文履歴");
+        setNavigationBar("注文履歴",false);
 
         // ゲット・注文履歴
         AppGlobals globals = (AppGlobals) this.getApplication();

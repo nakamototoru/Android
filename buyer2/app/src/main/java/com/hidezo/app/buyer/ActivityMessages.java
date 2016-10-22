@@ -35,7 +35,7 @@ public class ActivityMessages extends CustomAppCompatActivity {
 
         // ツールナビゲーションバー
         mySupplierName = intent.getStringExtra("supplier_name");
-        setNavigationBar(mySupplierName + "様宛");
+        setNavigationBar(mySupplierName + "様宛",true);
 
         // Touch Event
         TextView tvBtnSend = (TextView)findViewById(R.id.textViewButtonSendComment);

@@ -18,8 +18,8 @@ import java.util.List;
  */
 public class ActivityUserOrdersExec extends CustomAppCompatActivity {
 
-    private String mySupplierId = "";
-    private String myOrderNo = "";
+    String mySupplierId = "";
+    String myOrderNo = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +59,7 @@ public class ActivityUserOrdersExec extends CustomAppCompatActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             // 戻るボタンを無効
+            Log.d("####","戻るボタン無効");
             return false;
         }
         return true;

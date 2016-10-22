@@ -3,10 +3,12 @@ package com.hidezo.app.buyer;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 
 /**
  * Created by dezami on 2016/09/21.
@@ -39,11 +41,36 @@ public class CustomAppCompatActivity extends AppCompatActivity implements HDZCli
     /**
      * ツールバー初期化
      */
-    protected void setNavigationBar(final String title) {
+    protected void setNavigationBar(final String title, boolean isBack) {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(title);
+//        if (isBack) {
+//            toolbar.setNavigationIcon(R.drawable.ic_event_white_36dp);
+//            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    //do something you want
+//                    finish();
+//                }
+//            });
+//        }
         setSupportActionBar(toolbar);
+
+        if (isBack) {
+            // UPナビゲーションを有効化する
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    //do something you want
+                    finish();
+                }
+            });
+
+        }
     }
 
     /**

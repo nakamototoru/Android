@@ -57,7 +57,7 @@ public class ActivityCategorys extends CustomAppCompatActivity {
         });
 
         // ツールバー初期化
-        setNavigationBar("カテゴリ一覧");
+        setNavigationBar("カテゴリ一覧",true);
 
         // ゲット・商品一覧
         // HTTP GET

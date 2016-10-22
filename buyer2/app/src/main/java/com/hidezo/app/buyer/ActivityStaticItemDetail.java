@@ -39,7 +39,7 @@ public class ActivityStaticItemDetail extends CustomAppCompatActivity {
 
         // ツールバー初期化
         String title = "商品詳細";
-        setNavigationBar(title);
+        setNavigationBar(title,true);
 
         // HTTP GET
         HDZApiRequestPackage.Item req = new HDZApiRequestPackage.Item();

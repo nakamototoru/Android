@@ -30,7 +30,7 @@ public class ActivitySupplierDetail extends CustomAppCompatActivity {
 
         // ツールバー初期化
         String supplier_name = intent.getStringExtra("supplier_name");
-        setNavigationBar(supplier_name);
+        setNavigationBar(supplier_name,true);
 
         // HTTP GET
         HDZApiRequestPackage.Friend req = new HDZApiRequestPackage.Friend();

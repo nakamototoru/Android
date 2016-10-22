@@ -58,7 +58,7 @@ public class ActivityUserOrders extends CustomAppCompatActivity {
         });
 
         // ツールバー初期化
-        setNavigationBar("注文確認");
+        setNavigationBar("注文確認",true);
 
         // HTTP GET
         HDZApiRequestPackage.Item req = new HDZApiRequestPackage.Item();

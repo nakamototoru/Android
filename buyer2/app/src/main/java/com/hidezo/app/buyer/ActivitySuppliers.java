@@ -31,7 +31,7 @@ public class ActivitySuppliers extends CustomAppCompatActivity {
         setContentView(R.layout.activity_suppliers);
 
         // ツールナビゲーションバー
-        setNavigationBar("取引先一覧");
+        setNavigationBar("取引先一覧",false);
 
         // ゲット・取引先一覧
         HDZApiRequestPackage.Friend req = new HDZApiRequestPackage.Friend();

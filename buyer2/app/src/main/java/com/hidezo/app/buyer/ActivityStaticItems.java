@@ -61,7 +61,7 @@ public class ActivityStaticItems extends CustomAppCompatActivity {
 
         // ツールバー初期化
         String title = intent.getStringExtra("category_name");
-        setNavigationBar(title);
+        setNavigationBar(title,true);
 
         // HTTP GET
         HDZApiRequestPackage.Item req = new HDZApiRequestPackage.Item();

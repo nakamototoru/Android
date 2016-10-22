@@ -34,7 +34,7 @@ public class ActivityUserOrdersCheck extends CustomAppCompatActivity {
         mySupplierId = intent.getStringExtra("supplier_id");
 
         // ツールバー初期化
-        setNavigationBar("注文前入力");
+        setNavigationBar("注文前入力",true);
 
         // HTTP GET
         HDZApiRequestPackage.Item req = new HDZApiRequestPackage.Item();

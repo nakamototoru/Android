@@ -31,7 +31,7 @@ public class ActivityOrderDetail extends CustomAppCompatActivity {
 
         // ツールナビゲーションバー
         mySupplierName = intent.getStringExtra("supplier_name");
-        setNavigationBar(mySupplierName + "様宛");
+        setNavigationBar(mySupplierName + "様宛",true);
 
         // HTTP GET
         HDZApiRequestPackage.OrderDetail req = new HDZApiRequestPackage.OrderDetail();
