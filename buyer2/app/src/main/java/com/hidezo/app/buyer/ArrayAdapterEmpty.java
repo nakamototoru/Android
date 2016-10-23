@@ -13,7 +13,6 @@ import java.util.ArrayList;
  * Created by dezami on 2016/09/25.
  *
  */
-
 class ArrayAdapterEmpty extends ArrayAdapter<HDZApiResponse> {
 
     ArrayAdapterEmpty(Context context, ArrayList<HDZApiResponse> list) {

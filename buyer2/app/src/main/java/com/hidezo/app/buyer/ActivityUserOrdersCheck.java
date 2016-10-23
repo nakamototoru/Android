@@ -206,10 +206,6 @@ public class ActivityUserOrdersCheck extends CustomAppCompatActivity {
             txBtnOrderExec.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    // 画面遷移
-//                    Intent intent = new Intent(getApplication(), ActivityUserOrdersExec.class);
-//                    intent.putExtra("supplier_id",mySupplierId);
-//                    startActivity(intent);
 
                     openAlertOrderExec();
                 }

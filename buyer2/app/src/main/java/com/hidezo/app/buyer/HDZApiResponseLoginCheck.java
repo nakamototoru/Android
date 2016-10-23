@@ -1,7 +1,6 @@
 package com.hidezo.app.buyer;
 
-
-import org.json.JSONArray;
+//import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -9,17 +8,16 @@ import org.json.JSONObject;
  * Created by dezami on 2016/09/21.
  *
  */
-
 class HDZApiResponseLoginCheck extends HDZApiResponse {
 
-    String status = "";
+    public String status = "";
 
     @Override
-    public boolean parseJson(final String strjson) {
-        boolean isSuccess = super.parseJson(strjson);
+    public boolean parseJson(final String str_json) {
+        boolean isSuccess = super.parseJson(str_json);
         if (isSuccess) {
             try {
-                JSONObject json = new JSONObject(strjson);
+                JSONObject json = new JSONObject(str_json);
 
                 if ( !json.isNull("status") ) {
                     status = json.getString("status");

@@ -8,7 +8,6 @@ import org.json.JSONObject;
  * Created by dezami on 2016/09/28.
  *
  */
-
 class HDZApiResponseOrderResult extends HDZApiResponse {
 
     public String orderNo = "";

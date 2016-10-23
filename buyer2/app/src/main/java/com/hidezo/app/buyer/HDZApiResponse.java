@@ -15,11 +15,11 @@ class HDZApiResponse {
     public String message = "";
     public boolean result = false;
 
-    public boolean parseJson(final String strjson) {
+    public boolean parseJson(final String str_json) {
 
         result = false;
         try {
-            JSONObject json = new JSONObject(strjson);
+            JSONObject json = new JSONObject(str_json);
             result = json.getBoolean("result");
             message = json.getString("message");
             if (!result) {

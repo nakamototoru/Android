@@ -81,9 +81,6 @@ public class ActivityUserOrdersExec extends CustomAppCompatActivity {
      */
     public void HDZClientComplete(String response,String apiName) {
 
-        // Progress
-//        closeProgressDialog();
-
         final AppGlobals globals = (AppGlobals) this.getApplication();
         if (apiName.equals("store/order")) {
             // 注文処理
@@ -149,47 +146,8 @@ public class ActivityUserOrdersExec extends CustomAppCompatActivity {
     }
 
     /**
-     * ALERT DIALOG
+     * 失敗ダイアログ
      */
-//    public void openAlertCompleted() {
-//
-//        final AppGlobals globals = (AppGlobals) this.getApplication();
-//        final ActivityUserOrdersExec _self = this;
-//        final String title = "注文完了";
-//        final String message = "注文が完了しました。";
-//
-//        //UIスレッド上で呼び出してもらう
-//        this.runOnUiThread(new Runnable() {
-//            @Override
-//            public void run() {
-//                new AlertDialog.Builder(_self)
-//                        .setTitle(title)
-//                        .setMessage(message)
-//                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int id) {
-//
-//                                if ( globals.getOrderMessage().equals("") ) {
-//                                    // 記憶値クリア
-//                                    globals.deleteAllCart();
-//                                    globals.resetOrderInfoWithMessage(true);
-//
-//                                    // 画面遷移
-//                                    goOrdersFinish();
-//                                }
-//                                else {
-//                                    // メッセージ送信
-//                                    // HTTP POST
-//                                    HDZApiRequestPackage.AddMessage req = new HDZApiRequestPackage.AddMessage();
-//                                    req.begin( globals.getUserId(), globals.getUuid(), globals.getOrderCharge(), globals.getOrderMessage(), myOrderNo, _self);
-//                                }
-//                            }
-//                        })
-//                        .show();
-//            }
-//        });
-//    }
-
     public void openAlertFailed() {
 
         final ActivityUserOrdersExec _self = this;

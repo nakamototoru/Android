@@ -45,8 +45,14 @@ public class CustomAppCompatActivity extends AppCompatActivity implements HDZCli
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(title);
+        setSupportActionBar(toolbar);
+
+        // TODO:戻るボタンはあり？
 //        if (isBack) {
-//            toolbar.setNavigationIcon(R.drawable.ic_event_white_36dp);
+//            // UPナビゲーションを有効化する
+//            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//            getSupportActionBar().setDisplayShowHomeEnabled(true);
+//
 //            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
 //                @Override
 //                public void onClick(View view) {
@@ -54,23 +60,8 @@ public class CustomAppCompatActivity extends AppCompatActivity implements HDZCli
 //                    finish();
 //                }
 //            });
+//
 //        }
-        setSupportActionBar(toolbar);
-
-        if (isBack) {
-            // UPナビゲーションを有効化する
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-
-            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    //do something you want
-                    finish();
-                }
-            });
-
-        }
     }
 
     /**
@@ -219,6 +210,10 @@ public class CustomAppCompatActivity extends AppCompatActivity implements HDZCli
                                 // ログインフォーム画面遷移
                                 Intent intent = new Intent(getApplication(), MainActivity.class);
                                 startActivity(intent);
+
+                                // HTTP GET
+                                HDZApiRequestPackage.logOut req = new HDZApiRequestPackage.logOut();
+                                req.begin(globals.getUserId(),globals.getUuid(),null);
                             }
                         })
                         .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

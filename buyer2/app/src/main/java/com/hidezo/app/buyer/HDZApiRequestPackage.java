@@ -156,4 +156,14 @@ class HDZApiRequestPackage {
         }
     }
 
+    static class logOut {
+        public void begin(final String id,final String uuid, HDZClient.HDZCallbacks callbacks) {
+            HDZApiRequest request = new HDZApiRequest();
+            request.putKeyAndValue("id", id);
+            request.putKeyAndValue("uuid", uuid);
+
+            request.beginRequest("store/logout",callbacks);
+        }
+    }
+
 }

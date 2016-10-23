@@ -2,21 +2,19 @@ package com.hidezo.app.buyer;
 
 import android.app.Application;
 import android.content.ContentValues;
-import android.content.DialogInterface;
-import android.content.Intent;
+//import android.content.DialogInterface;
+//import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
+//import android.support.v7.app.AlertDialog;
+//import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 //import android.view.View;
 //import android.widget.AdapterView;
 //import android.widget.ListView;
-
 import com.hidezo.app.buyer.model.Dau;
 import com.hidezo.app.buyer.model.DauHelper;
 import com.hidezo.app.buyer.util.DBHelper;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;

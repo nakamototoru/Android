@@ -46,6 +46,7 @@ class HDZApiResponseOrderDetail extends HDZApiResponse {
                         item.price = json_dynamics.getJSONObject(i).getString("price");
                         item.order_num = json_dynamics.getJSONObject(i).getString("order_num");
                         item.code = json_dynamics.getJSONObject(i).getString("code");
+                        item.isDynamc = true;
                         itemList.add(item);
                     }
                 }

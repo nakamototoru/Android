@@ -1,17 +1,16 @@
 package com.hidezo.app.buyer;
 
 import android.content.Context;
-import android.util.Log;
+//import android.util.Log;
+//import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
-
 import com.hidezo.app.buyer.CustomView.CircleView;
-
 import java.util.ArrayList;
-import java.util.StringTokenizer;
+
 
 /**
  * Created by dezami on 2016/09/15.

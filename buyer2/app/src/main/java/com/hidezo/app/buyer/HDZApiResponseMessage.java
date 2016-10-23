@@ -10,16 +10,7 @@ import java.util.ArrayList;
  * Created by dezami on 2016/09/30.
  *
  */
-
 class HDZApiResponseMessage extends HDZApiResponse {
-
-    /*
-    "user_flg": "1",
-      "charge": "",
-      "message": "テスト送信です。\nこれはテスト。",
-      "posted_at": "06/12 PM 3:30",
-      "name": "ひでぞう酒店"
-     */
 
     public static class Detail {
         String user_flg = "";
