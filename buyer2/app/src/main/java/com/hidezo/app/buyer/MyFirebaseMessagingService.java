@@ -37,7 +37,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private static final String TAG = "MyFirebaseMsgService";
 
     /**
-     * Called when message is received.
+     * フォアグランド時に呼ばれる
      *
      * @param remoteMessage Object representing the message received from Firebase Cloud Messaging.
      */
@@ -84,7 +84,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         // Notificationを生成
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext());
-        builder.setSmallIcon(R.mipmap.ic_launcher);
+        builder.setSmallIcon(R.drawable.ic_stat_ic_notification);
         builder.setContentTitle(getString(R.string.app_name));
         builder.setContentText(remoteMessage.getNotification().getBody());
         builder.setDefaults(Notification.DEFAULT_SOUND
