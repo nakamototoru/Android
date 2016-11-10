@@ -27,6 +27,7 @@ public class ActivityStaticItems extends CustomAppCompatActivity {
 
     String myCategoryId = "";
     String mySupplierId = "";
+    boolean myHistoryFlag = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,9 +37,9 @@ public class ActivityStaticItems extends CustomAppCompatActivity {
         Intent intent = getIntent();
         mySupplierId = intent.getStringExtra("supplier_id");
         myCategoryId = intent.getStringExtra("category_id");
+        myHistoryFlag = intent.getBooleanExtra("history_flag",false);
 
         // TouchEvent
-//        final ActivityStaticItems _self = this;
         TextView tvOrderCheck = (TextView)findViewById(R.id.textViewButtonOrderCheck);
         tvOrderCheck.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,14 +65,21 @@ public class ActivityStaticItems extends CustomAppCompatActivity {
         setNavigationBar(title,true);
 
         // HTTP GET
-        HDZApiRequestPackage.Item req = new HDZApiRequestPackage.Item();
-        AppGlobals globals = (AppGlobals) this.getApplication();
-        req.begin( globals.getUserId(), globals.getUuid(), mySupplierId, this);
+        if (myHistoryFlag) {
+            // 履歴から
+            HDZApiRequestPackage.OrderdItem req = new HDZApiRequestPackage.OrderdItem();
+            AppGlobals globals = (AppGlobals) this.getApplication();
+            req.begin( globals.getUserId(), globals.getUuid(), mySupplierId, this);
+        }
+        else {
+            HDZApiRequestPackage.Item req = new HDZApiRequestPackage.Item();
+            AppGlobals globals = (AppGlobals) this.getApplication();
+            req.begin( globals.getUserId(), globals.getUuid(), mySupplierId, this);
+        }
 
         // Progress
         openProgressDialog();
     }
-
 
     /**
      * HDZClientCallbacksGet
@@ -86,19 +94,50 @@ public class ActivityStaticItems extends CustomAppCompatActivity {
         }
 
         final ActivityStaticItems _self = this;
-        final HDZApiResponseItem responseItem = new HDZApiResponseItem();
-        if (responseItem.parseJson(response)) {
+        final AppGlobals globals = (AppGlobals) _self.getApplication();
 
-            final AppGlobals globals = (AppGlobals) _self.getApplication();
+        // 商品選別
+        final ArrayList<HDZItemInfo.StaticItem> staticItems = new ArrayList<>();
 
-            // 商品選別
-            final ArrayList<HDZItemInfo.StaticItem> staticItems = new ArrayList<>();
-            // 静的商品
-            for (HDZItemInfo.StaticItem item : responseItem.staticItemList) {
-                if ( myCategoryId.equals(item.category.id) ) {
+        if (apiName.equals(HDZApiResponseOrderdItem.apiName)) {
+            // 履歴から注文
+            final HDZApiResponseOrderdItem responseOrderdItem = new HDZApiResponseOrderdItem();
+            if (responseOrderdItem.parseJson(response)) {
+                // 履歴商品
+                for (HDZItemInfo.StaticItem item : responseOrderdItem.staticItemList) {
                     staticItems.add(item);
                 }
             }
+            else {
+                return;
+            }
+        }
+        else {
+            final HDZApiResponseItem responseItem = new HDZApiResponseItem();
+            if (responseItem.parseJson(response)) {
+                // 静的商品
+                for (HDZItemInfo.StaticItem item : responseItem.staticItemList) {
+                    if ( myCategoryId.equals(item.category.id) ) {
+                        staticItems.add(item);
+                    }
+                }
+            }
+            else {
+                return;
+            }
+        }
+
+//        final HDZApiResponseItem responseItem = new HDZApiResponseItem();
+//        if (responseItem.parseJson(response)) {
+//
+//            // 商品選別
+////            final ArrayList<HDZItemInfo.StaticItem> staticItems = new ArrayList<>();
+//            // 静的商品
+//            for (HDZItemInfo.StaticItem item : responseItem.staticItemList) {
+//                if ( myCategoryId.equals(item.category.id) ) {
+//                    staticItems.add(item);
+//                }
+//            }
 
             // 表示リスト作成
             final ArrayList<HDZUserOrder> displayItemList = new ArrayList<>();
@@ -188,7 +227,8 @@ public class ActivityStaticItems extends CustomAppCompatActivity {
                     listView.setAdapter(adapter);
                 }
             });
-        }
+//        }
+
     }
 
     /**

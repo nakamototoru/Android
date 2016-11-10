@@ -54,7 +54,18 @@ class HDZApiRequestPackage {
         }
     }
 
-     static class OrderList {
+    static class OrderdItem {
+        public void begin(final String id,final String uuid,final String supplier_id, HDZClient.HDZCallbacks callbacks) {
+            HDZApiRequest request = new HDZApiRequest();
+            request.putKeyAndValue("id", id);
+            request.putKeyAndValue("uuid", uuid);
+            request.putKeyAndValue("supplier_id", supplier_id);
+
+            request.beginRequest("store/orderd_item",callbacks);
+        }
+    }
+
+    static class OrderList {
         public void begin(final String id,final String uuid,final int page, HDZClient.HDZCallbacks callbacks) {
             HDZApiRequest request = new HDZApiRequest();
             request.putKeyAndValue("id", id);

@@ -9,7 +9,7 @@ android {
         minSdkVersion 15
         targetSdkVersion 24
         versionCode 3
-        versionName "1.0"
+        versionName "1.1"
         multiDexEnabled true
     }
     buildTypes {
@@ -35,7 +35,6 @@ dependencies {
     compile 'com.android.support:support-annotations:24.2.1'
     compile 'com.squareup.picasso:picasso:2.3.3'
     testCompile 'junit:junit:4.12'
-//    compile 'com.google.android.gms:play-services:9.6.1'
     compile 'com.google.android.gms:play-services-appindexing:9.6.1'
     compile 'com.google.firebase:firebase-messaging:9.6.1'
 }

@@ -19,11 +19,11 @@ class HDZApiResponseItem extends HDZApiResponse {
     public HDZItemInfo.DynamicItemInfo dynamicItemInfo = new HDZItemInfo.DynamicItemInfo();
 
     @Override
-    public boolean parseJson(final String strjson) {
-        boolean isSuccess = super.parseJson(strjson);
+    public boolean parseJson(final String str_json) {
+        boolean isSuccess = super.parseJson(str_json);
         if (isSuccess) {
             try {
-                JSONObject json = new JSONObject(strjson);
+                JSONObject json = new JSONObject(str_json);
 
                 itemInfo.attr_flg = json.getString("attr_flg");
                 JSONArray json_charge_list = json.getJSONArray("charge_list");
@@ -50,7 +50,9 @@ class HDZApiResponseItem extends HDZApiResponse {
                         item.name = json_staticItem.getJSONObject(i).getString("name");
                         item.price = json_staticItem.getJSONObject(i).getString("price");
                         item.code = json_staticItem.getJSONObject(i).getString("code");
-                        item.image = json_staticItem.getJSONObject(i).getString("image");
+                        if ( !json_staticItem.getJSONObject(i).isNull("image") ) {
+                            item.image = json_staticItem.getJSONObject(i).getString("image");
+                        }
                         item.detail = json_staticItem.getJSONObject(i).getString("detail");
                         item.loading = json_staticItem.getJSONObject(i).getString("loading");
                         item.min_order_count = json_staticItem.getJSONObject(i).getString("min_order_count");
@@ -69,6 +71,12 @@ class HDZApiResponseItem extends HDZApiResponse {
                         item.category.id = json_category.getString("id");
                         item.category.name = json_category.getString("name");
                         item.category.isStatic = true;
+                        int img_flg = json_category.getInt("image_flg");
+                        if (img_flg != 0) {
+                            // 画像無し
+                            item.category.image_flg = true;
+                            item.image = "";
+                        }
 
                         staticItemList.add(item);
                     }
@@ -110,4 +118,5 @@ class HDZApiResponseItem extends HDZApiResponse {
         }
         return isSuccess;
     }
+
 }

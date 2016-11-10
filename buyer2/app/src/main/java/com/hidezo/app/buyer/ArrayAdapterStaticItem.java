@@ -57,25 +57,30 @@ class ArrayAdapterStaticItem extends ArrayAdapter<HDZUserOrder> {
                 ((ListView) parent).performItemClick(null, position, 0);
             }
         });
-        ImageView ivItem = (ImageView) convertView.findViewById(R.id.imageViewItem);
-        ivItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // 詳細画面
-                ((ListView) parent).performItemClick(null, position, 0);
-            }
-        });
-        Context context = this.getContext();
-        try {
-            Picasso.with(context)
-                    .load(item.image)
-//                .centerInside()
-                    .placeholder(R.drawable.sakana180)
-                    .error(R.drawable.sakana180)
-                    .into(ivItem);
 
-        } catch (Exception e) {
-            Log.d("## Picasso",e.getMessage());
+        if (!item.image.equals("")) {
+            // 画像
+            ImageView ivItem = (ImageView) convertView.findViewById(R.id.imageViewItem);
+            ivItem.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // 詳細画面へ
+                    ((ListView) parent).performItemClick(null, position, 0);
+                }
+            });
+            Context context = this.getContext();
+            try {
+                // 画像取得
+                Picasso.with(context)
+                        .load(item.image)
+//                .centerInside()
+                        .placeholder(R.drawable.sakana180)
+                        .error(R.drawable.sakana180)
+                        .into(ivItem);
+
+            } catch (Exception e) {
+                Log.d("## Picasso",e.getMessage());
+            }
         }
 
         TextView tvPrice = (TextView) convertView.findViewById(R.id.textViewPrice);

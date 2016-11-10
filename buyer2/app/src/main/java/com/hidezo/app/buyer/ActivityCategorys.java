@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.content.Intent;
 //import android.os.Handler;
 //import android.util.Log;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -131,6 +132,13 @@ public class ActivityCategorys extends CustomAppCompatActivity {
                     }
                 }
 
+                // 履歴から注文
+                HDZItemInfo.Category categoryHistory = new HDZItemInfo.Category();
+                categoryHistory.name = "履歴から注文";
+                categoryHistory.isStatic = true;
+                categoryHistory.isHistory = true;
+                displayList.add(categoryHistory);
+
                 //UIスレッド上で呼び出してもらう
                 this.runOnUiThread(new Runnable() {
                     @Override
@@ -150,6 +158,15 @@ public class ActivityCategorys extends CustomAppCompatActivity {
                                     // 動的商品リストビュー
                                     Intent intent = new Intent( _self.getApplication(), ActivityDynamicItems.class);
                                     intent.putExtra("supplier_id",_self.mySupplierId);
+                                    _self.startActivity(intent);
+                                }
+                                else if (category.isHistory) {
+                                    Log.d("##--##","履歴から注文");
+                                    Intent intent = new Intent( _self.getApplication(), ActivityStaticItems.class);
+                                    intent.putExtra("supplier_id", _self.mySupplierId);
+                                    intent.putExtra("category_id", category.id);
+                                    intent.putExtra("category_name", category.name);
+                                    intent.putExtra("history_flag", true);
                                     _self.startActivity(intent);
                                 }
                                 else if (position < listView.getCount() ) {

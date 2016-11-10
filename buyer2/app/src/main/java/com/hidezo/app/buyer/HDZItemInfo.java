@@ -22,6 +22,8 @@ class HDZItemInfo {
         String name = "";
         boolean isStatic = false;
         int badgeCount = 0;
+        boolean isHistory = false;
+        boolean image_flg = false;
     }
 
     static class StaticItem {
