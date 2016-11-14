@@ -16,19 +16,19 @@ public class ActivityUserOrdersFinish extends AppCompatActivity {
     String mySupplierId = "";
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_orders_finish);
 
-        Intent intent = getIntent();
+        final Intent intent = getIntent();
         mySupplierId = intent.getStringExtra("supplier_id");
 
-        Button btn = (Button)findViewById(R.id.buttonGoOrders);
+        final Button btn = (Button)findViewById(R.id.buttonGoOrders);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(final View v) {
                 // 画面遷移
-                Intent intent = new Intent(getApplication(), ActivityOrderes.class);
+                final Intent intent = new Intent(getApplication(), ActivityOrderes.class);
                 intent.putExtra("supplier_id",mySupplierId);
                 startActivity(intent);
             }
@@ -36,7 +36,7 @@ public class ActivityUserOrdersFinish extends AppCompatActivity {
     }
 
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
+    public boolean onKeyDown(final int keyCode, final KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             // 戻るボタンを無効
             Log.d("Hidezo","戻るボタン無効");

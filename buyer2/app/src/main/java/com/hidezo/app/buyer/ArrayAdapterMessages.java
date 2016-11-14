@@ -15,17 +15,17 @@ import java.util.ArrayList;
  */
 class ArrayAdapterMessages extends ArrayAdapter<HDZApiResponseMessage.Detail> {
 
-    ArrayAdapterMessages(Context context, ArrayList<HDZApiResponseMessage.Detail> items) {
+    ArrayAdapterMessages(final Context context, final ArrayList<HDZApiResponseMessage.Detail> items) {
         super(context, 0, items);
     }
     @Override
-    public boolean isEnabled(int position) {
+    public boolean isEnabled(final int position) {
         return false;  // ListView アイテムの選択を無効にする場合
     }
     @Override
     public View getView(final int position, View convertView, final ViewGroup parent) {
 
-        HDZApiResponseMessage.Detail detail = getItem(position);
+        final HDZApiResponseMessage.Detail detail = getItem(position);
         if (detail == null) {
             return convertView;
         }
@@ -36,7 +36,7 @@ class ArrayAdapterMessages extends ArrayAdapter<HDZApiResponseMessage.Detail> {
         }
 
         // Content
-        TextView tvMessage = (TextView) convertView.findViewById(R.id.textViewMessage);
+        final TextView tvMessage = (TextView) convertView.findViewById(R.id.textViewMessage);
         tvMessage.setText(detail.message);
 
         // Return the completed view to render on screen

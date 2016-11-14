@@ -14,17 +14,17 @@ class HDZApiResponseOrderedList extends HDZApiResponse {
     public ArrayList<HDZordered> orderedList = new ArrayList<>();
 
     @Override
-    public boolean parseJson(final String strjson) {
-        boolean isSuccess = super.parseJson(strjson);
+    public boolean parseJson(final String str_json) {
+        final boolean isSuccess = super.parseJson(str_json);
         if (isSuccess) {
             try {
-                JSONObject json = new JSONObject(strjson);
+                final JSONObject json = new JSONObject(str_json);
 
                 if ( !json.isNull("order_list") ) {
-                    JSONArray orderList = json.getJSONArray("order_list");
+                    final JSONArray orderList = json.getJSONArray("order_list");
                     if (orderList.length() > 0) {
                         for (int i = 0; i < orderList.length(); i++) {
-                            HDZordered info = new HDZordered();
+                            final HDZordered info = new HDZordered();
                             info.order_no = orderList.getJSONObject(i).getString("order_no");
                             info.supplier = orderList.getJSONObject(i).getString("supplier");
                             info.supplier_name = orderList.getJSONObject(i).getString("supplier_name");
@@ -35,7 +35,7 @@ class HDZApiResponseOrderedList extends HDZApiResponse {
                         }
                     }
                 }
-            } catch (JSONException e) {
+            } catch (final JSONException e) {
                 e.printStackTrace();
             }
         }

@@ -38,7 +38,7 @@ class HDZItemInfo {
         String price = "";
         String scale = "";
         String loading = "";
-        ArrayList<String> num_scale = new ArrayList<String>();
+        ArrayList<String> num_scale = new ArrayList<>();
     }
 
     static class DynamicItem {
@@ -51,7 +51,7 @@ class HDZItemInfo {
         public String getId() {
             return this.id;
         }
-        public void setId(String str) {
+        public void setId(final String str) {
             this.id = str;
         }
     }

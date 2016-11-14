@@ -23,7 +23,7 @@ class HDZApiRequest {
 //        return mapParams;
 //    }
 
-    void beginRequest(final String apiName, HDZClient.HDZCallbacks callbacks) {
+    void beginRequest(final String apiName, final HDZClient.HDZCallbacks callbacks) {
 
         final HDZClient.Get httpGet = new HDZClient.Get();
         if (mapParams.size() == 0) {
@@ -32,7 +32,7 @@ class HDZApiRequest {
         httpGet.runAsync(apiName, mapParams, callbacks);
     }
 
-    void beginPost(final String apiName, final HashMap<String,String> paramMap, HDZClient.HDZCallbacks callbacks) {
+    void beginPost(final String apiName, final HashMap<String,String> paramMap, final HDZClient.HDZCallbacks callbacks) {
 
         final HDZClient.Post httpPost = new HDZClient.Post();
         if (paramMap.size() == 0) {
@@ -40,9 +40,9 @@ class HDZApiRequest {
         }
 
         if (BuildConfig.DEBUG) {
-            for (HashMap.Entry<String,String> entry : paramMap.entrySet()) {
-                String key = entry.getKey();
-                String val = entry.getValue();
+            for (final HashMap.Entry<String,String> entry : paramMap.entrySet()) {
+                final String key = entry.getKey();
+                final String val = entry.getValue();
                 Log.d("## Order", key + ":" + val);
             }
         }
@@ -50,22 +50,22 @@ class HDZApiRequest {
         httpPost.runAsync(apiName, paramMap, callbacks);
     }
 
-    void beginOrder(final String apiName, final HashMap<String,String> paramMap, final ArrayList<String> dynamics, final ArrayList<String> statics, HDZClient.HDZCallbacks callbacks) {
+    void beginOrder(final String apiName, final HashMap<String,String> paramMap, final ArrayList<String> dynamics, final ArrayList<String> statics, final HDZClient.HDZCallbacks callbacks) {
 
         final HDZClient.Post httpPost = new HDZClient.Post();
 
-        FormBody.Builder postData = new FormBody.Builder();
-        for (HashMap.Entry<String,String> entry : paramMap.entrySet()) {
-            String key = entry.getKey();
-            String val = entry.getValue();
+        final FormBody.Builder postData = new FormBody.Builder();
+        for (final HashMap.Entry<String,String> entry : paramMap.entrySet()) {
+            final String key = entry.getKey();
+            final String val = entry.getValue();
             postData.add(key,val);
         }
         // 動的
-        for (String val : dynamics) {
+        for (final String val : dynamics) {
             postData.add("dynamic_item[]",val);
         }
         // 静的
-        for (String val : statics) {
+        for (final String val : statics) {
             postData.add("static_item[]",val);
         }
 

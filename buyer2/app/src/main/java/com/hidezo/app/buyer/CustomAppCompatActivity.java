@@ -3,12 +3,12 @@ package com.hidezo.app.buyer;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.ActionBar;
+//import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
+
 
 /**
  * Created by dezami on 2016/09/21.
@@ -25,7 +25,6 @@ public class CustomAppCompatActivity extends AppCompatActivity implements HDZCli
         // ログインチェック
         if (!isLogin()) {
             // ログアウト促す
-//            AppGlobals globals = (AppGlobals) this.getApplication();
             openAlertSessionOut();
         }
     }
@@ -34,21 +33,21 @@ public class CustomAppCompatActivity extends AppCompatActivity implements HDZCli
      * ログインチェック
      */
     public boolean isLogin() {
-        AppGlobals globals = (AppGlobals) this.getApplication();
+        final AppGlobals globals = (AppGlobals) this.getApplication();
         return globals.getLoginState();
     }
 
     /**
      * ツールバー初期化
      */
-    protected void setNavigationBar(final String title, boolean isBack) {
+    protected void setNavigationBar(final String title, final boolean isBack) {
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(title);
         setSupportActionBar(toolbar);
 
         // TODO:戻るボタンはあり？
-//        if (isBack) {
+        if (isBack) {
 //            // UPナビゲーションを有効化する
 //            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 //            getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -61,7 +60,7 @@ public class CustomAppCompatActivity extends AppCompatActivity implements HDZCli
 //                }
 //            });
 //
-//        }
+        }
     }
 
     /**
@@ -79,7 +78,7 @@ public class CustomAppCompatActivity extends AppCompatActivity implements HDZCli
                         .setMessage(message)
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             @Override
-                            public void onClick(DialogInterface dialog, int id) {
+                            public void onClick(final DialogInterface dialog, final int id) {
                             }
                         })
                         .show();
@@ -98,13 +97,13 @@ public class CustomAppCompatActivity extends AppCompatActivity implements HDZCli
                         .setMessage("他の端末でお客様のアカウントにログインしたか、サーバーの不具合でログアウトされました。")
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             @Override
-                            public void onClick(DialogInterface dialog, int id) {
+                            public void onClick(final DialogInterface dialog, final int id) {
                                 // ログアウト
-                                AppGlobals globals = (AppGlobals) getApplication();
+                                final AppGlobals globals = (AppGlobals) getApplication();
                                 globals.setLoginState(false);
 
                                 // ログインフォーム画面遷移
-                                Intent intent = new Intent(getApplication(), MainActivity.class);
+                                final Intent intent = new Intent(getApplication(), MainActivity.class);
                                 startActivity(intent);
                             }
                         })
@@ -146,10 +145,10 @@ public class CustomAppCompatActivity extends AppCompatActivity implements HDZCli
      * HDZClientCallbacksGet
      * データ取得時
      */
-    public void HDZClientComplete(String response,String apiName) {
+    public void HDZClientComplete(final String response,final String apiName) {
         // サブクラスで定義
     }
-    public void HDZClientError(String message) {
+    public void HDZClientError(final String message) {
         Log.d("########",message);
 
         if (progressDialog != null) {
@@ -168,7 +167,7 @@ public class CustomAppCompatActivity extends AppCompatActivity implements HDZCli
     /**
      * ログアウトチェック
      */
-    boolean checkLogOut(String response) {
+    boolean checkLogOut(final String response) {
 
         final HDZApiResponse apiRes = new HDZApiResponse();
 
@@ -196,29 +195,29 @@ public class CustomAppCompatActivity extends AppCompatActivity implements HDZCli
         this.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-
+                // ダイアログ
                 new AlertDialog.Builder(_self)
                         .setTitle("ログアウトします")
                         .setMessage("よろしいですか？")
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             @Override
-                            public void onClick(DialogInterface dialog, int id) {
-                                AppGlobals globals = (AppGlobals)getApplication();
+                            public void onClick(final DialogInterface dialog, final int id) {
+                                final AppGlobals globals = (AppGlobals)getApplication();
                                 globals.resetOrderInfoWithMessage(true);
                                 globals.setLoginState(false);
 
                                 // ログインフォーム画面遷移
-                                Intent intent = new Intent(getApplication(), MainActivity.class);
+                                final Intent intent = new Intent(getApplication(), MainActivity.class);
                                 startActivity(intent);
 
                                 // HTTP GET
-                                HDZApiRequestPackage.logOut req = new HDZApiRequestPackage.logOut();
+                                final HDZApiRequestPackage.logOut req = new HDZApiRequestPackage.logOut();
                                 req.begin(globals.getUserId(),globals.getUuid(),null);
                             }
                         })
                         .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                             @Override
-                            public void onClick(DialogInterface dialog, int which) {
+                            public void onClick(final DialogInterface dialog, final int which) {
                             }
                         })
                         .show();

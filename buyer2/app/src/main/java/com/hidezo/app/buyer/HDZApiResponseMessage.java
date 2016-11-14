@@ -12,7 +12,7 @@ import java.util.ArrayList;
  */
 class HDZApiResponseMessage extends HDZApiResponse {
 
-    public static class Detail {
+    static class Detail {
         String user_flg = "";
         String charge = "";
         String message = "";
@@ -20,22 +20,22 @@ class HDZApiResponseMessage extends HDZApiResponse {
         String nameOfSender = "";
     }
 
-    public String messageCount;
+    public String messageCount = "";
     public ArrayList<Detail> messageList = new ArrayList<>();
     public ArrayList<String> chargeList = new ArrayList<>();
 
     @Override
     public boolean parseJson(final String strJson) {
-        boolean isSuccess = super.parseJson(strJson);
+        final boolean isSuccess = super.parseJson(strJson);
         if (isSuccess) {
             try {
-                JSONObject json = new JSONObject(strJson);
+                final JSONObject json = new JSONObject(strJson);
 
                 messageCount = json.getString("messageCount");
 
-                JSONArray json_message_list = json.getJSONArray("messageList");
+                final JSONArray json_message_list = json.getJSONArray("messageList");
                 for (int i = 0; i < json_message_list.length(); i++) {
-                    Detail detail = new Detail();
+                    final Detail detail = new Detail();
                     detail.user_flg = json_message_list.getJSONObject(i).getString("user_flg");
                     detail.charge = json_message_list.getJSONObject(i).getString("charge");
                     detail.message = json_message_list.getJSONObject(i).getString("message");
@@ -44,13 +44,13 @@ class HDZApiResponseMessage extends HDZApiResponse {
                     messageList.add(detail);
                 }
 
-                JSONArray json_charge_list = json.getJSONArray("chargeList");
+                final JSONArray json_charge_list = json.getJSONArray("chargeList");
                 for (int i = 0; i < json_charge_list.length(); i++) {
-                    String charge = json_charge_list.getString(i);
+                    final String charge = json_charge_list.getString(i);
                     chargeList.add(charge);
                 }
 
-            } catch (JSONException e) {
+            } catch (final JSONException e) {
                 e.printStackTrace();
             }
         }

@@ -37,7 +37,7 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
     @Override
     public void onTokenRefresh() {
         // Get updated InstanceID token.
-        String refreshedToken = FirebaseInstanceId.getInstance().getToken();
+        final String refreshedToken = FirebaseInstanceId.getInstance().getToken();
         Log.d(TAG, "Refreshed token: " + refreshedToken);
 
         // If you want to send messages to this application instance or
@@ -55,18 +55,18 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
      *
      * @param token The new token.
      */
-    private void sendRegistrationToServer(String token) {
+    private void sendRegistrationToServer(final String token) {
         // TODO: Implement this method to send token to your app server.
 
         // HTTP POST
-        HDZApiRequestPackage.sendDeviceToken req = new HDZApiRequestPackage.sendDeviceToken();
+        final HDZApiRequestPackage.sendDeviceToken req = new HDZApiRequestPackage.sendDeviceToken();
 
         // インスタンスを取得する
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        final SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         // データを取得する(第2引数はデフォルト値)
-        String myUserId = sp.getString("user_id", "");
+        final String myUserId = sp.getString("user_id", "");
         // データを取得する(第2引数はデフォルト値)
-        String myUuid = sp.getString("uuid", "");
+        final String myUuid = sp.getString("uuid", "");
 
         req.begin( myUserId, myUuid, token, null);
     }

@@ -1,6 +1,5 @@
 package com.hidezo.app.buyer;
 
-//import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -13,15 +12,15 @@ class HDZApiResponseOrderResult extends HDZApiResponse {
     public String orderNo = "";
 
     @Override
-    public boolean parseJson(final String strjson) {
-        boolean isSuccess = super.parseJson(strjson);
+    public boolean parseJson(final String str_json) {
+        final boolean isSuccess = super.parseJson(str_json);
         if (isSuccess) {
             try {
-                JSONObject json = new JSONObject(strjson);
+                final JSONObject json = new JSONObject(str_json);
 
                 orderNo = json.getString("order_no");
 
-            } catch (JSONException e) {
+            } catch (final JSONException e) {
                 e.printStackTrace();
             }
         }

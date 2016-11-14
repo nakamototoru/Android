@@ -9,7 +9,7 @@ class HDZProfile {
     String title = "";
     String content = "";
 
-    HDZProfile(String title, String content) {
+    HDZProfile(final String title, final String content) {
         this.title = title;
         this.content = content;
     }

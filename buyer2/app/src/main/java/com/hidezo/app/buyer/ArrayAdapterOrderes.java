@@ -17,14 +17,14 @@ import java.util.ArrayList;
  */
 class ArrayAdapterOrderes extends ArrayAdapter<HDZordered> {
 
-    ArrayAdapterOrderes(Context context, ArrayList<HDZordered> list) {
+    ArrayAdapterOrderes(final Context context, final ArrayList<HDZordered> list) {
         super(context, 0, list);
     }
     @Override
     public View getView(final int position, View convertView, final ViewGroup parent) {
 
         // Get the data item for this position
-        HDZordered orderInfo = getItem(position);
+        final HDZordered orderInfo = getItem(position);
         if (orderInfo == null) {
             return convertView;
         }
@@ -35,23 +35,23 @@ class ArrayAdapterOrderes extends ArrayAdapter<HDZordered> {
         }
 
         // Lookup view for data population
-        TextView tvOrderAt = (TextView) convertView.findViewById(R.id.textViewOrderAt);
+        final TextView tvOrderAt = (TextView) convertView.findViewById(R.id.textViewOrderAt);
         tvOrderAt.setText( orderInfo.order_at );
 
-        TextView tvRow = (TextView) convertView.findViewById(R.id.textViewOrderRow);
+        final TextView tvRow = (TextView) convertView.findViewById(R.id.textViewOrderRow);
         tvRow.setText( String.valueOf(position+1) );
 
-        TextView tvSupplier = (TextView) convertView.findViewById(R.id.textViewSupplier);
+        final TextView tvSupplier = (TextView) convertView.findViewById(R.id.textViewSupplier);
         tvSupplier.setText( orderInfo.supplier_name );
 
-        TextView tvDeliverAt = (TextView) convertView.findViewById(R.id.textViewDeliverAt);
+        final TextView tvDeliverAt = (TextView) convertView.findViewById(R.id.textViewDeliverAt);
         tvDeliverAt.setText( orderInfo.deliver_at );
 
         // 通知バッジ表示
-        CircleView circleView = (CircleView)convertView.findViewById(R.id.viewForBadge);
+        final CircleView circleView = (CircleView)convertView.findViewById(R.id.viewForBadge);
         if (orderInfo.badgeCount > 0) {
             circleView.setColor(R.color.colorForBadge);
-            TextView tvCount = (TextView)convertView.findViewById(R.id.textViewBadgeCount);
+            final TextView tvCount = (TextView)convertView.findViewById(R.id.textViewBadgeCount);
             tvCount.setText( String.valueOf(orderInfo.badgeCount) );
         }
         else {

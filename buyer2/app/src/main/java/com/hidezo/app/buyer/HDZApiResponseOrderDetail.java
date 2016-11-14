@@ -17,10 +17,10 @@ class HDZApiResponseOrderDetail extends HDZApiResponse {
 
     @Override
     public boolean parseJson(final String strJson) {
-        boolean isSuccess = super.parseJson(strJson);
+        final boolean isSuccess = super.parseJson(strJson);
         if (isSuccess) {
             try {
-                JSONObject json = new JSONObject(strJson);
+                final JSONObject json = new JSONObject(strJson);
 
                 orderInfo.attr_flg = json.getString("attr_flg");
                 orderInfo.deliveryFee = json.getString("deliveryFee");
@@ -29,7 +29,7 @@ class HDZApiResponseOrderDetail extends HDZApiResponse {
 
                 // order
                 if ( !json.isNull("order") ) {
-                    JSONObject json_order = json.getJSONObject("order");
+                    final JSONObject json_order = json.getJSONObject("order");
                     orderInfo.order_no = json_order.getString("order_no");
                     orderInfo.deliver_to = json_order.getString("deliver_to");
                     orderInfo.delivery_day = json_order.getString("delivery_day");
@@ -38,9 +38,9 @@ class HDZApiResponseOrderDetail extends HDZApiResponse {
                 }
                 // item dynamic
                 if ( !json.isNull("dynamicItemList") ) {
-                    JSONArray json_dynamics = json.getJSONArray("dynamicItemList");
+                    final JSONArray json_dynamics = json.getJSONArray("dynamicItemList");
                     for (int i = 0; i < json_dynamics.length(); i++) {
-                        HDZOrderDetail.Item item = new HDZOrderDetail.Item();
+                        final HDZOrderDetail.Item item = new HDZOrderDetail.Item();
                         item.id = json_dynamics.getJSONObject(i).getString("id");
                         item.name = json_dynamics.getJSONObject(i).getString("name");
                         item.price = json_dynamics.getJSONObject(i).getString("price");
@@ -52,9 +52,9 @@ class HDZApiResponseOrderDetail extends HDZApiResponse {
                 }
                 // item static
                 if ( !json.isNull("staicItemList") ) {
-                    JSONArray json_statics = json.getJSONArray("staicItemList");
+                    final JSONArray json_statics = json.getJSONArray("staicItemList");
                     for (int i = 0; i < json_statics.length(); i++) {
-                        HDZOrderDetail.Item item = new HDZOrderDetail.Item();
+                        final HDZOrderDetail.Item item = new HDZOrderDetail.Item();
                         item.id = json_statics.getJSONObject(i).getString("id");
                         item.name = json_statics.getJSONObject(i).getString("name");
                         item.price = json_statics.getJSONObject(i).getString("price");
@@ -68,7 +68,7 @@ class HDZApiResponseOrderDetail extends HDZApiResponse {
                 }
 
 
-            } catch (JSONException e) {
+            } catch (final JSONException e) {
                 e.printStackTrace();
             }
         }

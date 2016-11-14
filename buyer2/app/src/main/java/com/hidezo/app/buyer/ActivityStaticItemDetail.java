@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.squareup.picasso.Picasso;
@@ -28,22 +29,22 @@ public class ActivityStaticItemDetail extends CustomAppCompatActivity {
     String imageURL = "";
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_static_item_detail);
 
-        Intent intent = getIntent();
+        final Intent intent = getIntent();
         myItemId = intent.getStringExtra("item_id");
         myCategoryId = intent.getStringExtra("category_id");
-        String supplier_id = intent.getStringExtra("supplier_id");
+        final String supplier_id = intent.getStringExtra("supplier_id");
 
         // ツールバー初期化
-        String title = "商品詳細";
+        final String title = "商品詳細";
         setNavigationBar(title,true);
 
         // HTTP GET
-        HDZApiRequestPackage.Item req = new HDZApiRequestPackage.Item();
-        AppGlobals globals = (AppGlobals) this.getApplication();
+        final HDZApiRequestPackage.Item req = new HDZApiRequestPackage.Item();
+        final AppGlobals globals = (AppGlobals) this.getApplication();
         req.begin( globals.getUserId(), globals.getUuid(), supplier_id, this);
 
         // Progress
@@ -54,7 +55,7 @@ public class ActivityStaticItemDetail extends CustomAppCompatActivity {
      * HDZClientCallbacksGet
      * データ取得時
      */
-    public void HDZClientComplete(String response,String apiName) {
+    public void HDZClientComplete(final String response,final String apiName) {
         // Progress
         closeProgressDialog();
 
@@ -72,41 +73,41 @@ public class ActivityStaticItemDetail extends CustomAppCompatActivity {
                     // 表示リスト
                     final ArrayList<HDZProfile> profileList = new ArrayList<>();
                     // 静的商品
-                    for (HDZItemInfo.StaticItem item : responseItem.staticItemList) {
-                        String cid = item.category.id;
-                        String iid = item.id;
+                    for (final HDZItemInfo.StaticItem item : responseItem.staticItemList) {
+                        final String cid = item.category.id;
+                        final String iid = item.id;
                         if ( cid.equals(myCategoryId) && iid.equals(myItemId)) {
-                            HDZProfile pCode = new HDZProfile("商品コード",item.code);
+                            final HDZProfile pCode = new HDZProfile("商品コード",item.code);
                             profileList.add(pCode);
-                            HDZProfile pName = new HDZProfile("商品名",item.name);
+                            final HDZProfile pName = new HDZProfile("商品名",item.name);
                             profileList.add(pName);
-                            HDZProfile pPrice = new HDZProfile("価格",item.price);
+                            final HDZProfile pPrice = new HDZProfile("価格",item.price);
                             profileList.add(pPrice);
-                            HDZProfile pStandard = new HDZProfile("規格",item.standard);
+                            final HDZProfile pStandard = new HDZProfile("規格",item.standard);
                             profileList.add(pStandard);
-                            HDZProfile pLoading = new HDZProfile("入り数",item.loading);
+                            final HDZProfile pLoading = new HDZProfile("入り数",item.loading);
                             profileList.add(pLoading);
-                            HDZProfile pScale = new HDZProfile("単位",item.scale);
+                            final HDZProfile pScale = new HDZProfile("単位",item.scale);
                             profileList.add(pScale);
-                            HDZProfile pMinOrderCount = new HDZProfile("最小注文本数",item.min_order_count);
+                            final HDZProfile pMinOrderCount = new HDZProfile("最小注文本数",item.min_order_count);
                             profileList.add(pMinOrderCount);
                             imageURL = item.image;
-
                             break;
                         }
                     }
                     //リストビュー作成
-                    ArrayAdapterStaticItemDetail adapter = new ArrayAdapterStaticItemDetail(_self, profileList);
-                    ListView listView = (ListView) findViewById(R.id.listViewStaticItemDetail);
+                    final ArrayAdapterStaticItemDetail adapter = new ArrayAdapterStaticItemDetail(_self, profileList);
+                    final ListView listView = (ListView) findViewById(R.id.listViewStaticItemDetail);
 
                     //ヘッダー追加
                     if (listView.getHeaderViewsCount() == 0) {
                         //
-                        View header = getLayoutInflater().inflate(R.layout.item_static_item_detail_header,null);
+                        final LinearLayout inflateLayout = null;
+                        final View header = getLayoutInflater().inflate(R.layout.item_static_item_detail_header,inflateLayout);
                         listView.addHeaderView(header, null, false); // タッチ無効
 
-                        ImageView ivItem = (ImageView) findViewById(R.id.imageViewItem);
-                        Context context = header.getContext();
+                        final ImageView ivItem = (ImageView) findViewById(R.id.imageViewItem);
+                        final Context context = header.getContext();
                         try {
                             Picasso.with(context)
                                     .load(imageURL)
@@ -114,12 +115,12 @@ public class ActivityStaticItemDetail extends CustomAppCompatActivity {
                                     .placeholder(R.drawable.sakana180)
                                     .error(R.drawable.sakana180)
                                     .into(ivItem);
-                        } catch (Exception e) {
+                        } catch (final Exception e) {
                             Log.d("## Picasso",e.getMessage());
                         }
                         ivItem.setOnClickListener(new View.OnClickListener() {
                             @Override
-                            public void onClick(View v) {
+                            public void onClick(final View v) {
                                 //UIスレッド上で呼び出してもらう
                                 _self.runOnUiThread(new Runnable() {
                                     @Override
@@ -134,7 +135,7 @@ public class ActivityStaticItemDetail extends CustomAppCompatActivity {
                                                     .placeholder(R.drawable.sakana180)
                                                     .error(R.drawable.sakana180)
                                                     .into(ivDetail);
-                                        } catch (Exception e) {
+                                        } catch (final Exception e) {
                                             Log.d("## Picasso",e.getMessage());
                                         }
 
@@ -143,7 +144,7 @@ public class ActivityStaticItemDetail extends CustomAppCompatActivity {
                                                 .setView(ivDetail)
                                                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                                     @Override
-                                                    public void onClick(DialogInterface dialog, int id) {
+                                                    public void onClick(final DialogInterface dialog, final int id) {
                                                     }
                                                 })
                                                 .show();
@@ -152,7 +153,6 @@ public class ActivityStaticItemDetail extends CustomAppCompatActivity {
                             }
                         });
                     }
-
                     listView.setAdapter(adapter);
                 }
             });
@@ -165,17 +165,17 @@ public class ActivityStaticItemDetail extends CustomAppCompatActivity {
      * @return result
      */
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(final Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
 //        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(final MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        final int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_logout) {

@@ -3,34 +3,30 @@ package com.hidezo.app.buyer;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 
 /**
  * Created by dezamisystem on 2016/11/10.
  *
  */
-
 class HDZApiResponseOrderdItem extends HDZApiResponse {
-
-    public static final String apiName = "store/orderd_item";
 
     public ArrayList<HDZItemInfo.StaticItem> staticItemList = new ArrayList<>();
 
     @Override
     public boolean parseJson(final String str_json) {
-        boolean isSuccess = super.parseJson(str_json);
+        final boolean isSuccess = super.parseJson(str_json);
         if (isSuccess) {
             try {
-                JSONObject json = new JSONObject(str_json);
+                final JSONObject json = new JSONObject(str_json);
 
 //                Log.d("########",json_staticItem.toString());
 
                 if ( !json.isNull("ordredStaticItem") ) {
-                    JSONArray json_staticItem = json.getJSONArray("ordredStaticItem");
+                    final JSONArray json_staticItem = json.getJSONArray("ordredStaticItem");
                     for (int i = 0; i < json_staticItem.length(); i++) {
 
-                        HDZItemInfo.StaticItem item = new HDZItemInfo.StaticItem();
+                        final HDZItemInfo.StaticItem item = new HDZItemInfo.StaticItem();
                         item.id = json_staticItem.getJSONObject(i).getString("id");
                         item.name = json_staticItem.getJSONObject(i).getString("name");
                         item.price = json_staticItem.getJSONObject(i).getString("price");
@@ -44,12 +40,12 @@ class HDZApiResponseOrderdItem extends HDZApiResponse {
                         item.scale = json_staticItem.getJSONObject(i).getString("scale");
                         item.standard = json_staticItem.getJSONObject(i).getString("standard");
 
-                        JSONArray json_num_scale = json_staticItem.getJSONObject(i).getJSONArray("num_scale");
+                        final JSONArray json_num_scale = json_staticItem.getJSONObject(i).getJSONArray("num_scale");
                         for (int j = 0; j < json_num_scale.length(); j++) {
                             item.num_scale.add( json_num_scale.getString(j) );
                         }
 
-                        JSONObject json_category = json_staticItem.getJSONObject(i).getJSONObject("category");
+                        final JSONObject json_category = json_staticItem.getJSONObject(i).getJSONObject("category");
                         item.category.id = json_category.getString("id");
                         item.category.name = json_category.getString("name");
                         item.category.isStatic = true;
@@ -64,7 +60,7 @@ class HDZApiResponseOrderdItem extends HDZApiResponse {
                     }
                 }
 
-            } catch (JSONException e) {
+            } catch (final JSONException e) {
                 e.printStackTrace();
             }
         }

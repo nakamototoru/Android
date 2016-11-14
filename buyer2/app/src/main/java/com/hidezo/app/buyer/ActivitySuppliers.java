@@ -26,7 +26,7 @@ public class ActivitySuppliers extends CustomAppCompatActivity {
     boolean isFinishBadge = false;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_suppliers);
 
@@ -34,8 +34,8 @@ public class ActivitySuppliers extends CustomAppCompatActivity {
         setNavigationBar("取引先一覧",false);
 
         // ゲット・取引先一覧
-        HDZApiRequestPackage.Friend req = new HDZApiRequestPackage.Friend();
-        AppGlobals globals = (AppGlobals) this.getApplication();
+        final HDZApiRequestPackage.Friend req = new HDZApiRequestPackage.Friend();
+        final AppGlobals globals = (AppGlobals) this.getApplication();
         req.begin( globals.getUserId(), globals.getUuid(), this);
 
         // Progress
@@ -46,7 +46,7 @@ public class ActivitySuppliers extends CustomAppCompatActivity {
      * HDZClientCallbacksGet
      * データ取得時
      */
-    public void HDZClientComplete(String response,String apiName) {
+    public void HDZClientComplete(final String response,final String apiName) {
         // Progress
         closeProgressDialog();
 
@@ -55,7 +55,8 @@ public class ActivitySuppliers extends CustomAppCompatActivity {
         }
 
         final ActivitySuppliers _self = this;
-        if ( apiName.equals("store/badge") ) {
+        if ( apiName.equals(HDZApiRequestPackage.Badge.apiName) ) {
+            // "store/badge"
             isFinishBadge = true;
 
             Log.d("####",response);
@@ -64,9 +65,9 @@ public class ActivitySuppliers extends CustomAppCompatActivity {
             if (responseBadge.parseJson(response)) {
                 if (responseBadge.badgeSupplierList.size() > 0) {
                     // バッジ情報追加
-                    ArrayList<HDZApiResponseBadge.SupplierUp> badgeSupplierList = responseBadge.badgeSupplierList;
-                    for (HDZFriendInfo friend : displayList) {
-                        for (HDZApiResponseBadge.SupplierUp badge : badgeSupplierList) {
+                    final ArrayList<HDZApiResponseBadge.SupplierUp> badgeSupplierList = responseBadge.badgeSupplierList;
+                    for (final HDZFriendInfo friend : displayList) {
+                        for (final HDZApiResponseBadge.SupplierUp badge : badgeSupplierList) {
                             if (badge.supplierId.equals(friend.id)) {
                                 friend.badgeCount = 1;
                                 break;
@@ -83,34 +84,31 @@ public class ActivitySuppliers extends CustomAppCompatActivity {
                 if (responseFriend.friendInfoList.size() > 0) {
                     // データ保存
                     displayList = responseFriend.friendInfoList;
-
                     //UIスレッド上で呼び出してもらう
                     this.runOnUiThread(new Runnable(){
                         @Override
                         public void run(){
-
                             //リストビュー作成
-                            ArrayAdapterSupplier adapter = new ArrayAdapterSupplier(_self, displayList); // responseFriend.friendInfoList
-                            ListView listView = (ListView) findViewById(R.id.listViewSupplier);
+                            final ArrayAdapterSupplier adapter = new ArrayAdapterSupplier(_self, displayList); // responseFriend.friendInfoList
+                            final ListView listView = (ListView) findViewById(R.id.listViewSupplier);
                             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 //行タッチイベント
                                 @Override
-                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                                    ListView listView = (ListView)parent;
-                                    HDZFriendInfo friend = (HDZFriendInfo)listView.getItemAtPosition(position);
-                                    String supplier_id = friend.id;
-
+                                public void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id) {
+                                    // 行情報
+                                    final ListView listView = (ListView)parent;
+                                    final HDZFriendInfo friend = (HDZFriendInfo)listView.getItemAtPosition(position);
+                                    final String supplier_id = friend.id;
                                     // 画面遷移
                                     if (id == 0) {
                                         // カテゴリ一覧
-                                        Intent intent = new Intent( _self.getApplication(), ActivityCategorys.class);
+                                        final Intent intent = new Intent( _self.getApplication(), ActivityCategorys.class);
                                         intent.putExtra("supplier_id", supplier_id);
                                         _self.startActivity(intent);
                                     }
                                     else {
                                         // 取引先詳細
-                                        Intent intent = new Intent( _self.getApplication(), ActivitySupplierDetail.class);
+                                        final Intent intent = new Intent( _self.getApplication(), ActivitySupplierDetail.class);
                                         intent.putExtra("supplier_id", supplier_id);
                                         intent.putExtra("supplier_name", friend.name);
                                         _self.startActivity(intent);
@@ -121,8 +119,8 @@ public class ActivitySuppliers extends CustomAppCompatActivity {
 
                             if (!isFinishBadge) {
                                 // HTTP GET
-                                HDZApiRequestPackage.Badge req = new HDZApiRequestPackage.Badge();
-                                AppGlobals globals = (AppGlobals) _self.getApplication();
+                                final HDZApiRequestPackage.Badge req = new HDZApiRequestPackage.Badge();
+                                final AppGlobals globals = (AppGlobals) _self.getApplication();
                                 req.begin( globals.getUserId(), globals.getUuid(), _self);
                             }
                         }
@@ -139,13 +137,14 @@ public class ActivitySuppliers extends CustomAppCompatActivity {
     public void reFleshListView() {
         //UIスレッド上で呼び出してもらう
         this.runOnUiThread(new Runnable() {
-                               @Override
-                               public void run() {
-                                   ListView listView = (ListView) findViewById(R.id.listViewSupplier);
-                                   ArrayAdapterSupplier adapter = (ArrayAdapterSupplier) listView.getAdapter();
-                                   adapter.notifyDataSetChanged();
-                               }
-                           });
+
+            @Override
+            public void run() {
+                final ListView listView = (ListView) findViewById(R.id.listViewSupplier);
+                final ArrayAdapterSupplier adapter = (ArrayAdapterSupplier) listView.getAdapter();
+                adapter.notifyDataSetChanged();
+            }
+        });
     }
 
     /**
@@ -154,17 +153,17 @@ public class ActivitySuppliers extends CustomAppCompatActivity {
      * @return result
      */
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(final Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(final MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        final int id = item.getItemId();
 
 //        final ActivitySuppliers _self = this;
 
@@ -177,7 +176,7 @@ public class ActivitySuppliers extends CustomAppCompatActivity {
 
         if (id == R.id.action_orderes) {
             // 注文履歴画面遷移
-            Intent intent = new Intent(getApplication(), ActivityOrderes.class);
+            final Intent intent = new Intent(getApplication(), ActivityOrderes.class);
             startActivity(intent);
             return true;
         }

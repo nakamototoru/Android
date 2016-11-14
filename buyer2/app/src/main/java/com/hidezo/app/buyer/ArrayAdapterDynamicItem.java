@@ -1,7 +1,6 @@
 package com.hidezo.app.buyer;
 
 import android.content.Context;
-//import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,11 +17,13 @@ import java.util.ArrayList;
  */
 class ArrayAdapterDynamicItem extends ArrayAdapter<HDZUserOrder> {
 
-    ArrayAdapterDynamicItem(Context context, ArrayList<HDZUserOrder> items) {
+    public static final int TouchEventDialog = 999;
+
+    ArrayAdapterDynamicItem(final Context context, final ArrayList<HDZUserOrder> items) {
         super(context, 0, items);
     }
     @Override
-    public boolean isEnabled(int position) {
+    public boolean isEnabled(final int position) {
         return false;  // ListView アイテムの選択を無効にする場合
     }
     @Override
@@ -40,77 +41,68 @@ class ArrayAdapterDynamicItem extends ArrayAdapter<HDZUserOrder> {
         }
 
         // Lookup view for data population
-        TextView tvName = (TextView) convertView.findViewById(R.id.textViewName);
+        final TextView tvName = (TextView) convertView.findViewById(R.id.textViewName);
         tvName.setText( item.itemName );
 
-        TextView tvPrice = (TextView) convertView.findViewById(R.id.textViewPrice);
+        final TextView tvPrice = (TextView) convertView.findViewById(R.id.textViewPrice);
         tvPrice.setText( item.price );
 
-        TextView tvCount = (TextView) convertView.findViewById(R.id.textViewCount);
+        final TextView tvCount = (TextView) convertView.findViewById(R.id.textViewCount);
         tvCount.setText( item.orderSize );
 
-        TextView tvRow = (TextView) convertView.findViewById(R.id.textViewRow);
+        final TextView tvRow = (TextView) convertView.findViewById(R.id.textViewRow);
         tvRow.setText( String.valueOf(position+1) );
 
-        // Touch Event
-//        TextView tvBtnPlus = (TextView)convertView.findViewById(R.id.textViewButtonUpdate);
-//        tvBtnPlus.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                // 親アクティビティへ
-//                ((ListView) parent).performItemClick(null, position, -1);
-//            }
-//        });
         // カート操作ボタン
         if ( item.numScale.size() < 100) {
             // 分数操作
             // 変更したいレイアウトを取得する
-            LinearLayout layout = (LinearLayout)convertView.findViewById(R.id.layoutOrderCountDynamic);
+            final LinearLayout layout = (LinearLayout)convertView.findViewById(R.id.layoutOrderCountDynamic);
             // レイアウトのビューをすべて削除する
             layout.removeAllViews();
             // レイアウトを変更する
-            LayoutInflater inflater = LayoutInflater.from(getContext());
+            final LayoutInflater inflater = LayoutInflater.from(getContext());
             inflater.inflate(R.layout.layout_order_fraction, layout);
 
             // Touch Event
-            TextView tvBtnUpdate = (TextView)convertView.findViewById(R.id.textViewButtonUpdate);
+            final TextView tvBtnUpdate = (TextView)convertView.findViewById(R.id.textViewButtonUpdate);
             tvBtnUpdate.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View view) {
+                public void onClick(final View view) {
                     // 変更ダイアログ
-                    ((ListView) parent).performItemClick(null, position, 999);
+                    ((ListView) parent).performItemClick(null, position, TouchEventDialog);
                 }
             });
         }
         else {
             // 整数操作
             // 変更したいレイアウトを取得する
-            LinearLayout layout = (LinearLayout)convertView.findViewById(R.id.layoutOrderCountDynamic);
+            final LinearLayout layout = (LinearLayout)convertView.findViewById(R.id.layoutOrderCountDynamic);
             // レイアウトのビューをすべて削除する
             layout.removeAllViews();
             // レイアウトを変更する
-            LayoutInflater inflater = LayoutInflater.from(getContext());
+            final LayoutInflater inflater = LayoutInflater.from(getContext());
             inflater.inflate(R.layout.layout_order_decimal, layout);
 
             // Touch Event
-            TextView tvBtnPlus = (TextView)convertView.findViewById(R.id.textViewButtonPlus);
+            final TextView tvBtnPlus = (TextView)convertView.findViewById(R.id.textViewButtonPlus);
             tvBtnPlus.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View view) {
+                public void onClick(final View view) {
                     // 操作制限
-                    int count = Integer.parseInt(item.orderSize);
+                    final int count = Integer.parseInt(item.orderSize);
                     if (count < 100) {
                         // 変更処理
                         ((ListView) parent).performItemClick(null, position, 1);
                     }
                 }
             });
-            TextView tvBtnMinus = (TextView)convertView.findViewById(R.id.textViewButtonMinus);
+            final TextView tvBtnMinus = (TextView)convertView.findViewById(R.id.textViewButtonMinus);
             tvBtnMinus.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
+                public void onClick(final View v) {
                     // 操作制限
-                    int count = Integer.parseInt(item.orderSize);
+                    final int count = Integer.parseInt(item.orderSize);
                     if (count > 0) {
                         // 変更処理
                         ((ListView) parent).performItemClick(null, position, -1);

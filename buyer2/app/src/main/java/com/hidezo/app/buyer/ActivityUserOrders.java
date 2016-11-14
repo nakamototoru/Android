@@ -14,13 +14,11 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.hidezo.app.buyer.model.Dau;
-
 import java.util.ArrayList;
 //import java.util.HashMap;
 import java.util.List;
@@ -39,19 +37,19 @@ public class ActivityUserOrders extends CustomAppCompatActivity {
     private GoogleApiClient client;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_orders);
 
-        Intent intent = getIntent();
+        final Intent intent = getIntent();
         mySupplierId = intent.getStringExtra("supplier_id");
 
         // Touch Event
-        TextView tvHome = (TextView)findViewById(R.id.textViewButtonHome);
+        final TextView tvHome = (TextView)findViewById(R.id.textViewButtonHome);
         tvHome.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent( getApplication(), ActivityCategorys.class);
+            public void onClick(final View v) {
+                final Intent intent = new Intent( getApplication(), ActivityCategorys.class);
                 intent.putExtra("supplier_id", mySupplierId);
                 startActivity(intent);
             }
@@ -61,8 +59,8 @@ public class ActivityUserOrders extends CustomAppCompatActivity {
         setNavigationBar("注文確認",true);
 
         // HTTP GET
-        HDZApiRequestPackage.Item req = new HDZApiRequestPackage.Item();
-        AppGlobals globals = (AppGlobals) this.getApplication();
+        final HDZApiRequestPackage.Item req = new HDZApiRequestPackage.Item();
+        final AppGlobals globals = (AppGlobals) this.getApplication();
         req.begin(globals.getUserId(), globals.getUuid(), mySupplierId, this);
 
         // Progress
@@ -77,7 +75,7 @@ public class ActivityUserOrders extends CustomAppCompatActivity {
      * HDZClientCallbacksGet
      * データ取得時
      */
-    public void HDZClientComplete(final String response, String apiName) {
+    public void HDZClientComplete(final String response, final String apiName) {
         // Progress
         closeProgressDialog();
 
@@ -97,33 +95,31 @@ public class ActivityUserOrders extends CustomAppCompatActivity {
                 @Override
                 public void run() {
                     // 表示リスト
-                    List<Dau> cartList = globals.selectCartList(mySupplierId);
-                    for (Dau dau : cartList) {
+                    final List<Dau> cartList = globals.selectCartList(mySupplierId);
+                    for (final Dau dau : cartList) {
                         if (dau.order_size.equals(AppGlobals.STR_ZERO)) {
                             continue;
                         }
                         boolean isFound = false;
                         // 動的商品チェック
-                        for (HDZItemInfo.DynamicItem item : responseItem.dynamicItemList) {
+                        for (final HDZItemInfo.DynamicItem item : responseItem.dynamicItemList) {
                             if (mySupplierId.equals(dau.supplier_id) && item.id.equals(dau.item_id)) {
-                                HDZUserOrder order = new HDZUserOrder();
+                                final HDZUserOrder order = new HDZUserOrder();
                                 order.getFromDynamic(item, mySupplierId);
                                 order.orderSize = dau.order_size;
                                 displayItemList.add(order);
                                 isFound = true;
-//                                Log.d("## NAME",item.item_name);
                                 break;
                             }
                         }
                         if (!isFound) {
                             // 静的商品チェック
-                            for (HDZItemInfo.StaticItem item : responseItem.staticItemList) {
+                            for (final HDZItemInfo.StaticItem item : responseItem.staticItemList) {
                                 if (mySupplierId.equals(dau.supplier_id) && item.id.equals(dau.item_id)) {
-                                    HDZUserOrder order = new HDZUserOrder();
+                                    final HDZUserOrder order = new HDZUserOrder();
                                     order.getFromStatic(item, mySupplierId);
                                     order.orderSize = dau.order_size;
                                     displayItemList.add(order);
-//                                    Log.d("## NAME",item.name);
                                     break;
                                 }
                             }
@@ -132,39 +128,39 @@ public class ActivityUserOrders extends CustomAppCompatActivity {
 
                     if (displayItemList.size() == 0) {
                         // カート空の場合
-                        ArrayList<HDZApiResponse> emptyList = new ArrayList<>();
-                        HDZApiResponse object = new HDZApiResponse();
+                        final ArrayList<HDZApiResponse> emptyList = new ArrayList<>();
+                        final HDZApiResponse object = new HDZApiResponse();
                         object.message = "カートが空です";
                         emptyList.add(object);
-                        ArrayAdapterEmpty emptyAdapter = new ArrayAdapterEmpty(_self,emptyList);
-                        ListView listView = (ListView) findViewById(R.id.listViewUserOrders);
+                        final ArrayAdapterEmpty emptyAdapter = new ArrayAdapterEmpty(_self,emptyList);
+                        final ListView listView = (ListView) findViewById(R.id.listViewUserOrders);
                         listView.setAdapter(emptyAdapter);
                         return;
                     }
 
                     // 注文確定ボタンを有効に
-                    TextView tvOrderDecide = (TextView) findViewById(R.id.textViewButtonOrderDecide);
+                    final TextView tvOrderDecide = (TextView) findViewById(R.id.textViewButtonOrderDecide);
                     tvOrderDecide.setOnClickListener(new View.OnClickListener() {
                         @Override
-                        public void onClick(View v) {
+                        public void onClick(final View v) {
                             // 遷移
-                            Intent intent = new Intent( _self.getApplication(), ActivityUserOrdersCheck.class);
+                            final Intent intent = new Intent( _self.getApplication(), ActivityUserOrdersCheck.class);
                             intent.putExtra("supplier_id", mySupplierId);
                             _self.startActivity(intent);
                         }
                     });
 
                     //リストビュー作成
-                    ArrayAdapterUserOrder adapter = new ArrayAdapterUserOrder(_self, displayItemList);
-                    ListView listView = (ListView) findViewById(R.id.listViewUserOrders);
+                    final ArrayAdapterUserOrder adapter = new ArrayAdapterUserOrder(_self, displayItemList);
+                    final ListView listView = (ListView) findViewById(R.id.listViewUserOrders);
                     listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         //行タッチイベント
                         @Override
-                        public void onItemClick(AdapterView<?> parent, View view, final int position, final long id) {
+                        public void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id) {
                             // ボタン場合分け
                             if (id == 0) {
                                 // カート削除
-                                HDZUserOrder order = displayItemList.get(position);
+                                final HDZUserOrder order = displayItemList.get(position);
                                 globals.deleteCart(order.supplierId, order.itemId);
                                 displayItemList.remove(position);
                                 // カート更新
@@ -172,7 +168,7 @@ public class ActivityUserOrders extends CustomAppCompatActivity {
                             }
                             else if (id == 1 || id == -1) {
                                 // 個数の増減
-                                HDZUserOrder order = displayItemList.get(position);
+                                final HDZUserOrder order = displayItemList.get(position);
                                 int count = Integer.parseInt(order.orderSize);
                                 count += (int)id;
                                 if (count == 0) {
@@ -183,7 +179,7 @@ public class ActivityUserOrders extends CustomAppCompatActivity {
                                     reFleshListView();
                                 }
                                 else if (count <= 100) {
-                                    String numScale = String.valueOf(count);
+                                    final String numScale = String.valueOf(count);
                                     globals.replaceCart(order.supplierId, order.itemId, numScale, order.isDynamic);
                                     order.orderSize = numScale;
                                     // カート更新
@@ -192,7 +188,7 @@ public class ActivityUserOrders extends CustomAppCompatActivity {
                             }
                             else {
                                 // ピッカーの作成
-                                ArrayList<String> pickerList = new ArrayList<>();
+                                final ArrayList<String> pickerList = new ArrayList<>();
                                 pickerList.add( AppGlobals.STR_ZERO );
                                 pickerList.addAll(displayItemList.get(position).numScale);
                                 final CustomPickerView pickerView = new CustomPickerView(_self, pickerList, displayItemList.get(position).orderSize);
@@ -206,10 +202,10 @@ public class ActivityUserOrders extends CustomAppCompatActivity {
                                                 .setView(pickerView)
                                                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                                     @Override
-                                                    public void onClick(DialogInterface dialog, int id) {
+                                                    public void onClick(final DialogInterface dialog, final int id) {
                                                         // カート更新
-                                                        HDZUserOrder order = displayItemList.get(position);
-                                                        String numScale = pickerView.getTextSelected();
+                                                        final HDZUserOrder order = displayItemList.get(position);
+                                                        final String numScale = pickerView.getTextSelected();
                                                         if (numScale.equals(AppGlobals.STR_ZERO)) {
                                                             //削除
                                                             globals.deleteCart(order.supplierId, order.itemId);
@@ -225,7 +221,7 @@ public class ActivityUserOrders extends CustomAppCompatActivity {
                                                 })
                                                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                                                     @Override
-                                                    public void onClick(DialogInterface dialog, int which) {
+                                                    public void onClick(final DialogInterface dialog, final int which) {
                                                     }
                                                 })
                                                 .show();
@@ -247,31 +243,31 @@ public class ActivityUserOrders extends CustomAppCompatActivity {
      */
     public void reFleshListView() {
         //
-        ListView listView = (ListView) findViewById(R.id.listViewUserOrders);
+        final ListView listView = (ListView) findViewById(R.id.listViewUserOrders);
 
         final AppGlobals globals = (AppGlobals) this.getApplication();
 
         // 表示リスト
-        List<Dau> cartList = globals.selectCartList(mySupplierId);
+        final List<Dau> cartList = globals.selectCartList(mySupplierId);
 
         if (cartList.size() <= 0) {
             // カート空の場合
-            ArrayList<HDZApiResponse> emptyList = new ArrayList<>();
-            HDZApiResponse object = new HDZApiResponse();
+            final ArrayList<HDZApiResponse> emptyList = new ArrayList<>();
+            final HDZApiResponse object = new HDZApiResponse();
             object.message = "カートが空です";
             emptyList.add(object);
-            ArrayAdapterEmpty emptyAdapter = new ArrayAdapterEmpty(this,emptyList);
+            final ArrayAdapterEmpty emptyAdapter = new ArrayAdapterEmpty(this,emptyList);
             listView.setAdapter(emptyAdapter);
             // 注文確定ボタンを無効に
-            TextView tvOrderDecide = (TextView) findViewById(R.id.textViewButtonOrderDecide);
+            final TextView tvOrderDecide = (TextView) findViewById(R.id.textViewButtonOrderDecide);
             tvOrderDecide.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
+                public void onClick(final View v) {
                 }
             });
         }
         else {
-            ArrayAdapterUserOrder adapter = (ArrayAdapterUserOrder) listView.getAdapter();
+            final ArrayAdapterUserOrder adapter = (ArrayAdapterUserOrder) listView.getAdapter();
             adapter.notifyDataSetChanged();
         }
 
@@ -285,24 +281,24 @@ public class ActivityUserOrders extends CustomAppCompatActivity {
      * @return result
      */
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(final Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
 //        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(final MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        final int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_logout) {
 
             // ログインフォーム画面遷移
-            Intent intent = new Intent(getApplication(), MainActivity.class);
+            final Intent intent = new Intent(getApplication(), MainActivity.class);
             startActivity(intent);
 
             return true;

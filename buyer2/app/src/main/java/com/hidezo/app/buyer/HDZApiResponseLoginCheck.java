@@ -14,16 +14,16 @@ class HDZApiResponseLoginCheck extends HDZApiResponse {
 
     @Override
     public boolean parseJson(final String str_json) {
-        boolean isSuccess = super.parseJson(str_json);
+        final boolean isSuccess = super.parseJson(str_json);
         if (isSuccess) {
             try {
-                JSONObject json = new JSONObject(str_json);
+                final JSONObject json = new JSONObject(str_json);
 
                 if ( !json.isNull("status") ) {
                     status = json.getString("status");
                 }
 
-            } catch (JSONException e) {
+            } catch (final JSONException e) {
                 e.printStackTrace();
             }
         }

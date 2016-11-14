@@ -20,32 +20,32 @@ class HDZApiResponseItem extends HDZApiResponse {
 
     @Override
     public boolean parseJson(final String str_json) {
-        boolean isSuccess = super.parseJson(str_json);
+        final boolean isSuccess = super.parseJson(str_json);
         if (isSuccess) {
             try {
-                JSONObject json = new JSONObject(str_json);
+                final JSONObject json = new JSONObject(str_json);
 
                 itemInfo.attr_flg = json.getString("attr_flg");
-                JSONArray json_charge_list = json.getJSONArray("charge_list");
+                final JSONArray json_charge_list = json.getJSONArray("charge_list");
                 for (int i = 0; i < json_charge_list.length(); i++) {
                     itemInfo.charge_list.add( json_charge_list.getString(i) );
                 }
-                JSONArray json_deliver_to_list = json.getJSONArray("deliver_to_list");
+                final JSONArray json_deliver_to_list = json.getJSONArray("deliver_to_list");
                 for (int i = 0; i < json_deliver_to_list.length(); i++) {
                     itemInfo.deliver_to_list.add( json_deliver_to_list.getString(i) );
                 }
 
-                JSONObject json_supplier = json.getJSONObject("supplier");
+                final JSONObject json_supplier = json.getJSONObject("supplier");
                 supplierInfo.supplier_id = json_supplier.getString("supplier_id");
                 supplierInfo.supplier_name = json_supplier.getString("supplier_name");
 
 //                Log.d("########",json_staticItem.toString());
 
                 if ( !json.isNull("staticItem") ) {
-                    JSONArray json_staticItem = json.getJSONArray("staticItem");
+                    final JSONArray json_staticItem = json.getJSONArray("staticItem");
                     for (int i = 0; i < json_staticItem.length(); i++) {
 
-                        HDZItemInfo.StaticItem item = new HDZItemInfo.StaticItem();
+                        final HDZItemInfo.StaticItem item = new HDZItemInfo.StaticItem();
                         item.id = json_staticItem.getJSONObject(i).getString("id");
                         item.name = json_staticItem.getJSONObject(i).getString("name");
                         item.price = json_staticItem.getJSONObject(i).getString("price");
@@ -59,19 +59,19 @@ class HDZApiResponseItem extends HDZApiResponse {
                         item.scale = json_staticItem.getJSONObject(i).getString("scale");
                         item.standard = json_staticItem.getJSONObject(i).getString("standard");
 
-                        JSONArray json_num_scale = json_staticItem.getJSONObject(i).getJSONArray("num_scale");
+                        final JSONArray json_num_scale = json_staticItem.getJSONObject(i).getJSONArray("num_scale");
                         for (int j = 0; j < json_num_scale.length(); j++) {
                             item.num_scale.add( json_num_scale.getString(j) );
                         }
 
-                        JSONObject json_category = json_staticItem.getJSONObject(i).getJSONObject("category");
+                        final JSONObject json_category = json_staticItem.getJSONObject(i).getJSONObject("category");
 
 //                        Log.d("########",json_category.toString());
 
                         item.category.id = json_category.getString("id");
                         item.category.name = json_category.getString("name");
                         item.category.isStatic = true;
-                        int img_flg = json_category.getInt("image_flg");
+                        final int img_flg = json_category.getInt("image_flg");
                         if (img_flg != 0) {
                             // 画像無し
                             item.category.image_flg = true;
@@ -83,15 +83,15 @@ class HDZApiResponseItem extends HDZApiResponse {
                 }
 
                 if ( !json.isNull("dynamicItem") ) {
-                    JSONArray json_dynamicItem = json.getJSONArray("dynamicItem");
+                    final JSONArray json_dynamicItem = json.getJSONArray("dynamicItem");
                     for (int i = 0; i < json_dynamicItem.length(); i++) {
 
-                        HDZItemInfo.DynamicItem item = new HDZItemInfo.DynamicItem();
+                        final HDZItemInfo.DynamicItem item = new HDZItemInfo.DynamicItem();
                         item.id = json_dynamicItem.getJSONObject(i).getString("id");
                         item.item_name = json_dynamicItem.getJSONObject(i).getString("item_name");
                         item.price = json_dynamicItem.getJSONObject(i).getString("price");
 
-                        JSONArray json_num_scale = json_dynamicItem.getJSONObject(i).getJSONArray("num_scale");
+                        final JSONArray json_num_scale = json_dynamicItem.getJSONObject(i).getJSONArray("num_scale");
                         for (int j = 0; j < json_num_scale.length(); j++) {
                             item.num_scale.add(json_num_scale.getString(j));
                         }
@@ -101,18 +101,18 @@ class HDZApiResponseItem extends HDZApiResponse {
                 }
 
                 if ( !json.isNull("dynamicItemInfo") ) {
-                    JSONArray json_dynamiciteminfo = json.getJSONArray("dynamicItemInfo");
+                    final JSONArray json_dynamiciteminfo = json.getJSONArray("dynamicItemInfo");
                     if (json_dynamiciteminfo.length() >= 1) {
                         dynamicItemInfo.text = json_dynamiciteminfo.getJSONObject(0).getString("text");
                         dynamicItemInfo.lastUpdate = json_dynamiciteminfo.getJSONObject(0).getString("lastUpdate");
-                        JSONArray json_imagepath = json_dynamiciteminfo.getJSONObject(0).getJSONArray("imagePath");
+                        final JSONArray json_imagepath = json_dynamiciteminfo.getJSONObject(0).getJSONArray("imagePath");
                         for (int i = 0; i < json_imagepath.length(); i++) {
                             dynamicItemInfo.imagePath.add( json_imagepath.getString(i) );
                         }
                     }
                 }
 
-            } catch (JSONException e) {
+            } catch (final JSONException e) {
                 e.printStackTrace();
             }
         }

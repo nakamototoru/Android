@@ -19,13 +19,13 @@ class HDZApiResponse {
 
         result = false;
         try {
-            JSONObject json = new JSONObject(str_json);
+            final JSONObject json = new JSONObject(str_json);
             result = json.getBoolean("result");
             message = json.getString("message");
             if (!result) {
                 Log.d("########",message);
             }
-        } catch (JSONException e) {
+        } catch (final JSONException e) {
             e.printStackTrace();
         }
         return result;

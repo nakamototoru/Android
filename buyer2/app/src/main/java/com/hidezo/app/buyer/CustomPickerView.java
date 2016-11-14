@@ -11,7 +11,7 @@ import java.util.ArrayList;
  *
  */
 
-public class CustomPickerView extends PickerView {
+class CustomPickerView extends PickerView {
 
     private CustomPickerView _self;
 
@@ -23,16 +23,16 @@ public class CustomPickerView extends PickerView {
     }
 
     private int indexSelected = 0;
-    public int getIndexSelected() {
-        return this.indexSelected;
-    }
+//    public int getIndexSelected() {
+//        return this.indexSelected;
+//    }
 
-    public CustomPickerView(Context context) {
+    public CustomPickerView(final Context context) {
         super(context);
         _self = this;
     }
 
-    public CustomPickerView(Context context, ArrayList<String> list, final String textTarget) {
+    public CustomPickerView(final Context context, final ArrayList<String> list, final String textTarget) {
         super(context);
         _self = this;
 
@@ -41,7 +41,7 @@ public class CustomPickerView extends PickerView {
         this.setData(list);
 
         int loop = 0;
-        for (String scale : dataList) {
+        for (final String scale : dataList) {
             if (scale.equals(textTarget)) {
                 _self.indexSelected = loop;
                 break;
@@ -52,7 +52,7 @@ public class CustomPickerView extends PickerView {
 
         this.setOnSelectListener(new PickerView.onSelectListener() {
             @Override
-            public void onSelect(String text) {
+            public void onSelect(final String text) {
                 _self.textSelected = text;
             }
         });

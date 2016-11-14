@@ -2,16 +2,9 @@ package com.hidezo.app.buyer;
 
 import android.app.Application;
 import android.content.ContentValues;
-//import android.content.DialogInterface;
-//import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-//import android.support.v7.app.AlertDialog;
-//import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-//import android.view.View;
-//import android.widget.AdapterView;
-//import android.widget.ListView;
 import com.hidezo.app.buyer.model.Dau;
 import com.hidezo.app.buyer.model.DauHelper;
 import com.hidezo.app.buyer.util.DBHelper;
@@ -38,14 +31,14 @@ public class AppGlobals extends Application {
      * @return uuid
      */
     public String createUuid() {
-
-        String uuid = UUID.randomUUID().toString();
+        final String uuid = UUID.randomUUID().toString();
 
         // インスタンスを取得する
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        final SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         // データを保存する
-        SharedPreferences.Editor ed = sp.edit();
-        SharedPreferences.Editor result = ed.putString("uuid", uuid);
+        final SharedPreferences.Editor ed = sp.edit();
+        final SharedPreferences.Editor result = ed.putString("uuid", uuid);
+        ed.apply();
         result.commit();
 
         Log.d("########",uuid);
@@ -54,9 +47,9 @@ public class AppGlobals extends Application {
     }
     public String getUuid() {
         // インスタンスを取得する
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        final SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         // データを取得する(第2引数はデフォルト値)
-        return sp.getString("uuid", ""); // F0CAC7E8-D81C-4667-BE8B-588869EF5D25
+        return sp.getString("uuid", "");
     }
 
     /**
@@ -65,15 +58,16 @@ public class AppGlobals extends Application {
      */
     public void setUserId(final String value) {
         // インスタンスを取得する
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        final SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         // データを保存する
-        SharedPreferences.Editor ed = sp.edit();
-        SharedPreferences.Editor result = ed.putString("user_id", value);
+        final SharedPreferences.Editor ed = sp.edit();
+        final SharedPreferences.Editor result = ed.putString("user_id", value);
+        ed.apply();
         result.commit();
     }
     public String getUserId() {
         // インスタンスを取得する
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        final SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         // データを取得する(第2引数はデフォルト値)
         return sp.getString("user_id", ""); // 6146740737615597570
     }
@@ -83,15 +77,16 @@ public class AppGlobals extends Application {
      */
     public void setLoginState(final boolean isLogin) {
         // インスタンスを取得する
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        final SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         // データを保存する
-        SharedPreferences.Editor ed = sp.edit();
-        SharedPreferences.Editor result = ed.putBoolean("is_login",isLogin);
+        final SharedPreferences.Editor ed = sp.edit();
+        final SharedPreferences.Editor result = ed.putBoolean("is_login",isLogin);
+        ed.apply();
         result.commit();
     }
     public boolean getLoginState() {
         // インスタンスを取得する
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        final SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         // データを取得する(第2引数はデフォルト値)
         return sp.getBoolean("is_login",false);
     }
@@ -99,20 +94,16 @@ public class AppGlobals extends Application {
     /**
      * ログアウトチェック
      */
-    public boolean checkLogOut(boolean result, String message) {
+    public boolean checkLogOut(final boolean result, final String message) {
 
         Log.d("## Global","checkLogOut");
 
         if (message.equals("データがありません")) {
-
             Log.d("##", "データがありません");
-
             return false;
         }
         else if (result) {
-
             Log.d("##", "result = true");
-
             return false;
         }
         return true;
@@ -124,15 +115,16 @@ public class AppGlobals extends Application {
     private static final String keyMessage = "message";
     public void setOrderMessage(final String text) {
         // インスタンスを取得する
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        final SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         // データを保存する
-        SharedPreferences.Editor ed = sp.edit();
-        SharedPreferences.Editor result = ed.putString(keyMessage, text);
+        final SharedPreferences.Editor ed = sp.edit();
+        final SharedPreferences.Editor result = ed.putString(keyMessage, text);
+        ed.apply();
         result.commit();
     }
     public String getOrderMessage() {
         // インスタンスを取得する
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        final SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         // データを取得する(第2引数はデフォルト値)
         return sp.getString(keyMessage, "");
     }
@@ -156,15 +148,16 @@ public class AppGlobals extends Application {
     });
     public void setOrderDeliverDay(final String text) {
         // インスタンスを取得する
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        final SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         // データを保存する
-        SharedPreferences.Editor ed = sp.edit();
-        SharedPreferences.Editor result = ed.putString(keyDeliverDay, text);
+        final SharedPreferences.Editor ed = sp.edit();
+        final SharedPreferences.Editor result = ed.putString(keyDeliverDay, text);
+        ed.apply();
         result.commit();
     }
     public String getOrderDeliverDay() {
         // インスタンスを取得する
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        final SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         // データを取得する(第2引数はデフォルト値)
         return sp.getString(keyDeliverDay, deliverDayList.get(0));
     }
@@ -175,15 +168,16 @@ public class AppGlobals extends Application {
     private static final String keyCharge = "charge";
     public void setOrderCharge(final String text) {
         // インスタンスを取得する
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        final SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         // データを保存する
-        SharedPreferences.Editor ed = sp.edit();
-        SharedPreferences.Editor result = ed.putString(keyCharge, text);
+        final SharedPreferences.Editor ed = sp.edit();
+        final SharedPreferences.Editor result = ed.putString(keyCharge, text);
+        ed.apply();
         result.commit();
     }
     public String getOrderCharge() {
         // インスタンスを取得する
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        final SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         // データを取得する(第2引数はデフォルト値)
         return sp.getString(keyCharge, "");
     }
@@ -194,15 +188,16 @@ public class AppGlobals extends Application {
     private static final String keyDeliverPlace = "deliver_place";
     public void setOrderDeliverPlace(final String text) {
         // インスタンスを取得する
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        final SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         // データを保存する
-        SharedPreferences.Editor ed = sp.edit();
-        SharedPreferences.Editor result = ed.putString(keyDeliverPlace, text);
+        final SharedPreferences.Editor ed = sp.edit();
+        final SharedPreferences.Editor result = ed.putString(keyDeliverPlace, text);
+        ed.apply();
         result.commit();
     }
     public String getOrderDeliverPlace() {
         // インスタンスを取得する
-        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        final SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         // データを取得する(第2引数はデフォルト値)
         return sp.getString(keyDeliverPlace, "");
     }
@@ -223,28 +218,28 @@ public class AppGlobals extends Application {
      * 注文カート操作
      */
     public void createCart() {
-        DBHelper dBHelper;
+        final DBHelper dBHelper;
         try {
             // 一度クリエイトすれば次からはスキップされる
             dBHelper = new DBHelper(getApplicationContext());
             dBHelper.sendSuccess();
-        } catch(Exception e) {
+        } catch(final Exception e) {
             Log.d(DauHelper.TAG, e.getMessage());
         }
     }
     public Dau selectCartDau(final String supplier_id, final String item_id) {
-        Dau dau = DauHelper.getDau(getApplicationContext(), supplier_id, item_id);
+        final Dau dau = DauHelper.getDau(getApplicationContext(), supplier_id, item_id);
         if (dau != null) {
             Log.d(DauHelper.TAG, dau.toString());
         }
-        List<Dau> list = DauHelper.getDauList(getApplicationContext());
+        final List<Dau> list = DauHelper.getDauList(getApplicationContext());
         Log.d(DauHelper.TAG, " list result : " + list.size());
 
         return dau;
     }
     public List<Dau> selectCartList(final String supplier_id) {
-        List<Dau> list_dau = DauHelper.getDauList(getApplicationContext(),supplier_id);
-        List<Dau> response = new ArrayList<>();
+        final List<Dau> list_dau = DauHelper.getDauList(getApplicationContext(),supplier_id);
+        final List<Dau> response = new ArrayList<>();
         response.addAll(list_dau);
         return response;
     }
@@ -257,8 +252,8 @@ public class AppGlobals extends Application {
 //        }
 //        Log.d(DauHelper.TAG, " list result : " + list_dau.size());
 //    }
-    public long insertCart(final String supplier_id, final String item_id, final String order_size, boolean is_dynamic) {
-        ContentValues contentValues = new ContentValues();
+    public long insertCart(final String supplier_id, final String item_id, final String order_size, final boolean is_dynamic) {
+        final ContentValues contentValues = new ContentValues();
         // "カラム名","値"
         contentValues.put(Dau.getKeyId() ,UUID.randomUUID().toString());
         contentValues.put(Dau.getKeySupplierId(), supplier_id);
@@ -267,28 +262,28 @@ public class AppGlobals extends Application {
         contentValues.put(Dau.getKeyIsDYnamic(), is_dynamic);
         contentValues.put(Dau.getKeyCreatedAt(), System.currentTimeMillis());
         contentValues.put(Dau.getKeyUpdatedAt(), System.currentTimeMillis());
-        long result = DauHelper.insert(getApplicationContext(), contentValues);
+        final long result = DauHelper.insert(getApplicationContext(), contentValues);
 
         Log.d(DauHelper.TAG, " insert result : " + result);
 
         return result;
     }
-    public long updateCart(final String supplier_id, final String item_id, final String order_size, boolean is_dynamic) {
-        ContentValues contentValues = new ContentValues();
+    public long updateCart(final String supplier_id, final String item_id, final String order_size, final boolean is_dynamic) {
+        final ContentValues contentValues = new ContentValues();
         // "カラム名","値"
         contentValues.put(Dau.getKeyOrderSize(), order_size);
         contentValues.put(Dau.getKeyIsDYnamic(), is_dynamic);
         contentValues.put(Dau.getKeyUpdatedAt(), System.currentTimeMillis());
-        long result = DauHelper.update(getApplicationContext(), contentValues, supplier_id, item_id);
+        final long result = DauHelper.update(getApplicationContext(), contentValues, supplier_id, item_id);
 
         Log.d(DauHelper.TAG, " update result : " + result);
 
         return result;
     }
-    public long replaceCart(final String supplier_id, final String item_id, final String order_size, boolean is_dynamic) {
+    public long replaceCart(final String supplier_id, final String item_id, final String order_size, final boolean is_dynamic) {
 
-        Dau dau = selectCartDau(supplier_id,item_id);
-        long result;
+        final Dau dau = selectCartDau(supplier_id,item_id);
+        final long result;
         if (dau == null) {
             // 新規
             result = insertCart(supplier_id,item_id,order_size, is_dynamic);
@@ -301,12 +296,12 @@ public class AppGlobals extends Application {
     }
 
     public void deleteCart(final String supplier_id, final String item_id) {
-        long result = DauHelper.delete(getApplicationContext(), supplier_id,item_id);
+        final long result = DauHelper.delete(getApplicationContext(), supplier_id,item_id);
         Log.d(DauHelper.TAG, " delete result : " + result);
     }
 
     public void deleteAllCart() {
-        long result = DauHelper.deleteAll(getApplicationContext());
+        final long result = DauHelper.deleteAll(getApplicationContext());
         Log.d(DauHelper.TAG, " delete result : " + result);
     }
 }

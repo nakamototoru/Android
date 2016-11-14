@@ -8,9 +8,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 //import android.widget.ListView;
 import android.widget.TextView;
-
-//import com.hidezo.app.buyer.HDZItemInfo;
-
 import java.util.ArrayList;
 
 /**
@@ -19,18 +16,18 @@ import java.util.ArrayList;
  */
 class ArrayAdapterStaticItemDetail extends ArrayAdapter<HDZProfile> {
 
-    ArrayAdapterStaticItemDetail(Context context, ArrayList<HDZProfile> items) {
+    ArrayAdapterStaticItemDetail(final Context context, final ArrayList<HDZProfile> items) {
         super(context, 0, items);
     }
     @Override
-    public boolean isEnabled(int position) {
+    public boolean isEnabled(final int position) {
         return false;  // ListView アイテムの選択を無効にする場合
     }
     @Override
     public View getView(final int position, View convertView, final ViewGroup parent) {
 
         // Get the data item for this position
-        HDZProfile profileInfo = getItem(position);
+        final HDZProfile profileInfo = getItem(position);
         if (profileInfo == null) {
             return convertView;
         }
@@ -41,9 +38,9 @@ class ArrayAdapterStaticItemDetail extends ArrayAdapter<HDZProfile> {
         }
 
         // Lookup view for data population
-        TextView tvTitle = (TextView) convertView.findViewById(R.id.textViewTitle);
+        final TextView tvTitle = (TextView) convertView.findViewById(R.id.textViewTitle);
         tvTitle.setText(profileInfo.title);
-        TextView tvContent = (TextView) convertView.findViewById(R.id.textViewContent);
+        final TextView tvContent = (TextView) convertView.findViewById(R.id.textViewContent);
         tvContent.setText(profileInfo.content);
 
         // Return the completed view to render on screen

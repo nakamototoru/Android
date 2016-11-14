@@ -14,17 +14,17 @@ class HDZApiResponseFriend extends HDZApiResponse {
     ArrayList<HDZFriendInfo> friendInfoList = new ArrayList<>();
 
     @Override
-    public boolean parseJson(final String strjson) {
-        boolean isSuccess = super.parseJson(strjson);
+    public boolean parseJson(final String str_json) {
+        final boolean isSuccess = super.parseJson(str_json);
         if (isSuccess) {
             try {
-                JSONObject json = new JSONObject(strjson);
+                final JSONObject json = new JSONObject(str_json);
 
                 if ( !json.isNull("friendList") ) {
-                    JSONArray friendList = json.getJSONArray("friendList");
+                    final JSONArray friendList = json.getJSONArray("friendList");
                     if (friendList.length() > 0) {
                         for (int i = 0; i < friendList.length(); i++) {
-                            HDZFriendInfo info = new HDZFriendInfo();
+                            final HDZFriendInfo info = new HDZFriendInfo();
                             info.id = friendList.getJSONObject(i).getString("id");
                             info.name = friendList.getJSONObject(i).getString("name");
                             info.address = friendList.getJSONObject(i).getString("address");
@@ -38,7 +38,7 @@ class HDZApiResponseFriend extends HDZApiResponse {
                     }
                 }
 
-            } catch (JSONException e) {
+            } catch (final JSONException e) {
                 e.printStackTrace();
             }
         }

@@ -23,7 +23,7 @@ class HDZUserOrder {
     String price = "";
     String image = "";
 
-    public void getFromDynamic(HDZItemInfo.DynamicItem src, String supplier_id) {
+    public void getFromDynamic(final HDZItemInfo.DynamicItem src, final String supplier_id) {
 
         this.id = src.id;
         this.isDynamic = true;
@@ -34,14 +34,14 @@ class HDZUserOrder {
         this.price = src.price;
     }
 
-    public static void transFromDynamic(CustomAppCompatActivity activity, ArrayList<HDZItemInfo.DynamicItem> srcList, String supplier_id, ArrayList<HDZUserOrder> dstList) {
+    public static void transFromDynamic(final CustomAppCompatActivity activity, final ArrayList<HDZItemInfo.DynamicItem> srcList, final String supplier_id, final ArrayList<HDZUserOrder> dstList) {
         final AppGlobals globals = (AppGlobals) activity.getApplication();
         // 表示リスト
-        for (HDZItemInfo.DynamicItem src : srcList) {
-            HDZUserOrder item = new HDZUserOrder();
+        for (final HDZItemInfo.DynamicItem src : srcList) {
+            final HDZUserOrder item = new HDZUserOrder();
             item.getFromDynamic(src, supplier_id);
             // カート内容
-            Dau dau = globals.selectCartDau(item.supplierId,item.itemId);
+            final Dau dau = globals.selectCartDau(item.supplierId,item.itemId);
             if (dau != null) {
                 item.orderSize = dau.order_size;
             }
@@ -52,7 +52,7 @@ class HDZUserOrder {
         }
     }
 
-    public void getFromStatic(HDZItemInfo.StaticItem src, String supplier_id) {
+    public void getFromStatic(final HDZItemInfo.StaticItem src, final String supplier_id) {
 
         this.id = src.id;
         this.numScale = src.num_scale;
@@ -66,14 +66,14 @@ class HDZUserOrder {
         this.image = src.image;
     }
 
-    public static void transFromStatic(CustomAppCompatActivity activity, ArrayList<HDZItemInfo.StaticItem> srcList, String supplier_id, ArrayList<HDZUserOrder> dstList) {
+    public static void transFromStatic(final CustomAppCompatActivity activity, final ArrayList<HDZItemInfo.StaticItem> srcList, final String supplier_id, final ArrayList<HDZUserOrder> dstList) {
         final AppGlobals globals = (AppGlobals) activity.getApplication();
         // 表示リスト
-        for (HDZItemInfo.StaticItem src : srcList) {
-            HDZUserOrder item = new HDZUserOrder();
+        for (final HDZItemInfo.StaticItem src : srcList) {
+            final HDZUserOrder item = new HDZUserOrder();
             item.getFromStatic(src, supplier_id);
             // カート内容
-            Dau dau = globals.selectCartDau(item.supplierId,item.itemId);
+            final Dau dau = globals.selectCartDau(item.supplierId,item.itemId);
             if (dau != null) {
                 item.orderSize = dau.order_size;
             }

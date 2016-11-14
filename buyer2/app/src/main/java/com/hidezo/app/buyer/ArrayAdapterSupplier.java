@@ -4,7 +4,7 @@ import android.content.Context;
 //import android.content.Intent;
 //import android.support.v7.app.AppCompatActivity;
 //import android.support.v7.widget.RecyclerView;
-import android.util.Log;
+//import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,18 +23,20 @@ import java.util.ArrayList;
  */
 class ArrayAdapterSupplier extends ArrayAdapter<HDZFriendInfo> {
 
-    ArrayAdapterSupplier(Context context, ArrayList<HDZFriendInfo> list) {
+    public static final int TouchEventDetail = 99;
+
+    ArrayAdapterSupplier(final Context context, final ArrayList<HDZFriendInfo> list) {
         super(context, 0, list);
     }
     @Override
-    public boolean isEnabled(int position) {
+    public boolean isEnabled(final int position) {
         return false;  // ListView アイテムの選択を無効にする場合
     }
     @Override
     public View getView(final int position, View convertView, final ViewGroup parent) {
 
         // Get the data item for this position
-        HDZFriendInfo friendInfo = getItem(position);
+        final HDZFriendInfo friendInfo = getItem(position);
         if (friendInfo == null) {
             return convertView;
         }
@@ -45,9 +47,9 @@ class ArrayAdapterSupplier extends ArrayAdapter<HDZFriendInfo> {
         }
 
         // Lookup view for data population
-        TextView tvName = (TextView) convertView.findViewById(R.id.tvName);
-        TextView tvRow = (TextView) convertView.findViewById(R.id.tvRow);
-        TextView tvOrder = (TextView) convertView.findViewById(R.id.textViewOrder);
+        final TextView tvName = (TextView) convertView.findViewById(R.id.tvName);
+        final TextView tvRow = (TextView) convertView.findViewById(R.id.tvRow);
+        final TextView tvOrder = (TextView) convertView.findViewById(R.id.textViewOrder);
 
         // Populate the data into the template view using the data object
         tvRow.setText( String.valueOf(position+1) );
@@ -55,25 +57,25 @@ class ArrayAdapterSupplier extends ArrayAdapter<HDZFriendInfo> {
         tvName.setText(friendInfo.name);
         tvName.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(final View view) {
 //                Log.d("########","R.id.tvName");
-                ((ListView) parent).performItemClick(null, position, 99);
+                ((ListView) parent).performItemClick(null, position, TouchEventDetail);
             }
         });
 
         tvOrder.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(final View view) {
 //                Log.d("########","R.id.tvOrder");
                 ((ListView) parent).performItemClick(null, position, 0);
             }
         });
 
         // 通知バッジ表示
-        CircleView circleView = (CircleView)convertView.findViewById(R.id.viewForBadge);
+        final CircleView circleView = (CircleView)convertView.findViewById(R.id.viewForBadge);
         if (friendInfo.badgeCount > 0) {
             circleView.setColor(R.color.colorForBadge);
-            TextView tvCount = (TextView)convertView.findViewById(R.id.textViewBadgeCount);
+            final TextView tvCount = (TextView)convertView.findViewById(R.id.textViewBadgeCount);
             tvCount.setText( String.valueOf(friendInfo.badgeCount) );
         }
         else {

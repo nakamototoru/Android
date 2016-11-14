@@ -21,20 +21,20 @@ public class ActivitySupplierDetail extends CustomAppCompatActivity {
     String mySupplierId = "";
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_supplier_detail);
 
-        Intent intent = getIntent();
+        final Intent intent = getIntent();
         mySupplierId = intent.getStringExtra("supplier_id");
 
         // ツールバー初期化
-        String supplier_name = intent.getStringExtra("supplier_name");
+        final String supplier_name = intent.getStringExtra("supplier_name");
         setNavigationBar(supplier_name,true);
 
         // HTTP GET
-        HDZApiRequestPackage.Friend req = new HDZApiRequestPackage.Friend();
-        AppGlobals globals = (AppGlobals) this.getApplication();
+        final HDZApiRequestPackage.Friend req = new HDZApiRequestPackage.Friend();
+        final AppGlobals globals = (AppGlobals) this.getApplication();
         req.begin( globals.getUserId(), globals.getUuid(), this);
 
         // Progress
@@ -45,7 +45,7 @@ public class ActivitySupplierDetail extends CustomAppCompatActivity {
      * HDZClientCallbacksGet
      * データ取得時
      */
-    public void HDZClientComplete(String response, String apiName) {
+    public void HDZClientComplete(final String response, final String apiName) {
 
         // Progress
         closeProgressDialog();
@@ -61,21 +61,21 @@ public class ActivitySupplierDetail extends CustomAppCompatActivity {
                 return;
             }
 
-            for (HDZFriendInfo object : responseFriend.friendInfoList) {
+            for (final HDZFriendInfo object : responseFriend.friendInfoList) {
                 if (object.id.equals(mySupplierId)) {
 
                     final ArrayList<HDZProfile> profileList = new ArrayList<>();
-                    HDZProfile pName = new HDZProfile("店舗名",object.name);
+                    final HDZProfile pName = new HDZProfile("店舗名",object.name);
                     profileList.add(pName);
-                    HDZProfile pAddress = new HDZProfile("本社所在地",object.address);
+                    final HDZProfile pAddress = new HDZProfile("本社所在地",object.address);
                     profileList.add(pAddress);
-                    HDZProfile pMadd = new HDZProfile("メールアドレス",object.mail_addr);
+                    final HDZProfile pMadd = new HDZProfile("メールアドレス",object.mail_addr);
                     profileList.add(pMadd);
-                    HDZProfile pMobile = new HDZProfile("携帯電話",object.mobile);
+                    final HDZProfile pMobile = new HDZProfile("携帯電話",object.mobile);
                     profileList.add(pMobile);
-                    HDZProfile pPhone = new HDZProfile("電話番号",object.tel);
+                    final HDZProfile pPhone = new HDZProfile("電話番号",object.tel);
                     profileList.add(pPhone);
-                    HDZProfile pMaster = new HDZProfile("代表者",object.minister);
+                    final HDZProfile pMaster = new HDZProfile("代表者",object.minister);
                     profileList.add(pMaster);
 
                     //UIスレッド上で呼び出してもらう
@@ -83,8 +83,8 @@ public class ActivitySupplierDetail extends CustomAppCompatActivity {
                         @Override
                         public void run(){
                             //リストビュー作成
-                            ArrayAdapterSupplierDetail adapter = new ArrayAdapterSupplierDetail(_self, profileList);
-                            ListView listView = (ListView) findViewById(R.id.listViewSupplierDetail);
+                            final ArrayAdapterSupplierDetail adapter = new ArrayAdapterSupplierDetail(_self, profileList);
+                            final ListView listView = (ListView) findViewById(R.id.listViewSupplierDetail);
                             listView.setAdapter(adapter);
                         }
                     });
@@ -102,17 +102,17 @@ public class ActivitySupplierDetail extends CustomAppCompatActivity {
      * @return result
      */
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(final Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(final MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        final int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_logout) {

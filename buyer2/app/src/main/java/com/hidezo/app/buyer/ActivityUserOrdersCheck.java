@@ -26,19 +26,19 @@ public class ActivityUserOrdersCheck extends CustomAppCompatActivity {
     String mySupplierId = "";
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_orders_check);
 
-        Intent intent = getIntent();
+        final Intent intent = getIntent();
         mySupplierId = intent.getStringExtra("supplier_id");
 
         // ツールバー初期化
         setNavigationBar("注文前入力",true);
 
         // HTTP GET
-        HDZApiRequestPackage.Item req = new HDZApiRequestPackage.Item();
-        AppGlobals globals = (AppGlobals) this.getApplication();
+        final HDZApiRequestPackage.Item req = new HDZApiRequestPackage.Item();
+        final AppGlobals globals = (AppGlobals) this.getApplication();
         req.begin(globals.getUserId(), globals.getUuid(), mySupplierId, this);
 
         // Progress
@@ -49,7 +49,7 @@ public class ActivityUserOrdersCheck extends CustomAppCompatActivity {
      * HDZClientCallbacksGet
      * データ取得時
      */
-    public void HDZClientComplete(String response, String apiName) {
+    public void HDZClientComplete(final String response, final String apiName) {
         // Progress
         closeProgressDialog();
 
@@ -64,12 +64,12 @@ public class ActivityUserOrdersCheck extends CustomAppCompatActivity {
 
             final ArrayList<HDZProfile> profileList = new ArrayList<>();
 
-            HDZProfile pMessage = new HDZProfile("メッセージ", globals.getOrderMessage() );
+            final HDZProfile pMessage = new HDZProfile("メッセージ", globals.getOrderMessage() );
             profileList.add(pMessage);
 
             // 注文情報
             // 納品日
-            HDZProfile pDate = new HDZProfile("納品日", globals.getOrderDeliverDay() );
+            final HDZProfile pDate = new HDZProfile("納品日", globals.getOrderDeliverDay() );
             profileList.add(pDate);
 
             // 担当者
@@ -78,7 +78,7 @@ public class ActivityUserOrdersCheck extends CustomAppCompatActivity {
                 strCharge = responseItem.itemInfo.charge_list.get(0);
             }
             globals.setOrderCharge(strCharge);
-            HDZProfile pCharge = new HDZProfile("担当者", strCharge );
+            final HDZProfile pCharge = new HDZProfile("担当者", strCharge );
             profileList.add(pCharge);
 
             // 配達先
@@ -91,7 +91,7 @@ public class ActivityUserOrdersCheck extends CustomAppCompatActivity {
                 strDeliverTo = deliverPlaceList.get(0);
             }
             globals.setOrderDeliverPlace(strDeliverTo);
-            HDZProfile pDeliverTo = new HDZProfile("配達先",strDeliverTo);
+            final HDZProfile pDeliverTo = new HDZProfile("配達先",strDeliverTo);
             profileList.add(pDeliverTo);
 
 
@@ -100,12 +100,11 @@ public class ActivityUserOrdersCheck extends CustomAppCompatActivity {
                 @Override
                 public void run(){
                     //リストビュー作成
-                    ArrayAdapterUserOrderCheck adapter = new ArrayAdapterUserOrderCheck(_self, profileList);
-                    ListView listView = (ListView) findViewById(R.id.listViewUserOrdersCheck);
+                    final ArrayAdapterUserOrderCheck adapter = new ArrayAdapterUserOrderCheck(_self, profileList);
+                    final ListView listView = (ListView) findViewById(R.id.listViewUserOrdersCheck);
                     listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
-                        public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-
+                        public void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id) {
                             if (position == 0) {
                                 // テキストエディット
                                 final EditText editText = new EditText(ActivityUserOrdersCheck.this);
@@ -121,9 +120,9 @@ public class ActivityUserOrdersCheck extends CustomAppCompatActivity {
                                                 .setView(editText)
                                                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                                     @Override
-                                                    public void onClick(DialogInterface dialog, int id) {
+                                                    public void onClick(final DialogInterface dialog, final int id) {
 
-                                                        String content = editText.getText().toString();
+                                                        final String content = editText.getText().toString();
                                                         globals.setOrderMessage(content);
                                                         profileList.get(position).content = content;
                                                         reFleshListView();
@@ -131,7 +130,7 @@ public class ActivityUserOrdersCheck extends CustomAppCompatActivity {
                                                 })
                                                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                                                     @Override
-                                                    public void onClick(DialogInterface dialog, int which) {
+                                                    public void onClick(final DialogInterface dialog, final int which) {
                                                     }
                                                 })
                                                 .show();
@@ -166,9 +165,9 @@ public class ActivityUserOrdersCheck extends CustomAppCompatActivity {
                                                 .setView(pickerView)
                                                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                                     @Override
-                                                    public void onClick(DialogInterface dialog, int id) {
+                                                    public void onClick(final DialogInterface dialog, final int id) {
 
-                                                        String content = pickerView.getTextSelected();
+                                                        final String content = pickerView.getTextSelected();
                                                         switch (position) {
                                                             case 1: // 納品日
                                                                 globals.setOrderDeliverDay(content);
@@ -188,7 +187,7 @@ public class ActivityUserOrdersCheck extends CustomAppCompatActivity {
                                                 })
                                                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                                                     @Override
-                                                    public void onClick(DialogInterface dialog, int which) {
+                                                    public void onClick(final DialogInterface dialog, final int which) {
                                                     }
                                                 })
                                                 .show();
@@ -202,11 +201,10 @@ public class ActivityUserOrdersCheck extends CustomAppCompatActivity {
             });
 
             // 注文実行ボタン
-            TextView txBtnOrderExec = (TextView)findViewById(R.id.textViewButtonOrderExec);
+            final TextView txBtnOrderExec = (TextView)findViewById(R.id.textViewButtonOrderExec);
             txBtnOrderExec.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
-
+                public void onClick(final View v) {
                     openAlertOrderExec();
                 }
             });
@@ -217,8 +215,8 @@ public class ActivityUserOrdersCheck extends CustomAppCompatActivity {
      */
     public void reFleshListView() {
         //
-        ListView listView = (ListView) findViewById(R.id.listViewUserOrdersCheck);
-        ArrayAdapterUserOrderCheck adapter = (ArrayAdapterUserOrderCheck) listView.getAdapter();
+        final ListView listView = (ListView) findViewById(R.id.listViewUserOrdersCheck);
+        final ArrayAdapterUserOrderCheck adapter = (ArrayAdapterUserOrderCheck) listView.getAdapter();
         adapter.notifyDataSetChanged();
     }
 
@@ -240,16 +238,16 @@ public class ActivityUserOrdersCheck extends CustomAppCompatActivity {
                         .setMessage(message)
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             @Override
-                            public void onClick(DialogInterface dialog, int id) {
+                            public void onClick(final DialogInterface dialog, final int id) {
                                 // 画面遷移
-                                Intent intent = new Intent(getApplication(), ActivityUserOrdersExec.class);
+                                final Intent intent = new Intent(getApplication(), ActivityUserOrdersExec.class);
                                 intent.putExtra("supplier_id",mySupplierId);
                                 startActivity(intent);
                             }
                         })
                         .setNegativeButton("キャンセル", new DialogInterface.OnClickListener() {
                             @Override
-                            public void onClick(DialogInterface dialog, int which) {
+                            public void onClick(final DialogInterface dialog, final int which) {
                             }
                         })
                         .show();
@@ -265,26 +263,24 @@ public class ActivityUserOrdersCheck extends CustomAppCompatActivity {
      * @return result
      */
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(final Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
 //        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(final MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+        final int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_logout) {
-
             // ログインフォーム画面遷移
-            Intent intent = new Intent(getApplication(), MainActivity.class);
+            final Intent intent = new Intent(getApplication(), MainActivity.class);
             startActivity(intent);
-
             return true;
         }
 

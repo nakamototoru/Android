@@ -22,25 +22,25 @@ public class ActivityUserOrdersExec extends CustomAppCompatActivity {
     String myOrderNo = "";
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_orders_exec);
 
-        Intent intent = getIntent();
+        final Intent intent = getIntent();
         mySupplierId = intent.getStringExtra("supplier_id");
 
         final ActivityUserOrdersExec _self = this;
         final AppGlobals globals = (AppGlobals) this.getApplication();
 
-        ArrayList<String> static_items = new ArrayList<>();
-        ArrayList<String> dynamic_items = new ArrayList<>();
-        List<Dau> cartList = globals.selectCartList(mySupplierId);
-        for (Dau dau : cartList) {
+        final ArrayList<String> static_items = new ArrayList<>();
+        final ArrayList<String> dynamic_items = new ArrayList<>();
+        final List<Dau> cartList = globals.selectCartList(mySupplierId);
+        for (final Dau dau : cartList) {
             if (dau.order_size.equals(AppGlobals.STR_ZERO)) {
                 continue;
             }
             // 商品チェック
-            String dst = dau.item_id + "," + dau.order_size;
+            final String dst = dau.item_id + "," + dau.order_size;
             if (dau.is_dynamic) {
                 dynamic_items.add(dst);
             }
@@ -49,14 +49,14 @@ public class ActivityUserOrdersExec extends CustomAppCompatActivity {
             }
         }
         // HTTP POST
-        HDZApiRequestPackage.Order req = new HDZApiRequestPackage.Order();
+        final HDZApiRequestPackage.Order req = new HDZApiRequestPackage.Order();
         req.begin( globals.getUserId(), globals.getUuid(), mySupplierId, dynamic_items,static_items, globals.getOrderDeliverDay(), globals.getOrderCharge(), globals.getOrderDeliverPlace(), _self );
 
         // Progress
         openPostProgressDialog();
     }
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
+    public boolean onKeyDown(final int keyCode, final KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             // 戻るボタンを無効
             Log.d("####","戻るボタン無効");
@@ -70,7 +70,7 @@ public class ActivityUserOrdersExec extends CustomAppCompatActivity {
      */
     void goOrdersFinish() {
         // 画面遷移
-        Intent intent = new Intent(getApplication(), ActivityUserOrdersFinish.class);
+        final Intent intent = new Intent(getApplication(), ActivityUserOrdersFinish.class);
         intent.putExtra("supplier_id",mySupplierId);
         startActivity(intent);
     }
@@ -79,10 +79,11 @@ public class ActivityUserOrdersExec extends CustomAppCompatActivity {
      * HDZClientCallbacksGet
      * データ取得時
      */
-    public void HDZClientComplete(String response,String apiName) {
+    public void HDZClientComplete(final String response,final String apiName) {
 
         final AppGlobals globals = (AppGlobals) this.getApplication();
-        if (apiName.equals("store/order")) {
+        if (apiName.equals(HDZApiRequestPackage.Order.apiName)) {
+            // "store/order"
             // 注文処理
             final HDZApiResponseOrderResult responseOrderResult = new HDZApiResponseOrderResult();
             if (responseOrderResult.parseJson(response)) {
@@ -104,7 +105,7 @@ public class ActivityUserOrdersExec extends CustomAppCompatActivity {
                     else {
                         // メッセージ送信
                         // HTTP POST
-                        HDZApiRequestPackage.AddMessage req = new HDZApiRequestPackage.AddMessage();
+                        final HDZApiRequestPackage.AddMessage req = new HDZApiRequestPackage.AddMessage();
                         req.begin( globals.getUserId(), globals.getUuid(), globals.getOrderCharge(), globals.getOrderMessage(), myOrderNo, this);
                     }
                 }
@@ -163,9 +164,9 @@ public class ActivityUserOrdersExec extends CustomAppCompatActivity {
                         .setMessage(message)
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             @Override
-                            public void onClick(DialogInterface dialog, int id) {
+                            public void onClick(final DialogInterface dialog, final int id) {
                                 // 画面遷移
-                                Intent intent = new Intent( getApplication(), ActivityUserOrdersCheck.class);
+                                final Intent intent = new Intent( getApplication(), ActivityUserOrdersCheck.class);
                                 intent.putExtra("supplier_id", mySupplierId);
                                 startActivity(intent);
                             }

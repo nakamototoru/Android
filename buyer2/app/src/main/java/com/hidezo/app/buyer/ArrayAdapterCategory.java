@@ -1,8 +1,6 @@
 package com.hidezo.app.buyer;
 
 import android.content.Context;
-//import android.util.Log;
-//import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,14 +16,14 @@ import java.util.ArrayList;
  */
 class ArrayAdapterCategory extends ArrayAdapter<HDZItemInfo.Category> {
 
-    ArrayAdapterCategory(Context context, ArrayList<HDZItemInfo.Category> list) {
+    ArrayAdapterCategory(final Context context, final ArrayList<HDZItemInfo.Category> list) {
         super(context, 0, list);
     }
     @Override
     public View getView(final int position, View convertView, final ViewGroup parent) {
 
         // Get the data item for this position
-        HDZItemInfo.Category categoryInfo = getItem(position);
+        final HDZItemInfo.Category categoryInfo = getItem(position);
         if (categoryInfo == null) {
             return convertView;
         }
@@ -36,13 +34,13 @@ class ArrayAdapterCategory extends ArrayAdapter<HDZItemInfo.Category> {
         }
 
         // Lookup view for data population
-        TextView tvName = (TextView) convertView.findViewById(R.id.textViewCategoryName);
+        final TextView tvName = (TextView) convertView.findViewById(R.id.textViewCategoryName);
         tvName.setText(categoryInfo.name);
 
         // 通知バッジ表示
-        CircleView circleView = (CircleView)convertView.findViewById(R.id.viewForBadge);
+        final CircleView circleView = (CircleView)convertView.findViewById(R.id.viewForBadge);
         if (!categoryInfo.isStatic && categoryInfo.badgeCount > 0) {
-            TextView tvCount = (TextView)convertView.findViewById(R.id.textViewBadgeCount);
+            final TextView tvCount = (TextView)convertView.findViewById(R.id.textViewBadgeCount);
             tvCount.setText( String.valueOf(categoryInfo.badgeCount) );
             circleView.setColor(R.color.colorForBadge);
         }

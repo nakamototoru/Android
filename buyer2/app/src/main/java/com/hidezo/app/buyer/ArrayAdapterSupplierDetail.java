@@ -17,18 +17,18 @@ import java.util.ArrayList;
  */
 class ArrayAdapterSupplierDetail extends ArrayAdapter<HDZProfile> {
 
-    ArrayAdapterSupplierDetail(Context context, ArrayList<HDZProfile> list) {
+    ArrayAdapterSupplierDetail(final Context context, final ArrayList<HDZProfile> list) {
         super(context, 0, list);
     }
     @Override
-    public boolean isEnabled(int position) {
+    public boolean isEnabled(final int position) {
         return false;  // ListView アイテムの選択を無効にする場合
     }
     @Override
     public View getView(final int position, View convertView, final ViewGroup parent) {
 
         // Get the data item for this position
-        HDZProfile profileInfo = getItem(position);
+        final HDZProfile profileInfo = getItem(position);
         if (profileInfo == null) {
             return convertView;
         }
@@ -39,9 +39,9 @@ class ArrayAdapterSupplierDetail extends ArrayAdapter<HDZProfile> {
         }
 
         // Lookup view for data population
-        TextView tvTitle = (TextView) convertView.findViewById(R.id.textViewTitle);
+        final TextView tvTitle = (TextView) convertView.findViewById(R.id.textViewTitle);
         tvTitle.setText(profileInfo.title);
-        TextView tvContent = (TextView) convertView.findViewById(R.id.textViewContent);
+        final TextView tvContent = (TextView) convertView.findViewById(R.id.textViewContent);
         tvContent.setText(profileInfo.content);
 
         // Return the completed view to render on screen

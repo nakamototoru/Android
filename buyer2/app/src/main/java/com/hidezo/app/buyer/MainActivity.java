@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity implements HDZClient.HDZCall
     String myUserId = "";
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -33,38 +33,36 @@ public class MainActivity extends AppCompatActivity implements HDZClient.HDZCall
         globals.createCart();
 
         // エディットテキスト
-        TextView tvEditId = (TextView) findViewById(R.id.editTextUserId);
+        final TextView tvEditId = (TextView) findViewById(R.id.editTextUserId);
         tvEditId.setText(globals.getUserId());
 
         // クリックイベントを取得したいボタン
-        Button button = (Button) findViewById(R.id.buttonLogin);
+        final Button button = (Button) findViewById(R.id.buttonLogin);
         // ボタンに OnClickListener インターフェースを実装する
         button.setOnClickListener(new View.OnClickListener() {
-
             // クリック時に呼ばれるメソッド
             @Override
-            public void onClick(View view) {
-
+            public void onClick(final View view) {
                 // ログイン処理
-                TextView tvId = (TextView) findViewById(R.id.editTextUserId);
+                final TextView tvId = (TextView) findViewById(R.id.editTextUserId);
                 myUserId = tvId.getText().toString();
-                TextView tvPass = (TextView) findViewById(R.id.editTextPassword);
-                String password = tvPass.getText().toString();
-                String uuid = globals.createUuid();
+                final TextView tvPass = (TextView) findViewById(R.id.editTextPassword);
+                final String password = tvPass.getText().toString();
+                final String uuid = globals.createUuid();
                 // HTTP POST
-                HDZApiRequestPackage.Login req = new HDZApiRequestPackage.Login();
+                final HDZApiRequestPackage.Login req = new HDZApiRequestPackage.Login();
                 req.begin( myUserId, uuid, password, _self);
             }
         });
 
         // ツールバー初期化
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         // ログインチェック
         if (globals.getLoginState()) {
             // 画面遷移
-            Intent intent = new Intent(getApplication(), ActivitySuppliers.class);
+            final Intent intent = new Intent(getApplication(), ActivitySuppliers.class);
             startActivity(intent);
         }
     }
@@ -73,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements HDZClient.HDZCall
      * HDZClientCallbacksGet
      * データ取得時
      */
-    public void HDZClientComplete(String response,String apiName) {
+    public void HDZClientComplete(final String response,final String apiName) {
 
         if (apiName.equals("login/store")) {
             // ログイン処理
@@ -86,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements HDZClient.HDZCall
                     globals.setLoginState(true);
                     globals.resetOrderInfoWithMessage(true);
                     // 画面遷移
-                    Intent intent = new Intent(getApplication(), ActivitySuppliers.class);
+                    final Intent intent = new Intent(getApplication(), ActivitySuppliers.class);
                     startActivity(intent);
                 }
                 else {
@@ -102,7 +100,7 @@ public class MainActivity extends AppCompatActivity implements HDZClient.HDZCall
             }
         }
     }
-    public void HDZClientError(String error) {
+    public void HDZClientError(final String error) {
         // 警告
         openWarning("アクセスエラー","ネットワークにアクセス出来ませんでしたので時間を置いて再試行して下さい。");
     }
@@ -112,7 +110,6 @@ public class MainActivity extends AppCompatActivity implements HDZClient.HDZCall
      */
     public void openWarning(final String title, final String message) {
         final MainActivity _self = this;
-
         //UIスレッド上で呼び出してもらう
         this.runOnUiThread(new Runnable() {
             @Override
@@ -122,7 +119,7 @@ public class MainActivity extends AppCompatActivity implements HDZClient.HDZCall
                         .setMessage(message)
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             @Override
-                            public void onClick(DialogInterface dialog, int id) {
+                            public void onClick(final DialogInterface dialog, final int id) {
                             }
                         })
                         .show();
@@ -136,7 +133,7 @@ public class MainActivity extends AppCompatActivity implements HDZClient.HDZCall
      * @return menu on
      */
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(final Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
 //        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;

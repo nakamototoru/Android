@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 //import org.w3c.dom.Text;
@@ -22,11 +23,11 @@ public class ActivityOrderDetail extends CustomAppCompatActivity {
     String myCharge = "";
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_detail);
 
-        Intent intent = getIntent();
+        final Intent intent = getIntent();
         myOrderNo = intent.getStringExtra("order_no");
 
         // ツールナビゲーションバー
@@ -34,8 +35,8 @@ public class ActivityOrderDetail extends CustomAppCompatActivity {
         setNavigationBar(mySupplierName + "様宛",true);
 
         // HTTP GET
-        HDZApiRequestPackage.OrderDetail req = new HDZApiRequestPackage.OrderDetail();
-        AppGlobals globals = (AppGlobals) this.getApplication();
+        final HDZApiRequestPackage.OrderDetail req = new HDZApiRequestPackage.OrderDetail();
+        final AppGlobals globals = (AppGlobals) this.getApplication();
         req.begin(globals.getUserId(), globals.getUuid(), myOrderNo, this);
 
         // Progress
@@ -65,12 +66,12 @@ public class ActivityOrderDetail extends CustomAppCompatActivity {
                 @Override
                 public void run(){
                     //リストビュー作成
-                    ArrayAdapterOrderDetail adapter = new ArrayAdapterOrderDetail(_self,responseOrderDetail.itemList);
-                    ListView listView = (ListView) findViewById(R.id.listViewOrderDetail);
+                    final ArrayAdapterOrderDetail adapter = new ArrayAdapterOrderDetail(_self,responseOrderDetail.itemList);
+                    final ListView listView = (ListView) findViewById(R.id.listViewOrderDetail);
                     listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         //行タッチイベント
                         @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        public void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id) {
                             //
 //                            ListView listView = (ListView)parent;
 //                            HDZordered order = (HDZordered)listView.getItemAtPosition(position);
@@ -86,31 +87,32 @@ public class ActivityOrderDetail extends CustomAppCompatActivity {
                     // フッター
                     if (listView.getFooterViewsCount() == 0) {
                         //
-                        View footer = getLayoutInflater().inflate(R.layout.item_order_detail_footer,null);
+                        final LinearLayout inflateLayout = null;
+                        final View footer = getLayoutInflater().inflate(R.layout.item_order_detail_footer,inflateLayout);
                         listView.addFooterView(footer, null ,false); // タッチ無効
 
-                        String subTotal = responseOrderDetail.orderInfo.subTotal + "円";
-                        TextView tvSubTotal = (TextView)findViewById(R.id.textViewSubTotal);
+                        final String subTotal = responseOrderDetail.orderInfo.subTotal + "円";
+                        final TextView tvSubTotal = (TextView)findViewById(R.id.textViewSubTotal);
                         tvSubTotal.setText(subTotal);
 
-                        String deliverFee = responseOrderDetail.orderInfo.deliveryFee + "円";
-                        TextView tvDeliverFee = (TextView)findViewById(R.id.textViewDeliverFee);
+                        final String deliverFee = responseOrderDetail.orderInfo.deliveryFee + "円";
+                        final TextView tvDeliverFee = (TextView)findViewById(R.id.textViewDeliverFee);
                         tvDeliverFee.setText(deliverFee);
 
-                        String total = responseOrderDetail.orderInfo.total + "円";
-                        TextView tvTotal = (TextView)findViewById(R.id.textViewTotal);
+                        final String total = responseOrderDetail.orderInfo.total + "円";
+                        final TextView tvTotal = (TextView)findViewById(R.id.textViewTotal);
                         tvTotal.setText(total);
 
-                        String charge = responseOrderDetail.orderInfo.charge;
-                        TextView tvCharge = (TextView)findViewById(R.id.textViewCharge);
+                        final String charge = responseOrderDetail.orderInfo.charge;
+                        final TextView tvCharge = (TextView)findViewById(R.id.textViewCharge);
                         tvCharge.setText(charge);
 
-                        String deliverDay = responseOrderDetail.orderInfo.delivery_day;
-                        TextView tvDay = (TextView)findViewById(R.id.textViewDeliverDay);
+                        final String deliverDay = responseOrderDetail.orderInfo.delivery_day;
+                        final TextView tvDay = (TextView)findViewById(R.id.textViewDeliverDay);
                         tvDay.setText(deliverDay);
 
-                        String deliverTo = responseOrderDetail.orderInfo.deliver_to;
-                        TextView tvTo = (TextView)findViewById(R.id.textViewDeliverTo);
+                        final String deliverTo = responseOrderDetail.orderInfo.deliver_to;
+                        final TextView tvTo = (TextView)findViewById(R.id.textViewDeliverTo);
                         tvTo.setText(deliverTo);
                     }
 
@@ -127,30 +129,26 @@ public class ActivityOrderDetail extends CustomAppCompatActivity {
      * @return result
      */
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public boolean onCreateOptionsMenu(final Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_order_detail, menu);
         return true;
     }
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected(final MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-//        final ActivityOrderDetail _self = this;
+        final int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_message) {
-
             // 画面遷移
-            Intent intent = new Intent( getApplication(), ActivityMessages.class);
+            final Intent intent = new Intent( getApplication(), ActivityMessages.class);
             intent.putExtra("order_no", myOrderNo);
             intent.putExtra("supplier_name", mySupplierName);
             intent.putExtra("charge", myCharge);
             startActivity(intent);
-
             return true;
         }
 
