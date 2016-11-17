@@ -10,7 +10,7 @@ import org.json.JSONObject;
  */
 class HDZApiResponseLoginCheck extends HDZApiResponse {
 
-    public String status = "";
+    String status = "";
 
     @Override
     public boolean parseJson(final String str_json) {

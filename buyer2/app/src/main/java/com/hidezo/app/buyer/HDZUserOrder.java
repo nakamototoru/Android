@@ -22,8 +22,9 @@ class HDZUserOrder {
     String scale = "";
     String price = "";
     String image = "";
+    boolean isNoImage = false;
 
-    public void getFromDynamic(final HDZItemInfo.DynamicItem src, final String supplier_id) {
+    void getFromDynamic(final HDZItemInfo.DynamicItem src, final String supplier_id) {
 
         this.id = src.id;
         this.isDynamic = true;
@@ -34,7 +35,7 @@ class HDZUserOrder {
         this.price = src.price;
     }
 
-    public static void transFromDynamic(final CustomAppCompatActivity activity, final ArrayList<HDZItemInfo.DynamicItem> srcList, final String supplier_id, final ArrayList<HDZUserOrder> dstList) {
+    static void transFromDynamic(final CustomAppCompatActivity activity, final ArrayList<HDZItemInfo.DynamicItem> srcList, final String supplier_id, final ArrayList<HDZUserOrder> dstList) {
         final AppGlobals globals = (AppGlobals) activity.getApplication();
         // 表示リスト
         for (final HDZItemInfo.DynamicItem src : srcList) {
@@ -52,7 +53,7 @@ class HDZUserOrder {
         }
     }
 
-    public void getFromStatic(final HDZItemInfo.StaticItem src, final String supplier_id) {
+    void getFromStatic(final HDZItemInfo.StaticItem src, final String supplier_id) {
 
         this.id = src.id;
         this.numScale = src.num_scale;
@@ -64,9 +65,14 @@ class HDZUserOrder {
         this.loading = src.loading;
         this.scale = src.scale;
         this.image = src.image;
+
+        this.isNoImage = src.category.image_flg;
+        if (this.isNoImage) {
+            this.image = "";
+        }
     }
 
-    public static void transFromStatic(final CustomAppCompatActivity activity, final ArrayList<HDZItemInfo.StaticItem> srcList, final String supplier_id, final ArrayList<HDZUserOrder> dstList) {
+    static void transFromStatic(final CustomAppCompatActivity activity, final ArrayList<HDZItemInfo.StaticItem> srcList, final String supplier_id, final ArrayList<HDZUserOrder> dstList) {
         final AppGlobals globals = (AppGlobals) activity.getApplication();
         // 表示リスト
         for (final HDZItemInfo.StaticItem src : srcList) {

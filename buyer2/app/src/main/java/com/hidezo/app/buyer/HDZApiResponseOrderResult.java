@@ -9,7 +9,7 @@ import org.json.JSONObject;
  */
 class HDZApiResponseOrderResult extends HDZApiResponse {
 
-    public String orderNo = "";
+    String orderNo = "";
 
     @Override
     public boolean parseJson(final String str_json) {

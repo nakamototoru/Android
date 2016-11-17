@@ -11,7 +11,7 @@ import java.util.ArrayList;
  */
 class HDZApiResponseOrderdItem extends HDZApiResponse {
 
-    public ArrayList<HDZItemInfo.StaticItem> staticItemList = new ArrayList<>();
+    ArrayList<HDZItemInfo.StaticItem> staticItemList = new ArrayList<>();
 
     @Override
     public boolean parseJson(final String str_json) {

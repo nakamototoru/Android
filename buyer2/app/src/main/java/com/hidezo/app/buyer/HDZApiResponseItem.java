@@ -12,11 +12,11 @@ import java.util.ArrayList;
  */
 class HDZApiResponseItem extends HDZApiResponse {
 
-    public HDZItemInfo itemInfo = new HDZItemInfo();
-    public HDZItemInfo.Supplier supplierInfo = new HDZItemInfo.Supplier();
-    public ArrayList<HDZItemInfo.StaticItem> staticItemList = new ArrayList<>();
-    public ArrayList<HDZItemInfo.DynamicItem> dynamicItemList = new ArrayList<>();
-    public HDZItemInfo.DynamicItemInfo dynamicItemInfo = new HDZItemInfo.DynamicItemInfo();
+    HDZItemInfo itemInfo = new HDZItemInfo();
+    HDZItemInfo.Supplier supplierInfo = new HDZItemInfo.Supplier();
+    ArrayList<HDZItemInfo.StaticItem> staticItemList = new ArrayList<>();
+    ArrayList<HDZItemInfo.DynamicItem> dynamicItemList = new ArrayList<>();
+    HDZItemInfo.DynamicItemInfo dynamicItemInfo = new HDZItemInfo.DynamicItemInfo();
 
     @Override
     public boolean parseJson(final String str_json) {

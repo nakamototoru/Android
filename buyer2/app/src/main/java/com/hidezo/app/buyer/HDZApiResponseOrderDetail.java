@@ -12,8 +12,8 @@ import java.util.ArrayList;
  */
 class HDZApiResponseOrderDetail extends HDZApiResponse {
 
-    public HDZOrderDetail.Info orderInfo = new HDZOrderDetail.Info();
-    public ArrayList<HDZOrderDetail.Item> itemList = new ArrayList<>();
+    HDZOrderDetail.Info orderInfo = new HDZOrderDetail.Info();
+    ArrayList<HDZOrderDetail.Item> itemList = new ArrayList<>();
 
     @Override
     public boolean parseJson(final String strJson) {

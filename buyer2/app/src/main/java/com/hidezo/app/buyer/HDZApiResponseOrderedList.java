@@ -11,7 +11,7 @@ import java.util.ArrayList;
  */
 class HDZApiResponseOrderedList extends HDZApiResponse {
 
-    public ArrayList<HDZordered> orderedList = new ArrayList<>();
+    ArrayList<HDZordered> orderedList = new ArrayList<>();
 
     @Override
     public boolean parseJson(final String str_json) {

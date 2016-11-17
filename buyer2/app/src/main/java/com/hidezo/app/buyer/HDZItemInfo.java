@@ -8,9 +8,9 @@ import java.util.ArrayList;
  */
 class HDZItemInfo {
 
-    public String attr_flg = "";
-    public ArrayList<String> charge_list = new ArrayList<>();
-    public ArrayList<String> deliver_to_list = new ArrayList<>();
+    String attr_flg = "";
+    ArrayList<String> charge_list = new ArrayList<>();
+    ArrayList<String> deliver_to_list = new ArrayList<>();
 
     static class Supplier {
         String supplier_id = "";

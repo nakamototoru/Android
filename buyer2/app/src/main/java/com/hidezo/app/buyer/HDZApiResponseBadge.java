@@ -20,8 +20,8 @@ class HDZApiResponseBadge extends HDZApiResponse {
         int messageCount = 0;
     }
 
-    public ArrayList<SupplierUp> badgeSupplierList = new ArrayList<>();
-    public ArrayList<MessageUp> badgeMessageList = new ArrayList<>();
+    ArrayList<SupplierUp> badgeSupplierList = new ArrayList<>();
+    ArrayList<MessageUp> badgeMessageList = new ArrayList<>();
 
     @Override
     public boolean parseJson(final String str_json) {

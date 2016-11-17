@@ -41,7 +41,12 @@ class ArrayAdapterStaticItem extends ArrayAdapter<HDZUserOrder> {
 
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_static_item, parent, false);
+            if (item.isNoImage) {
+                convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_static_noimage_item, parent, false);
+            }
+            else {
+                convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_static_item, parent, false);
+            }
         }
 
         // Lookup view for data population

@@ -20,9 +20,9 @@ class HDZApiResponseMessage extends HDZApiResponse {
         String nameOfSender = "";
     }
 
-    public String messageCount = "";
-    public ArrayList<Detail> messageList = new ArrayList<>();
-    public ArrayList<String> chargeList = new ArrayList<>();
+    String messageCount = "";
+    ArrayList<Detail> messageList = new ArrayList<>();
+    ArrayList<String> chargeList = new ArrayList<>();
 
     @Override
     public boolean parseJson(final String strJson) {
