@@ -21,15 +21,18 @@ class HDZApiRequestPackage {
 //    }
 
     static class Login {
-        public void begin(final String id,final String uuid,final String password, final HDZClient.HDZCallbacks callbacks) {
+        public static final String apiName = "store/login/attempt";
+
+        public void begin(final String login_id,final String uuid,final String pass, final HDZClient.HDZCallbacks callbacks) {
             final HDZApiRequest request = new HDZApiRequest();
 
             final HashMap<String,String> params = new HashMap<>();
-            params.put("id",id);
+            params.put("login_id",login_id);
             params.put("uuid",uuid);
-            params.put("password",password);
+            params.put("pass",pass);
+            params.put("device_div","2"); // for Android
 
-            request.beginPost("login/store", params, callbacks);
+            request.beginPost(apiName, params, callbacks);
         }
     }
 

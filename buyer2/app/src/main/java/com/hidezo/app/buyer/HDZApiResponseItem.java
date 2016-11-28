@@ -34,6 +34,10 @@ class HDZApiResponseItem extends HDZApiResponse {
                 for (int i = 0; i < json_deliver_to_list.length(); i++) {
                     itemInfo.deliver_to_list.add( json_deliver_to_list.getString(i) );
                 }
+                final JSONArray json_delivery_day_list = json.getJSONArray("delivery_day_list");
+                for (int i = 0; i < json_delivery_day_list.length(); i++) {
+                    itemInfo.delivery_day_list.add( json_delivery_day_list.getString(i) );
+                }
 
                 final JSONObject json_supplier = json.getJSONObject("supplier");
                 supplierInfo.supplier_id = json_supplier.getString("supplier_id");

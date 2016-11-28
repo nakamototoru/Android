@@ -11,6 +11,7 @@ class HDZItemInfo {
     String attr_flg = "";
     ArrayList<String> charge_list = new ArrayList<>();
     ArrayList<String> deliver_to_list = new ArrayList<>();
+    ArrayList<String> delivery_day_list = new ArrayList<>();
 
     static class Supplier {
         String supplier_id = "";

@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements HDZClient.HDZCall
      */
     public void HDZClientComplete(final String response,final String apiName) {
 
-        if (apiName.equals("login/store")) {
+        if (apiName.equals(HDZApiRequestPackage.Login.apiName)) {
             // ログイン処理
             final AppGlobals globals = (AppGlobals) this.getApplication();
             final HDZApiResponse responseLogin = new HDZApiResponse();

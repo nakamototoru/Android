@@ -69,7 +69,11 @@ public class ActivityUserOrdersCheck extends CustomAppCompatActivity {
 
             // 注文情報
             // 納品日
-            final HDZProfile pDate = new HDZProfile("納品日", globals.getOrderDeliverDay() );
+            String strDeliverDay = globals.getOrderDeliverDay();
+            if (strDeliverDay.equals("")) {
+                strDeliverDay = responseItem.itemInfo.delivery_day_list.get(0);
+            }
+            final HDZProfile pDate = new HDZProfile("納品日", strDeliverDay);
             profileList.add(pDate);
 
             // 担当者
@@ -78,7 +82,7 @@ public class ActivityUserOrdersCheck extends CustomAppCompatActivity {
                 strCharge = responseItem.itemInfo.charge_list.get(0);
             }
             globals.setOrderCharge(strCharge);
-            final HDZProfile pCharge = new HDZProfile("担当者", strCharge );
+            final HDZProfile pCharge = new HDZProfile("担当者", strCharge);
             profileList.add(pCharge);
 
             // 配達先
@@ -143,7 +147,7 @@ public class ActivityUserOrdersCheck extends CustomAppCompatActivity {
                                 // 場合分け
                                 switch (position) {
                                     case 1: // 納品日
-                                        pickerList.addAll( AppGlobals.deliverDayList );
+                                        pickerList.addAll( responseItem.itemInfo.delivery_day_list );
                                         break;
                                     case 2: // 担当者
                                         pickerList.addAll( responseItem.itemInfo.charge_list );

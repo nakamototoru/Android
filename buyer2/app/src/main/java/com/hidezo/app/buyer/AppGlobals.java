@@ -133,19 +133,19 @@ public class AppGlobals extends Application {
      * 注文前入力・納品日
      */
     private static final String keyDeliverDay = "deliver_day";
-    public static final List<String> deliverDayList = Collections.unmodifiableList(new LinkedList<String>() {
-        {
-            // 登録
-            add("最短納品日"); // 0
-            add("月曜日"); // 1
-            add("火曜日"); // 2
-            add("水曜日"); // 3
-            add("木曜日"); // 4
-            add("金曜日"); // 5
-            add("土曜日"); // 6
-            add("日曜日"); // 6
-        }
-    });
+//    public static final List<String> deliverDayList = Collections.unmodifiableList(new LinkedList<String>() {
+//        {
+//            // 登録
+//            add("最短納品日"); // 0
+//            add("月曜日"); // 1
+//            add("火曜日"); // 2
+//            add("水曜日"); // 3
+//            add("木曜日"); // 4
+//            add("金曜日"); // 5
+//            add("土曜日"); // 6
+//            add("日曜日"); // 6
+//        }
+//    });
     public void setOrderDeliverDay(final String text) {
         // インスタンスを取得する
         final SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
@@ -159,7 +159,7 @@ public class AppGlobals extends Application {
         // インスタンスを取得する
         final SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         // データを取得する(第2引数はデフォルト値)
-        return sp.getString(keyDeliverDay, deliverDayList.get(0));
+        return sp.getString(keyDeliverDay, "");
     }
 
     /**
@@ -207,7 +207,7 @@ public class AppGlobals extends Application {
      */
     public void resetOrderInfoWithMessage(final boolean isMessageAlso) {
         setOrderCharge("");
-        setOrderDeliverDay(deliverDayList.get(0));
+        setOrderDeliverDay("");
         setOrderDeliverPlace("");
         if (isMessageAlso) {
             setOrderMessage("");
