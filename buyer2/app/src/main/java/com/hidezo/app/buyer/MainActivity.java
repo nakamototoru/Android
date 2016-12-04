@@ -17,7 +17,8 @@ import android.widget.TextView;
  */
 public class MainActivity extends AppCompatActivity implements HDZClient.HDZCallbacks {
 
-    String myUserId = "";
+//    String myUserId = "";
+    String myLoginId = "";
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -34,7 +35,8 @@ public class MainActivity extends AppCompatActivity implements HDZClient.HDZCall
 
         // エディットテキスト
         final TextView tvEditId = (TextView) findViewById(R.id.editTextUserId);
-        tvEditId.setText(globals.getUserId());
+//        tvEditId.setText(globals.getUserId());
+        tvEditId.setText(globals.getLoginId());
 
         // クリックイベントを取得したいボタン
         final Button button = (Button) findViewById(R.id.buttonLogin);
@@ -45,13 +47,13 @@ public class MainActivity extends AppCompatActivity implements HDZClient.HDZCall
             public void onClick(final View view) {
                 // ログイン処理
                 final TextView tvId = (TextView) findViewById(R.id.editTextUserId);
-                myUserId = tvId.getText().toString();
+                myLoginId = tvId.getText().toString();
                 final TextView tvPass = (TextView) findViewById(R.id.editTextPassword);
                 final String password = tvPass.getText().toString();
                 final String uuid = globals.createUuid();
                 // HTTP POST
                 final HDZApiRequestPackage.Login req = new HDZApiRequestPackage.Login();
-                req.begin( myUserId, uuid, password, _self);
+                req.begin( myLoginId, uuid, password, _self);
             }
         });
 
@@ -76,11 +78,12 @@ public class MainActivity extends AppCompatActivity implements HDZClient.HDZCall
         if (apiName.equals(HDZApiRequestPackage.Login.apiName)) {
             // ログイン処理
             final AppGlobals globals = (AppGlobals) this.getApplication();
-            final HDZApiResponse responseLogin = new HDZApiResponse();
+            final HDZApiResponseLogin responseLogin = new HDZApiResponseLogin();
             if (responseLogin.parseJson(response)) {
                 if (responseLogin.result) {
                     // ログイン
-                    globals.setUserId(myUserId);
+                    globals.setUserId(responseLogin.id);
+                    globals.setLoginId(myLoginId);
                     globals.setLoginState(true);
                     globals.resetOrderInfoWithMessage(true);
                     // 画面遷移

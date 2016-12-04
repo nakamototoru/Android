@@ -1,14 +1,12 @@
 package com.hidezo.app.buyer;
 
 import android.util.Log;
-
-//import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
  * Created by dezami on 2016/09/13.
- *
+ * スーパークラスとして扱う
  */
 class HDZApiResponse {
 
@@ -27,6 +25,7 @@ class HDZApiResponse {
             }
         } catch (final JSONException e) {
             e.printStackTrace();
+            result = false;
         }
         return result;
     }

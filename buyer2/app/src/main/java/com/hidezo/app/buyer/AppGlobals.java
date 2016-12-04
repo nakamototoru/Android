@@ -73,6 +73,25 @@ public class AppGlobals extends Application {
     }
 
     /**
+     * LOGIN ID
+     */
+    public void setLoginId(final String value) {
+        // インスタンスを取得する
+        final SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        // データを保存する
+        final SharedPreferences.Editor ed = sp.edit();
+        final SharedPreferences.Editor result = ed.putString("login_id", value);
+        ed.apply();
+        result.commit();
+    }
+    public String getLoginId() {
+        // インスタンスを取得する
+        final SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        // データを取得する(第2引数はデフォルト値)
+        return sp.getString("login_id", "");
+    }
+
+    /**
      * ログイン状態
      */
     public void setLoginState(final boolean isLogin) {

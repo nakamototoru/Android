@@ -182,7 +182,7 @@ class HDZApiRequestPackage {
             request.putKeyAndValue("id", id);
             request.putKeyAndValue("uuid", uuid);
 
-            request.beginRequest("store/logout",callbacks);
+            request.beginRequest("logout",callbacks); // store/
         }
     }
 
