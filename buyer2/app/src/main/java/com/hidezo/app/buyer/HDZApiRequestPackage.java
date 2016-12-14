@@ -163,6 +163,7 @@ class HDZApiRequestPackage {
     }
 
     static class sendDeviceToken {
+        public static final String apiName = "store/device_token";
         public void begin(final String id,final String uuid, final String device_token, final HDZClient.HDZCallbacks callbacks) {
             final HDZApiRequest request = new HDZApiRequest();
 
@@ -172,7 +173,7 @@ class HDZApiRequestPackage {
             params.put("device_token",device_token);
             params.put("device_flg","2"); // Androidは２を送る
 
-            request.beginPost("store/device_token", params, callbacks);
+            request.beginPost(apiName, params, callbacks);
         }
     }
 

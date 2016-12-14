@@ -2,10 +2,13 @@ package com.hidezo.app.buyer;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+//import android.content.SharedPreferences;
+//import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -75,9 +78,9 @@ public class MainActivity extends AppCompatActivity implements HDZClient.HDZCall
      */
     public void HDZClientComplete(final String response,final String apiName) {
 
+        final AppGlobals globals = (AppGlobals) this.getApplication();
         if (apiName.equals(HDZApiRequestPackage.Login.apiName)) {
             // ログイン処理
-            final AppGlobals globals = (AppGlobals) this.getApplication();
             final HDZApiResponseLogin responseLogin = new HDZApiResponseLogin();
             if (responseLogin.parseJson(response)) {
                 if (responseLogin.result) {
@@ -86,9 +89,16 @@ public class MainActivity extends AppCompatActivity implements HDZClient.HDZCall
                     globals.setLoginId(myLoginId);
                     globals.setLoginState(true);
                     globals.resetOrderInfoWithMessage(true);
-                    // 画面遷移
-                    final Intent intent = new Intent(getApplication(), ActivitySuppliers.class);
-                    startActivity(intent);
+//                    // 画面遷移
+//                    final Intent intent = new Intent(getApplication(), ActivitySuppliers.class);
+//                    startActivity(intent);
+
+                    // HTTP POST
+                    final String token = globals.getDeviceToken();
+                    if (!token.equals("")) {
+                        final HDZApiRequestPackage.sendDeviceToken req = new HDZApiRequestPackage.sendDeviceToken();
+                        req.begin( globals.getUserId(), globals.getUuid(), globals.getDeviceToken(), this);
+                    }
                 }
                 else {
                     //ログイン失敗
@@ -101,6 +111,19 @@ public class MainActivity extends AppCompatActivity implements HDZClient.HDZCall
                 globals.setLoginState(false);
                 openWarning("エラー",responseLogin.message);
             }
+        }
+        else if (apiName.equals(HDZApiRequestPackage.sendDeviceToken.apiName)) {
+            final HDZApiResponse responseToken = new HDZApiResponse();
+            if (responseToken.parseJson(response)) {
+                Log.d("##Dev",globals.getDeviceToken());
+            }
+            else {
+                Log.d("##Dev",responseToken.message);
+            }
+
+            // 画面遷移
+            final Intent intent = new Intent(getApplication(), ActivitySuppliers.class);
+            startActivity(intent);
         }
     }
     public void HDZClientError(final String error) {

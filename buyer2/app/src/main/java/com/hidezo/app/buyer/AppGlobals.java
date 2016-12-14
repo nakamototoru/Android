@@ -92,6 +92,25 @@ public class AppGlobals extends Application {
     }
 
     /**
+     * DeviceToken
+     */
+    public void setDevicetoken(final String deviceToken) {
+        // インスタンスを取得する
+        final SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        // データを保存する
+        final SharedPreferences.Editor ed = sp.edit();
+        final SharedPreferences.Editor result = ed.putString("device_token", deviceToken);
+        ed.apply();
+        result.commit();
+    }
+    public String getDeviceToken() {
+        // インスタンスを取得する
+        final SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        // データを取得する(第2引数はデフォルト値)
+        return sp.getString("device_token", "");
+    }
+
+    /**
      * ログイン状態
      */
     public void setLoginState(final boolean isLogin) {

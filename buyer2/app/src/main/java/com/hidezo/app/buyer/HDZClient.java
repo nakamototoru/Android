@@ -84,7 +84,7 @@ class HDZClient {
                 requestUrl += e.getKey() + "=" + e.getValue();
                 count++;
             }
-            Log.d("########",requestUrl);
+            Log.d("Client",requestUrl);
             runAsync(requestUrl,callbacks,apiName);
         }
 
@@ -103,6 +103,7 @@ class HDZClient {
             else {
                 requestUrl = _baseUrlRelease + apiName;
             }
+            Log.d("Client",requestUrl);
 
             final OkHttpClient client = new OkHttpClient();
             final Request.Builder builder = new Request.Builder().url(requestUrl);
@@ -149,6 +150,7 @@ class HDZClient {
             else {
                 requestUrl = _baseUrlRelease + apiName;
             }
+            Log.d("Client",requestUrl);
 
             final OkHttpClient client = new OkHttpClient();
             final Request.Builder builder = new Request.Builder().url(requestUrl);
