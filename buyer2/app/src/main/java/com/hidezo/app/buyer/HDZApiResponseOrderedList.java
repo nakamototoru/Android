@@ -1,5 +1,7 @@
 package com.hidezo.app.buyer;
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -15,6 +17,9 @@ class HDZApiResponseOrderedList extends HDZApiResponse {
 
     @Override
     public boolean parseJson(final String str_json) {
+
+        Log.d("Ordered",str_json);
+
         final boolean isSuccess = super.parseJson(str_json);
         if (isSuccess) {
             try {

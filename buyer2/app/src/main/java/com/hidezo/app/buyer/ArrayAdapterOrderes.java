@@ -45,7 +45,8 @@ class ArrayAdapterOrderes extends ArrayAdapter<HDZordered> {
         tvSupplier.setText( orderInfo.supplier_name );
 
         final TextView tvDeliverAt = (TextView) convertView.findViewById(R.id.textViewDeliverAt);
-        tvDeliverAt.setText( orderInfo.deliver_at );
+        final String strDeliverAt = orderInfo.deliver_at + "納品";
+        tvDeliverAt.setText( strDeliverAt );
 
         // 通知バッジ表示
         final CircleView circleView = (CircleView)convertView.findViewById(R.id.viewForBadge);

@@ -107,7 +107,7 @@ public class ActivityOrderDetail extends CustomAppCompatActivity {
                         final TextView tvCharge = (TextView)findViewById(R.id.textViewCharge);
                         tvCharge.setText(charge);
 
-                        final String deliverDay = responseOrderDetail.orderInfo.delivery_day;
+                        final String deliverDay = responseOrderDetail.orderInfo.delivery_day + "納品";
                         final TextView tvDay = (TextView)findViewById(R.id.textViewDeliverDay);
                         tvDay.setText(deliverDay);
 

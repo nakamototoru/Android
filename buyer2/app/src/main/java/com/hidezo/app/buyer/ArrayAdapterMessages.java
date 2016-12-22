@@ -36,8 +36,21 @@ class ArrayAdapterMessages extends ArrayAdapter<HDZApiResponseMessage.Detail> {
         }
 
         // Content
+        // row
+        final TextView tvRow = (TextView)convertView.findViewById(R.id.textViewRow);
+        tvRow.setText( String.valueOf(position + 1) );
+
+        // comment
         final TextView tvMessage = (TextView) convertView.findViewById(R.id.textViewMessage);
         tvMessage.setText(detail.message);
+
+        // textViewSupplierName
+        final TextView tvSupplier = (TextView)convertView.findViewById(R.id.textViewSupplierName);
+        tvSupplier.setText(detail.nameOfSender);
+
+        // textViewDate
+        final TextView tvDate = (TextView)convertView.findViewById(R.id.textViewDate);
+        tvDate.setText(detail.posted_at);
 
         // Return the completed view to render on screen
         return convertView;
