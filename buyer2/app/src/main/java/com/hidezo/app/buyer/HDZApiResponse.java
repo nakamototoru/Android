@@ -19,8 +19,8 @@ class HDZApiResponse {
         try {
             final JSONObject json = new JSONObject(str_json);
             result = json.getBoolean("result");
-            message = json.getString("message");
             if (!result) {
+                message = json.getString("message");
                 Log.d("########",message);
             }
         } catch (final JSONException e) {

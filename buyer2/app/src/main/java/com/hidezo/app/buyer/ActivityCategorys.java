@@ -69,6 +69,17 @@ public class ActivityCategorys extends CustomAppCompatActivity {
         openProgressDialog();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        final ActivityCategorys _self = this;
+        // HTTP GET
+        final HDZApiRequestPackage.Badge req = new HDZApiRequestPackage.Badge();
+        final AppGlobals globals = (AppGlobals) _self.getApplication();
+        req.begin( globals.getUserId(), globals.getUuid(), _self);
+    }
+
     /**
      * HDZClientCallbacksGet
      * データ取得時

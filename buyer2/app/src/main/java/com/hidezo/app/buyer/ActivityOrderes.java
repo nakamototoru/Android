@@ -13,7 +13,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 
 /**
- *
+ * 注文履歴アクティビティ
  */
 public class ActivityOrderes extends CustomAppCompatActivity {
 
@@ -37,6 +37,17 @@ public class ActivityOrderes extends CustomAppCompatActivity {
         openProgressDialog();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        final ActivityOrderes _self = this;
+        // HTTP GET
+        final HDZApiRequestPackage.Badge req = new HDZApiRequestPackage.Badge();
+        final AppGlobals globals = (AppGlobals) _self.getApplication();
+        req.begin( globals.getUserId(), globals.getUuid(), _self);
+    }
+
     /**
      * HDZClientCallbacksGet
      * データ取得時
@@ -52,10 +63,13 @@ public class ActivityOrderes extends CustomAppCompatActivity {
         final ActivityOrderes _self = this;
         if ( apiName.equals(HDZApiRequestPackage.Badge.apiName) ) {
             // "store/badge"
+
+            Log.d("####",response);
+
             isFinishBadge = true;
             final HDZApiResponseBadge responseBadge = new HDZApiResponseBadge();
             if (responseBadge.parseJson(response)) {
-                if (responseBadge.badgeSupplierList.size() > 0) {
+                if (responseBadge.badgeMessageList.size() > 0) {
                     // バッジ情報追加
                     final ArrayList<HDZApiResponseBadge.MessageUp> badgeMessageList = responseBadge.badgeMessageList;
                     for (final HDZordered order : displayList) {

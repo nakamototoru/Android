@@ -9,8 +9,8 @@ import com.hidezo.app.buyer.model.Dau;
 import com.hidezo.app.buyer.model.DauHelper;
 import com.hidezo.app.buyer.util.DBHelper;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedList;
+//import java.util.Collections;
+//import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
 
@@ -31,17 +31,25 @@ public class AppGlobals extends Application {
      * @return uuid
      */
     public String createUuid() {
-        final String uuid = UUID.randomUUID().toString();
-
         // インスタンスを取得する
         final SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
+        // 保存データ取得
+        final String uuid_old = sp.getString("uuid", "");
+        if (!uuid_old.equals("")) {
+            Log.d("######","Ret uuid = " + uuid_old);
+            return uuid_old;
+        }
+
+        // uuid生成
+        final String uuid = UUID.randomUUID().toString();
+
         // データを保存する
         final SharedPreferences.Editor ed = sp.edit();
         final SharedPreferences.Editor result = ed.putString("uuid", uuid);
         ed.apply();
         result.commit();
 
-        Log.d("########",uuid);
+        Log.d("######","New uuid = " + uuid);
 
         return uuid;
     }

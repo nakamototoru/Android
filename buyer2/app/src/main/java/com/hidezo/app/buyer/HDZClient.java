@@ -26,7 +26,7 @@ class HDZClient {
         void HDZClientError(String message);
     }
 
-    private static final String _baseUrl = "https://dev-api.hidezo.co/"; // "https://api.hidezo.co/store/";
+//    private static final String _baseUrl = "https://dev-api.hidezo.co/";
     private static final String _baseUrlRelease = "https://api.hidezo.co/";
 
     private static HDZCallbacks hdzCallbacks = null;
@@ -71,7 +71,7 @@ class HDZClient {
 
             String requestUrl;
             if (BuildConfig.DEBUG) {
-                requestUrl = _baseUrl + apiName + "?";
+                requestUrl = _baseUrlRelease + apiName + "?";
             }
             else {
                 requestUrl = _baseUrlRelease + apiName + "?";
@@ -98,7 +98,7 @@ class HDZClient {
 
             final String requestUrl;
             if (BuildConfig.DEBUG) {
-                requestUrl = _baseUrl + apiName;
+                requestUrl = _baseUrlRelease + apiName;
             }
             else {
                 requestUrl = _baseUrlRelease + apiName;
@@ -145,7 +145,7 @@ class HDZClient {
 
             final String requestUrl;
             if (BuildConfig.DEBUG) {
-                requestUrl = _baseUrl + apiName;
+                requestUrl = _baseUrlRelease + apiName;
             }
             else {
                 requestUrl = _baseUrlRelease + apiName;
