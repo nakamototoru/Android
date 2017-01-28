@@ -63,7 +63,7 @@ public class HDZSoapFax extends AsyncTask<Object,Object,Object> {
         this.keyStore = keyStore;
     }
 
-    public int getSendList() throws IOException, XmlPullParserException,KeyStoreException, NoSuchAlgorithmException, KeyManagementException {
+    public String getSendList() throws IOException, XmlPullParserException,KeyStoreException, NoSuchAlgorithmException, KeyManagementException {
 
         final String METHOD_NAME = "getSendList";
 
@@ -85,10 +85,14 @@ public class HDZSoapFax extends AsyncTask<Object,Object,Object> {
         final String SOAP_ACTION = NAMESPACE + "/" + METHOD_NAME;
         httpsTransport.call(SOAP_ACTION, envelope);
 
-        final SoapPrimitive result;
-        result = (SoapPrimitive)envelope.getResponse();
-        return Integer.parseInt(result.toString());
+        // 結果取得
+        final SoapPrimitive result = (SoapPrimitive)envelope.getResponse();
+
+//        return Integer.parseInt(result.toString());
+
+        return result.toString();
     }
+
 
     /**
      * （編集不可）
