@@ -26,6 +26,11 @@ public class AppGlobals extends Application {
      */
     public static final String STR_ZERO = "0";
 
+    @Override
+    public void onCreate() {
+//        registerActivityLifecycleCallbacks(new MyLifecycleHandler());
+    }
+
     /**
      * UUID
      * @return uuid
@@ -179,19 +184,7 @@ public class AppGlobals extends Application {
      * 注文前入力・納品日
      */
     private static final String keyDeliverDay = "deliver_day";
-//    public static final List<String> deliverDayList = Collections.unmodifiableList(new LinkedList<String>() {
-//        {
-//            // 登録
-//            add("最短納品日"); // 0
-//            add("月曜日"); // 1
-//            add("火曜日"); // 2
-//            add("水曜日"); // 3
-//            add("木曜日"); // 4
-//            add("金曜日"); // 5
-//            add("土曜日"); // 6
-//            add("日曜日"); // 6
-//        }
-//    });
+
     public void setOrderDeliverDay(final String text) {
         // インスタンスを取得する
         final SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);

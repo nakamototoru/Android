@@ -16,8 +16,6 @@
 
 package com.hidezo.app.buyer;
 
-//import android.content.SharedPreferences;
-//import android.preference.PreferenceManager;
 import android.util.Log;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
@@ -25,7 +23,7 @@ import com.google.firebase.iid.FirebaseInstanceIdService;
 
 public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
 
-    private static final String TAG = "##Fbase";
+    private static final String TAG = "##FbaseIDService";
 
     /**
      * Called if InstanceID token is updated. This may occur if the security of
@@ -59,17 +57,5 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
 
         final AppGlobals globals = (AppGlobals)getApplication();
         globals.setDevicetoken(token);
-
-//        // HTTP POST
-//        final HDZApiRequestPackage.sendDeviceToken req = new HDZApiRequestPackage.sendDeviceToken();
-//
-//        // インスタンスを取得する
-//        final SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
-//        // データを取得する(第2引数はデフォルト値)
-//        final String myUserId = sp.getString("user_id", "");
-//        // データを取得する(第2引数はデフォルト値)
-//        final String myUuid = sp.getString("uuid", "");
-//
-//        req.begin( myUserId, myUuid, token, null);
     }
 }

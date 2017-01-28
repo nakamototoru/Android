@@ -16,7 +16,7 @@
 
 package com.hidezo.app.buyer;
 
-import android.app.Notification;
+//import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -24,17 +24,18 @@ import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.NotificationManagerCompat;
+//import android.support.v4.app.NotificationManagerCompat;
+//import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
-import java.util.Map;
+//import java.util.Map;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
-    private static final String TAG = "MyFirebaseMsgService";
+    private static final String TAG = "##FirebaseMsgService";
 
     /**
      * フォアグランド時に呼ばれる
@@ -58,50 +59,61 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         // Not getting messages here? See why this may be: https://goo.gl/39bRNJ
         Log.d(TAG, "From: " + remoteMessage.getFrom());
 
-        // Check if message contains a data payload.
-        if (remoteMessage.getData().size() > 0) {
-            Log.d(TAG, "Message data payload: " + remoteMessage.getData());
-        }
-        else {
+        // Check if message contains a notification payload.
+        if (remoteMessage.getNotification() == null) {
+            Log.d(TAG, "remoteMessageGetNotification = NULL");
             return;
         }
-
-        // Check if message contains a notification payload.
-        if (remoteMessage.getNotification() != null) {
+        else {
+//            Log.d(TAG, "Message Notification Title: " + remoteMessage.getNotification().getTitle());
             Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
         }
-        else {
-            return;
-        }
+
+//        final String messageBody = remoteMessage.getNotification().getBody();
+
+        // Check if message contains a data payload.
+//        if (remoteMessage.getData().size() > 0) {
+//            Log.d(TAG, "Message data payload: " + remoteMessage.getData());
+//        }
+//        else {
+//            Log.d(TAG, "remoteMessageSize = 0");
+//            return;
+//        }
 
         // Also if you intend on generating your own notifications as a result of a received FCM
         // message, here is where that should be initiated. See sendNotification method below.
 
         // プッシュメッセージのdataに含めた値を取得
-        final Map<String, String> data = remoteMessage.getData();
-        final String contentId = data.get("id");
-        final String contentType = data.get("type");
+//        final Map<String, String> data = remoteMessage.getData();
+//
+//        final String contentId = data.get("id");
+//        final String contentType = data.get("type");
+//
+//        Log.d(TAG, "ID = " + contentId + " TYPE = " + contentType);
 
         // Notificationを生成
-        final NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext());
-        builder.setSmallIcon(R.drawable.ic_stat_ic_notification);
-        builder.setContentTitle(getString(R.string.app_name));
-        builder.setContentText(remoteMessage.getNotification().getBody());
-        builder.setDefaults(Notification.DEFAULT_SOUND
-                | Notification.DEFAULT_VIBRATE
-                | Notification.DEFAULT_LIGHTS);
-        builder.setAutoCancel(true);
+//        final NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext());
+//        builder.setSmallIcon(R.drawable.ic_stat_ic_notification);
+////        builder.setColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
+//        builder.setContentTitle(getString(R.string.app_name));
+//        builder.setContentText(remoteMessage.getNotification().getBody());
+//        builder.setDefaults(Notification.DEFAULT_SOUND
+//                | Notification.DEFAULT_VIBRATE
+//                | Notification.DEFAULT_LIGHTS);
+//        builder.setAutoCancel(true);
+
+        sendNotification(remoteMessage.getNotification().getBody());
 
         // タップ時に呼ばれるIntentを生成
-        final Intent intent = new Intent(this, MainActivity.class);
+//        final Intent intent = new Intent(this, MainActivity.class);
 //        intent.putExtra(MainActivity.ARG_ID, contentId);
 //        intent.putExtra(MainActivity.ARG_TYPE, contentType);
-        final PendingIntent contentIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        builder.setContentIntent(contentIntent);
+//        final PendingIntent contentIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+//        builder.setContentIntent(contentIntent);
 
         // Notification表示
-        final NotificationManagerCompat manager = NotificationManagerCompat.from(getApplicationContext());
-        manager.notify(Integer.parseInt(contentId), builder.build());
+//        final NotificationManagerCompat manager = NotificationManagerCompat.from(getApplicationContext());
+//        manager.notify(Integer.parseInt(contentId), builder.build());
     }
     // [END receive_message]
 
@@ -111,23 +123,28 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
      * @param messageBody FCM message body received.
      */
     private void sendNotification(final String messageBody) {
+
+//        Log.d(TAG, messageBody);
+
+        // タップ時に呼ばれるIntentを生成
         final Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         final PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT);
 
+        // 通知アクション
         final Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         final NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.ic_stat_ic_notification)
-                .setContentTitle("FCM Message")
+                .setSmallIcon(R.drawable.ic_notification)
+                .setContentTitle(getString(R.string.app_name))
                 .setContentText(messageBody)
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent);
 
+        // 通知実行
         final NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
         notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
     }
 }

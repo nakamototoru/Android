@@ -69,17 +69,6 @@ public class ActivityCategorys extends CustomAppCompatActivity {
         openProgressDialog();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        final ActivityCategorys _self = this;
-        // HTTP GET
-        final HDZApiRequestPackage.Badge req = new HDZApiRequestPackage.Badge();
-        final AppGlobals globals = (AppGlobals) _self.getApplication();
-        req.begin( globals.getUserId(), globals.getUuid(), _self);
-    }
-
     /**
      * HDZClientCallbacksGet
      * データ取得時
@@ -97,7 +86,7 @@ public class ActivityCategorys extends CustomAppCompatActivity {
             // "store/badge"
             isFinishBadge = true;
 
-//            Log.d("####",response);
+            Log.d("####",response);
 
             final HDZApiResponseBadge responseBadge = new HDZApiResponseBadge();
             if (responseBadge.parseJson(response)) {
@@ -106,9 +95,11 @@ public class ActivityCategorys extends CustomAppCompatActivity {
                     final ArrayList<HDZApiResponseBadge.SupplierUp> badgeSupplierList = responseBadge.badgeSupplierList;
                     for (final HDZApiResponseBadge.SupplierUp badge : badgeSupplierList) {
                         if (mySupplierId.equals(badge.supplierId)) {
-                            final HDZItemInfo.Category category = displayList.get(0);
-                            if (!category.isStatic) {
-                                category.badgeCount = 1;
+                            if (displayList != null && displayList.size() > 0) {
+                                final HDZItemInfo.Category category = displayList.get(0);
+                                if (!category.isStatic) {
+                                    category.badgeCount = 1;
+                                }
                             }
                             break;
                         }
@@ -214,7 +205,9 @@ public class ActivityCategorys extends CustomAppCompatActivity {
             public void run() {
                 final ListView listView = (ListView) findViewById(R.id.listViewCategory);
                 final ArrayAdapterCategory adapter = (ArrayAdapterCategory) listView.getAdapter();
-                adapter.notifyDataSetChanged();
+                if (adapter != null) {
+                    adapter.notifyDataSetChanged();
+                }
             }
         });
     }
