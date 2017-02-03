@@ -53,7 +53,7 @@ public class ActivityUserOrdersExec extends CustomAppCompatActivity {
         req.begin( globals.getUserId(), globals.getUuid(), mySupplierId, dynamic_items,static_items, globals.getOrderDeliverDay(), globals.getOrderCharge(), globals.getOrderDeliverPlace(), _self );
 
         // Progress
-        openPostProgressDialog();
+        openHttpPostProgressDialog();
     }
     @Override
     public boolean onKeyDown(final int keyCode, final KeyEvent event) {
@@ -93,7 +93,7 @@ public class ActivityUserOrdersExec extends CustomAppCompatActivity {
 
                     if ( globals.getOrderMessage().equals("") ) {
                         // Progress
-                        closeProgressDialog();
+                        closeHttpProgressDialog();
 
                         // 記憶値クリア
                         globals.deleteAllCart();
@@ -111,7 +111,7 @@ public class ActivityUserOrdersExec extends CustomAppCompatActivity {
                 }
                 else {
                     // Progress
-                    closeProgressDialog();
+                    closeHttpProgressDialog();
 
                     //注文失敗
                     openAlertFailed();
@@ -119,7 +119,7 @@ public class ActivityUserOrdersExec extends CustomAppCompatActivity {
             }
             else {
                 // Progress
-                closeProgressDialog();
+                closeHttpProgressDialog();
 
                 //注文失敗
                 openAlertFailed();
@@ -127,7 +127,7 @@ public class ActivityUserOrdersExec extends CustomAppCompatActivity {
         }
         else {
             // Progress
-            closeProgressDialog();
+            closeHttpProgressDialog();
 
             final HDZApiResponse responseResult = new HDZApiResponse();
             if (responseResult.parseJson(response)) {

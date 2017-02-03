@@ -17,6 +17,7 @@
 package com.hidezo.app.buyer;
 
 //import android.app.Notification;
+import android.app.ActionBar;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -26,6 +27,7 @@ import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 //import android.support.v4.app.NotificationManagerCompat;
 //import android.support.v4.content.ContextCompat;
+import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
@@ -91,29 +93,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 //
 //        Log.d(TAG, "ID = " + contentId + " TYPE = " + contentType);
 
-        // Notificationを生成
-//        final NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext());
-//        builder.setSmallIcon(R.drawable.ic_stat_ic_notification);
-////        builder.setColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
-//        builder.setContentTitle(getString(R.string.app_name));
-//        builder.setContentText(remoteMessage.getNotification().getBody());
-//        builder.setDefaults(Notification.DEFAULT_SOUND
-//                | Notification.DEFAULT_VIBRATE
-//                | Notification.DEFAULT_LIGHTS);
-//        builder.setAutoCancel(true);
-
         sendNotification(remoteMessage.getNotification().getBody());
-
-        // タップ時に呼ばれるIntentを生成
-//        final Intent intent = new Intent(this, MainActivity.class);
-//        intent.putExtra(MainActivity.ARG_ID, contentId);
-//        intent.putExtra(MainActivity.ARG_TYPE, contentType);
-//        final PendingIntent contentIntent = PendingIntent.getActivity(getApplicationContext(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-//        builder.setContentIntent(contentIntent);
-
-        // Notification表示
-//        final NotificationManagerCompat manager = NotificationManagerCompat.from(getApplicationContext());
-//        manager.notify(Integer.parseInt(contentId), builder.build());
     }
     // [END receive_message]
 
@@ -125,12 +105,22 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private void sendNotification(final String messageBody) {
 
 //        Log.d(TAG, messageBody);
+        final AppGlobals globals = (AppGlobals) this.getApplication();
 
         // タップ時に呼ばれるIntentを生成
-        final Intent intent = new Intent(this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        final PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
-                PendingIntent.FLAG_ONE_SHOT);
+        final Intent intent;
+        // ログインチェック
+        if (globals.getLoginState()) {
+            // ログイン時
+            intent = new Intent(this, ActivitySuppliers.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        }
+        else {
+            // 非ログイン時
+            intent = new Intent(this, MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        }
+        final PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /*Request code*/, intent, PendingIntent.FLAG_ONE_SHOT);
 
         // 通知アクション
         final Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
@@ -142,9 +132,20 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent);
 
+//        /* Add Big View Specific Configuration */
+//        final NotificationCompat.InboxStyle inboxStyle = new NotificationCompat.InboxStyle();
+//
+//        // Sets a title for the Inbox style big view
+//        inboxStyle.setBigContentTitle(messageBody);
+//
+//        inboxStyle.addLine("追加ライン");
+//
+//        notificationBuilder.setStyle(inboxStyle);
+        // ------------------------------------------
+
         // 通知実行
-        final NotificationManager notificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
+        final NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(0 /*ID of notification*/, notificationBuilder.build());
+
     }
 }

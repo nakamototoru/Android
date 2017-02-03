@@ -39,7 +39,7 @@ public class ActivitySuppliers extends CustomAppCompatActivity {
         req.begin( globals.getUserId(), globals.getUuid(), this);
 
         // Progress
-        openProgressDialog();
+        openHttpGetProgressDialog();
    }
 
     /**
@@ -48,7 +48,7 @@ public class ActivitySuppliers extends CustomAppCompatActivity {
      */
     public void HDZClientComplete(final String response,final String apiName) {
         // Progress
-        closeProgressDialog();
+        closeHttpProgressDialog();
 
         if ( checkLogOut(response) ) {
             return;

@@ -1,10 +1,8 @@
 package com.hidezo.app.buyer;
 
 import android.util.Log;
-
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import okhttp3.FormBody;
 
 /**

@@ -41,7 +41,7 @@
         <activity android:name=".ActivityUserOrdersCheck" />
         <activity android:name=".ActivityUserOrdersExec" />
         <activity android:name=".ActivityMessages" />
-        <activity android:name=".ActivityUserOrdersFinish"></activity>
+        <activity android:name=".ActivityUserOrdersFinish" />
 
         <!-- [START firebase_service] -->
         <service

@@ -93,7 +93,7 @@ public class ActivityMessages extends CustomAppCompatActivity {
         req.begin(globals.getUserId(), globals.getUuid(), myOrderNo, this);
 
         // Progress
-        openProgressDialog();
+        openHttpGetProgressDialog();
     }
 
     /**
@@ -103,7 +103,7 @@ public class ActivityMessages extends CustomAppCompatActivity {
     public void HDZClientComplete(final String response, final String apiName) {
 
         // Progress
-        closeProgressDialog();
+        closeHttpProgressDialog();
 
         if ( checkLogOut(response) ) {
             return;

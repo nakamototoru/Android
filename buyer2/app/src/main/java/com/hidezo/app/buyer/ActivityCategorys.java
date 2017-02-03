@@ -66,7 +66,7 @@ public class ActivityCategorys extends CustomAppCompatActivity {
         req.begin(globals.getUserId(), globals.getUuid(), mySupplierId, this);
 
         // Progress Start
-        openProgressDialog();
+        openHttpGetProgressDialog();
     }
 
     /**
@@ -75,7 +75,7 @@ public class ActivityCategorys extends CustomAppCompatActivity {
      */
     public void HDZClientComplete(final String response,final String apiName) {
         // Progress End
-        closeProgressDialog();
+        closeHttpProgressDialog();
 
         if ( checkLogOut(response) ) {
             return;

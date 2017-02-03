@@ -20,7 +20,6 @@ import android.widget.TextView;
  */
 public class MainActivity extends AppCompatActivity implements HDZClient.HDZCallbacks {
 
-//    String myUserId = "";
     String myLoginId = "";
 
     @Override

@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.hidezo.app.buyer"
-        minSdkVersion 15
+        minSdkVersion 24 //21 //15
         targetSdkVersion 25
         versionCode 4
         versionName "1.2"
@@ -25,6 +25,9 @@ android {
         //incremental = true
         preDexLibraries = false
         javaMaxHeapSize "4g" // 2g should be also OK
+    }
+    aaptOptions {
+        noCompress "pdf"
     }
 }
 

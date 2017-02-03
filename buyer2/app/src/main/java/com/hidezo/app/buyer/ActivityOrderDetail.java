@@ -4,6 +4,7 @@ import android.content.Intent;
 //import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 //import android.util.Log;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,6 +12,20 @@ import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.Certificate;
+import java.security.cert.CertificateEncodingException;
+import java.security.cert.CertificateException;
+import java.security.cert.CertificateFactory;
+import java.security.cert.X509Certificate;
 //import org.w3c.dom.Text;
 
 /**
@@ -18,9 +33,13 @@ import android.widget.TextView;
  */
 public class ActivityOrderDetail extends CustomAppCompatActivity {
 
+    private static final String TAG = "#ActivityOrderDetail";
+
     String myOrderNo = "";
     String mySupplierName = "";
     String myCharge = "";
+
+    ListView myListView = null;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -40,7 +59,7 @@ public class ActivityOrderDetail extends CustomAppCompatActivity {
         req.begin(globals.getUserId(), globals.getUuid(), myOrderNo, this);
 
         // Progress
-        openProgressDialog();
+        openHttpGetProgressDialog();
     }
 
     /**
@@ -49,7 +68,7 @@ public class ActivityOrderDetail extends CustomAppCompatActivity {
      */
     public void HDZClientComplete(final String response, final String apiName) {
         // Progress
-        closeProgressDialog();
+        closeHttpProgressDialog();
 
         if ( checkLogOut(response) ) {
             return;
@@ -117,6 +136,8 @@ public class ActivityOrderDetail extends CustomAppCompatActivity {
                     }
 
                     listView.setAdapter(adapter);
+
+                    myListView = listView;
                 }
             });
 
@@ -150,6 +171,27 @@ public class ActivityOrderDetail extends CustomAppCompatActivity {
             intent.putExtra("charge", myCharge);
             startActivity(intent);
             return true;
+        }
+
+        if (BuildConfig.DEBUG) {
+            if (id == R.id.action_pdf) {
+                // PDF出力テスト
+                new HDZPdfManager.GenerationTask(myListView, getApplicationContext(), this).execute();
+                return true;
+            }
+
+            if (id == R.id.action_base64) {
+                String result = HDZPdfManager.getPdfBase64String(getApplicationContext());
+                Log.d(TAG, result);
+                return true;
+            }
+
+            if (id == R.id.action_soap) {
+
+                HDZSoapFax.getSendList();
+
+                return true;
+            }
         }
 
         return super.onOptionsItemSelected(item);

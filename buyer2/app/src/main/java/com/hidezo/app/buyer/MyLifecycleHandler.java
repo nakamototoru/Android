@@ -2,6 +2,7 @@ package com.hidezo.app.buyer;
 
 import android.app.Activity;
 import android.app.Application;
+//import android.content.ComponentCallbacks2;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -18,9 +19,14 @@ public class MyLifecycleHandler implements Application.ActivityLifecycleCallback
     private int paused;
     private int started;
     private int stopped;
+    private boolean shouldSendLaunchLogs = true;
 
     @Override
     public void onActivityCreated(final Activity activity, final Bundle savedInstanceState) {
+        if (shouldSendLaunchLogs) {
+            // send logs
+            shouldSendLaunchLogs = false;
+        }
     }
 
     @Override
@@ -30,12 +36,20 @@ public class MyLifecycleHandler implements Application.ActivityLifecycleCallback
     @Override
     public void onActivityResumed(final Activity activity) {
         ++resumed;
+        if (shouldSendLaunchLogs) {
+            // send logs
+            shouldSendLaunchLogs = false;
+        }
     }
 
     @Override
     public void onActivityPaused(final Activity activity) {
         ++paused;
         Log.d(TAG, "application is in foreground: " + (resumed > paused));
+        if (shouldSendLaunchLogs) {
+            // send logs
+            shouldSendLaunchLogs = false;
+        }
     }
 
     @Override
@@ -45,6 +59,10 @@ public class MyLifecycleHandler implements Application.ActivityLifecycleCallback
     @Override
     public void onActivityStarted(final Activity activity) {
         ++started;
+        if (shouldSendLaunchLogs) {
+            // send logs
+            shouldSendLaunchLogs = false;
+        }
     }
 
     @Override
@@ -52,5 +70,17 @@ public class MyLifecycleHandler implements Application.ActivityLifecycleCallback
         // ここでアクテビティの表示処理が完了する
         ++stopped;
         Log.d(TAG, "application is visible: " + (started > stopped));
+        if (shouldSendLaunchLogs) {
+            // send logs
+            shouldSendLaunchLogs = false;
+        }
     }
+
+//    @Override
+//    public void onTrimMemory(int level) {
+//        if (level == ComponentCallbacks2.TRIM_MEMORY_UI_HIDDEN) {
+//            shouldSendLaunchLogs = true;
+//        }
+//    }
+
 }

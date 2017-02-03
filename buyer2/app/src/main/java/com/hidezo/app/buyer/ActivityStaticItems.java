@@ -78,7 +78,7 @@ public class ActivityStaticItems extends CustomAppCompatActivity {
         }
 
         // Progress
-        openProgressDialog();
+        openHttpGetProgressDialog();
     }
 
     /**
@@ -87,7 +87,7 @@ public class ActivityStaticItems extends CustomAppCompatActivity {
      */
     public void HDZClientComplete(final String response,final String apiName) {
         // Progress
-        closeProgressDialog();
+        closeHttpProgressDialog();
 
         if ( checkLogOut(response) ) {
             return;

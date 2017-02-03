@@ -13,7 +13,16 @@ import java.util.ArrayList;
  */
 class HDZApiResponseOrderedList extends HDZApiResponse {
 
-    ArrayList<HDZordered> orderedList = new ArrayList<>();
+    static class OrderInfo {
+        String order_no = "";
+        String supplier = "";
+        String supplier_name = "";
+        String order_at = "";
+        String deliver_at = "";
+        int badgeCount = 0;
+    }
+
+    ArrayList<OrderInfo> orderedList = new ArrayList<>();
 
     @Override
     public boolean parseJson(final String str_json) {
@@ -29,7 +38,7 @@ class HDZApiResponseOrderedList extends HDZApiResponse {
                     final JSONArray orderList = json.getJSONArray("order_list");
                     if (orderList.length() > 0) {
                         for (int i = 0; i < orderList.length(); i++) {
-                            final HDZordered info = new HDZordered();
+                            final OrderInfo info = new OrderInfo();
                             info.order_no = orderList.getJSONObject(i).getString("order_no");
                             info.supplier = orderList.getJSONObject(i).getString("supplier");
                             info.supplier_name = orderList.getJSONObject(i).getString("supplier_name");

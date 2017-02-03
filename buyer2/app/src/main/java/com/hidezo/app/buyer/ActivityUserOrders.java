@@ -58,7 +58,7 @@ public class ActivityUserOrders extends CustomAppCompatActivity {
         req.begin(globals.getUserId(), globals.getUuid(), mySupplierId, this);
 
         // Progress
-        openProgressDialog();
+        openHttpGetProgressDialog();
 
     }
 
@@ -68,7 +68,7 @@ public class ActivityUserOrders extends CustomAppCompatActivity {
      */
     public void HDZClientComplete(final String response, final String apiName) {
         // Progress
-        closeProgressDialog();
+        closeHttpProgressDialog();
 
         if (checkLogOut(response)) {
             return;

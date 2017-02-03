@@ -1,9 +1,12 @@
 package com.hidezo.app.buyer;
 
+import android.app.Activity;
+import android.app.Application;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 //import android.support.v7.app.ActionBar;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -15,8 +18,10 @@ import android.util.Log;
  *
  */
 public class CustomAppCompatActivity extends AppCompatActivity implements HDZClient.HDZCallbacks {
+    // ,Application.ActivityLifecycleCallbacks
 
     ProgressDialog progressDialog = null;
+    ProgressDialog progressNotification = null;
 
     @Override
     protected void onResume() {
@@ -47,7 +52,7 @@ public class CustomAppCompatActivity extends AppCompatActivity implements HDZCli
         setSupportActionBar(toolbar);
 
         // TODO:戻るボタンはあり？
-        if (isBack) {
+//        if (isBack) {
 //            // UPナビゲーションを有効化する
 //            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 //            getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -60,7 +65,7 @@ public class CustomAppCompatActivity extends AppCompatActivity implements HDZCli
 //                }
 //            });
 //
-        }
+//        }
     }
 
     /**
@@ -87,7 +92,6 @@ public class CustomAppCompatActivity extends AppCompatActivity implements HDZCli
     }
     public void openAlertSessionOut() {
         final CustomAppCompatActivity _self = this;
-
         //UIスレッド上で呼び出してもらう
         this.runOnUiThread(new Runnable() {
             @Override
@@ -116,7 +120,37 @@ public class CustomAppCompatActivity extends AppCompatActivity implements HDZCli
     /**
      * プログレスダイアログ
      */
-    protected void openProgressDialog() {
+    public void openProgressDialog(final String title, final String message) {
+        if (progressDialog == null) {
+            final CustomAppCompatActivity _self = this;
+            //UIスレッド上で呼び出してもらう
+            this.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    progressDialog = new ProgressDialog(_self);
+                    progressDialog.setTitle(title);
+                    progressDialog.setMessage(message);
+                    progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                    progressDialog.show();
+                }
+            });
+        }
+    }
+    public void closeProgressDialog() {
+        if (progressDialog != null) {
+            final CustomAppCompatActivity _self = this;
+            //UIスレッド上で呼び出してもらう
+            this.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    progressDialog.dismiss();
+                    progressDialog = null;
+                }
+            });
+        }
+    }
+
+    void openHttpGetProgressDialog() {
         if (progressDialog == null) {
             progressDialog = new ProgressDialog(this);
             progressDialog.setTitle("データ取得中");
@@ -125,7 +159,7 @@ public class CustomAppCompatActivity extends AppCompatActivity implements HDZCli
             progressDialog.show();
         }
     }
-    protected void openPostProgressDialog() {
+    void openHttpPostProgressDialog() {
         if (progressDialog == null) {
             progressDialog = new ProgressDialog(this);
             progressDialog.setTitle("データ送信中");
@@ -134,11 +168,30 @@ public class CustomAppCompatActivity extends AppCompatActivity implements HDZCli
             progressDialog.show();
         }
     }
-    protected void closeProgressDialog() {
+    void closeHttpProgressDialog() {
         if (progressDialog != null) {
             progressDialog.dismiss();
         }
         progressDialog = null;
+    }
+
+    /**
+     * 通知ダイアログ
+     */
+    protected void openNotificationDialog(final String message) {
+        if (progressNotification == null) {
+            progressNotification = new ProgressDialog(this);
+            progressNotification.setMessage(message);
+            progressNotification.setButton(DialogInterface.BUTTON_POSITIVE, "OK",
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(final DialogInterface dialog, final int which) {
+                            progressNotification = null;
+                        }
+                    }
+            );
+            progressNotification.show();
+        }
     }
 
     /**
@@ -224,4 +277,26 @@ public class CustomAppCompatActivity extends AppCompatActivity implements HDZCli
             }
         });
     }
+
+    // ActivityLifecycleCallbacksのメソッド郡
+//    public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
+//    }
+//
+//    public void onActivityPaused(Activity activity) {
+//    }
+//
+//    public void onActivityDestroyed(Activity activity) {
+//    }
+//
+//    public void onActivityStarted(Activity activity) {
+//    }
+//
+//    public void onActivityResumed(Activity activity) {
+//    }
+//
+//    public void onActivityStopped(Activity activity) {
+//    }
+//
+//    public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
+//    }
 }

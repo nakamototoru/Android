@@ -15,16 +15,16 @@ import java.util.ArrayList;
  * Created by dezami on 2016/09/21.
  *
  */
-class ArrayAdapterOrderes extends ArrayAdapter<HDZordered> {
+class ArrayAdapterOrderes extends ArrayAdapter<HDZApiResponseOrderedList.OrderInfo> {
 
-    ArrayAdapterOrderes(final Context context, final ArrayList<HDZordered> list) {
+    ArrayAdapterOrderes(final Context context, final ArrayList<HDZApiResponseOrderedList.OrderInfo> list) {
         super(context, 0, list);
     }
     @Override
     public View getView(final int position, View convertView, final ViewGroup parent) {
 
         // Get the data item for this position
-        final HDZordered orderInfo = getItem(position);
+        final HDZApiResponseOrderedList.OrderInfo orderInfo = getItem(position);
         if (orderInfo == null) {
             return convertView;
         }

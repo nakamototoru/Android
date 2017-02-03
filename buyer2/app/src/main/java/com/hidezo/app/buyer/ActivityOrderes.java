@@ -17,7 +17,7 @@ import java.util.ArrayList;
  */
 public class ActivityOrderes extends CustomAppCompatActivity {
 
-    ArrayList<HDZordered> displayList = new ArrayList<>();
+    ArrayList<HDZApiResponseOrderedList.OrderInfo> displayList = new ArrayList<>();
     boolean isFinishBadge = false;
 
     @Override
@@ -34,7 +34,7 @@ public class ActivityOrderes extends CustomAppCompatActivity {
         req.begin(globals.getUserId(), globals.getUuid(), 1, this );
 
         // Progress
-        openProgressDialog();
+        openHttpGetProgressDialog();
     }
 
     /**
@@ -43,7 +43,7 @@ public class ActivityOrderes extends CustomAppCompatActivity {
      */
     public void HDZClientComplete(final String response, final String apiName) {
         // Progress
-        closeProgressDialog();
+        closeHttpProgressDialog();
 
         if ( checkLogOut(response) ) {
             return;
@@ -61,7 +61,7 @@ public class ActivityOrderes extends CustomAppCompatActivity {
                 if (responseBadge.badgeMessageList.size() > 0) {
                     // バッジ情報追加
                     final ArrayList<HDZApiResponseBadge.MessageUp> badgeMessageList = responseBadge.badgeMessageList;
-                    for (final HDZordered order : displayList) {
+                    for (final HDZApiResponseOrderedList.OrderInfo order : displayList) {
                         for (final HDZApiResponseBadge.MessageUp badge : badgeMessageList) {
                             if (badge.order_no.equals(order.order_no)) {
                                 order.badgeCount = badge.messageCount;
@@ -97,7 +97,7 @@ public class ActivityOrderes extends CustomAppCompatActivity {
                             public void onItemClick(final AdapterView<?> parent, final View view, final int position, final long id) {
 
                                 final ListView listView = (ListView)parent;
-                                final HDZordered order = (HDZordered)listView.getItemAtPosition(position);
+                                final HDZApiResponseOrderedList.OrderInfo order = (HDZApiResponseOrderedList.OrderInfo)listView.getItemAtPosition(position);
 
                                 // 画面遷移
                                 final Intent intent = new Intent( _self.getApplication(), ActivityOrderDetail.class);
