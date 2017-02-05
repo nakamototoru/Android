@@ -176,22 +176,23 @@ public class ActivityOrderDetail extends CustomAppCompatActivity {
         if (BuildConfig.DEBUG) {
             if (id == R.id.action_pdf) {
                 // PDF出力テスト
-                new HDZPdfManager.GenerationTask(myListView, getApplicationContext(), this).execute();
+//                new HDZPdfManager.GenerationTask(myListView, getApplicationContext(), this).execute();
+                // PDFイメージアクティビティ
+                final Intent intent = new Intent( getApplication(), ActivityPdfDocument.class);
+                intent.putExtra("order_no", myOrderNo);
+                startActivity(intent);
                 return true;
             }
 
-            if (id == R.id.action_base64) {
-                String result = HDZPdfManager.getPdfBase64String(getApplicationContext());
-                Log.d(TAG, result);
-                return true;
-            }
-
-            if (id == R.id.action_soap) {
-
-                HDZSoapFax.getSendList();
-
-                return true;
-            }
+//            if (id == R.id.action_base64) {
+//                String result = HDZPdfManager.getPdfBase64String(getApplicationContext());
+//                Log.d(TAG, result);
+//                return true;
+//            }
+//            if (id == R.id.action_soap) {
+//                HDZSoapFax.getSendList();
+//                return true;
+//            }
         }
 
         return super.onOptionsItemSelected(item);

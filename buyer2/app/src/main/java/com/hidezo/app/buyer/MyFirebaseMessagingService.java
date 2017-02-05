@@ -17,7 +17,7 @@
 package com.hidezo.app.buyer;
 
 //import android.app.Notification;
-import android.app.ActionBar;
+//import android.app.ActionBar;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -27,7 +27,7 @@ import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 //import android.support.v4.app.NotificationManagerCompat;
 //import android.support.v4.content.ContextCompat;
-import android.support.v4.app.TaskStackBuilder;
+//import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
@@ -35,7 +35,10 @@ import com.google.firebase.messaging.RemoteMessage;
 
 //import java.util.Map;
 
-public class MyFirebaseMessagingService extends FirebaseMessagingService {
+/**
+ * 通知時アクション
+ */
+class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     private static final String TAG = "##FirebaseMsgService";
 

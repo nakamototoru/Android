@@ -14,12 +14,8 @@
         android:id="@+id/action_message"
         android:title="コメント"
         app:showAsAction="never" />
-    <item android:title="testpdf"
+    <item android:title="testpdfview"
         android:id="@+id/action_pdf" />
-    <item android:title="testbase64"
-        android:id="@+id/action_base64" />
-    <item android:title="testsoap"
-        android:id="@+id/action_soap" />
     <!--
     <item
         android:id="@+id/action_logout"

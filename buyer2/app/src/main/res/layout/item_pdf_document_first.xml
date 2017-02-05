@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/width_pdf_view"
+    android:layout_height="@dimen/height_pdf_view"
+    android:paddingBottom="10dp"
+    android:paddingLeft="40dp"
+    android:paddingRight="40dp"
+    android:paddingTop="10dp">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:text="卸業者名前"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewPdfSupplierName"
+            android:textSize="18sp" />
+
+        <TextView
+            android:text="ページ数"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewPdfPage"
+            android:gravity="right"
+            android:textSize="12sp" />
+
+        <TextView
+            android:text="発注書"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewPdfDocumentTitle"
+            android:textSize="18sp"
+            android:gravity="center_horizontal" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:background="@android:color/black"
+            android:gravity="center_vertical"
+            android:layout_height="4dp"
+            android:id="@+id/linerLayoutBorderLine">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:background="@android:color/white"
+                android:layout_height="2dp"></LinearLayout>
+        </LinearLayout>
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:id="@+id/tableLayoutStoreInfo">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <TextView
+                    android:text="＜お届け先＞"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textViewPdfStoreName"
+                    android:layout_weight="1"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:text="注文日時"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textViewPdfOrderAt"
+                    android:layout_weight="1"
+                    android:textSize="12sp" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <TextView
+                    android:text="＜納品住所＞"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textViewPdfStoreAddress"
+                    android:layout_weight="1"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:text="納品希望日"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textViewPdfDeliverAt"
+                    android:layout_weight="1"
+                    android:textSize="12sp" />
+            </TableRow>
+
+        </TableLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/linerLayoutOrderList"
+            android:padding="2dp"
+            android:background="@android:color/black">
+
+            <TableLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:paddingRight="2dp"
+                android:id="@+id/tableLayoutLeft">
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:text="商品名"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textView19"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:textSize="10sp"
+                        android:background="@android:color/white" />
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"></LinearLayout>
+
+                    <TextView
+                        android:text="品番号"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textView18"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:textSize="10sp"
+                        android:background="@android:color/white" />
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"></LinearLayout>
+
+                    <TextView
+                        android:text="数量"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textView17"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:textSize="10sp"
+                        android:background="@android:color/white" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="1dp">
+
+                    <TextView
+                        android:text="TextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textViewOrderName0"
+                        android:background="@android:color/white"
+                        android:layout_weight="1"
+                        android:textSize="12sp"
+                        android:gravity="center_vertical|center_horizontal" />
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"></LinearLayout>
+
+                    <TextView
+                        android:text="TextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textViewOrderNumber0"
+                        android:background="@android:color/white"
+                        android:layout_weight="1"
+                        android:textSize="12sp"
+                        android:gravity="center_vertical|center_horizontal" />
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"></LinearLayout>
+
+                    <TextView
+                        android:text="TextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textViewOrderCount0"
+                        android:textSize="12sp"
+                        android:background="@android:color/white"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical|center_horizontal" />
+                </TableRow>
+
+            </TableLayout>
+
+            <TableLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/tableLayoutRight">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" >
+
+                    <TextView
+                        android:text="商品名"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textView22"
+                        android:layout_weight="1"
+                        android:background="@android:color/white"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:textSize="10sp" />
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"></LinearLayout>
+
+                    <TextView
+                        android:text="品番号"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textView21"
+                        android:layout_weight="1"
+                        android:background="@android:color/white"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:textSize="10sp" />
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"></LinearLayout>
+
+                    <TextView
+                        android:text="数量"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textView20"
+                        android:layout_weight="1"
+                        android:background="@android:color/white"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:textSize="10sp" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="1dp">
+
+                    <TextView
+                        android:text="TextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textViewOrderName13"
+                        android:textSize="12sp"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:layout_weight="1"
+                        android:background="@android:color/white" />
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"></LinearLayout>
+
+                    <TextView
+                        android:text="TextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textViewOrderNumber13"
+                        android:textSize="12sp"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:layout_weight="1"
+                        android:background="@android:color/white" />
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"></LinearLayout>
+
+                    <TextView
+                        android:text="TextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textViewOrderCount13"
+                        android:textSize="12sp"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:layout_weight="1"
+                        android:background="@android:color/white" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </TableLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

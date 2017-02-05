@@ -143,7 +143,6 @@ class HDZApiRequestPackage {
             final HDZApiRequest request = new HDZApiRequest();
             request.putKeyAndValue("id", id);
             request.putKeyAndValue("uuid", uuid);
-
             request.beginRequest(apiName,callbacks); // "store/badge"
         }
     }
@@ -159,6 +158,17 @@ class HDZApiRequestPackage {
             params.put("supplier_id",supplier_id);
 
             request.beginPost(apiName, params, callbacks);
+        }
+    }
+
+    static class faxDoc {
+        public static final String apiName = "store/faxdoc";
+        public void begin(final String id,final String uuid, final String order_no, final HDZClient.HDZCallbacks callbacks) {
+            final HDZApiRequest request = new HDZApiRequest();
+            request.putKeyAndValue("id", id);
+            request.putKeyAndValue("uuid", uuid);
+            request.putKeyAndValue("order_no", order_no);
+            request.beginRequest(apiName,callbacks);
         }
     }
 
@@ -182,7 +192,6 @@ class HDZApiRequestPackage {
             final HDZApiRequest request = new HDZApiRequest();
             request.putKeyAndValue("id", id);
             request.putKeyAndValue("uuid", uuid);
-
             request.beginRequest("logout",callbacks); // store/
         }
     }

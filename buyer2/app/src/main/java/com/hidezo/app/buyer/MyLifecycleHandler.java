@@ -11,7 +11,7 @@ import android.util.Log;
  *
  */
 
-public class MyLifecycleHandler implements Application.ActivityLifecycleCallbacks {
+class MyLifecycleHandler implements Application.ActivityLifecycleCallbacks {
 
     private static final String TAG = "##MyLifecycle";
 
