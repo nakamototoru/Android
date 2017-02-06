@@ -45,6 +45,7 @@ class HDZApiResponseFaxDoc extends HDZApiResponse {
                 deliver_at = json_faxdoc.getString("deliver_at");
                 comment = json_faxdoc.getString("comment");
                 supplier_name = json_faxdoc.getString("supplier_name");
+                fax = json_faxdoc.getString("fax");
                 final JSONArray item_list = json_faxdoc.getJSONArray("item_list");
                 if (item_list.length() > 0) {
                     for (int i = 0; i < item_list.length(); i++) {

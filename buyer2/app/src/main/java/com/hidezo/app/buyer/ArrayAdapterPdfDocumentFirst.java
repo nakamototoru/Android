@@ -17,8 +17,12 @@ import java.util.ArrayList;
  */
 class ArrayAdapterPdfDocumentFirst extends ArrayAdapter<HDZApiResponseFaxDoc> {
 
+    private int countPage = 0;
+
     ArrayAdapterPdfDocumentFirst(final Context context, final ArrayList<HDZApiResponseFaxDoc> list) {
         super(context, 0, list);
+
+        countPage = list.size();
     }
     @Override
     public View getView(final int position, View convertView, final ViewGroup parent) {
@@ -41,7 +45,7 @@ class ArrayAdapterPdfDocumentFirst extends ArrayAdapter<HDZApiResponseFaxDoc> {
 
         final TextView tvPage = (TextView) convertView.findViewById(R.id.textViewPdfPage);
         final int page_number = position + 1;
-        final String textPage = String.valueOf(page_number) + "枚目／" + "n枚中";
+        final String textPage = String.valueOf(page_number) + "枚目／" + String.valueOf(countPage) + "n枚中";
         tvPage.setText(textPage);
 
         final TextView tvStoreName = (TextView)convertView.findViewById(R.id.textViewPdfStoreName);

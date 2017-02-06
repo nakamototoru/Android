@@ -50,15 +50,17 @@ class HDZSoapFax {
 
         String soapAction;
         String soapXml;
+        private CustomAppCompatActivity activity;
 
         /**
          * コンストラクタ
          * @param soapAction コマンド
          * @param soapXml xml body
          */
-        SoapTask(final String soapAction, final String soapXml) {
+        SoapTask(final String soapAction, final String soapXml, final CustomAppCompatActivity activity) {
             this.soapAction = soapAction;
             this.soapXml = soapXml;
+            this.activity = activity;
         }
 
         /**
@@ -68,6 +70,9 @@ class HDZSoapFax {
          */
         @Override
         protected String doInBackground(final Void... params) {
+
+            activity.openProgressDialog("注文書送信中","しばらくお待ち下さい。");
+
             // XML
             String soapMessageFinal = soapXmlFirst;
             // Header
@@ -142,6 +147,8 @@ class HDZSoapFax {
         protected void onPostExecute(final String responseXml) {
             Log.d(TAG, "onPostExecute");
 
+            activity.closeProgressDialog();
+
             try {
                 final boolean isSuccess = parseXml(responseXml);
 
@@ -172,7 +179,7 @@ class HDZSoapFax {
     /**
      * 送信履歴取得
      */
-    static void getSendList() {
+    static void getSendList(final CustomAppCompatActivity activity) {
         // XML
         String soapXml = "";
         // Body
@@ -181,26 +188,30 @@ class HDZSoapFax {
         soapXml += "</ns1:SendListSearchCondition></FAXSendListRequest></ns1:getSendList></SOAP-ENV:Body></SOAP-ENV:Envelope>";
         // END of XML
 
-        new HDZSoapFax.SoapTask(ACTION_NAME_GetSendList,soapXml).execute();
+        new HDZSoapFax.SoapTask(ACTION_NAME_GetSendList,soapXml,activity).execute();
     }
 
     /**
      * FAX送信
      * @param base64Binary データ文字列
-     * @param telNumber 電話番号
+     * @param faxNumber FAX番号
      * @param subject 件名
      */
-    static void doSendRequest(final String base64Binary, final String telNumber, final String subject) {
+    static void doSendRequest(final String base64Binary, final String faxNumber, final String subject, final CustomAppCompatActivity activity) {
 
-        final String faxNumber;
-
-        final Locale theLocale = Locale.getDefault();
-        final NumberFormat numberFormat = DecimalFormat.getInstance(theLocale);
-        final Number theNumber;
-        try {
-            theNumber = numberFormat.parse(telNumber);
-            faxNumber = theNumber.toString();
-            Log.d(TAG, "FaxNumber = " + faxNumber);
+//        final Locale theLocale = Locale.getDefault();
+//        final NumberFormat numberFormat = DecimalFormat.getInstance(theLocale);
+//        final Number theNumber;
+//        final String[] numbers = telNumber.split("-",0);
+//        String faxNumber = "";
+//        for (final String part: numbers) {
+//            faxNumber += part;
+//        }
+//        for (int i = 0; i < numbers.length; i++) {
+//            faxNumber += numbers[i];
+//        }
+        Log.d(TAG, "FaxNumber = " + faxNumber);
+//        try {
 
             // XML
             String soapXml = "";
@@ -221,10 +232,10 @@ class HDZSoapFax {
             soapXml += "</ns1:SendData></FAXSendRequest></ns1:doSendRequest></SOAP-ENV:Body></SOAP-ENV:Envelope>";
             // END of XML
 
-            new HDZSoapFax.SoapTask(ACTION_NAME_DoSendRequest,soapXml).execute();
+            new HDZSoapFax.SoapTask(ACTION_NAME_DoSendRequest,soapXml,activity).execute();
 
-        } catch (final ParseException e) {
-            e.printStackTrace();
+//        } catch (final ParseException e) {
+//            e.printStackTrace();
             // The string value might be either 99.99 or 99,99, depending on Locale.
             // We can deal with this safely, by forcing to be a point for the decimal separator, and then using Double.valueOf ...
             //http://stackoverflow.com/questions/4323599/best-way-to-parsedouble-with-comma-as-decimal-separator
@@ -240,7 +251,7 @@ class HDZSoapFax {
 //                Log.w("CORE", "Warning: Value is not a number" + telNumber);
 ////                return 0.0;
 //            }
-        }
+//        }
     }
 
     /**

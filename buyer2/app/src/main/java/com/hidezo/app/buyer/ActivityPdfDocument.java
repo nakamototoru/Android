@@ -20,6 +20,8 @@ public class ActivityPdfDocument extends CustomAppCompatActivity {
     ArrayList<HDZApiResponseFaxDoc> displayList = new ArrayList<>();
 
     String myOrderNo = "";
+    String faxNumber = "";
+    ListView listViewPdfImage = null;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -59,6 +61,8 @@ public class ActivityPdfDocument extends CustomAppCompatActivity {
 
             Log.d(TAG, response);
 
+            faxNumber = responseFaxDoc.fax;
+
             displayList.add(responseFaxDoc);
 
             //UIスレッド上で呼び出してもらう
@@ -68,10 +72,23 @@ public class ActivityPdfDocument extends CustomAppCompatActivity {
                     //リストビュー作成
                     final ArrayAdapterPdfDocumentFirst adapter = new ArrayAdapterPdfDocumentFirst(_self, displayList);
                     final ListView listView = (ListView) findViewById(R.id.listViewPdfDocument);
-
                     listView.setAdapter(adapter);
+
+                    _self.listViewPdfImage = listView;
                 }
             });
+        }
+    }
+
+    /**
+     * PDFデータ受け取り
+     * @param base64Binary Base64 string
+     */
+    public void respondBase64String(final String base64Binary) {
+
+        if (base64Binary != null && base64Binary.length() > 0) {
+            // FAX送信開始
+            HDZSoapFax.doSendRequest(base64Binary,faxNumber,"TestFromAndroid",this);
         }
     }
 
@@ -80,33 +97,27 @@ public class ActivityPdfDocument extends CustomAppCompatActivity {
      * @param menu menu
      * @return result
      */
-//    @Override
-//    public boolean onCreateOptionsMenu(final Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-////        getMenuInflater().inflate(R.menu.menu_orders, menu);
-//        return true;
-//    }
-//    @Override
-//    public boolean onOptionsItemSelected(final MenuItem item) {
-//        // Handle action bar item clicks here. The action bar will
-//        // automatically handle clicks on the Home/Up button, so long
-//        // as you specify a parent activity in AndroidManifest.xml.
-//        final int id = item.getItemId();
-//
-//        //noinspection SimplifiableIfStatement
-////        if (id == R.id.action_logout) {
-////            openLogoutDialog();
-////            return true;
-////        }
-//
-////        if (id == R.id.action_suppliers) {
-////            // 取引先一覧
-////            final Intent intent = new Intent(getApplication(), ActivitySuppliers.class);
-////            startActivity(intent);
-////            return true;
-////        }
-//
-//        return super.onOptionsItemSelected(item);
-//    }
+    @Override
+    public boolean onCreateOptionsMenu(final Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_pdf_document, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(final MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        final int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_fax_send) {
+            // FAX送信の原稿を作成
+            new HDZPdfManager.GenerationTask(listViewPdfImage,getApplicationContext(),this).execute();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 
 }

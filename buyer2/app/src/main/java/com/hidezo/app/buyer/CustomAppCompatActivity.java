@@ -278,6 +278,14 @@ public class CustomAppCompatActivity extends AppCompatActivity implements HDZCli
         });
     }
 
+    /**
+     * サブクラスで使用
+     * @param base64data Base64 string
+     */
+    public void respondBase64String(final String base64data) {
+
+    }
+
     // ActivityLifecycleCallbacksのメソッド郡
 //    public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
 //    }

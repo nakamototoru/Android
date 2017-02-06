@@ -30,12 +30,11 @@ class HDZPdfManager extends Application {
     private static final String TAG = "#HDZPdfManager";
 
     private static final String PDF_FILE_NAME = "hidezo_order_document.pdf";
-    private static final int WIDTH_PAGE = 595;
-    private static final int HEIGHT_PAGE = 842;
+//    private static final int WIDTH_PAGE = 595;
+//    private static final int HEIGHT_PAGE = 842;
     private static final int BYTE_READ_SIZE = 10240;
 
     protected static File getPdfDir(final Context context) {
-//        final File myDir = context.getFilesDir();
         return context.getFilesDir();
     }
 
@@ -52,8 +51,8 @@ class HDZPdfManager extends Application {
             // crate a page description
             final int pageNumber = 1;
             final PdfDocument.PageInfo pageInfo = new PdfDocument.PageInfo.Builder(
-                    WIDTH_PAGE, // viewContent.getWidth(),
-                    HEIGHT_PAGE, // viewContent.getHeight() - 20,
+                    viewContent.getWidth(),
+                    viewContent.getHeight(),
                     pageNumber
             ).create();
 
@@ -107,6 +106,9 @@ class HDZPdfManager extends Application {
             Log.d(TAG, "onPostExecute");
 
             activity.closeProgressDialog();
+
+            final String base64Binary = HDZPdfManager.getPdfBase64String(activity.getApplicationContext());
+            activity.respondBase64String(base64Binary);
         }
     }
 
@@ -131,7 +133,12 @@ class HDZPdfManager extends Application {
 //        return null;
 //    }
 
-    // Converting File to Base64.encode String type using Method
+
+    /**
+     * Converting File to Base64.encode String type using Method
+     * @param context context
+     * @return base64Binary string
+     */
     public static String getPdfBase64String(final Context context) {
 
         final File directory = getPdfDir(context);
