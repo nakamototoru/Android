@@ -7,6 +7,7 @@ import android.os.Bundle;
 //import android.sax.StartElementListener;
 import android.support.v7.app.AlertDialog;
 //import android.util.Log;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,7 +24,12 @@ import java.util.ArrayList;
  */
 public class ActivityUserOrdersCheck extends CustomAppCompatActivity {
 
+    private static final String TAG = "##UserOrdersCheck";
+
     String mySupplierId = "";
+    String myDeliverDay = "";
+    String myCharge = "";
+    String myDeliverPlace = "";
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -72,7 +78,10 @@ public class ActivityUserOrdersCheck extends CustomAppCompatActivity {
             String strDeliverDay = globals.getOrderDeliverDay();
             if (strDeliverDay.equals("")) {
                 strDeliverDay = responseItem.itemInfo.delivery_day_list.get(0);
+
+//                Log.d(TAG,"strDeliverDay = " + strDeliverDay);
             }
+            globals.setOrderDeliverDay(strDeliverDay);
             final HDZProfile pDate = new HDZProfile("納品日", strDeliverDay);
             profileList.add(pDate);
 
@@ -97,7 +106,6 @@ public class ActivityUserOrdersCheck extends CustomAppCompatActivity {
             globals.setOrderDeliverPlace(strDeliverTo);
             final HDZProfile pDeliverTo = new HDZProfile("配達先",strDeliverTo);
             profileList.add(pDeliverTo);
-
 
             //UIスレッド上で呼び出してもらう
             this.runOnUiThread(new Runnable(){
@@ -209,6 +217,9 @@ public class ActivityUserOrdersCheck extends CustomAppCompatActivity {
             txBtnOrderExec.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(final View v) {
+
+//                    Log.d(TAG, "Day = " + globals.getOrderDeliverDay());
+
                     openAlertOrderExec();
                 }
             });

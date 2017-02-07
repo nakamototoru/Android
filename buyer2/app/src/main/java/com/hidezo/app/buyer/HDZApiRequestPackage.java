@@ -172,6 +172,17 @@ class HDZApiRequestPackage {
         }
     }
 
+    static class OrderMethod {
+        public static final String apiName = "store/order_method";
+        public void begin(final String id,final String uuid, final String supplier_id, final HDZClient.HDZCallbacks callbacks) {
+            final HDZApiRequest request = new HDZApiRequest();
+            request.putKeyAndValue("id", id);
+            request.putKeyAndValue("uuid", uuid);
+            request.putKeyAndValue("supplier_id", supplier_id);
+            request.beginRequest(apiName,callbacks);
+        }
+    }
+
     static class sendDeviceToken {
         public static final String apiName = "store/device_token";
         public void begin(final String id,final String uuid, final String device_token, final HDZClient.HDZCallbacks callbacks) {

@@ -10,7 +10,6 @@ import java.util.ArrayList;
  * Created by dezamisystem2 on 2017/02/04.
  *
  */
-
 class HDZApiResponseFaxDoc extends HDZApiResponse {
 
     String store_name = "";

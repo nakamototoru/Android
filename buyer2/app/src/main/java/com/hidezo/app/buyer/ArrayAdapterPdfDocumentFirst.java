@@ -25,6 +25,10 @@ class ArrayAdapterPdfDocumentFirst extends ArrayAdapter<HDZApiResponseFaxDoc> {
         countPage = list.size();
     }
     @Override
+    public boolean isEnabled(final int position) {
+        return false;  // ListView アイテムの選択を無効にする場合
+    }
+    @Override
     public View getView(final int position, View convertView, final ViewGroup parent) {
 
         // Get the data item for this position
@@ -63,6 +67,17 @@ class ArrayAdapterPdfDocumentFirst extends ArrayAdapter<HDZApiResponseFaxDoc> {
         final TextView tvDeliverAt = (TextView)convertView.findViewById(R.id.textViewPdfDeliverAt);
         final String textDeliverAt = "納品希望日" + faxDoc.deliver_at;
         tvDeliverAt.setText(textDeliverAt);
+
+        for (final HDZApiResponseFaxDoc.ItemInfo item: faxDoc.itemInfoArrayList) {
+            final String name = item.name;
+
+            final TextView tvOrderName = (TextView)convertView.findViewById(R.id.textViewOrderName0);
+            tvOrderName.setText(name);
+        }
+
+        final TextView tvComment = (TextView)convertView.findViewById(R.id.textViewPdfDocumentComment);
+        final String textComment = "備考：" + faxDoc.comment;
+        tvComment.setText(textComment);
 
         // Return the completed view to render on screen
         return convertView;

@@ -15,10 +15,10 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.text.ParseException;
-import java.util.Locale;
+//import java.text.DecimalFormat;
+//import java.text.NumberFormat;
+//import java.text.ParseException;
+//import java.util.Locale;
 
 /**
  * Created by dezamisystem2 on 2017/02/03.

@@ -1,8 +1,6 @@
 package com.hidezo.app.buyer;
 
 import android.content.Context;
-//import android.support.annotation.NonNull;
-//import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +19,7 @@ import java.util.ArrayList;
  */
 class ArrayAdapterStaticItem extends ArrayAdapter<HDZUserOrder> {
 
-    public static final int TouchEventDialog = 999;
+    private static final int TouchEventDialog = 999;
 
     ArrayAdapterStaticItem(final Context context, final ArrayList<HDZUserOrder> items) {
         super(context, 0, items);

@@ -1,14 +1,14 @@
 package com.hidezo.app.buyer;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+//import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
+//import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.HorizontalScrollView;
+//import android.view.View;
+//import android.widget.HorizontalScrollView;
 import android.widget.ListView;
 
 import java.util.ArrayList;

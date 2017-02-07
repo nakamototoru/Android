@@ -23,7 +23,7 @@ import java.util.ArrayList;
  */
 class ArrayAdapterSupplier extends ArrayAdapter<HDZFriendInfo> {
 
-    public static final int TouchEventDetail = 99;
+    private static final int TouchEventDetail = 99;
 
     ArrayAdapterSupplier(final Context context, final ArrayList<HDZFriendInfo> list) {
         super(context, 0, list);

@@ -1,16 +1,13 @@
 package com.hidezo.app.buyer;
 
 import android.content.Context;
-
 import com.hidezo.app.buyer.CustomView.PickerView;
-
 import java.util.ArrayList;
 
 /**
  * Created by dezami on 2016/09/25.
  *
  */
-
 class CustomPickerView extends PickerView {
 
     private CustomPickerView _self;

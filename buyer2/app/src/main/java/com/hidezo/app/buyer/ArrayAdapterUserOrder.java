@@ -16,7 +16,7 @@ import java.util.ArrayList;
  */
 class ArrayAdapterUserOrder extends ArrayAdapter<HDZUserOrder> {
 
-    static final int TouchEventDialog = 999;
+    private static final int TouchEventDialog = 999;
 
     ArrayAdapterUserOrder(final Context context, final ArrayList<HDZUserOrder> userOrders) {
         super(context, 0, userOrders);

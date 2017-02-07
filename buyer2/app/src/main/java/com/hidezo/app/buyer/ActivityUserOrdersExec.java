@@ -72,6 +72,7 @@ public class ActivityUserOrdersExec extends CustomAppCompatActivity {
         // 画面遷移
         final Intent intent = new Intent(getApplication(), ActivityUserOrdersFinish.class);
         intent.putExtra("supplier_id",mySupplierId);
+        intent.putExtra("order_no",myOrderNo);
         startActivity(intent);
     }
 

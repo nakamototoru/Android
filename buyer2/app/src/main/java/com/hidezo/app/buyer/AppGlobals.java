@@ -8,14 +8,9 @@ import android.util.Log;
 import com.hidezo.app.buyer.model.Dau;
 import com.hidezo.app.buyer.model.DauHelper;
 import com.hidezo.app.buyer.util.DBHelper;
-
-import java.security.KeyStore;
 import java.util.ArrayList;
-//import java.util.Collections;
-//import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
-
 
 /**
  * Created by dezami on 2016/09/14.
@@ -31,7 +26,6 @@ public class AppGlobals extends Application {
     @Override
     public void onCreate() {
 //        registerActivityLifecycleCallbacks(new MyLifecycleHandler());
-
     }
 
     /**

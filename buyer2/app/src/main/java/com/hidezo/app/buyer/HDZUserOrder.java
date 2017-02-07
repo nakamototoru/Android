@@ -7,7 +7,6 @@ import java.util.ArrayList;
  * Created by dezami on 2016/09/24.
  *
  */
-
 class HDZUserOrder {
 
     String id = "";

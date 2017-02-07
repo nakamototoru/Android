@@ -1,12 +1,12 @@
 package com.hidezo.app.buyer;
 
-import android.app.Activity;
-import android.app.Application;
+//import android.app.Activity;
+//import android.app.Application;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 //import android.support.v7.app.ActionBar;
-import android.os.Bundle;
+//import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -21,7 +21,7 @@ public class CustomAppCompatActivity extends AppCompatActivity implements HDZCli
     // ,Application.ActivityLifecycleCallbacks
 
     ProgressDialog progressDialog = null;
-    ProgressDialog progressNotification = null;
+//    ProgressDialog progressNotification = null;
 
     @Override
     protected void onResume() {
@@ -138,7 +138,7 @@ public class CustomAppCompatActivity extends AppCompatActivity implements HDZCli
     }
     public void closeProgressDialog() {
         if (progressDialog != null) {
-            final CustomAppCompatActivity _self = this;
+//            final CustomAppCompatActivity _self = this;
             //UIスレッド上で呼び出してもらう
             this.runOnUiThread(new Runnable() {
                 @Override
@@ -178,21 +178,21 @@ public class CustomAppCompatActivity extends AppCompatActivity implements HDZCli
     /**
      * 通知ダイアログ
      */
-    protected void openNotificationDialog(final String message) {
-        if (progressNotification == null) {
-            progressNotification = new ProgressDialog(this);
-            progressNotification.setMessage(message);
-            progressNotification.setButton(DialogInterface.BUTTON_POSITIVE, "OK",
-                    new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(final DialogInterface dialog, final int which) {
-                            progressNotification = null;
-                        }
-                    }
-            );
-            progressNotification.show();
-        }
-    }
+//    protected void openNotificationDialog(final String message) {
+//        if (progressNotification == null) {
+//            progressNotification = new ProgressDialog(this);
+//            progressNotification.setMessage(message);
+//            progressNotification.setButton(DialogInterface.BUTTON_POSITIVE, "OK",
+//                    new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(final DialogInterface dialog, final int which) {
+//                            progressNotification = null;
+//                        }
+//                    }
+//            );
+//            progressNotification.show();
+//        }
+//    }
 
     /**
      * HDZClientCallbacksGet
