@@ -13,21 +13,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-//import java.io.BufferedInputStream;
-//import java.io.FileInputStream;
-//import java.io.FileNotFoundException;
-//import java.io.IOException;
-//import java.io.InputStream;
-//import java.security.KeyStore;
-//import java.security.KeyStoreException;
-//import java.security.NoSuchAlgorithmException;
-//import java.security.cert.Certificate;
-//import java.security.cert.CertificateEncodingException;
-//import java.security.cert.CertificateException;
-//import java.security.cert.CertificateFactory;
-//import java.security.cert.X509Certificate;
-//import org.w3c.dom.Text;
-
 /**
  *
  */
@@ -84,7 +69,7 @@ public class ActivityOrderDetail extends CustomAppCompatActivity {
             this.runOnUiThread(new Runnable(){
                 @Override
                 public void run(){
-                    //リストビュー作成
+                    //リストビュー作成・商品一覧
                     final ArrayAdapterOrderDetail adapter = new ArrayAdapterOrderDetail(_self,responseOrderDetail.itemList);
                     final ListView listView = (ListView) findViewById(R.id.listViewOrderDetail);
                     listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -103,7 +88,7 @@ public class ActivityOrderDetail extends CustomAppCompatActivity {
                         }
                     });
 
-                    // フッター
+                    // フッター・決済
                     if (listView.getFooterViewsCount() == 0) {
                         //
                         final LinearLayout inflateLayout = null;
@@ -133,6 +118,20 @@ public class ActivityOrderDetail extends CustomAppCompatActivity {
                         final String deliverTo = responseOrderDetail.orderInfo.deliver_to;
                         final TextView tvTo = (TextView)findViewById(R.id.textViewDeliverTo);
                         tvTo.setText(deliverTo);
+
+                        // コメントボタン
+                        final TextView tvButtonComment = (TextView)findViewById(R.id.textViewButtonComment);
+                        tvButtonComment.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(final View view) {
+                                // 画面遷移・コメント一覧
+                                final Intent intent = new Intent( getApplication(), ActivityMessages.class);
+                                intent.putExtra("order_no", myOrderNo);
+                                intent.putExtra("supplier_name", mySupplierName);
+                                intent.putExtra("charge", myCharge);
+                                startActivity(intent);
+                            }
+                        });
                     }
 
                     listView.setAdapter(adapter);
@@ -142,6 +141,15 @@ public class ActivityOrderDetail extends CustomAppCompatActivity {
             });
 
         }
+    }
+
+    /**
+     * 戻る実行
+     */
+    void onClickNavigationBack() {
+        // 注文履歴画面遷移
+        final Intent intent = new Intent(getApplication(), ActivityOrderes.class);
+        startActivity(intent);
     }
 
     /**
@@ -163,15 +171,15 @@ public class ActivityOrderDetail extends CustomAppCompatActivity {
         final int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_message) {
-            // 画面遷移
-            final Intent intent = new Intent( getApplication(), ActivityMessages.class);
-            intent.putExtra("order_no", myOrderNo);
-            intent.putExtra("supplier_name", mySupplierName);
-            intent.putExtra("charge", myCharge);
-            startActivity(intent);
-            return true;
-        }
+//        if (id == R.id.action_message) {
+//            // 画面遷移・コメント一覧
+//            final Intent intent = new Intent( getApplication(), ActivityMessages.class);
+//            intent.putExtra("order_no", myOrderNo);
+//            intent.putExtra("supplier_name", mySupplierName);
+//            intent.putExtra("charge", myCharge);
+//            startActivity(intent);
+//            return true;
+//        }
 
         if (BuildConfig.DEBUG) {
             if (id == R.id.action_pdf) {

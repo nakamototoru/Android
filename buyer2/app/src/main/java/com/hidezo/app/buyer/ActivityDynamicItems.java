@@ -40,6 +40,7 @@ public class ActivityDynamicItems extends CustomAppCompatActivity {
         tvOrderCheck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
+                // 遷移・注文履歴
                 final Intent intent = new Intent( getApplication(), ActivityUserOrders.class);
                 intent.putExtra("supplier_id",mySupplierId);
                 startActivity(intent);
@@ -49,6 +50,7 @@ public class ActivityDynamicItems extends CustomAppCompatActivity {
         tvHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
+                // 遷移・カテゴリ一覧
                 final Intent intent = new Intent( getApplication(), ActivityCategorys.class);
                 intent.putExtra("supplier_id", mySupplierId);
                 startActivity(intent);
@@ -233,6 +235,16 @@ public class ActivityDynamicItems extends CustomAppCompatActivity {
         if (myAdapter != null) {
             myAdapter.notifyDataSetChanged();
         }
+    }
+
+    /**
+     * 戻る実行
+     */
+    void onClickNavigationBack() {
+        // 遷移・カテゴリ一覧
+        final Intent intent = new Intent( getApplication(), ActivityCategorys.class);
+        intent.putExtra("supplier_id", mySupplierId);
+        startActivity(intent);
     }
 
     /**

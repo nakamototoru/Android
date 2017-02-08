@@ -11,6 +11,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 
 
 /**
@@ -19,6 +20,8 @@ import android.util.Log;
  */
 public class CustomAppCompatActivity extends AppCompatActivity implements HDZClient.HDZCallbacks {
     // ,Application.ActivityLifecycleCallbacks
+
+    private static final String TAG = "#CustomActivity";
 
     ProgressDialog progressDialog = null;
 //    ProgressDialog progressNotification = null;
@@ -51,21 +54,24 @@ public class CustomAppCompatActivity extends AppCompatActivity implements HDZCli
         toolbar.setTitle(title);
         setSupportActionBar(toolbar);
 
-        // TODO:戻るボタンはあり？
-//        if (isBack) {
-//            // UPナビゲーションを有効化する
-//            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//            getSupportActionBar().setDisplayShowHomeEnabled(true);
-//
-//            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    //do something you want
-//                    finish();
-//                }
-//            });
-//
-//        }
+        // 戻るボタン
+        if (isBack) {
+            // UPナビゲーションを有効化する
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(final View view) {
+                    Log.d(TAG,"toolbar.onClick");
+
+                    onClickNavigationBack();
+                }
+            });
+        }
+    }
+    void onClickNavigationBack() {
+        // サブクラスに実装
     }
 
     /**

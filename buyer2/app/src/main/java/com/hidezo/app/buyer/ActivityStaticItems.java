@@ -28,6 +28,7 @@ public class ActivityStaticItems extends CustomAppCompatActivity {
     String myCategoryId = "";
     String mySupplierId = "";
     boolean myHistoryFlag = false;
+    String myCategoryName = "";
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -61,8 +62,8 @@ public class ActivityStaticItems extends CustomAppCompatActivity {
         });
 
         // ツールバー初期化
-        final String title = intent.getStringExtra("category_name");
-        setNavigationBar(title,true);
+        myCategoryName = intent.getStringExtra("category_name");
+        setNavigationBar(myCategoryName,true);
 
         // HTTP GET
         if (myHistoryFlag) {
@@ -148,6 +149,7 @@ public class ActivityStaticItems extends CustomAppCompatActivity {
                             intent.putExtra("supplier_id", mySupplierId);
                             intent.putExtra("item_id", displayItemList.get(position).id);
                             intent.putExtra("category_id", myCategoryId);
+                            intent.putExtra("category_name", myCategoryName);
                             _self.startActivity(intent);
                         }
                         else if (id == 1 || id == -1) {
@@ -215,6 +217,16 @@ public class ActivityStaticItems extends CustomAppCompatActivity {
             }
         });
 
+    }
+
+    /**
+     * 戻る実行
+     */
+    void onClickNavigationBack() {
+        // カテゴリ一覧
+        final Intent intent = new Intent( getApplication(), ActivityCategorys.class);
+        intent.putExtra("supplier_id", mySupplierId);
+        startActivity(intent);
     }
 
     /**

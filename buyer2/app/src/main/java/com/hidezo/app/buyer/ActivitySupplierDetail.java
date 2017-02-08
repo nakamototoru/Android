@@ -95,6 +95,14 @@ public class ActivitySupplierDetail extends CustomAppCompatActivity {
         }
     }
 
+    /**
+     * 戻る実行
+     */
+    void onClickNavigationBack() {
+        // 遷移・取引先一覧
+        final Intent intent = new Intent(getApplication(), ActivitySuppliers.class);
+        startActivity(intent);
+    }
 
     /**
      * ツールバー

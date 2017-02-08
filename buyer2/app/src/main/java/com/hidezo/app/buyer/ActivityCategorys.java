@@ -40,7 +40,7 @@ public class ActivityCategorys extends CustomAppCompatActivity {
         tvOrderCheck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
-                // 遷移
+                // 遷移・注文履歴
                 final Intent intent = new Intent( getApplication(), ActivityUserOrders.class);
                 intent.putExtra("supplier_id",mySupplierId);
                 startActivity(intent);
@@ -50,7 +50,7 @@ public class ActivityCategorys extends CustomAppCompatActivity {
         tvTop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
-                // 遷移
+                // 遷移・取引先一覧
                 final Intent intent = new Intent(getApplication(), ActivitySuppliers.class);
                 startActivity(intent);
             }
@@ -210,6 +210,15 @@ public class ActivityCategorys extends CustomAppCompatActivity {
                 }
             }
         });
+    }
+
+    /**
+     * 戻る実行
+     */
+    void onClickNavigationBack() {
+        // 遷移・取引先一覧
+        final Intent intent = new Intent(getApplication(), ActivitySuppliers.class);
+        startActivity(intent);
     }
 
     /**

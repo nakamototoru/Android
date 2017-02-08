@@ -1,25 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-</menu>
--->
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.hidezo.app.samplebaseactivity01.ActivityOrders">
+
     <item
         android:id="@+id/action_suppliers"
         android:title="取引先一覧"
         app:showAsAction="never" />
+
     <item
         android:id="@+id/action_logout"
         android:title="ログアウト"
         app:showAsAction="never" />
-
-    <!--        android:orderInCategory="100"-->
-
 </menu>
 

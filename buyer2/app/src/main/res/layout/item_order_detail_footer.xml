@@ -168,6 +168,18 @@
             android:textColor="@android:color/holo_red_dark"
             android:textStyle="normal|bold"
             android:gravity="top|center_horizontal" />
+
+        <TextView
+            android:text="コメント一覧"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewButtonComment"
+            android:gravity="center_vertical|center_horizontal"
+            android:textSize="24sp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:textColor="@color/colorOrderButton"
+            android:background="@color/colorOrderBar" />
     </LinearLayout>
 
 </RelativeLayout>

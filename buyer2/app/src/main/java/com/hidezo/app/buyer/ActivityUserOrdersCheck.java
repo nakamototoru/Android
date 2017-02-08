@@ -17,6 +17,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 //import com.hidezo.app.buyer.model.Dau;
 //import org.w3c.dom.Text;
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 /**
@@ -269,6 +271,16 @@ public class ActivityUserOrdersCheck extends CustomAppCompatActivity {
             }
         });
 
+    }
+
+    /**
+     * 戻る実行
+     */
+    void onClickNavigationBack() {
+        // 画面遷移
+        final Intent intent = new Intent( getApplication(), ActivityUserOrders.class);
+        intent.putExtra("supplier_id",mySupplierId);
+        startActivity(intent);
     }
 
     /**

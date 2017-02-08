@@ -27,6 +27,8 @@ public class ActivityStaticItemDetail extends CustomAppCompatActivity {
     String myItemId = "";
     String myCategoryId = "";
     String imageURL = "";
+    String mySupplierId = "";
+    String myCategoryName = "";
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -36,7 +38,7 @@ public class ActivityStaticItemDetail extends CustomAppCompatActivity {
         final Intent intent = getIntent();
         myItemId = intent.getStringExtra("item_id");
         myCategoryId = intent.getStringExtra("category_id");
-        final String supplier_id = intent.getStringExtra("supplier_id");
+        mySupplierId = intent.getStringExtra("supplier_id");
 
         // ツールバー初期化
         final String title = "商品詳細";
@@ -45,7 +47,7 @@ public class ActivityStaticItemDetail extends CustomAppCompatActivity {
         // HTTP GET
         final HDZApiRequestPackage.Item req = new HDZApiRequestPackage.Item();
         final AppGlobals globals = (AppGlobals) this.getApplication();
-        req.begin( globals.getUserId(), globals.getUuid(), supplier_id, this);
+        req.begin( globals.getUserId(), globals.getUuid(), mySupplierId, this);
 
         // Progress
         openHttpGetProgressDialog();
@@ -157,6 +159,18 @@ public class ActivityStaticItemDetail extends CustomAppCompatActivity {
                 }
             });
         }
+    }
+
+    /**
+     * 戻る実行
+     */
+    void onClickNavigationBack() {
+        // 遷移・静的商品一覧
+        final Intent intent = new Intent( getApplication(), ActivityStaticItems.class);
+        intent.putExtra("supplier_id", mySupplierId);
+        intent.putExtra("category_id", myCategoryId);
+        intent.putExtra("category_name", myCategoryName);
+        startActivity(intent);
     }
 
     /**

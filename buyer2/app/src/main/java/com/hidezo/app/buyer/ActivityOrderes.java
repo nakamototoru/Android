@@ -99,7 +99,7 @@ public class ActivityOrderes extends CustomAppCompatActivity {
                                 final ListView listView = (ListView)parent;
                                 final HDZApiResponseOrderedList.OrderInfo order = (HDZApiResponseOrderedList.OrderInfo)listView.getItemAtPosition(position);
 
-                                // 画面遷移
+                                // 画面遷移・注文詳細
                                 final Intent intent = new Intent( _self.getApplication(), ActivityOrderDetail.class);
                                 intent.putExtra("order_no", order.order_no);
                                 intent.putExtra("supplier_name", order.supplier_name);

@@ -7,57 +7,56 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_user_orders">
 
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/listViewUserOrders"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_above="@+id/toolbar2" />
-
-    <android.support.v7.widget.Toolbar
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/colorOrderBar"
-        android:theme="?attr/actionBarTheme"
-        android:minHeight="?attr/actionBarSize"
-        android:id="@+id/toolbar2"
-        android:layout_alignParentBottom="true" />
-
     <LinearLayout
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/abc_action_bar_default_height_material"
-        android:layout_alignParentBottom="true"
-        android:gravity="center_vertical|center_horizontal">
+        android:layout_height="match_parent">
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/listViewUserOrders"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_above="@+id/toolbar2"
+            android:layout_weight="1" />
 
         <LinearLayout
             android:orientation="horizontal"
-            android:layout_width="@dimen/toolbar_range_width"
-            android:layout_height="match_parent">
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/toolbar_height"
+            android:layout_alignParentBottom="true"
+            android:gravity="center_vertical|center_horizontal"
+            android:background="@color/colorOrderBar">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="@dimen/toolbar_range_width"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:text="@string/GoHome"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:id="@+id/textViewButtonHome"
+                    android:gravity="left|center_vertical"
+                    android:textSize="18sp"
+                    android:textColor="@color/colorOrderButton" />
+            </LinearLayout>
 
             <TextView
-                android:text="@string/GoHome"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:id="@+id/textViewButtonHome"
-                android:gravity="left|center_vertical"
-                android:textSize="18sp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/OrderDecide"
+                android:id="@+id/textViewButtonOrderDecide"
                 android:textColor="@color/colorOrderButton" />
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="@dimen/toolbar_range_width"
+                android:layout_height="match_parent"></LinearLayout>
         </LinearLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/OrderDecide"
-            android:id="@+id/textViewButtonOrderDecide"
-            android:textColor="@color/colorOrderButton" />
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="@dimen/toolbar_range_width"
-            android:layout_height="match_parent"></LinearLayout>
     </LinearLayout>
 
 </RelativeLayout>

@@ -152,6 +152,17 @@ public class ActivityMessages extends CustomAppCompatActivity {
     }
 
     /**
+     * 戻る実行
+     */
+    void onClickNavigationBack() {
+        // 画面遷移・注文詳細
+        final Intent intent = new Intent( getApplication(), ActivityOrderDetail.class);
+        intent.putExtra("order_no", myOrderNo);
+        intent.putExtra("supplier_name", mySupplierName);
+        startActivity(intent);
+    }
+
+    /**
      * ツールバー
      * @param menu menu
      * @return result
