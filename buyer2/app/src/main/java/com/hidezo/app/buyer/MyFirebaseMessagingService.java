@@ -33,12 +33,14 @@ import android.util.Log;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
+import java.util.Map;
+
 //import java.util.Map;
 
 /**
  * 通知時アクション
  */
-class MyFirebaseMessagingService extends FirebaseMessagingService {
+public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     private static final String TAG = "##FirebaseMsgService";
 
@@ -60,7 +62,7 @@ class MyFirebaseMessagingService extends FirebaseMessagingService {
         // messages. For more see: https://firebase.google.com/docs/cloud-messaging/concept-options
         // [END_EXCLUDE]
 
-        // TODO(developer): Handle FCM messages here.
+        // Handle FCM messages.
         // Not getting messages here? See why this may be: https://goo.gl/39bRNJ
         Log.d(TAG, "From: " + remoteMessage.getFrom());
 
@@ -74,29 +76,27 @@ class MyFirebaseMessagingService extends FirebaseMessagingService {
             Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
         }
 
-//        final String messageBody = remoteMessage.getNotification().getBody();
+        final String messageBody = remoteMessage.getNotification().getBody();
 
         // Check if message contains a data payload.
-//        if (remoteMessage.getData().size() > 0) {
-//            Log.d(TAG, "Message data payload: " + remoteMessage.getData());
-//        }
-//        else {
-//            Log.d(TAG, "remoteMessageSize = 0");
-//            return;
-//        }
+        if (remoteMessage.getData().size() > 0) {
+            Log.d(TAG, "Message data payload: " + remoteMessage.getData());
+
+            // プッシュメッセージのdataに含めた値を取得
+            final Map<String, String> data = remoteMessage.getData();
+            if (data != null && data.size() > 0) {
+                final String contentId = data.get("id");
+                Log.d(TAG, "ID = " + contentId);
+            }
+        }
+        else {
+            Log.d(TAG, "remoteMessageDataSize = 0");
+        }
 
         // Also if you intend on generating your own notifications as a result of a received FCM
         // message, here is where that should be initiated. See sendNotification method below.
 
-        // プッシュメッセージのdataに含めた値を取得
-//        final Map<String, String> data = remoteMessage.getData();
-//
-//        final String contentId = data.get("id");
-//        final String contentType = data.get("type");
-//
-//        Log.d(TAG, "ID = " + contentId + " TYPE = " + contentType);
-
-        sendNotification(remoteMessage.getNotification().getBody());
+        sendNotification(messageBody);
     }
     // [END receive_message]
 
@@ -128,7 +128,7 @@ class MyFirebaseMessagingService extends FirebaseMessagingService {
         // 通知アクション
         final Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         final NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.drawable.ic_notification)
+                .setSmallIcon(R.drawable.ic_stat_notification)
                 .setContentTitle(getString(R.string.app_name))
                 .setContentText(messageBody)
                 .setAutoCancel(true)

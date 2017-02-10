@@ -7,8 +7,16 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_orderes">
 
-    <ListView
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/listViewOrderes" />
+        android:background="@android:color/white">
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/listViewOrderes" />
+    </LinearLayout>
+
 </RelativeLayout>

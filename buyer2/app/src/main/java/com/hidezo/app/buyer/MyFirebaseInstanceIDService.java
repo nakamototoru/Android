@@ -23,7 +23,7 @@ import com.google.firebase.iid.FirebaseInstanceIdService;
 /**
  * 通知用デバイス情報送信
  */
-class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
+public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
 
     private static final String TAG = "##FbaseIDService";
 

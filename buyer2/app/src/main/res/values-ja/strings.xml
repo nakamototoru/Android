@@ -24,4 +24,6 @@
     <string name="OrderIsFinished">注文は完了しました。</string>
     <string name="Okey">OK</string>
     <string name="ZERO">0</string>
+    <string name="DummyString">　</string>
+    <string name="SampleText">sample text</string>
 </resources>

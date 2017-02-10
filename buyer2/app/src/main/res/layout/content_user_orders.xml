@@ -29,33 +29,33 @@
             android:gravity="center_vertical|center_horizontal"
             android:background="@color/colorOrderBar">
 
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="@dimen/toolbar_range_width"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:text="@string/GoHome"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:id="@+id/textViewButtonHome"
-                    android:gravity="left|center_vertical"
-                    android:textSize="18sp"
-                    android:textColor="@color/colorOrderButton" />
-            </LinearLayout>
+            <TextView
+                android:text="@string/GoHome"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/textViewButtonHome"
+                android:gravity="center_vertical|center_horizontal"
+                android:textSize="18sp"
+                android:textColor="@color/colorOrderButton"
+                android:layout_weight="1" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="@string/OrderDecide"
                 android:id="@+id/textViewButtonOrderDecide"
-                android:textColor="@color/colorOrderButton" />
+                android:textColor="@color/colorOrderButton"
+                android:layout_weight="1"
+                android:gravity="center_vertical|center_horizontal" />
 
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="@dimen/toolbar_range_width"
-                android:layout_height="match_parent"></LinearLayout>
+            <TextView
+                android:text="@string/DummyString"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/textView13"
+                android:layout_weight="1" />
+
         </LinearLayout>
     </LinearLayout>
 

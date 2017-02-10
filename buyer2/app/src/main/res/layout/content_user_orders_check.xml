@@ -26,15 +26,17 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/toolbar_height"
             android:layout_alignParentBottom="true"
-            android:gravity="center_vertical|center_horizontal">
+            android:gravity="center_vertical|center_horizontal"
+            android:background="@color/colorOrderBar">
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="@string/OrderExec"
                 android:id="@+id/textViewButtonOrderExec"
-                android:textColor="@color/colorOrderButton" />
+                android:textColor="@color/colorOrderButton"
+                android:gravity="center_vertical|center_horizontal" />
         </LinearLayout>
     </LinearLayout>
 
