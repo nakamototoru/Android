@@ -77,6 +77,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         }
 
         final String messageBody = remoteMessage.getNotification().getBody();
+        int type_flag = 0;
 
         // Check if message contains a data payload.
         if (remoteMessage.getData().size() > 0) {
@@ -85,8 +86,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             // プッシュメッセージのdataに含めた値を取得
             final Map<String, String> data = remoteMessage.getData();
             if (data != null && data.size() > 0) {
-                final String contentId = data.get("id");
-                Log.d(TAG, "ID = " + contentId);
+                final String typeStr = data.get("type");
+                Log.d(TAG, "TYPE = " + typeStr);
+
+                type_flag = Integer.parseInt(typeStr);
             }
         }
         else {
@@ -96,7 +99,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         // Also if you intend on generating your own notifications as a result of a received FCM
         // message, here is where that should be initiated. See sendNotification method below.
 
-        sendNotification(messageBody);
+        sendNotification(messageBody,type_flag);
     }
     // [END receive_message]
 
@@ -105,7 +108,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
      *
      * @param messageBody FCM message body received.
      */
-    private void sendNotification(final String messageBody) {
+    private void sendNotification(final String messageBody, final int type_flag) {
 
 //        Log.d(TAG, messageBody);
         final AppGlobals globals = (AppGlobals) this.getApplication();
@@ -115,8 +118,18 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         // ログインチェック
         if (globals.getLoginState()) {
             // ログイン時
-            intent = new Intent(this, ActivitySuppliers.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            switch (type_flag) {
+                case 1:
+                    // メッセージ
+                    intent = new Intent(this, ActivityOrderes.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    break;
+                default:
+                    // 動的商品
+                    intent = new Intent(this, ActivitySuppliers.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    break;
+            }
         }
         else {
             // 非ログイン時

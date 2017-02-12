@@ -80,12 +80,12 @@ public class ActivityUserOrdersCheck extends CustomAppCompatActivity {
             String strDeliverDay = globals.getOrderDeliverDay();
             if (strDeliverDay.equals("")) {
                 strDeliverDay = responseItem.itemInfo.delivery_day_list.get(0);
-
-//                Log.d(TAG,"strDeliverDay = " + strDeliverDay);
             }
             globals.setOrderDeliverDay(strDeliverDay);
             final HDZProfile pDate = new HDZProfile("納品日", strDeliverDay);
             profileList.add(pDate);
+
+            Log.d(TAG,"strDeliverDay = " + strDeliverDay);
 
             // 担当者
             String strCharge = globals.getOrderCharge();
