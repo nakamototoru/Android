@@ -160,7 +160,7 @@ public class ActivityOrderDetail extends CustomAppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(final Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_order_detail, menu);
+//        getMenuInflater().inflate(R.menu.menu_order_detail, menu);
         return true;
     }
     @Override
@@ -191,16 +191,6 @@ public class ActivityOrderDetail extends CustomAppCompatActivity {
                 startActivity(intent);
                 return true;
             }
-
-//            if (id == R.id.action_base64) {
-//                String result = HDZPdfManager.getPdfBase64String(getApplicationContext());
-//                Log.d(TAG, result);
-//                return true;
-//            }
-//            if (id == R.id.action_soap) {
-//                HDZSoapFax.getSendList();
-//                return true;
-//            }
         }
 
         return super.onOptionsItemSelected(item);
