@@ -26,29 +26,29 @@ public class ActivityUserOrdersFinish extends AppCompatActivity implements HDZCl
 
         final Intent intent = getIntent();
         mySupplierId = intent.getStringExtra("supplier_id");
+        myOrderNo = intent.getStringExtra("order_no");
 
+//        final ActivityUserOrdersFinish _self = this;
         final Button btn = (Button)findViewById(R.id.buttonGoOrders);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
-                // 画面遷移
 //                if (isFaxSend) {
-//                    // PDFイメージアクティビティ
-//                    final Intent intent = new Intent(getApplication(), ActivityPdfDocument.class);
-//                    intent.putExtra("order_no", myOrderNo);
-//                    startActivity(intent);
+////                    // PDFイメージアクティビティ
+////                    final Intent intent = new Intent(getApplication(), ActivityPdfDocument.class);
+////                    intent.putExtra("order_no", myOrderNo);
+////                    startActivity(intent);
 //                }
 //                else {
 //                    // 注文履歴
-//                    final Intent intent = new Intent(getApplication(), ActivityOrderes.class);
-//                    intent.putExtra("supplier_id",mySupplierId);
-//                    startActivity(intent);
+//                    goOrderListActivity();
+////                    final Intent intent = new Intent(getApplication(), ActivityOrderes.class);
+////                    intent.putExtra("supplier_id",mySupplierId);
+////                    startActivity(intent);
 //                }
 
                 // 注文履歴
-                final Intent intent = new Intent(getApplication(), ActivityOrderes.class);
-                intent.putExtra("supplier_id",mySupplierId);
-                startActivity(intent);
+                goOrderListActivity();
 
             }
         });
@@ -66,14 +66,29 @@ public class ActivityUserOrdersFinish extends AppCompatActivity implements HDZCl
     public void HDZClientComplete(final String response,final String apiName) {
 //        final AppGlobals globals = (AppGlobals) this.getApplication();
 
-        // FAX送信処理
-        final HDZApiResponseOrderMethod responseOrderMethod = new HDZApiResponseOrderMethod();
-        if (responseOrderMethod.parseJson(response)) {
+        if (apiName.equals(HDZApiRequestPackage.OrderMethod.apiName)) {
+            // FAX送信方法取得
+            final HDZApiResponseOrderMethod responseOrderMethod = new HDZApiResponseOrderMethod();
+            if (responseOrderMethod.parseJson(response)) {
 
-            Log.d(TAG,"Method = " + responseOrderMethod.method);
+                Log.d(TAG,"Method = " + responseOrderMethod.method);
 
-            isFaxSend = responseOrderMethod.method.equals("fax");
+                isFaxSend = responseOrderMethod.method.equals("fax");
+                if (isFaxSend) {
+                    // FAX送信
+                    final HDZApiRequestPackage.sendFax req = new HDZApiRequestPackage.sendFax();
+                    final AppGlobals globals = (AppGlobals) this.getApplication();
+                    req.begin(globals.getUserId(), globals.getUuid(), myOrderNo, this);
+                }
+            }
         }
+        else {
+            final HDZApiResponse responseApi = new HDZApiResponse();
+            if (responseApi.parseJson(response)) {
+                Log.d(TAG,"fax send complete");
+            }
+        }
+
     }
     public void HDZClientError(final String error) {
         // 警告
@@ -89,4 +104,14 @@ public class ActivityUserOrdersFinish extends AppCompatActivity implements HDZCl
         }
         return true;
     }
+
+    /**
+     * 注文履歴画面へ
+     */
+    private void goOrderListActivity() {
+        final Intent intent = new Intent(getApplication(), ActivityOrderes.class);
+        intent.putExtra("supplier_id",mySupplierId);
+        startActivity(intent);
+    }
+
 }

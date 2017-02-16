@@ -73,24 +73,28 @@ class HDZApiRequestPackage {
     }
 
     static class OrderList {
+        public static final String apiName = "store/order_list";
         public void begin(final String id,final String uuid,final int page, final HDZClient.HDZCallbacks callbacks) {
             final HDZApiRequest request = new HDZApiRequest();
             request.putKeyAndValue("id", id);
             request.putKeyAndValue("uuid", uuid);
             request.putKeyAndValue("page", String.valueOf(page));
 
-            request.beginRequest("store/order_list",callbacks);
+            // "store/order_list"
+            request.beginRequest(apiName,callbacks);
         }
     }
 
     static class OrderDetail {
+        public static final String apiName = "store/order_detail";
         public void begin(final String id,final String uuid,final String order_no, final HDZClient.HDZCallbacks callbacks) {
             final HDZApiRequest request = new HDZApiRequest();
             request.putKeyAndValue("id", id);
             request.putKeyAndValue("uuid", uuid);
             request.putKeyAndValue("order_no", order_no);
 
-            request.beginRequest("store/order_detail",callbacks);
+            // store/order_detail
+            request.beginRequest(apiName,callbacks);
         }
     }
 
@@ -174,6 +178,18 @@ class HDZApiRequestPackage {
             request.putKeyAndValue("uuid", uuid);
             request.putKeyAndValue("order_no", order_no);
             request.beginRequest(apiName,callbacks);
+        }
+    }
+
+    static class sendFax {
+        public static String apiName = "store/fax/";
+        public void begin(final String id,final String uuid, final String order_no, final HDZClient.HDZCallbacks callbacks) {
+            final String api_url = apiName + order_no;
+//            apiName += order_no;
+            final HDZApiRequest request = new HDZApiRequest();
+            request.putKeyAndValue("id", id);
+            request.putKeyAndValue("uuid", uuid);
+            request.beginRequest(api_url,callbacks);
         }
     }
 
