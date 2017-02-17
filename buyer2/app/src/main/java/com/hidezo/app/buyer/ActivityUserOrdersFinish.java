@@ -17,7 +17,7 @@ public class ActivityUserOrdersFinish extends AppCompatActivity implements HDZCl
 
     String mySupplierId = "";
     String myOrderNo = "";
-    boolean isFaxSend = false;
+//    boolean isFaxSend = false;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -33,30 +33,20 @@ public class ActivityUserOrdersFinish extends AppCompatActivity implements HDZCl
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
-//                if (isFaxSend) {
-////                    // PDFイメージアクティビティ
-////                    final Intent intent = new Intent(getApplication(), ActivityPdfDocument.class);
-////                    intent.putExtra("order_no", myOrderNo);
-////                    startActivity(intent);
-//                }
-//                else {
-//                    // 注文履歴
-//                    goOrderListActivity();
-////                    final Intent intent = new Intent(getApplication(), ActivityOrderes.class);
-////                    intent.putExtra("supplier_id",mySupplierId);
-////                    startActivity(intent);
-//                }
-
                 // 注文履歴
                 goOrderListActivity();
-
             }
         });
 
         // HTTP GET
-        final HDZApiRequestPackage.OrderMethod req = new HDZApiRequestPackage.OrderMethod();
+//        final HDZApiRequestPackage.OrderMethod req = new HDZApiRequestPackage.OrderMethod();
+//        final AppGlobals globals = (AppGlobals) this.getApplication();
+//        req.begin(globals.getUserId(), globals.getUuid(), mySupplierId, this);
+
+        // FAX送信
+        final HDZApiRequestPackage.sendFax req = new HDZApiRequestPackage.sendFax();
         final AppGlobals globals = (AppGlobals) this.getApplication();
-        req.begin(globals.getUserId(), globals.getUuid(), mySupplierId, this);
+        req.begin(globals.getUserId(), globals.getUuid(), myOrderNo, this);
     }
 
     /**
@@ -73,19 +63,22 @@ public class ActivityUserOrdersFinish extends AppCompatActivity implements HDZCl
 
                 Log.d(TAG,"Method = " + responseOrderMethod.method);
 
-                isFaxSend = responseOrderMethod.method.equals("fax");
-                if (isFaxSend) {
-                    // FAX送信
-                    final HDZApiRequestPackage.sendFax req = new HDZApiRequestPackage.sendFax();
-                    final AppGlobals globals = (AppGlobals) this.getApplication();
-                    req.begin(globals.getUserId(), globals.getUuid(), myOrderNo, this);
-                }
+//                isFaxSend = responseOrderMethod.method.equals("fax");
+//                if (isFaxSend) {
+//                    // FAX送信
+//                    final HDZApiRequestPackage.sendFax req = new HDZApiRequestPackage.sendFax();
+//                    final AppGlobals globals = (AppGlobals) this.getApplication();
+//                    req.begin(globals.getUserId(), globals.getUuid(), myOrderNo, this);
+//                }
             }
         }
         else {
             final HDZApiResponse responseApi = new HDZApiResponse();
             if (responseApi.parseJson(response)) {
                 Log.d(TAG,"fax send complete");
+            }
+            else {
+                Log.d(TAG,"cancel send fax");
             }
         }
 
