@@ -56,6 +56,8 @@ public class ActivityUserOrdersFinish extends AppCompatActivity implements HDZCl
     public void HDZClientComplete(final String response,final String apiName) {
 //        final AppGlobals globals = (AppGlobals) this.getApplication();
 
+        Log.d(TAG,response);
+
         if (apiName.equals(HDZApiRequestPackage.OrderMethod.apiName)) {
             // FAX送信方法取得
             final HDZApiResponseOrderMethod responseOrderMethod = new HDZApiResponseOrderMethod();
