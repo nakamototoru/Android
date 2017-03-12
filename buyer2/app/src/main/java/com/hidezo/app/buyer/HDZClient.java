@@ -65,17 +65,18 @@ class HDZClient {
                 @Override
                 public void onFailure(final Call call, final IOException e) {
                     if (hdzCallbacks != null) {
-                        hdzCallbacks.HDZClientError("Error:HDZClient.runAsync");
+                        hdzCallbacks.HDZClientError("Get:runAsync:onFailure:HDZClient.runAsync");
                     }
                 }
                 @Override
                 public void onResponse(final Call call, final Response response) throws IOException {
                     if (!response.isSuccessful()) {
-                        throw new IOException("Unexpected code " + response);
+                        throw new IOException("Get:runAsync:onResponse:Unexpected code " + response);
                     }
-
-                    if (hdzCallbacks != null) {
-                        hdzCallbacks.HDZClientComplete(response.body().string(), apiName);
+                    else {
+                        if (hdzCallbacks != null) {
+                            hdzCallbacks.HDZClientComplete(response.body().string(), apiName);
+                        }
                     }
                 }
             });
@@ -90,12 +91,6 @@ class HDZClient {
         void runAsync(final String apiName, final HashMap<String,String> params, final HDZCallbacks callbacks) {
 
             String requestUrl = getRequestUrl(apiName); //getBaseUrl() + apiName + "?";
-//            if (BuildConfig.DEBUG) {
-//                requestUrl = _baseUrlRelease + apiName + "?";
-//            }
-//            else {
-//                requestUrl = _baseUrlRelease + apiName + "?";
-//            }
             int count = 0;
             for ( final HashMap.Entry<String, String> e : params.entrySet() ) {
                 if (count != 0) {
@@ -104,7 +99,9 @@ class HDZClient {
                 requestUrl += e.getKey() + "=" + e.getValue();
                 count++;
             }
-            Log.d("Client",requestUrl);
+            if (BuildConfig.DEBUG) {
+                Log.d("Client",requestUrl);
+            }
             runAsync(requestUrl,callbacks,apiName);
         }
 
@@ -123,14 +120,9 @@ class HDZClient {
             hdzCallbacks = callbacks;
 
             final String requestUrl = getRequestUrl(apiName); //getBaseUrl() + apiName + "?";
-//            if (BuildConfig.DEBUG) {
-//                requestUrl = _baseUrlRelease + apiName;
-//            }
-//            else {
-//                requestUrl = _baseUrlRelease + apiName;
-//            }
-            Log.d("Client",requestUrl);
-
+            if (BuildConfig.DEBUG) {
+                Log.d("Client",requestUrl);
+            }
             final OkHttpClient client = new OkHttpClient();
             final Request.Builder builder = new Request.Builder().url(requestUrl);
 
@@ -142,16 +134,18 @@ class HDZClient {
                 @Override
                 public void onFailure(final Call call, final IOException e) {
                     if (hdzCallbacks != null) {
-                        hdzCallbacks.HDZClientError("Error:HDZClient.runAsync");
+                        hdzCallbacks.HDZClientError("Post:runAsync:onFailure:HDZClient.runAsync");
                     }
                 }
                 @Override
                 public void onResponse(final Call call, final Response response) throws IOException {
                     if (!response.isSuccessful()) {
-                        throw new IOException("Unexpected code " + response);
+                        throw new IOException("Post:runAsync:onResponse:Unexpected code " + response);
                     }
-                    if (hdzCallbacks != null) {
-                        hdzCallbacks.HDZClientComplete(response.body().string(), apiName);
+                    else {
+                        if (hdzCallbacks != null) {
+                            hdzCallbacks.HDZClientComplete(response.body().string(), apiName);
+                        }
                     }
                 }
             });
@@ -171,42 +165,6 @@ class HDZClient {
                 postData.add(e.getKey(),e.getValue());
             }
             runAsync(apiName,postData,callbacks);
-
-//            hdzCallbacks = callbacks;
-//
-//            final String requestUrl = getRequestUrl(apiName); //getBaseUrl() + apiName + "?";
-//            Log.d("Client",requestUrl);
-//
-//            final OkHttpClient client = new OkHttpClient();
-//            final Request.Builder builder = new Request.Builder().url(requestUrl);
-//
-//            if (paramMap != null) {
-//                // Body
-//                final FormBody.Builder postData = new FormBody.Builder();
-//                for(final HashMap.Entry<String, String> e : paramMap.entrySet()) {
-//                    postData.add(e.getKey(),e.getValue());
-//                }
-//                builder.post(postData.build());
-//            }
-//
-//            final Request request = builder.build();
-//            client.newCall(request).enqueue(new Callback() {
-//                @Override
-//                public void onFailure(final Call call, final IOException e) {
-//                    if (hdzCallbacks != null) {
-//                        hdzCallbacks.HDZClientError("Error:HDZClient.runAsync");
-//                    }
-//                }
-//                @Override
-//                public void onResponse(final Call call, final Response response) throws IOException {
-//                    if (!response.isSuccessful()) {
-//                        throw new IOException("Unexpected code " + response);
-//                    }
-//                    if (hdzCallbacks != null) {
-//                        hdzCallbacks.HDZClientComplete(response.body().string(), apiName);
-//                    }
-//                }
-//            });
 
         }
 

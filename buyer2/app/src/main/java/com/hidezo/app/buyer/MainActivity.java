@@ -114,10 +114,14 @@ public class MainActivity extends AppCompatActivity implements HDZClient.HDZCall
         else if (apiName.equals(HDZApiRequestPackage.sendDeviceToken.apiName)) {
             final HDZApiResponse responseToken = new HDZApiResponse();
             if (responseToken.parseJson(response)) {
-                Log.d("##Dev",globals.getDeviceToken());
+                if (BuildConfig.DEBUG) {
+                    Log.d("##Dev", globals.getDeviceToken());
+                }
             }
             else {
-                Log.d("##Dev",responseToken.message);
+                if (BuildConfig.DEBUG) {
+                    Log.d("##Dev",responseToken.message);
+                }
             }
 
             // 画面遷移

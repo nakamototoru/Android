@@ -63,7 +63,9 @@ public class CustomAppCompatActivity extends AppCompatActivity implements HDZCli
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(final View view) {
-                    Log.d(TAG,"toolbar.onClick");
+                    if (BuildConfig.DEBUG) {
+                        Log.d(TAG,"toolbar.onClick");
+                    }
 
                     onClickNavigationBack();
                 }
@@ -208,7 +210,9 @@ public class CustomAppCompatActivity extends AppCompatActivity implements HDZCli
         // サブクラスで定義
     }
     public void HDZClientError(final String message) {
-        Log.d("########",message);
+        if (BuildConfig.DEBUG) {
+            Log.d("########",message);
+        }
 
         if (progressDialog != null) {
             progressDialog.dismiss();

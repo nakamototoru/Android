@@ -27,7 +27,9 @@ class HDZApiResponseOrderedList extends HDZApiResponse {
     @Override
     public boolean parseJson(final String str_json) {
 
-        Log.d("Ordered",str_json);
+        if (BuildConfig.DEBUG) {
+            Log.d("Ordered",str_json);
+        }
 
         final boolean isSuccess = super.parseJson(str_json);
         if (isSuccess) {

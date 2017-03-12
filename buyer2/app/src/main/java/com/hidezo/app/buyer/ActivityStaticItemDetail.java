@@ -118,7 +118,9 @@ public class ActivityStaticItemDetail extends CustomAppCompatActivity {
                                     .error(R.drawable.sakana180)
                                     .into(ivItem);
                         } catch (final Exception e) {
-                            Log.d("## Picasso",e.getMessage());
+                            if (BuildConfig.DEBUG) {
+                                Log.d("## Picasso",e.getMessage());
+                            }
                         }
                         ivItem.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -138,7 +140,9 @@ public class ActivityStaticItemDetail extends CustomAppCompatActivity {
                                                     .error(R.drawable.sakana180)
                                                     .into(ivDetail);
                                         } catch (final Exception e) {
-                                            Log.d("## Picasso",e.getMessage());
+                                            if (BuildConfig.DEBUG) {
+                                                Log.d("## Picasso",e.getMessage());
+                                            }
                                         }
 
                                         new AlertDialog.Builder(_self)

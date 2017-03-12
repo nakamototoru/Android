@@ -84,7 +84,9 @@ public class ActivityDynamicItems extends CustomAppCompatActivity {
         final ActivityDynamicItems _self = this;
         if ( apiName.equals(HDZApiRequestPackage.CheckDynamicItems.apiName) ) {
             // "store/check_dynamic_items"
-            Log.d("Hidezo",response);
+            if (BuildConfig.DEBUG) {
+                Log.d("Hidezo",response);
+            }
         }
         else {
             final HDZApiResponseItem responseItem = new HDZApiResponseItem();
@@ -210,7 +212,9 @@ public class ActivityDynamicItems extends CustomAppCompatActivity {
                                             .error(R.drawable.sakana180)
                                             .into(iv);
                                 } catch (final Exception e) {
-                                    Log.d("## Picasso",e.getMessage());
+                                    if (BuildConfig.DEBUG) {
+                                        Log.d("## Picasso",e.getMessage());
+                                    }
                                 }
                             }
 

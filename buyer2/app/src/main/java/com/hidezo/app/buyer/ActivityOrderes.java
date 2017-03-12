@@ -53,7 +53,9 @@ public class ActivityOrderes extends CustomAppCompatActivity {
         if ( apiName.equals(HDZApiRequestPackage.Badge.apiName) ) {
             // "store/badge"
 
-            Log.d("####",response);
+            if (BuildConfig.DEBUG) {
+                Log.d("####",response);
+            }
 
             isFinishBadge = true;
             final HDZApiResponseBadge responseBadge = new HDZApiResponseBadge();
@@ -77,7 +79,9 @@ public class ActivityOrderes extends CustomAppCompatActivity {
             final HDZApiResponseOrderedList responseOrderedList = new HDZApiResponseOrderedList();
             if ( responseOrderedList.parseJson(response) ) {
                 if (responseOrderedList.orderedList.size() == 0) {
-                    Log.d("########","orderedList is ZERO");
+                    if (BuildConfig.DEBUG) {
+                        Log.d("########","orderedList is ZERO");
+                    }
                     return;
                 }
 

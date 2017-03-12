@@ -39,9 +39,11 @@ class HDZApiRequest {
 
         if (BuildConfig.DEBUG) {
             for (final HashMap.Entry<String,String> entry : paramMap.entrySet()) {
-                final String key = entry.getKey();
-                final String val = entry.getValue();
-                Log.d("## Order", key + ":" + val);
+                if (BuildConfig.DEBUG) {
+//                    final String key = entry.getKey();
+//                    final String val = entry.getValue();
+                    Log.d("## Order", entry.getKey() + ":" + entry.getValue());
+                }
             }
         }
 

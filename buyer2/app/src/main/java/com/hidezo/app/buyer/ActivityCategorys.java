@@ -1,18 +1,13 @@
 package com.hidezo.app.buyer;
 
 import android.os.Bundle;
-//import android.support.v7.widget.Toolbar;
-//import android.util.Log;
 import android.content.Intent;
-//import android.os.Handler;
-//import android.util.Log;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-//import android.widget.ProgressBar;
 import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -86,7 +81,9 @@ public class ActivityCategorys extends CustomAppCompatActivity {
             // "store/badge"
             isFinishBadge = true;
 
-            Log.d("####",response);
+            if (BuildConfig.DEBUG) {
+                Log.d("####",response);
+            }
 
             final HDZApiResponseBadge responseBadge = new HDZApiResponseBadge();
             if (responseBadge.parseJson(response)) {
@@ -163,7 +160,9 @@ public class ActivityCategorys extends CustomAppCompatActivity {
                                     _self.startActivity(intent);
                                 }
                                 else if (category.isHistory) {
-                                    Log.d("##--##","履歴から注文");
+                                    if (BuildConfig.DEBUG) {
+                                        Log.d("##--##","履歴から注文");
+                                    }
                                     final Intent intent = new Intent( _self.getApplication(), ActivityStaticItems.class);
                                     intent.putExtra("supplier_id", _self.mySupplierId);
                                     intent.putExtra("category_id", category.id);

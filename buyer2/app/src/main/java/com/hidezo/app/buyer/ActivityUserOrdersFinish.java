@@ -56,14 +56,18 @@ public class ActivityUserOrdersFinish extends AppCompatActivity implements HDZCl
     public void HDZClientComplete(final String response,final String apiName) {
 //        final AppGlobals globals = (AppGlobals) this.getApplication();
 
-        Log.d(TAG,response);
+        if (BuildConfig.DEBUG) {
+            Log.d(TAG,response);
+        }
 
         if (apiName.equals(HDZApiRequestPackage.OrderMethod.apiName)) {
             // FAX送信方法取得
             final HDZApiResponseOrderMethod responseOrderMethod = new HDZApiResponseOrderMethod();
             if (responseOrderMethod.parseJson(response)) {
 
-                Log.d(TAG,"Method = " + responseOrderMethod.method);
+                if (BuildConfig.DEBUG) {
+                    Log.d(TAG,"Method = " + responseOrderMethod.method);
+                }
 
 //                isFaxSend = responseOrderMethod.method.equals("fax");
 //                if (isFaxSend) {
@@ -77,10 +81,14 @@ public class ActivityUserOrdersFinish extends AppCompatActivity implements HDZCl
         else {
             final HDZApiResponse responseApi = new HDZApiResponse();
             if (responseApi.parseJson(response)) {
-                Log.d(TAG,"fax send complete");
+                if (BuildConfig.DEBUG) {
+                    Log.d(TAG,"fax send complete");
+                }
             }
             else {
-                Log.d(TAG,"cancel send fax");
+                if (BuildConfig.DEBUG) {
+                    Log.d(TAG,"cancel send fax");
+                }
             }
         }
 
@@ -94,7 +102,9 @@ public class ActivityUserOrdersFinish extends AppCompatActivity implements HDZCl
     public boolean onKeyDown(final int keyCode, final KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             // 戻るボタンを無効
-            Log.d("Hidezo","戻るボタン無効");
+            if (BuildConfig.DEBUG) {
+                Log.d("Hidezo","戻るボタン無効");
+            }
             return false;
         }
         return true;

@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.hidezo.app.buyer"
-        minSdkVersion 19 //24 //21 //15
+        minSdkVersion 15 //17 //24 //21
         targetSdkVersion 25
         versionCode 4
         versionName "1.2"
@@ -15,11 +15,11 @@ android {
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//            minifyEnabled true
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//            runProguard = true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
-//        repositories {
-//            maven { url 'https://oss.sonatype.org/content/repositories/ksoap2-android-releases' }
-//        }
     }
     dexOptions {
         //incremental = true
@@ -41,10 +41,8 @@ dependencies {
     compile 'com.android.support:support-annotations:25.1.0'
     compile 'com.squareup.picasso:picasso:2.3.3'
     testCompile 'junit:junit:4.12'
-    // compile 'com.google.android.gms:play-services-appindexing:10.0.1'
     compile 'com.google.firebase:firebase-messaging:10.0.1'
     compile 'com.google.android.gms:play-services-gcm:10.0.1'
-//    compile 'com.google.code.ksoap2-android:ksoap2-android:3.6.1'
 }
 
 apply plugin: 'com.google.gms.google-services'

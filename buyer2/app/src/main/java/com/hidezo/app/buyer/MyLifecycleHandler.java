@@ -45,7 +45,9 @@ class MyLifecycleHandler implements Application.ActivityLifecycleCallbacks {
     @Override
     public void onActivityPaused(final Activity activity) {
         ++paused;
-        Log.d(TAG, "application is in foreground: " + (resumed > paused));
+        if (BuildConfig.DEBUG) {
+            Log.d(TAG, "application is in foreground: " + (resumed > paused));
+        }
         if (shouldSendLaunchLogs) {
             // send logs
             shouldSendLaunchLogs = false;
@@ -69,7 +71,9 @@ class MyLifecycleHandler implements Application.ActivityLifecycleCallbacks {
     public void onActivityStopped(final Activity activity) {
         // ここでアクテビティの表示処理が完了する
         ++stopped;
-        Log.d(TAG, "application is visible: " + (started > stopped));
+        if (BuildConfig.DEBUG) {
+            Log.d(TAG, "application is visible: " + (started > stopped));
+        }
         if (shouldSendLaunchLogs) {
             // send logs
             shouldSendLaunchLogs = false;

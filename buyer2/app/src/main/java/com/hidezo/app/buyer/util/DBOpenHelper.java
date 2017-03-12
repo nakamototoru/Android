@@ -1,4 +1,4 @@
-/**
+/* *
  * Copyright (C) 2016 Programming Java Android Development Project
  * Programming Java is
  *
@@ -16,7 +16,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.hidezo.app.buyer.util;
 
 import android.content.ContentValues;
@@ -25,12 +24,12 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import com.hidezo.app.buyer.BuildConfig;
 
 /**
  * Created by msuzuki on 2016/06/24.
@@ -57,13 +56,17 @@ public class DBOpenHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(final SQLiteDatabase db) {
-        Log.d(TAG, "onCreate version : " + db.getVersion());
+        if (BuildConfig.DEBUG) {
+            Log.d(TAG, "onCreate version : " + db.getVersion());
+        }
 //        this.execFileSQL(db, "create_table.sql"); // assetsフォルダにあるファイルを読む
-        String sql = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (id text,supplier_id text,item_id text,order_size text, is_dynamic integer, created_at text,updated_at text,deleted_at text);";
+        final String sql = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME + " (id text,supplier_id text,item_id text,order_size text, is_dynamic integer, created_at text,updated_at text,deleted_at text);";
         try {
             db.execSQL(sql);
-        } catch (Exception e) {
-            Log.d(TAG,e.getMessage());
+        } catch (final Exception e) {
+            if (BuildConfig.DEBUG) {
+                Log.d(TAG,e.getMessage());
+            }
         }
         // "CREATE TABLE IF NOT EXISTS dau (id text,supplier_id text,item_id text,order_size text,created_at text,updated_at text,deleted_at text);"
     }
@@ -71,9 +74,11 @@ public class DBOpenHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(final SQLiteDatabase db, final int oldVersion, final int newVersion) {
 
-        Log.d(TAG, "onUpgrade version : " + db.getVersion());
-        Log.d(TAG, "onUpgrade oldVersion : " + oldVersion);
-        Log.d(TAG, "onUpgrade newVersion : " + newVersion);
+        if (BuildConfig.DEBUG) {
+            Log.d(TAG, "onUpgrade version : " + db.getVersion());
+            Log.d(TAG, "onUpgrade oldVersion : " + oldVersion);
+            Log.d(TAG, "onUpgrade newVersion : " + newVersion);
+        }
         // 1 → 2
 //        if (oldVersion == 1 && newVersion == 2) {
 //            this.execFileSQL(db, "change_table_1.0.3.sql"); // v1.0.0
@@ -103,7 +108,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
      * @param db database
      * @param fileName file_name
      */
-    private void execFileSQL(SQLiteDatabase db, String fileName){
+    private void execFileSQL(final SQLiteDatabase db, final String fileName){
         InputStream in = null;
         InputStreamReader inReader = null;
         BufferedReader reader = null;
@@ -125,12 +130,10 @@ public class DBOpenHelper extends SQLiteOpenHelper {
                     db.execSQL(s);
                 }
             }
-
-        } catch (IOException e) {
-//            e.printStackTrace();
-
-            Log.d(TAG,e.getMessage());
-
+        } catch (final IOException e) {
+            if (BuildConfig.DEBUG) {
+                Log.d(TAG,e.getMessage());
+            }
         } finally {
 
             if (in != null) {
@@ -152,7 +155,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
             if (reader != null) {
                 try {
                     reader.close();
-                } catch (IOException e) {
+                } catch (final IOException e) {
                     e.printStackTrace();
                 }
             }
@@ -165,8 +168,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
      * @param cvList contentvalues_list
      * @return boolean
      */
-    public static boolean insertTransactionExcute(final Context context, final String tableName,
-                                                  ArrayList<ContentValues> cvList) {
+    public static boolean insertTransactionExcute(final Context context, final String tableName, final ArrayList<ContentValues> cvList) {
 
         // テーブルデータ削除
         DBHelper dbhelper = null;
@@ -176,8 +178,8 @@ public class DBOpenHelper extends SQLiteOpenHelper {
             dbhelper.db.beginTransaction();
 
 //            long result = -1;
-            for (ContentValues cv : cvList) {
-                long result = dbhelper.db.insert(tableName, null, cv);
+            for (final ContentValues cv : cvList) {
+                final long result = dbhelper.db.insert(tableName, null, cv);
                 if (result == -1) {
                     return false;
                 }
@@ -186,7 +188,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
             // コミット
             dbhelper.db.setTransactionSuccessful();
 
-        } catch (SQLException e) {
+        } catch (final SQLException e) {
             e.printStackTrace();
             return false;
         } finally {

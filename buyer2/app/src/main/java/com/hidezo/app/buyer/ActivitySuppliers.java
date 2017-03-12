@@ -58,7 +58,9 @@ public class ActivitySuppliers extends CustomAppCompatActivity {
         if ( apiName.equals(HDZApiRequestPackage.Badge.apiName) ) {
             isFinishBadge = true;
 
-             Log.d("####",response);
+            if (BuildConfig.DEBUG) {
+                Log.d("####",response);
+            }
 
             final HDZApiResponseBadge responseBadge = new HDZApiResponseBadge();
             if (responseBadge.parseJson(response)) {

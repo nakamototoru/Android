@@ -43,7 +43,9 @@ public class ActivityMessages extends CustomAppCompatActivity {
         tvBtnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
-                Log.d("## Messages","TODO: Send Comment");
+                if (BuildConfig.DEBUG) {
+                    Log.d("## Messages","TODO: Send Comment");
+                }
 
                 // テキストエディット
                 final EditText editText = new EditText(ActivityMessages.this);

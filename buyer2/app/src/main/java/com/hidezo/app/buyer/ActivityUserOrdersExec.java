@@ -59,7 +59,9 @@ public class ActivityUserOrdersExec extends CustomAppCompatActivity {
     public boolean onKeyDown(final int keyCode, final KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             // 戻るボタンを無効
-            Log.d("####","戻るボタン無効");
+            if (BuildConfig.DEBUG) {
+                Log.d("####","戻るボタン無効");
+            }
             return false;
         }
         return true;
@@ -132,10 +134,14 @@ public class ActivityUserOrdersExec extends CustomAppCompatActivity {
 
             final HDZApiResponse responseResult = new HDZApiResponse();
             if (responseResult.parseJson(response)) {
-                Log.d("## OrderExec","Completed");
+                if (BuildConfig.DEBUG) {
+                    Log.d("## OrderExec","Completed");
+                }
             }
             else {
-                Log.d("## OrderExec","Error");
+                if (BuildConfig.DEBUG) {
+                    Log.d("## OrderExec","Error");
+                }
             }
 
             // 記憶値クリア

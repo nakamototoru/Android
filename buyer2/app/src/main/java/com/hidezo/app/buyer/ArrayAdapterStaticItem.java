@@ -79,7 +79,9 @@ class ArrayAdapterStaticItem extends ArrayAdapter<HDZUserOrder> {
                         .into(ivItem);
 
             } catch (final Exception e) {
-                Log.d("## Picasso",e.getMessage());
+                if (BuildConfig.DEBUG) {
+                    Log.d("## Picasso",e.getMessage());
+                }
             }
         }
 

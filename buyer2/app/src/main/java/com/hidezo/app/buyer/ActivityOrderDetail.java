@@ -147,7 +147,9 @@ public class ActivityOrderDetail extends CustomAppCompatActivity {
         else {
             final HDZApiResponse responseApi = new HDZApiResponse();
             if (responseApi.parseJson(response)) {
-                Log.d(TAG,"Complete fax send");
+                if (BuildConfig.DEBUG) {
+                    Log.d(TAG,"Complete fax send");
+                }
             }
         }
 

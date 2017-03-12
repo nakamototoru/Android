@@ -112,7 +112,9 @@ class HDZApiRequestPackage {
             params.put("deliver_to",deliver_to);
             params.put("charge",charge);
 
-            Log.d(TAG,"delivery_day = " + delivery_day);
+            if (BuildConfig.DEBUG) {
+                Log.d(TAG,"delivery_day = " + delivery_day);
+            }
 
             request.beginOrder(apiName, params, dynamic_items, static_items, callbacks); // "store/order"
         }

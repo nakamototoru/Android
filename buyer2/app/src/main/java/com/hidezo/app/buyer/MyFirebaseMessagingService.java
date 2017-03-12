@@ -64,16 +64,21 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         // Handle FCM messages.
         // Not getting messages here? See why this may be: https://goo.gl/39bRNJ
-        Log.d(TAG, "From: " + remoteMessage.getFrom());
+        if (BuildConfig.DEBUG) {
+            Log.d(TAG, "From: " + remoteMessage.getFrom());
+        }
 
         // Check if message contains a notification payload.
         if (remoteMessage.getNotification() == null) {
-            Log.d(TAG, "remoteMessageGetNotification = NULL");
+            if (BuildConfig.DEBUG) {
+                Log.d(TAG, "remoteMessageGetNotification = NULL");
+            }
             return;
         }
         else {
-//            Log.d(TAG, "Message Notification Title: " + remoteMessage.getNotification().getTitle());
-            Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
+            if (BuildConfig.DEBUG) {
+                Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
+            }
         }
 
         final String messageBody = remoteMessage.getNotification().getBody();
@@ -81,19 +86,25 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         // Check if message contains a data payload.
         if (remoteMessage.getData().size() > 0) {
-            Log.d(TAG, "Message data payload: " + remoteMessage.getData());
+            if (BuildConfig.DEBUG) {
+                Log.d(TAG, "Message data payload: " + remoteMessage.getData());
+            }
 
             // プッシュメッセージのdataに含めた値を取得
             final Map<String, String> data = remoteMessage.getData();
             if (data != null && data.size() > 0) {
                 final String typeStr = data.get("type");
-                Log.d(TAG, "TYPE = " + typeStr);
+                if (BuildConfig.DEBUG) {
+                    Log.d(TAG, "TYPE = " + typeStr);
+                }
 
                 type_flag = Integer.parseInt(typeStr);
             }
         }
         else {
-            Log.d(TAG, "remoteMessageDataSize = 0");
+            if (BuildConfig.DEBUG) {
+                Log.d(TAG, "remoteMessageDataSize = 0");
+            }
         }
 
         // Also if you intend on generating your own notifications as a result of a received FCM

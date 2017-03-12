@@ -38,7 +38,9 @@ public class AppGlobals extends Application {
         // 保存データ取得
         final String uuid_old = sp.getString("uuid", "");
         if (!uuid_old.equals("")) {
-            Log.d("######","Ret uuid = " + uuid_old);
+            if (BuildConfig.DEBUG) {
+                Log.d("######", "Ret uuid = " + uuid_old);
+            }
             return uuid_old;
         }
 
@@ -51,7 +53,9 @@ public class AppGlobals extends Application {
         ed.apply();
         result.commit();
 
-        Log.d("######","New uuid = " + uuid);
+        if (BuildConfig.DEBUG) {
+            Log.d("######", "New uuid = " + uuid);
+        }
 
         return uuid;
     }
@@ -144,14 +148,20 @@ public class AppGlobals extends Application {
      */
     public boolean checkLogOut(final boolean result, final String message) {
 
-        Log.d("## Global","checkLogOut");
+        if (BuildConfig.DEBUG) {
+            Log.d("## Global","checkLogOut");
+        }
 
         if (message.equals("データがありません")) {
-            Log.d("##", "データがありません");
+            if (BuildConfig.DEBUG) {
+                Log.d("##", "データがありません");
+            }
             return false;
         }
         else if (result) {
-            Log.d("##", "result = true");
+            if (BuildConfig.DEBUG) {
+                Log.d("##", "result = true");
+            }
             return false;
         }
         return true;
@@ -260,16 +270,22 @@ public class AppGlobals extends Application {
             dBHelper = new DBHelper(getApplicationContext());
             dBHelper.sendSuccess();
         } catch(final Exception e) {
-            Log.d(DauHelper.TAG, e.getMessage());
+            if (BuildConfig.DEBUG) {
+                Log.d(DauHelper.TAG, e.getMessage());
+            }
         }
     }
     public Dau selectCartDau(final String supplier_id, final String item_id) {
         final Dau dau = DauHelper.getDau(getApplicationContext(), supplier_id, item_id);
         if (dau != null) {
-            Log.d(DauHelper.TAG, dau.toString());
+            if (BuildConfig.DEBUG) {
+                Log.d(DauHelper.TAG, dau.toString());
+            }
         }
         final List<Dau> list = DauHelper.getDauList(getApplicationContext());
-        Log.d(DauHelper.TAG, " list result : " + list.size());
+        if (BuildConfig.DEBUG) {
+            Log.d(DauHelper.TAG, " list result : " + list.size());
+        }
 
         return dau;
     }
@@ -300,7 +316,9 @@ public class AppGlobals extends Application {
         contentValues.put(Dau.getKeyUpdatedAt(), System.currentTimeMillis());
         final long result = DauHelper.insert(getApplicationContext(), contentValues);
 
-        Log.d(DauHelper.TAG, " insert result : " + result);
+        if (BuildConfig.DEBUG) {
+            Log.d(DauHelper.TAG, " insert result : " + result);
+        }
 
         return result;
     }
@@ -312,7 +330,9 @@ public class AppGlobals extends Application {
         contentValues.put(Dau.getKeyUpdatedAt(), System.currentTimeMillis());
         final long result = DauHelper.update(getApplicationContext(), contentValues, supplier_id, item_id);
 
-        Log.d(DauHelper.TAG, " update result : " + result);
+        if (BuildConfig.DEBUG) {
+            Log.d(DauHelper.TAG, " update result : " + result);
+        }
 
         return result;
     }
@@ -333,11 +353,15 @@ public class AppGlobals extends Application {
 
     public void deleteCart(final String supplier_id, final String item_id) {
         final long result = DauHelper.delete(getApplicationContext(), supplier_id,item_id);
-        Log.d(DauHelper.TAG, " delete result : " + result);
+        if (BuildConfig.DEBUG) {
+            Log.d(DauHelper.TAG, " delete result : " + result);
+        }
     }
 
     public void deleteAllCart() {
         final long result = DauHelper.deleteAll(getApplicationContext());
-        Log.d(DauHelper.TAG, " delete result : " + result);
+        if (BuildConfig.DEBUG) {
+            Log.d(DauHelper.TAG, " delete result : " + result);
+        }
     }
 }

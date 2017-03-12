@@ -21,7 +21,9 @@ class HDZApiResponse {
             result = json.getBoolean("result");
             if (!result) {
                 message = json.getString("message");
-                Log.d("########",message);
+                if (BuildConfig.DEBUG) {
+                    Log.d("########",message);
+                }
             }
         } catch (final JSONException e) {
             e.printStackTrace();

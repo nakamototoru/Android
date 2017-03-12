@@ -1,4 +1,4 @@
-/**
+/* *
  * Copyright (C) 2016 Programming Java Android Development Project
  * Programming Java is
  *
@@ -16,15 +16,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.hidezo.app.buyer.util;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.Build;
+//import android.os.Build;
 import android.util.Log;
-
-import java.io.File;
+import com.hidezo.app.buyer.BuildConfig;
 
 /**
  * Created by msuzuki on 2016/06/24.
@@ -55,24 +53,26 @@ public class DBHelper {
         }
     }
 
-    /**
-     * Databaseが削除できればtrue。できなければfalse
-     * @param context application_context
-     * @return result
-     */
-    public boolean isDatabaseDelete(final Context context) {
-        boolean result = false;
-        if (this.db != null) {
-            File file = context.getDatabasePath(dbOpenHelper.getDatabaseName());
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-                result = this.db.deleteDatabase(file);
-            }
-        }
-        return result;
-    }
+//    /**
+//     * Databaseが削除できればtrue。できなければfalse
+//     * @param context application_context
+//     * @return result
+//     */
+//    public boolean isDatabaseDelete(final Context context) {
+//        boolean result = false;
+//        if (this.db != null) {
+//            final File file = context.getDatabasePath(dbOpenHelper.getDatabaseName());
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+//                result = this.db.deleteDatabase(file);
+//            }
+//        }
+//        return result;
+//    }
 
     public void sendSuccess() {
-        Log.d(TAG,"sendSuccess");
+        if (BuildConfig.DEBUG) {
+            Log.d(TAG, "sendSuccess");
+        }
     }
 
 }
