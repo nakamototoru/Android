@@ -1,16 +1,34 @@
 apply plugin: 'com.android.application'
 
+// Create a variable called keystorePropertiesFile, and initialize it to your
+// keystore.properties file, in the rootProject folder.
+//def keystorePropertiesFile = rootProject.file("keystore.properties")
+
+// Initialize a new Properties() object called keystoreProperties.
+//def keystoreProperties = new Properties()
+
+// Load your keystore.properties file into the keystoreProperties object.
+//keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
 android {
+    signingConfigs {
+//        config {
+//            keyAlias keystoreProperties['keyAlias']
+//            keyPassword keystoreProperties['keyPassword']
+//            storeFile file(keystoreProperties['storeFile'])
+//            storePassword keystoreProperties['storePassword']
+//        }
+    }
     compileSdkVersion 25
     buildToolsVersion '25.0.2'
-
     defaultConfig {
         applicationId "com.hidezo.app.buyer"
         minSdkVersion 15 //17 //24 //21
         targetSdkVersion 25
         versionCode 4
-        versionName "1.2"
+        versionName "1.1"
         multiDexEnabled true
+//        signingConfig signingConfigs.config
     }
     buildTypes {
         release {
@@ -20,15 +38,23 @@ android {
 //            runProguard = true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+        debug {
+        }
     }
     dexOptions {
         //incremental = true
         preDexLibraries = false
         javaMaxHeapSize "4g" // 2g should be also OK
     }
-    aaptOptions {
-        noCompress "pdf"
-    }
+//    aaptOptions {
+//        noCompress "pdf"
+//    }
+//    productFlavors {
+//        full {
+//            applicationId "com.hidezo.app.buyer"
+//            versionName "1.0-full"
+//        }
+//    }
 }
 
 dependencies {
